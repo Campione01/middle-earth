@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "V": {
+      "tag": "me:wooden_vertical_slabs"
+    }
+  },
+  "pattern": [
+    "VSV",
+    "V V",
+    "VSV"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:thin_barrel"
+  }
+}

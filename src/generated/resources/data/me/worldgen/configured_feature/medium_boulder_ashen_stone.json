@@ -1,0 +1,27 @@
+{
+  "type": "me:big_boulder",
+  "config": {
+    "blockstates": [
+      {
+        "Name": "me:ashen_stone"
+      },
+      {
+        "Name": "me:ashen_stone"
+      },
+      {
+        "Name": "me:ashen_cobblestone"
+      },
+      {
+        "Name": "me:ashen_gravel"
+      },
+      {
+        "Name": "me:ash_block"
+      }
+    ],
+    "height": 2.8,
+    "length": 4.0,
+    "random_size": 0.95,
+    "randomness": 0.26,
+    "width": 2.6
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "me:block/mire",
+    "side": "me:block/mire",
+    "top": "me:block/mire"
+  }
+}

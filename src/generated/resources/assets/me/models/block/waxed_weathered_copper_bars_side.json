@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_glass_pane_side",
+  "textures": {
+    "edge": "me:block/waxed_weathered_copper_bars_top",
+    "pane": "me:block/waxed_weathered_copper_bars"
+  }
+}

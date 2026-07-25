@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/large_door_right",
+  "textures": {
+    "all": "me:block/great_dwarven_gate_2",
+    "particle": "me:block/great_dwarven_gate_2"
+  }
+}

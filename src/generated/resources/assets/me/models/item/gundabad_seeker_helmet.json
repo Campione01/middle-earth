@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/gundabad_seeker_helmet",
+    "layer1": "me:item/gundabad_seeker_helmet_overlay"
+  }
+}

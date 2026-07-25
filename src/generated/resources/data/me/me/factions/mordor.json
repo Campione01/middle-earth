@@ -1,0 +1,127 @@
+{
+  "banner": {
+    "base_color": "black",
+    "patterns": [
+      {
+        "dye_color": "gray",
+        "id": "me:cloth"
+      },
+      {
+        "dye_color": "black",
+        "id": "minecraft:gradient"
+      },
+      {
+        "dye_color": "black",
+        "id": "minecraft:triangle_bottom"
+      },
+      {
+        "dye_color": "orange",
+        "id": "me:small_circle"
+      },
+      {
+        "dye_color": "red",
+        "id": "me:eye_of_sauron"
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "disposition": "EVIL",
+  "faction_selection_order_index": 0,
+  "faction_type": "FACTION",
+  "id": "me:mordor",
+  "joinable": true,
+  "npcs": {
+    "ranks": [
+      {
+        "pool": [
+          "me:mordor.black_numenorean",
+          "me:mordor.orc_snaga"
+        ],
+        "rank": "MILITIA"
+      },
+      {
+        "pool": [
+          "me:mordor.black_uruk_leader"
+        ],
+        "rank": "LEADER"
+      },
+      {
+        "pool": [
+          "me:mordor.orc_militia",
+          "me:mordor.orc_scout",
+          "me:mordor.orc_soldier"
+        ],
+        "rank": "SOLDIER"
+      },
+      {
+        "pool": [
+          "me:mordor.black_uruk_veteran",
+          "me:mordor.black_uruk_veteran_archer"
+        ],
+        "rank": "VETERAN"
+      },
+      {
+        "pool": [
+          "me:mordor.orc_snaga"
+        ],
+        "rank": "CIVILIAN"
+      },
+      {
+        "pool": [
+          "me:mordor.black_uruk_soldier"
+        ],
+        "rank": "KNIGHT"
+      }
+    ]
+  },
+  "spawns": {
+    "data": [
+      {
+        "coordinates": {
+          "x": 1793.0,
+          "y": 0.0,
+          "z": 1210.0
+        },
+        "dynamic": 1,
+        "id": "me:mordor.dol_guldur"
+      },
+      {
+        "coordinates": {
+          "x": 2345.0,
+          "y": 0.0,
+          "z": 1915.0
+        },
+        "dynamic": 1,
+        "id": "me:mordor.nurn"
+      },
+      {
+        "coordinates": {
+          "x": 2010.0,
+          "y": 0.0,
+          "z": 1608.0
+        },
+        "dynamic": 1,
+        "id": "me:mordor.black_gates"
+      },
+      {
+        "coordinates": {
+          "x": 2161.0,
+          "y": 0.0,
+          "z": 1717.0
+        },
+        "dynamic": 1,
+        "id": "me:mordor.gorgoroth"
+      },
+      {
+        "coordinates": {
+          "x": 2029.0,
+          "y": 0.0,
+          "z": 1770.0
+        },
+        "dynamic": 1,
+        "id": "me:mordor.minas_morgul"
+      }
+    ]
+  }
+}

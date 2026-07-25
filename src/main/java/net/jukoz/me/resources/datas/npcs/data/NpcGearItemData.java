@@ -12,24 +12,17 @@ import net.jukoz.me.item.utils.armor.hoods.ModHoodStates;
 import net.jukoz.me.item.utils.armor.hoods.ModHoods;
 import net.jukoz.me.recipe.ModTags;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.DyedColorComponent;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.random.Random;
-
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.DyedItemColor;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +50,7 @@ public class NpcGearItemData {
     public NpcGearItemData(Item item) {
         this.item = item;
     }
-    public NpcGearItemData(Identifier itemIdentifier) {
+    public NpcGearItemData(ResourceLocation itemIdentifier) {
         this.item = getItemFromId(itemIdentifier);
     }
 
@@ -67,7 +60,7 @@ public class NpcGearItemData {
     public static NpcGearItemData create(Item item) {
         return new NpcGearItemData(item);
     }
-    public static NpcGearItemData create(Identifier itemIdentifier) {
+    public static NpcGearItemData create(ResourceLocation itemIdentifier) {
         return new NpcGearItemData(itemIdentifier);
     }
     public NpcGearItemData withWeight(int weight) {
@@ -136,36 +129,36 @@ public class NpcGearItemData {
             this.isDown = isDown;
         }
         if(this.isDown != isDown){
-            LoggerUtil.logError("NpcGearItemData:: [%s - %s] Cannot set the hood state to %s, it was forced to %s!".formatted(this.item.getName(), hood.getName(), isDown, this.isDown));
+            LoggerUtil.logError("NpcGearItemData:: [%s - %s] Cannot set the hood state to %s, it was forced to %s!".formatted(this.item.getDescription(), hood.getName(), isDown, this.isDown));
         }
         return this;
     }
 
-    private static Item getItemFromId(Identifier itemId){
-        return Registries.ITEM.get(itemId);
+    private static Item getItemFromId(ResourceLocation itemId){
+        return BuiltInRegistries.ITEM.get(itemId);
     }
 
-    private static Identifier getIdentifierFromItem(Item item){
-        return Registries.ITEM.getId(item);
+    private static ResourceLocation getIdentifierFromItem(Item item){
+        return BuiltInRegistries.ITEM.getKey(item);
     }
 
     public ItemStack getItem(){
         ItemStack itemStack = new ItemStack(this.item);
 
         if(this.color != null){
-            List<TagKey<Item>> tags = itemStack.streamTags().toList();
+            List<TagKey<Item>> tags = itemStack.getTags().toList();
             if(tags.contains(ItemTags.DYEABLE))
-                itemStack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(this.color, true));
-            else if(itemStack.isIn(ModTags.DYEABLE))
+                itemStack.set(DataComponents.DYED_COLOR, new DyedItemColor(this.color, true));
+            else if(itemStack.is(ModTags.DYEABLE))
                 itemStack.set(ModDataComponentTypes.DYE_DATA, new CustomDyeableDataComponent(this.color));
         } else if(this.colors != null){
-            List<TagKey<Item>> tags = itemStack.streamTags().toList();
+            List<TagKey<Item>> tags = itemStack.getTags().toList();
             if(tags.contains(ItemTags.DYEABLE))
-                itemStack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(getRandomColor(colors), true));
-            else if(itemStack.isIn(ModTags.DYEABLE))
+                itemStack.set(DataComponents.DYED_COLOR, new DyedItemColor(getRandomColor(colors), true));
+            else if(itemStack.is(ModTags.DYEABLE))
                 itemStack.set(ModDataComponentTypes.DYE_DATA, new CustomDyeableDataComponent(getRandomColor(colors)));
         }
-        if(this.noCape != null && this.noCape && itemStack.getComponents().contains(ModDataComponentTypes.CAPE_DATA)){
+        if(this.noCape != null && this.noCape && itemStack.getComponents().has(ModDataComponentTypes.CAPE_DATA)){
             itemStack.remove(ModDataComponentTypes.CAPE_DATA);
         } else if (cape != null)
             if(capeColor != null)
@@ -175,14 +168,14 @@ public class NpcGearItemData {
             }
             else
                 itemStack.set(ModDataComponentTypes.CAPE_DATA, CapeDataComponent.newCape(cape));
-        if(this.noHood != null && this.noHood && itemStack.getComponents().contains(ModDataComponentTypes.HOOD_DATA)){
+        if(this.noHood != null && this.noHood && itemStack.getComponents().has(ModDataComponentTypes.HOOD_DATA)){
             itemStack.remove(ModDataComponentTypes.HOOD_DATA);
         } else if(hood != null){
             boolean hoodState = false;
             if(this.hood.getConstantState() != null){
                 this.isDown = this.hood.getConstantState() == ModHoodStates.DOWN;
                 hoodState = this.isDown;
-                LoggerUtil.logError("NpcGearItemData:: [%s - %s] Cannot set the hood state to %s, it was forced to %s!".formatted(this.item.getName(), hood.getName(), isDown, this.isDown));
+                LoggerUtil.logError("NpcGearItemData:: [%s - %s] Cannot set the hood state to %s, it was forced to %s!".formatted(this.item.getDescription(), hood.getName(), isDown, this.isDown));
             } else if(isDown == null){
                 hoodState = Math.random() >= 0.5;
             } else {
@@ -201,7 +194,7 @@ public class NpcGearItemData {
     private int getRandomColor(List<Integer> listToFetch) {
         if(listToFetch != null){
             int max = listToFetch.size() - 1;
-            return listToFetch.get(Random.create().nextBetween(0, max));
+            return listToFetch.get(RandomSource.create().nextIntBetweenInclusive(0, max));
         }
         return Color.PINK.getRGB();
     }
@@ -215,12 +208,12 @@ public class NpcGearItemData {
     public Integer getColor(){
         return this.color;
     }
-    public Identifier getItemIdentifier() {
+    public ResourceLocation getItemIdentifier() {
         return getIdentifierFromItem(this.item);
     }
 
-    public static NbtCompound createNbt(NpcGearItemData gearItemData){
-        NbtCompound nbt = new NbtCompound();
+    public static CompoundTag createNbt(NpcGearItemData gearItemData){
+        CompoundTag nbt = new CompoundTag();
         nbt.putString("id", gearItemData.getItemIdentifier().toString());
 
         Integer weight = gearItemData.weight;
@@ -272,8 +265,8 @@ public class NpcGearItemData {
         return nbt;
     }
 
-    public static NpcGearItemData readNbt(NbtCompound nbt){
-        Identifier id = Identifier.of(nbt.getString("id"));
+    public static NpcGearItemData readNbt(CompoundTag nbt){
+        ResourceLocation id = ResourceLocation.parse(nbt.getString("id"));
         NpcGearItemData npcGearItemData = NpcGearItemData.create(id);
         if(nbt.get("weight") != null){
             npcGearItemData.weight = nbt.getInt("weight");

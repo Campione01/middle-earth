@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_barding_sergeant_chestplate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:barding_sergeant_chestplate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:barding_sergeant_chestplate_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_barding_sergeant_chestplate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:barding_sergeant_chestplate_artisan"
+    ]
+  }
+}

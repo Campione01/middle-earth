@@ -1,0 +1,107 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "color": 4865076,
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "cape": "orcish_cape",
+              "color": 4865076,
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "cape": "orcish_shoulders",
+              "cape_color": 4865076,
+              "color": 4865076,
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "color": 4865076,
+              "id": "me:orcish_leather_scale_vest"
+            },
+            {
+              "cape": "orcish_cape",
+              "color": 4865076,
+              "id": "me:orcish_leather_scale_vest"
+            },
+            {
+              "cape": "orcish_shoulders",
+              "cape_color": 4865076,
+              "color": 4865076,
+              "id": "me:orcish_leather_scale_vest"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:orcish_brown_fur_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            },
+            {
+              "id": "me:orcish_helmet",
+              "weight": 6
+            },
+            {
+              "id": "me:orcish_braced_helmet",
+              "weight": 3
+            },
+            {
+              "id": "me:rusted_orcish_mail_coif",
+              "weight": 3
+            },
+            {
+              "id": "me:orcish_mail_coif",
+              "weight": 2
+            },
+            {
+              "id": "me:rusted_mordor_kettle_hat"
+            },
+            {
+              "id": "me:rusted_mordor_kettle_hat_with_coif"
+            },
+            {
+              "id": "me:rusted_mordor_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "color": 4865076,
+              "id": "me:rusted_orcish_mail_coat"
+            },
+            {
+              "color": 4865076,
+              "id": "me:rusted_orcish_reinforced_leather_skirt"
+            },
+            {
+              "color": 4865076,
+              "id": "me:orcish_leather_skirt"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:orcish_bow",
+              "weight": 4
+            },
+            {
+              "id": "me:gundabad_bow"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:bandit.wild_goblin_scout",
+  "race": "me:orc"
+}

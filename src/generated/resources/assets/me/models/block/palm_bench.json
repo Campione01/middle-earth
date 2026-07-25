@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/wood_bench_template",
+  "textures": {
+    "all": "me:block/palm_bench",
+    "particle": "me:block/palm_bench"
+  }
+}

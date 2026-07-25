@@ -1,0 +1,38 @@
+{
+  "type": "me:artisan_table",
+  "category": "cape",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:bronze_nugget"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:yellow_dye"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:yellow_dye"
+    },
+    {
+      "item": "minecraft:green_dye"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:green_dye"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:rohirric_royal_guard_cape"
+  }
+}

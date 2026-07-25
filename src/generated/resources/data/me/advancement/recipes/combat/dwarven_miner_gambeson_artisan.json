@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dwarven_mail_hauberk": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:dwarven_mail_hauberk"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:dwarven_miner_gambeson_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dwarven_mail_hauberk"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:dwarven_miner_gambeson_artisan"
+    ]
+  }
+}

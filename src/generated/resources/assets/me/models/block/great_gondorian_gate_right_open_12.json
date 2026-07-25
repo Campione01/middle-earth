@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/large_door_right_open",
+  "textures": {
+    "all": "me:block/great_gondorian_gate_12",
+    "particle": "me:block/great_gondorian_gate_12"
+  }
+}

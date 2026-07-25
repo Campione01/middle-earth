@@ -1,0 +1,134 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "me:item/mail_ring_jade_trim",
+      "predicate": {
+        "trim_type": 0.001
+      }
+    },
+    {
+      "model": "me:item/mail_ring_tin_trim",
+      "predicate": {
+        "trim_type": 0.002
+      }
+    },
+    {
+      "model": "me:item/mail_ring_lead_trim",
+      "predicate": {
+        "trim_type": 0.003
+      }
+    },
+    {
+      "model": "me:item/mail_ring_silver_trim",
+      "predicate": {
+        "trim_type": 0.004
+      }
+    },
+    {
+      "model": "me:item/mail_ring_bronze_trim",
+      "predicate": {
+        "trim_type": 0.005
+      }
+    },
+    {
+      "model": "me:item/mail_ring_steel_trim",
+      "predicate": {
+        "trim_type": 0.006
+      }
+    },
+    {
+      "model": "me:item/mail_ring_crude_trim",
+      "predicate": {
+        "trim_type": 0.007
+      }
+    },
+    {
+      "model": "me:item/mail_ring_burzum_steel_trim",
+      "predicate": {
+        "trim_type": 0.008
+      }
+    },
+    {
+      "model": "me:item/mail_ring_edhel_steel_trim",
+      "predicate": {
+        "trim_type": 0.009
+      }
+    },
+    {
+      "model": "me:item/mail_ring_khazad_steel_trim",
+      "predicate": {
+        "trim_type": 0.011
+      }
+    },
+    {
+      "model": "me:item/mail_ring_mithril_trim",
+      "predicate": {
+        "trim_type": 0.012
+      }
+    },
+    {
+      "model": "me:item/mail_ring_quartz_trim",
+      "predicate": {
+        "trim_type": 0.1
+      }
+    },
+    {
+      "model": "me:item/mail_ring_iron_darker_trim",
+      "predicate": {
+        "trim_type": 0.2
+      }
+    },
+    {
+      "model": "me:item/mail_ring_netherite_trim",
+      "predicate": {
+        "trim_type": 0.3
+      }
+    },
+    {
+      "model": "me:item/mail_ring_redstone_trim",
+      "predicate": {
+        "trim_type": 0.4
+      }
+    },
+    {
+      "model": "me:item/mail_ring_copper_trim",
+      "predicate": {
+        "trim_type": 0.5
+      }
+    },
+    {
+      "model": "me:item/mail_ring_gold_trim",
+      "predicate": {
+        "trim_type": 0.6
+      }
+    },
+    {
+      "model": "me:item/mail_ring_emerald_trim",
+      "predicate": {
+        "trim_type": 0.7
+      }
+    },
+    {
+      "model": "me:item/mail_ring_diamond_trim",
+      "predicate": {
+        "trim_type": 0.8
+      }
+    },
+    {
+      "model": "me:item/mail_ring_lapis_trim",
+      "predicate": {
+        "trim_type": 0.9
+      }
+    },
+    {
+      "model": "me:item/mail_ring_amethyst_trim",
+      "predicate": {
+        "trim_type": 1.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "me:item/mail_ring"
+  }
+}

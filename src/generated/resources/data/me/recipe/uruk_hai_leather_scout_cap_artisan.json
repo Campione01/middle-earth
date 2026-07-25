@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:uruk_hai_leather_scout_cap"
+  }
+}

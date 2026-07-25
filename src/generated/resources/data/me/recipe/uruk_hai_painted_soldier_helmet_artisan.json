@@ -1,0 +1,17 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:uruk_hai_soldier_helmet"
+    },
+    {
+      "item": "me:isengard_banner_pattern"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:uruk_hai_painted_soldier_helmet"
+  }
+}

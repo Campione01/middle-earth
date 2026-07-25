@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gabbro_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:gabbro_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:gabbro_bricks_wall"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gabbro_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:gabbro_bricks_wall"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:gonluin_vertical_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:gonluin_slab"
+  }
+}

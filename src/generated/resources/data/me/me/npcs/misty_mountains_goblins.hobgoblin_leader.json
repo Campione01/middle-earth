@@ -1,0 +1,112 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:gundabad_hobgoblin_plate_trophy_chestplate",
+              "weight": 4
+            },
+            {
+              "cape": "orcish_tan_fur_surcoat_with_bone",
+              "cape_colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_hobgoblin_plate_trophy_chestplate"
+            },
+            {
+              "cape": "orcish_brown_fur_surcoat_with_bone",
+              "cape_colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_hobgoblin_plate_trophy_chestplate"
+            },
+            {
+              "cape": "orcish_black_fur_surcoat_with_bone",
+              "cape_colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_hobgoblin_plate_trophy_chestplate"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_hobgoblin_plate_chestplate",
+              "weight": 2
+            },
+            {
+              "cape": "orcish_long_cape",
+              "id": "me:gundabad_hobgoblin_plate_chestplate",
+              "weight": 2
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:gundabad_hobgoblin_plated_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:gundabad_hobgoblin_plate_large_crest_helmet"
+            },
+            {
+              "id": "me:gundabad_captain_helmet"
+            },
+            {
+              "id": "me:gundabad_hobgoblin_plate_crested_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "id": "me:gundabad_hobgoblin_mail_coat"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:gundabad_elite_battleaxe",
+              "weight": 4
+            },
+            {
+              "id": "me:gundabad_elite_scimitar",
+              "weight": 3
+            },
+            {
+              "id": "me:gundabad_elite_spear",
+              "weight": 2
+            },
+            {
+              "id": "me:gundabad_elite_cleaver",
+              "weight": 2
+            },
+            {
+              "id": "me:gundabad_falchion"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:gundabad_heavy_shield"
+            },
+            {
+              "id": "me:gundabad_reinforced_shield"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 2
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:misty_mountains_goblins.hobgoblin_leader",
+  "race": "me:uruk"
+}

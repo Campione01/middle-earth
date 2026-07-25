@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "boots",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:orcish_braced_sandals"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "banner": {
+    "base_color": "white",
+    "patterns": [
+      {
+        "dye_color": "gray",
+        "id": "me:cloth"
+      },
+      {
+        "dye_color": "black",
+        "id": "minecraft:gradient"
+      },
+      {
+        "dye_color": "white",
+        "id": "me:hand"
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "disposition": "EVIL",
+  "faction_selection_order_index": 2,
+  "faction_type": "FACTION",
+  "id": "me:isengard",
+  "joinable": true,
+  "npcs": {
+    "ranks": [
+      {
+        "pool": [
+          "me:isengard.orc_snaga",
+          "me:isengard.orthanc_guard"
+        ],
+        "rank": "MILITIA"
+      },
+      {
+        "pool": [
+          "me:isengard.uruk_hai_leader"
+        ],
+        "rank": "LEADER"
+      },
+      {
+        "pool": [
+          "me:isengard.orc_warrior"
+        ],
+        "rank": "SOLDIER"
+      },
+      {
+        "pool": [
+          "me:isengard.uruk_hai_veteran",
+          "me:isengard.uruk_hai_berserker"
+        ],
+        "rank": "VETERAN"
+      },
+      {
+        "pool": [
+          "me:isengard.orc_snaga"
+        ],
+        "rank": "CIVILIAN"
+      },
+      {
+        "pool": [
+          "me:isengard.uruk_hai_soldier",
+          "me:isengard.uruk_hai_scout"
+        ],
+        "rank": "KNIGHT"
+      }
+    ]
+  },
+  "spawns": {
+    "data": [
+      {
+        "coordinates": {
+          "x": 1402.0,
+          "y": 0.0,
+          "z": 1467.0
+        },
+        "dynamic": 1,
+        "id": "me:isengard.orthanc"
+      }
+    ]
+  }
+}

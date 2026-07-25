@@ -8,18 +8,18 @@ import net.jukoz.me.resources.datas.factions.data.SpawnData;
 import net.jukoz.me.utils.LoggerUtil;
 import net.jukoz.me.world.chunkgen.map.MiddleEarthHeightMap;
 import net.jukoz.me.world.dimension.ModDimensions;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class AffiliationData {
     public Disposition disposition;
-    public Identifier faction;
-    public Identifier spawnId;
+    public ResourceLocation faction;
+    public ResourceLocation spawnId;
 
-    public AffiliationData(String disposition, Identifier factionId, Identifier spawnId) {
+    public AffiliationData(String disposition, ResourceLocation factionId, ResourceLocation spawnId) {
         this.disposition = Disposition.valueOf(disposition);
         this.faction = factionId;
         this.spawnId = spawnId;
@@ -30,17 +30,17 @@ public class AffiliationData {
         return disposition;
     }
 
-    public Vec3d getSpawnMiddleEarthCoordinate(World world){
+    public Vec3 getSpawnMiddleEarthCoordinate(Level world){
         try{
             Faction foundFaction = FactionLookup.getFactionById(world,faction);
             SpawnData spawnData = foundFaction.getSpawnData().findSpawn(spawnId);
             BlockPos blockpos = spawnData.getBlockPos();
             if(!spawnData.isDynamic()){ // Return custom spawn coords
-                return blockpos.toCenterPos();
+                return blockpos.getCenter();
             }
             int height = ModDimensions.getDimensionHeight(blockpos.getX(), blockpos.getZ()).y;
             blockpos = new BlockPos(blockpos.getX(), height, blockpos.getZ());
-            return blockpos.toCenterPos();
+            return blockpos.getCenter();
         } catch (FactionIdentifierException e){
             LoggerUtil.logError("AffiliationData::getSpawnMiddleEarthCoordinate - Faction couldn't be found <%s>".formatted(faction));
             return null;

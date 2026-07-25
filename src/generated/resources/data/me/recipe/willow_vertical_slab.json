@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:willow_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:willow_vertical_slab"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/rocks_stage_0_template",
+  "textures": {
+    "all": "minecraft:block/deepslate",
+    "particle": "minecraft:block/deepslate"
+  }
+}

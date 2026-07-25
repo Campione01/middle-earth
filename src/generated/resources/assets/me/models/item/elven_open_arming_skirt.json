@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/elven_open_arming_skirt",
+    "layer1": "me:item/elven_open_arming_skirt_overlay"
+  }
+}

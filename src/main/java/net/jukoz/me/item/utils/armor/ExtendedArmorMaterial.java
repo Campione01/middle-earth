@@ -1,8 +1,8 @@
 package net.jukoz.me.item.utils.armor;
 
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.core.Holder;
+import net.minecraft.world.item.ArmorMaterial;
 
 
-public record ExtendedArmorMaterial(RegistryEntry<ArmorMaterial> material, int durabilityModifier, ModArmorMaterials.Tiers tier) {
+public record ExtendedArmorMaterial(Holder<ArmorMaterial> material, int durabilityModifier, ModArmorMaterials.Tiers tier) {
 }

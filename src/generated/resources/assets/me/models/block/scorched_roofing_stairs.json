@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "me:block/scorched_roofing",
+    "side": "me:block/scorched_roofing",
+    "top": "me:block/scorched_roofing"
+  }
+}

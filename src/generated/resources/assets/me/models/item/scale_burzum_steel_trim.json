@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/scale",
+    "layer1": "me:trims/items/scale_trim_burzum_steel"
+  }
+}

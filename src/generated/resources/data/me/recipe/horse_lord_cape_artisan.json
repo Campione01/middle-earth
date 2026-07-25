@@ -1,0 +1,38 @@
+{
+  "type": "me:artisan_table",
+  "category": "cape",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:bronze_nugget"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:blue_dye"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:blue_dye"
+    },
+    {
+      "item": "minecraft:red_dye"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:red_dye"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:horse_lord_cape"
+  }
+}

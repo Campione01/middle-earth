@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gabbro_brickwork": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:gabbro_brickwork"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:gabbro_brickwork_vertical_slab_from_gabbro_brickwork_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gabbro_brickwork"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:gabbro_brickwork_vertical_slab_from_gabbro_brickwork_stonecutting"
+    ]
+  }
+}

@@ -2,37 +2,33 @@ package net.jukoz.me.datageneration.custom;
 
 import net.jukoz.me.item.ModResourceItems;
 import net.jukoz.me.recipe.AlloyingRecipe;
-import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.AdvancementCriterion;
-import net.minecraft.advancement.AdvancementRequirements;
-import net.minecraft.advancement.AdvancementRewards;
-import net.minecraft.advancement.criterion.RecipeUnlockedCriterion;
-import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.SmeltingRecipe;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.core.NonNullList;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class AlloyRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
+public class AlloyRecipeJsonBuilder implements RecipeBuilder {
 
     private final RecipeCategory category;
-    private final DefaultedList<Ingredient> inputs = DefaultedList.of();
+    private final NonNullList<Ingredient> inputs = NonNullList.create();
     private final String metalOutput;
     private final int metalAmount;
-    private final Map<String, AdvancementCriterion<?>> criteria = new LinkedHashMap<>();
+    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     private String group;
 
     public AlloyRecipeJsonBuilder(RecipeCategory category, String metalOutput, int metalAmount) {
@@ -42,13 +38,13 @@ public class AlloyRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     @Override
-    public CraftingRecipeJsonBuilder group(@Nullable String group) {
+    public RecipeBuilder group(@Nullable String group) {
         this.group = group;
         return this;
     }
 
     @Override
-    public Item getOutputItem() {
+    public Item getResult() {
         return ModResourceItems.ROD;
     }
 
@@ -65,16 +61,16 @@ public class AlloyRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     public AlloyRecipeJsonBuilder input(TagKey<Item> tag) {
-        return this.input(Ingredient.fromTag(tag));
+        return this.input(Ingredient.of(tag));
     }
 
-    public AlloyRecipeJsonBuilder input(ItemConvertible itemProvider) {
-        return this.input((ItemConvertible)itemProvider, 1);
+    public AlloyRecipeJsonBuilder input(ItemLike itemProvider) {
+        return this.input((ItemLike)itemProvider, 1);
     }
 
-    public AlloyRecipeJsonBuilder input(ItemConvertible itemProvider, int size) {
+    public AlloyRecipeJsonBuilder input(ItemLike itemProvider, int size) {
         for(int i = 0; i < size; ++i) {
-            this.input(Ingredient.ofItems(new ItemConvertible[]{itemProvider}));
+            this.input(Ingredient.of(new ItemLike[]{itemProvider}));
         }
         return this;
     }
@@ -91,22 +87,22 @@ public class AlloyRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     @Override
-    public void offerTo(RecipeExporter exporter, Identifier recipeId) {
+    public void save(RecipeOutput exporter, ResourceLocation recipeId) {
         this.validate(recipeId);
-        Advancement.Builder builder = exporter.getAdvancementBuilder().criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).criteriaMerger(AdvancementRequirements.CriterionMerger.OR);
+        Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(builder);
-        this.criteria.forEach(builder::criterion);
-        AlloyingRecipe alloyRecipeJsonBuilder = new AlloyingRecipe((String)Objects.requireNonNullElse(this.group, ""), CraftingRecipeJsonBuilder.toCraftingCategory(this.category), this.metalOutput, this.inputs, this.metalAmount);
-        exporter.accept(recipeId, alloyRecipeJsonBuilder, builder.build(recipeId.withPrefixedPath("recipes/" + this.category.getName() + "/")));
+        this.criteria.forEach(builder::addCriterion);
+        AlloyingRecipe alloyRecipeJsonBuilder = new AlloyingRecipe((String)Objects.requireNonNullElse(this.group, ""), RecipeBuilder.determineBookCategory(this.category), this.metalOutput, this.inputs, this.metalAmount);
+        exporter.accept(recipeId, alloyRecipeJsonBuilder, builder.build(recipeId.withPrefix("recipes/" + this.category.getFolderName() + "/")));
     }
 
     @Override
-    public AlloyRecipeJsonBuilder criterion(String string, AdvancementCriterion<?> advancementCriterion) {
+    public AlloyRecipeJsonBuilder unlockedBy(String string, Criterion<?> advancementCriterion) {
         this.criteria.put(string, advancementCriterion);
         return this;
     }
 
-    private void validate(Identifier recipeId) {
+    private void validate(ResourceLocation recipeId) {
         if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + String.valueOf(recipeId));
         }

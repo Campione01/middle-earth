@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/sword_hilt",
+    "layer1": "me:trims/items/sword_hilt_trim_silver"
+  }
+}

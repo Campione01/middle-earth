@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:mossy_izheraban_bricks"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:mossy_izheraban_bricks_stairs"
+  }
+}

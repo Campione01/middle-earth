@@ -1,0 +1,24 @@
+{
+  "type": "me:big_boulder",
+  "config": {
+    "blockstates": [
+      {
+        "Name": "minecraft:diorite"
+      },
+      {
+        "Name": "minecraft:diorite"
+      },
+      {
+        "Name": "me:cobbled_diorite"
+      },
+      {
+        "Name": "me:mossy_cobbled_diorite"
+      }
+    ],
+    "height": 4.35,
+    "length": 5.85,
+    "random_size": 1.7,
+    "randomness": 0.34,
+    "width": 4.1
+  }
+}

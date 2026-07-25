@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "discard_chance_on_air_exposure": 0.3,
+    "size": 12,
+    "targets": [
+      {
+        "state": {
+          "Name": "me:deepslate_lead_ore"
+        },
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "minecraft:deepslate_ore_replaceables"
+        }
+      },
+      {
+        "state": {
+          "Name": "me:nurgon_lead_ore"
+        },
+        "target": {
+          "block": "me:nurgon",
+          "predicate_type": "minecraft:block_match"
+        }
+      },
+      {
+        "state": {
+          "Name": "me:medgon_lead_ore"
+        },
+        "target": {
+          "block": "me:medgon",
+          "predicate_type": "minecraft:block_match"
+        }
+      }
+    ]
+  }
+}

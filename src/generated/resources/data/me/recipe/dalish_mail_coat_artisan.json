@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "leggings",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail_skirt"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:dalish_mail_coat"
+  }
+}

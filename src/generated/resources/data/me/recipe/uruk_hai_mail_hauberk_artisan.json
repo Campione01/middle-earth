@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:uruk_hai_mail_hauberk"
+  }
+}

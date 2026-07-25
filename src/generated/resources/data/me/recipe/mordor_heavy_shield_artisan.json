@@ -1,0 +1,38 @@
+{
+  "type": "me:artisan_table",
+  "category": "heavy_shield",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:burzum_steel_nugget"
+    },
+    {
+      "item": "me:burzum_steel_nugget"
+    },
+    {
+      "item": "me:burzum_steel_nugget"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "me:shield_plate"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "me:burzum_steel_nugget"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:burzum_steel_nugget"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:mordor_heavy_shield"
+  }
+}

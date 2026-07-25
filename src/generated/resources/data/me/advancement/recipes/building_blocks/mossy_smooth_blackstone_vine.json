@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_smooth_blackstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:smooth_blackstone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:mossy_smooth_blackstone_vine"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_smooth_blackstone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:mossy_smooth_blackstone_vine"
+    ]
+  }
+}

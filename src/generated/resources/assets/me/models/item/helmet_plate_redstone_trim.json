@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/helmet_plate",
+    "layer1": "me:trims/items/helmet_plate_trim_redstone"
+  }
+}

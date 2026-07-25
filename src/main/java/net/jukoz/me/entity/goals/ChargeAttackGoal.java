@@ -4,11 +4,11 @@ import net.jukoz.me.entity.beasts.AbstractBeastEntity;
 import net.jukoz.me.resources.StateSaverAndLoader;
 import net.jukoz.me.resources.datas.Disposition;
 import net.jukoz.me.resources.persistent_datas.PlayerData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.pathing.Path;
-import net.minecraft.entity.ai.pathing.PathNode;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.pathfinder.Node;
+import net.minecraft.world.level.pathfinder.Path;
 
 public class ChargeAttackGoal extends Goal {
     private AbstractBeastEntity mob;
@@ -23,10 +23,10 @@ public class ChargeAttackGoal extends Goal {
     }
 
     @Override
-    public boolean canStart() {
-        if(this.mob.getTarget() != null && this.mob.getTarget() instanceof PlayerEntity player) {
-            PlayerData data = StateSaverAndLoader.getPlayerState(player);
-            Disposition playerDisposition = data.getCurrentDisposition();
+    public boolean canUse() {
+        if(this.mob.getTarget() != null && this.mob.getTarget() instanceof Player player) {
+            PlayerData data = StateSaverAndLoader.getPlayerStateReadOnly(player);
+            Disposition playerDisposition = data == null ? null : data.getCurrentDisposition();
             if(playerDisposition == null)
                 return true;
             if(playerDisposition == beastDisposition){
@@ -36,7 +36,7 @@ public class ChargeAttackGoal extends Goal {
 
         return this.mob.getChargeTimeout() == 0 &&
                 (mob.getTarget() != null) &&
-                this.mob.getRandom().nextInt(ChargeAttackGoal.toGoalTicks(40)) == 0 &&
+                this.mob.getRandom().nextInt(ChargeAttackGoal.reducedTickDelay(40)) == 0 &&
                 canNavigateToEntity(this.mob.getTarget()) &&
                 this.mob.canCharge();
     }
@@ -59,12 +59,12 @@ public class ChargeAttackGoal extends Goal {
 
     private boolean canNavigateToEntity(LivingEntity entity) {
         int j;
-        this.checkCanNavigateCooldown = Goal.toGoalTicks(10 + this.mob.getRandom().nextInt(5));
-        Path path = this.mob.getNavigation().findPathTo(entity, 0);
+        this.checkCanNavigateCooldown = Goal.reducedTickDelay(10 + this.mob.getRandom().nextInt(5));
+        Path path = this.mob.getNavigation().createPath(entity, 0);
         if (path == null) {
             return false;
         }
-        PathNode pathNode = path.getEnd();
+        Node pathNode = path.getEndNode();
         if (pathNode == null) {
             return false;
         }

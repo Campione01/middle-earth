@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dry_growth": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:dry_growth"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:frozen_growth"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dry_growth"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:frozen_growth"
+    ]
+  }
+}

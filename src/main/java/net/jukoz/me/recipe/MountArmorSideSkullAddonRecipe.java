@@ -3,28 +3,28 @@ package net.jukoz.me.recipe;
 import net.jukoz.me.item.ModDataComponentTypes;
 import net.jukoz.me.item.dataComponents.MountArmorAddonComponent;
 import net.jukoz.me.item.items.armor.CustomAnimalArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.SpecialCraftingRecipe;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.recipe.input.CraftingRecipeInput;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.world.World;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
 
-public class MountArmorSideSkullAddonRecipe extends SpecialCraftingRecipe {
-    public MountArmorSideSkullAddonRecipe(CraftingRecipeCategory category) {
+public class MountArmorSideSkullAddonRecipe extends CustomRecipe {
+    public MountArmorSideSkullAddonRecipe(CraftingBookCategory category) {
         super(category);
     }
 
     @Override
-    public boolean matches(CraftingRecipeInput input, World world) {
+    public boolean matches(CraftingInput input, Level world) {
         ItemStack itemStackArmor = ItemStack.EMPTY;
         ItemStack itemStackString = ItemStack.EMPTY;
         ItemStack itemStackSkull= ItemStack.EMPTY;
 
-        for(int i = 0; i < input.getSize(); ++i) {
-            ItemStack itemStack2 = input.getStackInSlot(i);
+        for(int i = 0; i < input.size(); ++i) {
+            ItemStack itemStack2 = input.getItem(i);
             if (!itemStack2.isEmpty()) {
                 if (itemStack2.getItem() instanceof CustomAnimalArmorItem) {
                     if (!itemStackArmor.isEmpty()) {
@@ -32,13 +32,13 @@ public class MountArmorSideSkullAddonRecipe extends SpecialCraftingRecipe {
                     }
                     itemStackArmor = itemStack2;
                 }
-                else if (itemStack2.isOf(Items.STRING)) {
+                else if (itemStack2.is(Items.STRING)) {
                     if (!itemStackString.isEmpty()) {
                         return false;
                     }
                     itemStackString = itemStack2;
                 }
-                else if (itemStack2.isOf(Items.SKELETON_SKULL)) {
+                else if (itemStack2.is(Items.SKELETON_SKULL)) {
                     if (!itemStackSkull.isEmpty()) {
                         return false;
                     }
@@ -50,11 +50,11 @@ public class MountArmorSideSkullAddonRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(CraftingRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack assemble(CraftingInput input, HolderLookup.Provider lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
 
-        for(int i = 0; i < input.getSize(); ++i) {
-            ItemStack itemStack2 = input.getStackInSlot(i);
+        for(int i = 0; i < input.size(); ++i) {
+            ItemStack itemStack2 = input.getItem(i);
             if (!itemStack2.isEmpty()) {
                 if (itemStack2.getItem() instanceof CustomAnimalArmorItem) {
                     if (!itemStack.isEmpty()) {
@@ -78,7 +78,7 @@ public class MountArmorSideSkullAddonRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean fits(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return width * height >= 2;
     }
 

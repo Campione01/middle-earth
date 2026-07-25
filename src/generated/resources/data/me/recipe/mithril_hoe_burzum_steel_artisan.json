@@ -1,0 +1,20 @@
+{
+  "type": "me:artisan_table",
+  "category": "hoe",
+  "disposition": "neutral",
+  "ingredients": [
+    {
+      "item": "me:hoe_head"
+    },
+    {
+      "item": "me:rod"
+    },
+    {
+      "item": "me:rod"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:mithril_hoe"
+  }
+}

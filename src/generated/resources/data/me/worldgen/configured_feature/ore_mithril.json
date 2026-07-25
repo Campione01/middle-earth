@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:scattered_ore",
+  "config": {
+    "discard_chance_on_air_exposure": 1.0,
+    "size": 1,
+    "targets": [
+      {
+        "state": {
+          "Name": "me:medgon_mithril_ore"
+        },
+        "target": {
+          "block": "me:medgon",
+          "predicate_type": "minecraft:block_match"
+        }
+      }
+    ]
+  }
+}

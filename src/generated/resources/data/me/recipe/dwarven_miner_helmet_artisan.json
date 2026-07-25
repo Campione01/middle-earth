@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "minecraft:candle"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:candle"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:dwarven_miner_helmet"
+  }
+}

@@ -2,7 +2,7 @@ package net.jukoz.me.world.biomes;
 
 import net.jukoz.me.block.ModBlocks;
 import net.jukoz.me.block.StoneBlockSets;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 
 public class MEBiomeDataConfigs {
     // region Slopes

@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/large_door_left_open",
+  "textures": {
+    "all": "me:block/rickety_simple_larch_door_7",
+    "particle": "me:block/rickety_simple_larch_door_7"
+  }
+}

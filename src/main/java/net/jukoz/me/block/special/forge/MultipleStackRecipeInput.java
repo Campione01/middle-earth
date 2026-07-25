@@ -1,22 +1,21 @@
 package net.jukoz.me.block.special.forge;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.input.RecipeInput;
-
 import java.util.List;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeInput;
 
 public record MultipleStackRecipeInput(List<ItemStack> items) implements RecipeInput {
 
     @Override
-    public ItemStack getStackInSlot(int slot) {
-        if (slot >= getSize()) {
+    public ItemStack getItem(int slot) {
+        if (slot >= size()) {
             throw new IllegalArgumentException("No item for index " + slot);
         }
         return this.items.get(slot);
     }
 
     @Override
-    public int getSize() {
+    public int size() {
         return items.size();
     }
 }

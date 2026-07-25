@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "me:crude_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "me:crude_ingot"
+  }
+}

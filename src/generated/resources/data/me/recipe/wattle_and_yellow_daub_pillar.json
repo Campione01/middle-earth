@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "D": {
+      "item": "me:yellow_daub"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "DSD",
+    "DSD",
+    "DSD"
+  ],
+  "result": {
+    "count": 6,
+    "id": "me:wattle_and_yellow_daub_pillar"
+  }
+}

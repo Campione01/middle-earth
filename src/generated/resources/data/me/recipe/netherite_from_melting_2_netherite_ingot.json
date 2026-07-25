@@ -1,0 +1,14 @@
+{
+  "type": "me:alloying",
+  "amount": 288,
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    }
+  ],
+  "output": "netherite"
+}

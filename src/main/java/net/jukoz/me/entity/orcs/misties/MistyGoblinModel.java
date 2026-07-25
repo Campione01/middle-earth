@@ -1,58 +1,57 @@
 package net.jukoz.me.entity.orcs.misties;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.jukoz.me.compat.neoforge.dist.EnvType;
+import net.jukoz.me.compat.neoforge.dist.Environment;
 import net.jukoz.me.item.items.weapons.ranged.CustomBowWeaponItem;
 import net.jukoz.me.item.items.weapons.ranged.CustomLongbowWeaponItem;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.Arm;
-import net.minecraft.util.Hand;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 @Environment(value= EnvType.CLIENT)
-public class MistyGoblinModel<T extends MobEntity>
-        extends BipedEntityModel<T> {
+public class MistyGoblinModel<T extends Mob>
+        extends HumanoidModel<T> {
 
     public MistyGoblinModel(ModelPart root) {
         super(root);
     }
 
     @Override
-    public void animateModel(T mobEntity, float f, float g, float h) {
-        this.rightArmPose = BipedEntityModel.ArmPose.EMPTY;
-        this.leftArmPose = BipedEntityModel.ArmPose.EMPTY;
-        ItemStack itemStack = (mobEntity).getStackInHand(Hand.MAIN_HAND);
-        if ((itemStack.isOf(Items.BOW) || itemStack.getItem() instanceof CustomLongbowWeaponItem || itemStack.getItem() instanceof CustomBowWeaponItem) && (mobEntity).isAttacking()) {
-            if (mobEntity.getMainArm() == Arm.RIGHT) {
-                this.rightArmPose = BipedEntityModel.ArmPose.BOW_AND_ARROW;
+    public void prepareMobModel(T mobEntity, float f, float g, float h) {
+        this.rightArmPose = HumanoidModel.ArmPose.EMPTY;
+        this.leftArmPose = HumanoidModel.ArmPose.EMPTY;
+        ItemStack itemStack = (mobEntity).getItemInHand(InteractionHand.MAIN_HAND);
+        if ((itemStack.is(Items.BOW) || itemStack.getItem() instanceof CustomLongbowWeaponItem || itemStack.getItem() instanceof CustomBowWeaponItem) && (mobEntity).isAggressive()) {
+            if (mobEntity.getMainArm() == HumanoidArm.RIGHT) {
+                this.rightArmPose = HumanoidModel.ArmPose.BOW_AND_ARROW;
             } else {
-                this.leftArmPose = BipedEntityModel.ArmPose.BOW_AND_ARROW;
+                this.leftArmPose = HumanoidModel.ArmPose.BOW_AND_ARROW;
             }
         }
-        super.animateModel(mobEntity, f, g, h);
+        super.prepareMobModel(mobEntity, f, g, h);
     }
 
     @Override
-    public void setAngles(T livingEntity, float f, float g, float h, float i, float j) {
-        super.setAngles(livingEntity, f, g, h, i, j);
+    public void setupAnim(T livingEntity, float f, float g, float h, float i, float j) {
+        super.setupAnim(livingEntity, f, g, h, i, j);
         if(riding){
-            head.pivotY = 10f;
-            hat.pivotY = 10f;
-            body.pivotY = 10f;
-            leftArm.pivotY = 12f;
-            rightArm.pivotY = 12f;
-            leftLeg.pivotY = 22f;
-            rightLeg.pivotY = 22f;
+            head.y = 10f;
+            hat.y = 10f;
+            body.y = 10f;
+            leftArm.y = 12f;
+            rightArm.y = 12f;
+            leftLeg.y = 22f;
+            rightLeg.y = 22f;
         }
     }
 
     /*@Override
-    public void setAngles(T mobEntity, float f, float g, float h, float i, float j) {
-        super.setAngles(mobEntity, f, g, h, i, j);
+    public void setupAnim(T mobEntity, float f, float g, float h, float i, float j) {
+        super.setupAnim(mobEntity, f, g, h, i, j);
         ItemStack itemStack = ((LivingEntity)mobEntity).getMainHandStack();
         MistyOrcEntity.State state = ((MistyOrcEntity)mobEntity).getState();
 

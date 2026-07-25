@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/longbeard_reinforced_leather_hauberk",
+    "layer1": "me:item/longbeard_reinforced_leather_hauberk_overlay"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:polished_nurgon"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:nurgon_bricks"
+  }
+}

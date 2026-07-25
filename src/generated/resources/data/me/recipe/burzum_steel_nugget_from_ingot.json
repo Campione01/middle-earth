@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "me:burzum_steel_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "me:burzum_steel_nugget"
+  }
+}

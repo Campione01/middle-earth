@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_silver_treasure_heap_layer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:silver_treasure_heap_layer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:silver_coin_from_treasure"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_silver_treasure_heap_layer"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:silver_coin_from_treasure"
+    ]
+  }
+}

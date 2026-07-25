@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "me:polished_gonluin"
+    },
+    "S": {
+      "item": "me:gonluin"
+    },
+    "W": {
+      "item": "me:gonluin_wall"
+    }
+  },
+  "pattern": [
+    "WSW",
+    "WSW",
+    "WPW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:gonluin_statue"
+  }
+}

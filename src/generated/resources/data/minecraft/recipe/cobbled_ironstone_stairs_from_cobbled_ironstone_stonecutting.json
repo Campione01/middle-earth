@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:cobbled_ironstone"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:cobbled_ironstone_stairs"
+  }
+}

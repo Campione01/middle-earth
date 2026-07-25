@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "me:block/rotten_thatch",
+    "side": "me:block/rotten_thatch",
+    "top": "me:block/rotten_thatch"
+  }
+}

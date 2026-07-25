@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_old_limestone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:old_limestone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:old_limestone_wall_from_old_limestone_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_old_limestone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:old_limestone_wall_from_old_limestone_stonecutting"
+    ]
+  }
+}

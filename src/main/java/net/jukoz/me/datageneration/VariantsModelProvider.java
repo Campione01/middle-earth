@@ -1,34 +1,34 @@
 package net.jukoz.me.datageneration;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 
 
 public class VariantsModelProvider {
-    public static Identifier getInventoryModelIdentifierVariant(Item item) {
-        return Registries.ITEM.getId(item).withPrefixedPath("item/").withSuffixedPath("_inventory");
+    public static ResourceLocation getInventoryModelIdentifierVariant(Item item) {
+        return BuiltInRegistries.ITEM.getKey(item).withPrefix("item/").withSuffix("_inventory");
     }
 
-    public static Identifier getInventoryLongbowModelIdentifierVariant(Item item, int stage) {
-        return Registries.ITEM.getId(item).withPrefixedPath("item/").withSuffixedPath("_pulling_" + stage + "_inventory");
+    public static ResourceLocation getInventoryLongbowModelIdentifierVariant(Item item, int stage) {
+        return BuiltInRegistries.ITEM.getKey(item).withPrefix("item/").withSuffix("_pulling_" + stage + "_inventory");
     }
 
-    public static Identifier getHotModelIdentifierVariant(Item item) {
-        return Registries.ITEM.getId(item).withPrefixedPath("item/").withSuffixedPath("_hot");
+    public static ResourceLocation getHotModelIdentifierVariant(Item item) {
+        return BuiltInRegistries.ITEM.getKey(item).withPrefix("item/").withSuffix("_hot");
     }
 
-    public static Identifier getPullModelIdentifierVariant(Item item) {
-        return Registries.ITEM.getId(item).withPrefixedPath("item/").withSuffixedPath("_pull");
+    public static ResourceLocation getPullModelIdentifierVariant(Item item) {
+        return BuiltInRegistries.ITEM.getKey(item).withPrefix("item/").withSuffix("_pull");
     }
 
-    public static Identifier getInventoryModelBrokenItem(Item item) {
-        return Registries.ITEM.getId(item).withPrefixedPath("item/").withSuffixedPath("_broken_inventory");
+    public static ResourceLocation getInventoryModelBrokenItem(Item item) {
+        return BuiltInRegistries.ITEM.getKey(item).withPrefix("item/").withSuffix("_broken_inventory");
     }
-    public static Identifier getInventoryModelGlowingItem(Item item) {
-        return Registries.ITEM.getId(item).withPrefixedPath("item/").withSuffixedPath("_glowing_inventory");
+    public static ResourceLocation getInventoryModelGlowingItem(Item item) {
+        return BuiltInRegistries.ITEM.getKey(item).withPrefix("item/").withSuffix("_glowing_inventory");
     }
-    public static Identifier getPullLongbowModel(Item item, float progress) {
+    public static ResourceLocation getPullLongbowModel(Item item, float progress) {
         String predicate;
         if(progress < 0.65f) {
             predicate = "0";
@@ -37,6 +37,6 @@ public class VariantsModelProvider {
         }else {
             predicate = "2";
         }
-        return Registries.ITEM.getId(item).withPrefixedPath("item/").withSuffixedPath("_pulling_" + predicate + "_inventory");
+        return BuiltInRegistries.ITEM.getKey(item).withPrefix("item/").withSuffix("_pulling_" + predicate + "_inventory");
     }
 }

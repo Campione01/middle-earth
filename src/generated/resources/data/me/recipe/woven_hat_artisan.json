@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "hat",
+  "disposition": "neutral",
+  "ingredients": [
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:white_wool"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:woven_hat"
+  }
+}

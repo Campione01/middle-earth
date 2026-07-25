@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "mount_armor",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "tag": "me:bones"
+    },
+    {
+      "item": "me:warg_leather_armor"
+    },
+    {
+      "tag": "me:bones"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "tag": "me:bones"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:warg_reinforced_leather_armor"
+  }
+}

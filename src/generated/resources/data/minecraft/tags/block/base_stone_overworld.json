@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:calcite",
+    "me:pumice",
+    "me:gonluin",
+    "me:schist",
+    "me:dolomite",
+    "me:ironstone",
+    "me:hematite",
+    "me:gneiss",
+    "me:zigilaban",
+    "me:izheraban",
+    "me:limestone",
+    "me:galonn",
+    "me:gabbro",
+    "me:slate",
+    "me:blue_tuff",
+    "me:green_tuff",
+    "me:gilded_green_tuff",
+    "me:quartzite",
+    "me:jadeite",
+    "me:nurgon",
+    "me:medgon"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "G": {
+      "item": "me:quartz_shard"
+    },
+    "I": {
+      "item": "me:bronze_ingot"
+    },
+    "L": {
+      "tag": "minecraft:candles"
+    },
+    "N": {
+      "item": "me:bronze_nugget"
+    }
+  },
+  "pattern": [
+    "NGN",
+    "GLG",
+    "NIN"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:crystal_lamp"
+  }
+}

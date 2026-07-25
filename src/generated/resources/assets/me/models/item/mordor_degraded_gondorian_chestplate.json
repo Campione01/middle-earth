@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/mordor_degraded_gondorian_chestplate",
+    "layer1": "me:item/mordor_degraded_gondorian_chestplate_overlay"
+  }
+}

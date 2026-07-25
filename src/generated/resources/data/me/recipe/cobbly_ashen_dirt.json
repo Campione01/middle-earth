@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": {
+      "item": "me:ashen_cobblestone"
+    },
+    "D": {
+      "item": "me:ashen_dirt"
+    }
+  },
+  "pattern": [
+    "DC",
+    "CD"
+  ],
+  "result": {
+    "count": 4,
+    "id": "me:cobbly_ashen_dirt"
+  }
+}

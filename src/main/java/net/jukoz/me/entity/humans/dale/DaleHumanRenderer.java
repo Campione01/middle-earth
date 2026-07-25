@@ -1,32 +1,31 @@
 package net.jukoz.me.entity.humans.dale;
 
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.entity.model.ModEntityModelLayers;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.BipedEntityRenderer;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-
+import net.minecraft.Util;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
+import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.resources.ResourceLocation;
 import java.util.Map;
 
-public class DaleHumanRenderer extends BipedEntityRenderer<DaleHumanEntity, DaleHumanModel<DaleHumanEntity>> {
+public class DaleHumanRenderer extends HumanoidMobRenderer<DaleHumanEntity, DaleHumanModel<DaleHumanEntity>> {
     private static final String PATH = "textures/entities/humans/dale/";
 
-    public DaleHumanRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new DaleHumanModel<>(ctx.getPart(ModEntityModelLayers.HUMAN)), 0.5f);
-        this.addFeature(new ArmorFeatureRenderer<>(this, new DaleHumanModel<>(ctx.getPart(EntityModelLayers.PLAYER_INNER_ARMOR)),
-                new DaleHumanModel<>(ctx.getPart(EntityModelLayers.PLAYER_OUTER_ARMOR)), ctx.getModelManager()));
+    public DaleHumanRenderer(EntityRendererProvider.Context ctx) {
+        super(ctx, new DaleHumanModel<>(ctx.bakeLayer(ModEntityModelLayers.HUMAN)), 0.5f);
+        this.addLayer(new HumanoidArmorLayer<>(this, new DaleHumanModel<>(ctx.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
+                new DaleHumanModel<>(ctx.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)), ctx.getModelManager()));
 
     }
 
     @Override
-    public Identifier getTexture(DaleHumanEntity entity) {
-        return Identifier.of(MiddleEarth.MOD_ID, LOCATION_BY_VARIANT.get(entity.getVariant()));
+    public ResourceLocation getTextureLocation(DaleHumanEntity entity) {
+        return ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, LOCATION_BY_VARIANT.get(entity.getVariant()));
     }
 
     public static final Map<DaleHumanVariant, String> LOCATION_BY_VARIANT =
@@ -40,8 +39,8 @@ public class DaleHumanRenderer extends BipedEntityRenderer<DaleHumanEntity, Dale
             });
 
     @Override
-    public void render(DaleHumanEntity entity, float entityYaw, float partialTick, MatrixStack poseStack,
-                       VertexConsumerProvider bufferSource, int packedLight) {
+    public void render(DaleHumanEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
+                       MultiBufferSource bufferSource, int packedLight) {
 
         poseStack.scale(0.95f, 0.95f, 0.95f);
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);

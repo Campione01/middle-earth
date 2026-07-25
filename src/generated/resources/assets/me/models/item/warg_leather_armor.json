@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/warg_leather_armor",
+    "layer1": "me:item/warg_leather_armor_overlay"
+  }
+}

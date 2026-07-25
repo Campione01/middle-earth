@@ -1,0 +1,46 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:orthanc_guard_chestplate"
+            },
+            {
+              "cape": "orthanc_guard_cape",
+              "id": "me:orthanc_guard_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:orthanc_guard_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:orthanc_guard_helmet",
+              "weight": 4
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:orthanc_guard_leggings"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:uruk_hai_spear"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:isengard.orthanc_guard",
+  "race": "me:human"
+}

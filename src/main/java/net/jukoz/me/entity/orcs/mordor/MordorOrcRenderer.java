@@ -1,32 +1,31 @@
 package net.jukoz.me.entity.orcs.mordor;
 
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.entity.model.ModEntityModelLayers;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.BipedEntityRenderer;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-
+import net.minecraft.Util;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
+import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.resources.ResourceLocation;
 import java.util.Map;
 
-public class MordorOrcRenderer extends BipedEntityRenderer<MordorOrcEntity, MordorOrcModel<MordorOrcEntity>> {
+public class MordorOrcRenderer extends HumanoidMobRenderer<MordorOrcEntity, MordorOrcModel<MordorOrcEntity>> {
     private static final String PATH = "textures/entities/orcs/mordor/";
 
-    public MordorOrcRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new MordorOrcModel<>(ctx.getPart(ModEntityModelLayers.ORC)), 0.5f);
-        this.addFeature(new ArmorFeatureRenderer<>(this, new MordorOrcModel(ctx.getPart(EntityModelLayers.PLAYER_INNER_ARMOR)),
-                new MordorOrcModel(ctx.getPart(EntityModelLayers.PLAYER_OUTER_ARMOR)), ctx.getModelManager()));
+    public MordorOrcRenderer(EntityRendererProvider.Context ctx) {
+        super(ctx, new MordorOrcModel<>(ctx.bakeLayer(ModEntityModelLayers.ORC)), 0.5f);
+        this.addLayer(new HumanoidArmorLayer<>(this, new MordorOrcModel(ctx.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
+                new MordorOrcModel(ctx.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)), ctx.getModelManager()));
 
     }
 
     @Override
-    public Identifier getTexture(MordorOrcEntity entity) {
-        return Identifier.of(MiddleEarth.MOD_ID, LOCATION_BY_VARIANT.get(entity.getVariant()));
+    public ResourceLocation getTextureLocation(MordorOrcEntity entity) {
+        return ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, LOCATION_BY_VARIANT.get(entity.getVariant()));
     }
 
     public static final Map<MordorOrcVariant, String> LOCATION_BY_VARIANT =
@@ -40,8 +39,8 @@ public class MordorOrcRenderer extends BipedEntityRenderer<MordorOrcEntity, Mord
             });
 
     @Override
-    public void render(MordorOrcEntity entity, float entityYaw, float partialTick, MatrixStack poseStack,
-                       VertexConsumerProvider bufferSource, int packedLight) {
+    public void render(MordorOrcEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
+                       MultiBufferSource bufferSource, int packedLight) {
 
         poseStack.scale(0.8f, 0.8f, 0.8f);
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);

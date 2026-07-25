@@ -1,4 +1,5 @@
 .gradle
+.gradle-local-maven/
 **/build/
 !src/**/build/
 
@@ -18,7 +19,15 @@ gradle-app.setting
 .classpath
 
 run/
+logs/
 build/
 .idea
+.codex/
+.codex-plans/
+.agents/
+.codex-tmp/
+__pycache__/
+*.py[cod]
+src/generated/resources/.cache/
 src/main/generated/
 bin/main/*

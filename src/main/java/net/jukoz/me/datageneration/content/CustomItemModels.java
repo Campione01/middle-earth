@@ -1,23 +1,22 @@
 package net.jukoz.me.datageneration.content;
 
 import net.jukoz.me.MiddleEarth;
-import net.minecraft.data.client.Model;
-import net.minecraft.data.client.TextureKey;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.data.models.model.ModelTemplate;
+import net.minecraft.data.models.model.TextureSlot;
+import net.minecraft.resources.ResourceLocation;
 import java.util.Optional;
 
 public class CustomItemModels {
-    public static final Model BIG_WEAPON = new Model(Optional.of(
-            Identifier.of(MiddleEarth.MOD_ID, "item/big_weapon")), Optional.empty(), TextureKey.LAYER0);
-    public static final Model BOW = new Model(Optional.of(
-            Identifier.of(MiddleEarth.MOD_ID, "item/bow")), Optional.empty(), TextureKey.LAYER0);
-    public static final Model LONGBOW = new Model(Optional.of(
-            Identifier.of(MiddleEarth.MOD_ID, "item/longbow")), Optional.empty(), TextureKey.LAYER0);
+    public static final ModelTemplate BIG_WEAPON = new ModelTemplate(Optional.of(
+            ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "item/big_weapon")), Optional.empty(), TextureSlot.LAYER0);
+    public static final ModelTemplate BOW = new ModelTemplate(Optional.of(
+            ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "item/bow")), Optional.empty(), TextureSlot.LAYER0);
+    public static final ModelTemplate LONGBOW = new ModelTemplate(Optional.of(
+            ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "item/longbow")), Optional.empty(), TextureSlot.LAYER0);
 
-    public static final Model CROSSBOW = new Model(Optional.of(
-            Identifier.of("item/crossbow")), Optional.empty(), TextureKey.LAYER0);
+    public static final ModelTemplate CROSSBOW = new ModelTemplate(Optional.of(
+            ResourceLocation.parse("item/crossbow")), Optional.empty(), TextureSlot.LAYER0);
 
-    public static final Model TEMPLATE_SPAWN_EGG = new Model(Optional.of(
-            Identifier.of("minecraft", "item/template_spawn_egg")), Optional.empty());
+    public static final ModelTemplate TEMPLATE_SPAWN_EGG = new ModelTemplate(Optional.of(
+            ResourceLocation.fromNamespaceAndPath("minecraft", "item/template_spawn_egg")), Optional.empty());
 }

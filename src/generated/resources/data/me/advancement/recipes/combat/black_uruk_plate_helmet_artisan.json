@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_helmet_plate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:helmet_plate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:black_uruk_plate_helmet_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_helmet_plate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:black_uruk_plate_helmet_artisan"
+    ]
+  }
+}

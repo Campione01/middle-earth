@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:deepslate_brickwork_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:deepslate_brickwork_vertical_slab"
+  }
+}

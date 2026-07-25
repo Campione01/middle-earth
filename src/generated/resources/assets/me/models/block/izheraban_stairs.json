@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "me:block/izheraban",
+    "side": "me:block/izheraban",
+    "top": "me:block/izheraban"
+  }
+}

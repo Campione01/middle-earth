@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "me:block/gilded_chiseled_green_tuff_tiles_top",
+    "side": "me:block/gilded_chiseled_green_tuff_tiles"
+  }
+}

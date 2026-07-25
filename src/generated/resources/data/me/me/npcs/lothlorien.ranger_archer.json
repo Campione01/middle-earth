@@ -1,0 +1,63 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:lorien_arming_coat",
+              "weight": 3
+            },
+            {
+              "cape": "lorien_marchwarden_cape",
+              "id": "me:lorien_arming_coat"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:elven_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:lorien_marchwarden_hood"
+            },
+            {
+              "id": "me:lorien_leather_helmet"
+            },
+            {
+              "id": "me:lorien_diadem"
+            },
+            {
+              "hood": "lorien_marchwarden_hood",
+              "hood_is_down": 0,
+              "id": "me:lorien_diadem"
+            }
+          ]
+        },
+        "legs": {
+          "id": "me:lorien_arming_skirt"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:lorien_bow"
+            },
+            {
+              "id": "me:lorien_longbow"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "minecraft:air"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:lothlorien.ranger_archer",
+  "race": "me:elf"
+}

@@ -1,0 +1,78 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "cape": "erebor_cape",
+              "id": "me:erebor_gatewarden_chestplate"
+            },
+            {
+              "cape": "surcoat",
+              "cape_color": 4940404,
+              "id": "me:erebor_gatewarden_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "pool": [
+            {
+              "id": "me:erebor_gatewarden_boots"
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:erebor_gatewarden_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:erebor_gatewarden_leggings"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:erebor_noble_sword",
+              "weight": 3
+            },
+            {
+              "id": "me:erebor_noble_axe",
+              "weight": 3
+            },
+            {
+              "id": "me:erebor_noble_spear",
+              "weight": 2
+            },
+            {
+              "id": "me:erebor_noble_longsword"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:erebor_ornamented_tower_shield",
+              "weight": 3
+            },
+            {
+              "id": "me:erebor_reinforced_tower_shield",
+              "weight": 3
+            },
+            {
+              "id": "me:erebor_buckler_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:longbeards.erebor.gatewarden",
+  "race": "me:dwarf"
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "me:warg_mordor_plate_armor",
+    "me:warg_gundabad_plate_armor",
+    "me:warg_isengard_plate_armor",
+    "me:warg_mordor_mail_armor",
+    "me:warg_leather_armor",
+    "me:warg_reinforced_leather_armor"
+  ]
+}

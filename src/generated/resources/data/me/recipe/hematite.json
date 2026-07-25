@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "me:ironstone"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "SI",
+    "IS"
+  ],
+  "result": {
+    "count": 4,
+    "id": "me:hematite"
+  }
+}

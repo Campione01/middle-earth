@@ -1,0 +1,20 @@
+{
+  "type": "me:artisan_table",
+  "category": "sword",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:blade"
+    },
+    {
+      "item": "me:sword_hilt"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:isengard_orc_cleaver"
+  }
+}

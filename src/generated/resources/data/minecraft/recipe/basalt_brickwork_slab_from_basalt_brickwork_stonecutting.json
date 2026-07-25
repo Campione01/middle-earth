@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:basalt_brickwork"
+  },
+  "result": {
+    "count": 2,
+    "id": "me:basalt_brickwork_slab"
+  }
+}

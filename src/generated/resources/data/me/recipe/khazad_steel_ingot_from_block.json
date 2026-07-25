@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "me:khazad_steel_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "me:khazad_steel_ingot"
+  }
+}

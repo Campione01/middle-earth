@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "me:block/black_pine_shingles",
+    "side": "me:block/black_pine_shingles",
+    "top": "me:block/black_pine_shingles"
+  }
+}

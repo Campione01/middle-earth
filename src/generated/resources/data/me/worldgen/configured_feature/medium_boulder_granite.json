@@ -1,0 +1,24 @@
+{
+  "type": "me:big_boulder",
+  "config": {
+    "blockstates": [
+      {
+        "Name": "minecraft:granite"
+      },
+      {
+        "Name": "minecraft:granite"
+      },
+      {
+        "Name": "me:cobbled_granite"
+      },
+      {
+        "Name": "me:mossy_cobbled_granite"
+      }
+    ],
+    "height": 2.8,
+    "length": 4.0,
+    "random_size": 0.95,
+    "randomness": 0.26,
+    "width": 2.6
+  }
+}

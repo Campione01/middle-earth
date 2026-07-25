@@ -1,0 +1,65 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "cape": "surcoat",
+              "id": "me:dalish_arming_coat_brown_fur"
+            },
+            {
+              "cape": "surcoat",
+              "id": "me:dalish_arming_coat_black_fur"
+            },
+            {
+              "cape": "surcoat",
+              "id": "me:dalish_arming_coat_tan_fur"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:dalish_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:dalish_helmet"
+            },
+            {
+              "id": "me:dalish_helmet_brown_fur"
+            },
+            {
+              "id": "me:dalish_helmet_black_fur"
+            },
+            {
+              "id": "me:dalish_helmet_tan_fur"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:dalish_mail_coat"
+            },
+            {
+              "id": "me:arming_skirt"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:dalish_longbow"
+            },
+            {
+              "id": "minecraft:bow"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:dale.soldier_archer",
+  "race": "me:human"
+}

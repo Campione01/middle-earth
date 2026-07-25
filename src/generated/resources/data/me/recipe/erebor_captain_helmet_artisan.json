@@ -1,0 +1,20 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "minecraft:goat_horn"
+    },
+    {
+      "item": "me:erebor_guard_helmet"
+    },
+    {
+      "item": "minecraft:goat_horn"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:erebor_captain_helmet"
+  }
+}

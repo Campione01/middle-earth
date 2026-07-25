@@ -1,25 +1,25 @@
 package net.jukoz.me.item.items;
 
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.jukoz.me.compat.neoforge.api.client.networking.v1.ClientPlayNetworking;
 import net.jukoz.me.network.packets.C2S.PacketOnboardingRequest;
 import net.jukoz.me.world.dimension.ModDimensions;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class StarlightPhialItem extends Item {
-    public StarlightPhialItem(Settings settings) {
+    public StarlightPhialItem(Properties settings) {
         super(settings);
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        if(world.isClient){
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        if(world.isClientSide){
             ClientPlayNetworking.send(new PacketOnboardingRequest());
         }
-        return TypedActionResult.success(player.getStackInHand(hand));
+        return InteractionResultHolder.success(player.getItemInHand(hand));
     }
 }

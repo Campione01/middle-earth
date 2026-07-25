@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:cracked_gonluin_bricks"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:cracked_gonluin_bricks_stairs"
+  }
+}

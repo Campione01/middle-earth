@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:plaster_vertical_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:plaster_slab"
+  }
+}

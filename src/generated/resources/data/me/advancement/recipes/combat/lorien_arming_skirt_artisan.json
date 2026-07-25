@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_elven_arming_skirt": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:elven_arming_skirt"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:lorien_arming_skirt_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_elven_arming_skirt"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:lorien_arming_skirt_artisan"
+    ]
+  }
+}

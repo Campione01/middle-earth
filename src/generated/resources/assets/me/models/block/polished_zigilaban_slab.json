@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "me:block/polished_zigilaban",
+    "side": "me:block/polished_zigilaban",
+    "top": "me:block/polished_zigilaban"
+  }
+}

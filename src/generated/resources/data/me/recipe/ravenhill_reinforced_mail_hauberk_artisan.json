@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:erebor_mail_hauberk"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:armor_plate"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:ravenhill_reinforced_mail_hauberk"
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "banner": {
+    "base_color": "white",
+    "patterns": [
+      {
+        "dye_color": "gray",
+        "id": "me:cloth"
+      },
+      {
+        "dye_color": "black",
+        "id": "minecraft:gradient"
+      },
+      {
+        "dye_color": "white",
+        "id": "me:tree"
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "disposition": "GOOD",
+  "faction_selection_order_index": 0,
+  "faction_type": "FACTION",
+  "id": "me:gondor",
+  "joinable": true,
+  "npcs": {
+    "ranks": [
+      {
+        "pool": [
+          "me:gondor.militia"
+        ],
+        "rank": "MILITIA"
+      },
+      {
+        "pool": [
+          "me:gondor.leader"
+        ],
+        "rank": "LEADER"
+      },
+      {
+        "pool": [
+          "me:gondor.soldier"
+        ],
+        "rank": "SOLDIER"
+      },
+      {
+        "pool": [
+          "me:gondor.veteran",
+          "me:gondor.king_guards",
+          "me:gondor.citadel_guards",
+          "me:gondor.fountain_guards"
+        ],
+        "rank": "VETERAN"
+      },
+      {
+        "pool": [
+          "me:human.civilian"
+        ],
+        "rank": "CIVILIAN"
+      },
+      {
+        "pool": [
+          "me:gondor.knight"
+        ],
+        "rank": "KNIGHT"
+      }
+    ]
+  },
+  "spawns": {
+    "data": [
+      {
+        "coordinates": {
+          "x": 1875.0,
+          "y": 0.0,
+          "z": 1960.0
+        },
+        "dynamic": 1,
+        "id": "me:gondor.pelargir"
+      },
+      {
+        "coordinates": {
+          "x": 1895.0,
+          "y": 0.0,
+          "z": 1792.0
+        },
+        "dynamic": 1,
+        "id": "me:gondor.lossarnach"
+      },
+      {
+        "coordinates": {
+          "x": 1625.0,
+          "y": 0.0,
+          "z": 1800.0
+        },
+        "dynamic": 1,
+        "id": "me:gondor.lamedon"
+      },
+      {
+        "coordinates": {
+          "x": 1715.0,
+          "y": 0.0,
+          "z": 1955.0
+        },
+        "dynamic": 1,
+        "id": "me:gondor.lebennin"
+      },
+      {
+        "coordinates": {
+          "x": 1975.0,
+          "y": 0.0,
+          "z": 1700.0
+        },
+        "dynamic": 1,
+        "id": "me:gondor.ithilien"
+      },
+      {
+        "coordinates": {
+          "x": 1530.0,
+          "y": 0.0,
+          "z": 1730.0
+        },
+        "dynamic": 1,
+        "id": "me:gondor.ringlo_vale"
+      },
+      {
+        "coordinates": {
+          "x": 1945.0,
+          "y": 0.0,
+          "z": 1785.0
+        },
+        "dynamic": 1,
+        "id": "me:gondor.minas_tirith"
+      },
+      {
+        "coordinates": {
+          "x": 1500.0,
+          "y": 0.0,
+          "z": 1930.0
+        },
+        "dynamic": 1,
+        "id": "me:gondor.dol_amroth"
+      },
+      {
+        "coordinates": {
+          "x": 1930.0,
+          "y": 0.0,
+          "z": 1735.0
+        },
+        "dynamic": 1,
+        "id": "me:gondor.anorien"
+      }
+    ]
+  }
+}

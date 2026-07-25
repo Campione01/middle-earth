@@ -1,0 +1,38 @@
+{
+  "type": "me:artisan_table",
+  "category": "cape",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:bronze_nugget"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "me:bronze_nugget"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:red_dye"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:red_dye"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:dalish_heyday_cloak"
+  }
+}

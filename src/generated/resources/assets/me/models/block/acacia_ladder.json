@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/thick_ladder",
+  "textures": {
+    "particle": "me:block/acacia_ladder",
+    "texture": "me:block/acacia_ladder"
+  }
+}

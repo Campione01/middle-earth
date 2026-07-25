@@ -1,0 +1,17 @@
+{
+  "type": "me:alloying",
+  "amount": 432,
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "me:iron"
+    },
+    {
+      "tag": "me:iron"
+    },
+    {
+      "tag": "me:iron"
+    }
+  ],
+  "output": "iron"
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:nurgon_vertical_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:nurgon_slab"
+  }
+}

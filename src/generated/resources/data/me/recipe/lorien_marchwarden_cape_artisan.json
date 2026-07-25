@@ -1,0 +1,38 @@
+{
+  "type": "me:artisan_table",
+  "category": "cape",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:bronze_nugget"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:gray_dye"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:gray_dye"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:lorien_marchwarden_cape"
+  }
+}

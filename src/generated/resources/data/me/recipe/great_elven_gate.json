@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "minecraft:cyan_dye"
+    },
+    "S": {
+      "item": "me:edhel_steel_ingot"
+    },
+    "T": {
+      "item": "me:treated_wood"
+    }
+  },
+  "pattern": [
+    "BTB",
+    "BTS",
+    "BTB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:great_elven_gate"
+  }
+}

@@ -1,27 +1,20 @@
 package net.jukoz.me.network.packets.S2C;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.jukoz.me.MiddleEarth;
-import net.jukoz.me.client.screens.ReturnConfirmationScreen;
-import net.jukoz.me.network.contexts.ClientPacketContext;
 import net.jukoz.me.network.packets.ServerToClientPacket;
-import net.jukoz.me.network.handlers.OnboardingScreenHandler;
-import net.jukoz.me.world.dimension.ModDimensions;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 
 public class PacketOnboardingResult extends ServerToClientPacket<PacketOnboardingResult> {
-    public static final CustomPayload.Id<PacketOnboardingResult> ID = new CustomPayload.Id<>(Identifier.of(MiddleEarth.MOD_ID, "packet_onboarding_result"));
-    public static final PacketCodec<RegistryByteBuf, PacketOnboardingResult> CODEC = PacketCodec.tuple(
-            PacketCodecs.BOOL, p -> p.havePlayerData,
-            PacketCodecs.BOOL, p -> p.canChangeFaction,
-            PacketCodecs.BOOL, p -> p.canReturnToOverworld,
-            PacketCodecs.FLOAT, p -> p.delayOnTeleportationConfirm,
+    public static final CustomPacketPayload.Type<PacketOnboardingResult> ID = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "packet_onboarding_result"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, PacketOnboardingResult> CODEC = StreamCodec.composite(
+            ByteBufCodecs.BOOL, p -> p.havePlayerData,
+            ByteBufCodecs.BOOL, p -> p.canChangeFaction,
+            ByteBufCodecs.BOOL, p -> p.canReturnToOverworld,
+            ByteBufCodecs.FLOAT, p -> p.delayOnTeleportationConfirm,
             PacketOnboardingResult::new
     );
 
@@ -38,29 +31,24 @@ public class PacketOnboardingResult extends ServerToClientPacket<PacketOnboardin
     }
 
     @Override
-    public Id<PacketOnboardingResult> getId() {
+    public Type<PacketOnboardingResult> type() {
         return ID;
     }
 
     @Override
-    public PacketCodec<RegistryByteBuf, PacketOnboardingResult> streamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, PacketOnboardingResult> streamCodec() {
         return CODEC;
     }
 
-    @Override
-    @Environment(EnvType.CLIENT)
-    public void process(ClientPacketContext context) {
-        float delay = delayOnTeleportationConfirm;
-        if(context.player().isInCreativeMode())
-            delay = 0;
-        if(ModDimensions.isInMiddleEarth(context.player().getWorld())){
-            if(!canReturnToOverworld){
-                return;
-            }
-            MinecraftClient client = MinecraftClient.getInstance();
-            client.setScreen(new ReturnConfirmationScreen(delay));
-        } else if(ModDimensions.isInOverworld(context.player().getWorld())){
-            OnboardingScreenHandler.handle(context, havePlayerData, delay);
-        }
+    public boolean havePlayerData() {
+        return havePlayerData;
+    }
+
+    public boolean canReturnToOverworld() {
+        return canReturnToOverworld;
+    }
+
+    public float delayOnTeleportationConfirm() {
+        return delayOnTeleportationConfirm;
     }
 }

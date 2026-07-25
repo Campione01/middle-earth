@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/cracked_polished_basalt_slab"
+    },
+    "type=double": {
+      "model": "me:block/cracked_polished_basalt"
+    },
+    "type=top": {
+      "model": "me:block/cracked_polished_basalt_slab_top"
+    }
+  }
+}

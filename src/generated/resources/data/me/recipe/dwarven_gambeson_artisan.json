@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:white_wool"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:fabric"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:dwarven_gambeson"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "banner": {
+    "base_color": "white",
+    "patterns": [
+      {
+        "dye_color": "brown",
+        "id": "me:cloth"
+      },
+      {
+        "dye_color": "black",
+        "id": "minecraft:gradient"
+      },
+      {
+        "dye_color": "light_gray",
+        "id": "minecraft:triangle_bottom"
+      },
+      {
+        "dye_color": "gray",
+        "id": "minecraft:triangles_bottom"
+      },
+      {
+        "dye_color": "red",
+        "id": "me:evil_eye"
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "disposition": "EVIL",
+  "faction_selection_order_index": 1,
+  "faction_type": "FACTION",
+  "id": "me:misty_mountains_goblins",
+  "joinable": true,
+  "npcs": {
+    "ranks": [
+      {
+        "pool": [
+          "me:misty_mountains_goblins.goblin_snaga"
+        ],
+        "rank": "MILITIA"
+      },
+      {
+        "pool": [
+          "me:misty_mountains_goblins.hobgoblin_leader"
+        ],
+        "rank": "LEADER"
+      },
+      {
+        "pool": [
+          "me:misty_mountains_goblins.goblin_warrior",
+          "me:misty_mountains_goblins.goblin_archer"
+        ],
+        "rank": "SOLDIER"
+      },
+      {
+        "pool": [
+          "me:misty_mountains_goblins.hobgoblin_veteran"
+        ],
+        "rank": "VETERAN"
+      },
+      {
+        "pool": [
+          "me:misty_mountains_goblins.goblin_snaga"
+        ],
+        "rank": "CIVILIAN"
+      },
+      {
+        "pool": [
+          "me:misty_mountains_goblins.hobgoblin_soldier"
+        ],
+        "rank": "KNIGHT"
+      }
+    ]
+  },
+  "spawns": {
+    "data": [
+      {
+        "coordinates": {
+          "x": 1521.0,
+          "y": 0.0,
+          "z": 1138.0
+        },
+        "dynamic": 1,
+        "id": "me:misty_mountains_goblins.moria"
+      },
+      {
+        "coordinates": {
+          "x": 1595.0,
+          "y": 0.0,
+          "z": 640.0
+        },
+        "dynamic": 1,
+        "id": "me:misty_mountains_goblins.gundabad"
+      },
+      {
+        "coordinates": {
+          "x": 1652.0,
+          "y": 0.0,
+          "z": 640.0
+        },
+        "dynamic": 1,
+        "id": "me:misty_mountains_goblins.grey_mountains"
+      },
+      {
+        "coordinates": {
+          "x": 1581.5,
+          "y": 0.0,
+          "z": 874.5
+        },
+        "dynamic": 1,
+        "id": "me:misty_mountains_goblins.goblin_town"
+      }
+    ]
+  }
+}

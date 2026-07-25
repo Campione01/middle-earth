@@ -8,16 +8,15 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.jukoz.me.exceptions.FactionIdentifierException;
 import net.jukoz.me.item.utils.armor.capes.ModCapes;
 import net.jukoz.me.item.utils.armor.hoods.ModHoods;
-import net.minecraft.server.command.ServerCommandSource;
-
+import net.minecraft.commands.CommandSourceStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class AllHoodsSuggestionProvider implements SuggestionProvider<ServerCommandSource> {
+public class AllHoodsSuggestionProvider implements SuggestionProvider<CommandSourceStack> {
 
     @Override
-    public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) {
+    public CompletableFuture<Suggestions> getSuggestions(CommandContext<CommandSourceStack> context, SuggestionsBuilder builder) {
         try {
             List<String> candidates = getAllHoods();
             return SuggestionUtil.getCorrespondingNames(candidates, builder);

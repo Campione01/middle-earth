@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/wood_stool_template",
+  "textures": {
+    "all": "me:block/birch_chair",
+    "particle": "me:block/birch_chair"
+  }
+}

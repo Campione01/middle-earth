@@ -1,0 +1,70 @@
+{
+  "banner": {
+    "base_color": "black",
+    "patterns": [
+      {
+        "dye_color": "gray",
+        "id": "minecraft:gradient_up"
+      },
+      {
+        "dye_color": "red",
+        "id": "minecraft:cross"
+      },
+      {
+        "dye_color": "white",
+        "id": "minecraft:skull"
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "disposition": "NEUTRAL",
+  "faction_selection_order_index": 0,
+  "faction_type": "FACTION",
+  "id": "me:bandit",
+  "joinable": false,
+  "npcs": {
+    "ranks": [
+      {
+        "pool": [
+          "me:bandit.thug",
+          "me:bandit.thief"
+        ],
+        "rank": "MILITIA"
+      },
+      {
+        "pool": [
+          "me:bandit.chieftain"
+        ],
+        "rank": "LEADER"
+      },
+      {
+        "pool": [
+          "me:bandit.mercenary",
+          "me:bandit.wild_goblin_gatherer",
+          "me:bandit.wild_goblin_warrior",
+          "me:bandit.wild_goblin_scout"
+        ],
+        "rank": "SOLDIER"
+      },
+      {
+        "pool": [
+          "me:bandit.chieftain"
+        ],
+        "rank": "VETERAN"
+      },
+      {
+        "pool": [
+          "me:bandit.thug"
+        ],
+        "rank": "CIVILIAN"
+      },
+      {
+        "pool": [
+          "me:bandit.chieftain"
+        ],
+        "rank": "KNIGHT"
+      }
+    ]
+  }
+}

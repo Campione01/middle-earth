@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/mail_ring",
+    "layer1": "me:trims/items/mail_ring_trim_khazad_steel"
+  }
+}

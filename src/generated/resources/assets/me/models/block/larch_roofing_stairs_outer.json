@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "me:block/larch_roofing",
+    "side": "me:block/larch_roofing",
+    "top": "me:block/larch_roofing"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "replace": false,
+  "values": [
+    "me:ashen_cobblestone",
+    "me:cobbled_gonluin",
+    "me:cobbled_schist",
+    "me:cobbled_calcite",
+    "me:cobbled_dolomite",
+    "me:cobbled_ironstone",
+    "me:cobbled_hematite",
+    "me:cobbled_gneiss",
+    "me:cobbled_izheraban",
+    "me:cobbled_limestone",
+    "me:cobbled_galonn",
+    "me:cobbled_slate",
+    "me:cobbled_blue_tuff",
+    "me:cobbled_andesite",
+    "me:cobbled_granite",
+    "me:cobbled_diorite",
+    "me:cobbled_tuff",
+    "me:cobbled_blackstone",
+    "me:cobbled_basalt",
+    "me:cobbled_quartzite",
+    "me:cobbled_jadeite",
+    "me:cobbled_nurgon",
+    "me:cobbled_medgon"
+  ]
+}

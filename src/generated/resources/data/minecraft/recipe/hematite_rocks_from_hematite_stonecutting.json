@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:hematite"
+  },
+  "result": {
+    "count": 4,
+    "id": "me:hematite_rocks"
+  }
+}

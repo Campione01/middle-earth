@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_shovel_head": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:shovel_head"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:khazad_steel_shovel_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_shovel_head"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:khazad_steel_shovel_artisan"
+    ]
+  }
+}

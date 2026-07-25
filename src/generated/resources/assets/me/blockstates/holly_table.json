@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "": {
+      "model": "me:block/holly_table",
+      "uvlock": false
+    }
+  }
+}

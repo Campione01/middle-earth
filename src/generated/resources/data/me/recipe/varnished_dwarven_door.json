@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "N": {
+      "item": "me:steel_nugget"
+    },
+    "S": {
+      "item": "me:khazad_steel_ingot"
+    },
+    "T": {
+      "item": "me:treated_wood"
+    }
+  },
+  "pattern": [
+    "TNT",
+    "TTS",
+    "TNT"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:varnished_dwarven_door"
+  }
+}

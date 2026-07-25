@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": {
+      "item": "me:rope"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "R R",
+    "RSR",
+    "R R"
+  ],
+  "result": {
+    "count": 3,
+    "id": "me:rope_ladder"
+  }
+}

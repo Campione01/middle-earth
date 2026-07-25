@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "L": {
+      "item": "minecraft:spruce_planks"
+    },
+    "S": {
+      "tag": "me:steel_ingots"
+    }
+  },
+  "pattern": [
+    "LSL",
+    "SLL",
+    "LSL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:spruce_hobbit_door"
+  }
+}

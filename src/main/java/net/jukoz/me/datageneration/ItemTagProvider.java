@@ -1,7 +1,7 @@
 package net.jukoz.me.datageneration;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.jukoz.me.compat.neoforge.api.datagen.v1.NeoForgeDataOutput;
+import net.jukoz.me.compat.neoforge.api.datagen.v1.provider.NeoForgeTagProvider;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.block.OreRockSets;
 import net.jukoz.me.datageneration.content.models.HotMetalsModel;
@@ -11,62 +11,61 @@ import net.jukoz.me.item.ModEquipmentItems;
 import net.jukoz.me.item.ModFoodItems;
 import net.jukoz.me.item.ModResourceItems;
 import net.jukoz.me.recipe.ModTags;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import java.util.concurrent.CompletableFuture;
 
-public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
+public class ItemTagProvider extends NeoForgeTagProvider.ItemTagProvider {
 
-    public ItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public ItemTagProvider(NeoForgeDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup arg) {
-        var bones = getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "bones")));
-        var feathers = getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "feathers")));
-        var cloaks = getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "cloaks")));
-        var warg_food = getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "warg_food")));
-        var warg_armor = getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "warg_armor")));
-        var broadhoof_goat_armor = getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "broadhoof_goat_armor")));
-        var dyeable = getOrCreateTagBuilder(ModTags.DYEABLE);
+    protected void addTags(HolderLookup.Provider arg) {
+        var bones = tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "bones")));
+        var feathers = tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "feathers")));
+        var cloaks = tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "cloaks")));
+        var warg_food = tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "warg_food")));
+        var warg_armor = tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "warg_armor")));
+        var broadhoof_goat_armor = tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "broadhoof_goat_armor")));
+        var dyeable = tag(ModTags.DYEABLE);
 
-        TagKey<Item> iron_ores = TagKey.of(RegistryKeys.ITEM, Identifier.of("iron_ores"));
-        TagKey<Item> gold_ores = TagKey.of(RegistryKeys.ITEM, Identifier.of("gold_ores"));
-        TagKey<Item> copper_ores = TagKey.of(RegistryKeys.ITEM, Identifier.of("copper_ores"));
-        TagKey<Item> coal_ores = TagKey.of(RegistryKeys.ITEM, Identifier.of("coal_ores"));
+        TagKey<Item> iron_ores = TagKey.create(Registries.ITEM, ResourceLocation.parse("iron_ores"));
+        TagKey<Item> gold_ores = TagKey.create(Registries.ITEM, ResourceLocation.parse("gold_ores"));
+        TagKey<Item> copper_ores = TagKey.create(Registries.ITEM, ResourceLocation.parse("copper_ores"));
+        TagKey<Item> coal_ores = TagKey.create(Registries.ITEM, ResourceLocation.parse("coal_ores"));
 
-        TagKey<Item> saplings = TagKey.of(RegistryKeys.ITEM, Identifier.of("saplings"));
-        TagKey<Item> wooden_slabs = TagKey.of(RegistryKeys.ITEM, Identifier.of("wooden_slabs"));
-        TagKey<Item> wooden_vertical_slabs = TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "wooden_vertical_slabs"));
-        TagKey<Item> wooden_fences = TagKey.of(RegistryKeys.ITEM, Identifier.of( "wooden_fences"));
-        TagKey<Item> logs_that_burn = TagKey.of(RegistryKeys.ITEM, Identifier.of("logs_that_burn"));
-        TagKey<Item> stone_crafting_materials = TagKey.of(RegistryKeys.ITEM, Identifier.of("stone_crafting_materials"));
-        TagKey<Item> stone_tool_materials = TagKey.of(RegistryKeys.ITEM, Identifier.of("stone_tool_materials"));
+        TagKey<Item> saplings = TagKey.create(Registries.ITEM, ResourceLocation.parse("saplings"));
+        TagKey<Item> wooden_slabs = TagKey.create(Registries.ITEM, ResourceLocation.parse("wooden_slabs"));
+        TagKey<Item> wooden_vertical_slabs = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "wooden_vertical_slabs"));
+        TagKey<Item> wooden_fences = TagKey.create(Registries.ITEM, ResourceLocation.parse( "wooden_fences"));
+        TagKey<Item> logs_that_burn = TagKey.create(Registries.ITEM, ResourceLocation.parse("logs_that_burn"));
+        TagKey<Item> stone_crafting_materials = TagKey.create(Registries.ITEM, ResourceLocation.parse("stone_crafting_materials"));
+        TagKey<Item> stone_tool_materials = TagKey.create(Registries.ITEM, ResourceLocation.parse("stone_tool_materials"));
 
-        TagKey<Item> ingot_shaping = TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "ingot_shaping"));
-        TagKey<Item> nugget_shaping = TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "nugget_shaping"));
+        TagKey<Item> ingot_shaping = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "ingot_shaping"));
+        TagKey<Item> nugget_shaping = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "nugget_shaping"));
 
-        TagKey<Item> tin_ores = TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "tin_ores"));
-        TagKey<Item> lead_ores = TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "lead_ores"));
-        TagKey<Item> silver_ores = TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "silver_ores"));
-        TagKey<Item> mithril_ores = TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "mithril_ores"));
-        TagKey<Item> shingles = TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "shingles"));
+        TagKey<Item> tin_ores = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "tin_ores"));
+        TagKey<Item> lead_ores = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "lead_ores"));
+        TagKey<Item> silver_ores = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "silver_ores"));
+        TagKey<Item> mithril_ores = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "mithril_ores"));
+        TagKey<Item> shingles = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "shingles"));
 
-        TagKey<Item> mod_stripped_logs = TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "mod_stripped_logs"));
-        getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "mod_planks"))).add(Planks.getItemPlanks().toArray(new Item[0]));
+        TagKey<Item> mod_stripped_logs = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "mod_stripped_logs"));
+        tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "mod_planks"))).add(Planks.getItemPlanks().toArray(new Item[0]));
 
-        getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of("planks"))).add(Planks.getItemPlanks().toArray(new Item[0]));
-        getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of("logs"))).add(Logs.getItemPlanks().toArray(new Item[0]));
+        tag(TagKey.create(Registries.ITEM, ResourceLocation.parse("planks"))).add(Planks.getItemPlanks().toArray(new Item[0]));
+        tag(TagKey.create(Registries.ITEM, ResourceLocation.parse("logs"))).add(Logs.getItemPlanks().toArray(new Item[0]));
 
-        getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of("swords"))).add(Swords.swords.toArray(new Item[0]));
-        getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of("enchantable/bow"))).add(Bows.bows.toArray(new Item[0]));
-        getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of("enchantable/crossbow"))).add(Crossbows.crossbows.toArray(new Item[0]));
+        tag(TagKey.create(Registries.ITEM, ResourceLocation.parse("swords"))).add(Swords.swords.toArray(new Item[0]));
+        tag(TagKey.create(Registries.ITEM, ResourceLocation.parse("enchantable/bow"))).add(Bows.bows.toArray(new Item[0]));
+        tag(TagKey.create(Registries.ITEM, ResourceLocation.parse("enchantable/crossbow"))).add(Crossbows.crossbows.toArray(new Item[0]));
 
 
         warg_food.add(Items.RABBIT);
@@ -107,35 +106,35 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
         for (OreRockSets.OreRockSet set : OreRockSets.sets) {
             if(set.coal_ore() != null) {
-                getOrCreateTagBuilder(coal_ores)
+                tag(coal_ores)
                         .add(set.coal_ore().asItem());
             }
             if(set.copper_ore() != null) {
-                getOrCreateTagBuilder(copper_ores)
+                tag(copper_ores)
                         .add(set.copper_ore().asItem());
             }
             if(set.tin_ore() != null) {
-                getOrCreateTagBuilder(tin_ores)
+                tag(tin_ores)
                         .add(set.tin_ore().asItem());
             }
             if(set.lead_ore() != null) {
-                getOrCreateTagBuilder(lead_ores)
+                tag(lead_ores)
                         .add(set.lead_ore().asItem());
             }
             if(set.silver_ore() != null) {
-                getOrCreateTagBuilder(silver_ores)
+                tag(silver_ores)
                         .add(set.silver_ore().asItem());
             }
             if(set.gold_ore() != null) {
-                getOrCreateTagBuilder(gold_ores)
+                tag(gold_ores)
                         .add(set.gold_ore().asItem());
             }
             if(set.iron_ore() != null) {
-                getOrCreateTagBuilder(iron_ores)
+                tag(iron_ores)
                         .add(set.iron_ore().asItem());
             }
             if(set.mithril_ore() != null) {
-                getOrCreateTagBuilder(mithril_ores)
+                tag(mithril_ores)
                         .add(set.mithril_ore().asItem());
             }
         }
@@ -143,45 +142,45 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         SimpleDyeableItemModel.items.forEach(dyeable::add);
 
         WoodenSlabs.woodenSlabs.forEach(block -> {
-            getOrCreateTagBuilder(wooden_slabs).add(block.asItem());
+            tag(wooden_slabs).add(block.asItem());
         });
 
         WoodenVerticalSlabs.woodenVericalSlabs.forEach(block -> {
-            getOrCreateTagBuilder(wooden_vertical_slabs).add(block.asItem());
+            tag(wooden_vertical_slabs).add(block.asItem());
         });
 
         Fences.fences.forEach(block -> {
-            getOrCreateTagBuilder(wooden_fences).add(block.asItem());
+            tag(wooden_fences).add(block.asItem());
         });
 
         ModdedStrippedLogs.strippedLogs.forEach(block -> {
-            getOrCreateTagBuilder(mod_stripped_logs).add(block.asItem());
+            tag(mod_stripped_logs).add(block.asItem());
         });
 
         Shingles.shingles.forEach(block -> {
-            getOrCreateTagBuilder(shingles).add(block.asItem());
+            tag(shingles).add(block.asItem());
         });
 
         Saplings.saplings.forEach(sapling -> {
-            getOrCreateTagBuilder(saplings).add(sapling.asItem());
+            tag(saplings).add(sapling.asItem());
         });
 
         LogsThatBurn.logsThatBurn.forEach(log -> {
-            getOrCreateTagBuilder(logs_that_burn).add(log.asItem());
+            tag(logs_that_burn).add(log.asItem());
         });
 
         HotMetalsModel.ingots.forEach(ingot -> {
-            getOrCreateTagBuilder(ingot_shaping).add(ingot);
+            tag(ingot_shaping).add(ingot);
         });
 
         HotMetalsModel.nuggets.forEach(nugget -> {
-            getOrCreateTagBuilder(nugget_shaping).add(nugget);
+            tag(nugget_shaping).add(nugget);
         });
 
         Stones.stones.forEach(stone -> {
-            getOrCreateTagBuilder(stone_crafting_materials).add(stone.asItem());
+            tag(stone_crafting_materials).add(stone.asItem());
             if(!stone.asItem().toString().contains("jadeite")){
-                getOrCreateTagBuilder(stone_tool_materials).add(stone.asItem());
+                tag(stone_tool_materials).add(stone.asItem());
             }
         });
     }

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "me:block/smooth_medgon",
+    "side": "me:block/smooth_medgon",
+    "top": "me:block/smooth_medgon"
+  }
+}

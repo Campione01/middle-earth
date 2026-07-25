@@ -1,0 +1,149 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "cape": "rohirric_cape",
+              "color": 5336130,
+              "id": "me:arming_coat",
+              "weight": 4
+            },
+            {
+              "cape": "rohirric_cape",
+              "color": 2965794,
+              "id": "me:arming_coat",
+              "weight": 4
+            },
+            {
+              "cape": "rohirric_cape",
+              "color": 6904141,
+              "id": "me:arming_coat",
+              "weight": 4
+            },
+            {
+              "cape": "rohirric_cape",
+              "color": 4470831,
+              "id": "me:arming_coat",
+              "weight": 4
+            },
+            {
+              "cape": "rohirric_cape",
+              "color": 10719849,
+              "id": "me:arming_coat",
+              "weight": 2
+            },
+            {
+              "cape": "rohirric_cape",
+              "color": 8548434,
+              "id": "me:arming_coat",
+              "weight": 2
+            },
+            {
+              "color": 5336130,
+              "id": "me:rohirric_reinforced_coat"
+            },
+            {
+              "color": 2965794,
+              "id": "me:rohirric_reinforced_coat"
+            },
+            {
+              "color": 10719849,
+              "id": "me:rohirric_reinforced_coat"
+            },
+            {
+              "color": 8548434,
+              "id": "me:rohirric_reinforced_coat"
+            },
+            {
+              "color": 6904141,
+              "id": "me:rohirric_reinforced_coat"
+            },
+            {
+              "color": 4470831,
+              "id": "me:rohirric_reinforced_coat"
+            }
+          ]
+        },
+        "feet": {
+          "pool": [
+            {
+              "id": "me:sturdy_boots"
+            },
+            {
+              "id": "me:travelling_boots"
+            },
+            {
+              "id": "me:high_cut_boots"
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:rohirric_leather_helmet",
+              "weight": 6
+            },
+            {
+              "id": "me:leather_skullcap",
+              "weight": 4
+            },
+            {
+              "id": "me:rohirric_reinforced_leather_helmet",
+              "weight": 3
+            },
+            {
+              "id": "me:rohirric_ornamented_leather_helmet"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:bronze_spear",
+              "weight": 4
+            },
+            {
+              "id": "me:bronze_sword",
+              "weight": 3
+            },
+            {
+              "id": "me:bronze_axe",
+              "weight": 3
+            },
+            {
+              "id": "me:iron_spear",
+              "weight": 2
+            },
+            {
+              "id": "minecraft:iron_sword"
+            },
+            {
+              "id": "minecraft:iron_axe"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:kite_shield"
+            },
+            {
+              "id": "me:heater_shield"
+            },
+            {
+              "id": "me:round_shield"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 5
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:rohan.militia",
+  "race": "me:human"
+}

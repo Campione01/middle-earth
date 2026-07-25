@@ -1,0 +1,82 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "me:hematite_rocks",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "stage": "0"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "me:hematite_rocks"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "me:hematite_rocks",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "stage": "1"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "me:hematite_rocks"
+        }
+      ],
+      "rolls": 2.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "me:hematite_rocks",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "stage": "2"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "me:hematite_rocks"
+        }
+      ],
+      "rolls": 3.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "me:hematite_rocks",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "stage": "3"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "me:hematite_rocks"
+        }
+      ],
+      "rolls": 4.0
+    }
+  ],
+  "random_sequence": "me:blocks/hematite_rocks"
+}

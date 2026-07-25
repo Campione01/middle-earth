@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "leggings",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:orcish_reinforced_leather_skirt"
+  }
+}

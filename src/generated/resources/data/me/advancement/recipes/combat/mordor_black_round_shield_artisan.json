@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mordor_painted_round_shield": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:mordor_painted_round_shield"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:mordor_black_round_shield_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mordor_painted_round_shield"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:mordor_black_round_shield_artisan"
+    ]
+  }
+}

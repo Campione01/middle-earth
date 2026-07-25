@@ -1,16 +1,19 @@
 package net.jukoz.me.item.items;
 
-import net.fabricmc.fabric.api.item.v1.EnchantingContext;
 import net.jukoz.me.MiddleEarth;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.resource.featuretoggle.FeatureSet;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.World;
+import net.minecraft.core.Holder;
+import net.minecraft.world.item.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.item.AnimalArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 
 
 public class TrollArmorItem extends AnimalArmorItem {
@@ -19,42 +22,27 @@ public class TrollArmorItem extends AnimalArmorItem {
     private final String entityTexture;
 
 
-    public TrollArmorItem(RegistryEntry<ArmorMaterial> material, Type type, boolean hasOverlay, Settings settings) {
+    public TrollArmorItem(Holder<ArmorMaterial> material, BodyType type, boolean hasOverlay, Properties settings) {
         super(material, type, hasOverlay, settings);
         this.entityTexture = "textures/entity/troll/armor/troll_armor_steel.png";
     }
 
-    public Identifier getEntityTexture() {
-        return Identifier.of(MiddleEarth.MOD_ID ,this.entityTexture);
+    public ResourceLocation getTexture() {
+        return ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID ,this.entityTexture);
     }
 
     @Override
-    public boolean allowComponentsUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack) {
-        return super.allowComponentsUpdateAnimation(player, hand, oldStack, newStack);
+    public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
+        return super.supportsEnchantment(stack, enchantment);
     }
 
     @Override
-    public boolean allowContinuingBlockBreaking(PlayerEntity player, ItemStack oldStack, ItemStack newStack) {
-        return super.allowContinuingBlockBreaking(player, oldStack, newStack);
+    public InteractionResultHolder<ItemStack> swapWithEquipmentSlot(Item item, Level world, Player user, InteractionHand hand) {
+        return super.swapWithEquipmentSlot(item, world, user, hand);
     }
 
     @Override
-    public ItemStack getRecipeRemainder(ItemStack stack) {
-        return super.getRecipeRemainder(stack);
-    }
-
-    @Override
-    public boolean canBeEnchantedWith(ItemStack stack, RegistryEntry<Enchantment> enchantment, EnchantingContext context) {
-        return super.canBeEnchantedWith(stack, enchantment, context);
-    }
-
-    @Override
-    public TypedActionResult<ItemStack> equipAndSwap(Item item, World world, PlayerEntity user, Hand hand) {
-        return super.equipAndSwap(item, world, user, hand);
-    }
-
-    @Override
-    public boolean isEnabled(FeatureSet enabledFeatures) {
+    public boolean isEnabled(FeatureFlagSet enabledFeatures) {
         return super.isEnabled(enabledFeatures);
     }
 }

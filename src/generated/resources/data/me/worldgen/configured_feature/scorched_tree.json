@@ -1,0 +1,54 @@
+{
+  "type": "minecraft:tree",
+  "config": {
+    "decorators": [],
+    "dirt_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "me:ashen_dirt"
+      }
+    },
+    "foliage_placer": {
+      "type": "minecraft:pine_foliage_placer",
+      "height": 1,
+      "offset": 1,
+      "radius": 1
+    },
+    "foliage_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:air"
+      }
+    },
+    "force_dirt": false,
+    "ignore_vines": false,
+    "minimum_size": {
+      "type": "minecraft:two_layers_feature_size",
+      "limit": 1,
+      "lower_size": 0,
+      "upper_size": 2
+    },
+    "trunk_placer": {
+      "type": "me:canopy_trunk",
+      "base_height": 10,
+      "base_radius": 0.92,
+      "iteration": 3,
+      "iteration_percentage": 0.38,
+      "random_height": 2,
+      "roots_offset": 1,
+      "straight_trunk": 1,
+      "tip_radius": 0.87,
+      "trunk_noise": -0.1,
+      "velocity": 5.5
+    },
+    "trunk_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "me:scorched_log",
+        "Properties": {
+          "axis": "y"
+        }
+      }
+    }
+  }
+}

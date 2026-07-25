@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/polished_ironstone_slab"
+    },
+    "type=double": {
+      "model": "me:block/polished_ironstone"
+    },
+    "type=top": {
+      "model": "me:block/polished_ironstone_slab_top"
+    }
+  }
+}

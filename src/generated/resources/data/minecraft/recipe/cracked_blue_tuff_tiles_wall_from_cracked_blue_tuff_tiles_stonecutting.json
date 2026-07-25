@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:cracked_blue_tuff_tiles"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:cracked_blue_tuff_tiles_wall"
+  }
+}

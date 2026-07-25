@@ -5,15 +5,13 @@ import net.jukoz.me.item.utils.MEEquipmentTooltip;
 import net.jukoz.me.item.utils.ModRangedWeaponTypes;
 import net.jukoz.me.utils.ModFactions;
 import net.jukoz.me.utils.ModSubFactions;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.Registries;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -24,57 +22,57 @@ public class CustomCrossbowWeaponItem extends CrossbowItem implements MEEquipmen
     public ModRangedWeaponTypes type;
 
     public CustomCrossbowWeaponItem(ModRangedWeaponTypes type) {
-        super(new Item.Settings().maxDamage(type.durability));
+        super(new Item.Properties().durability(type.durability));
         this.faction = null;
         this.subFaction = null;
         this.type = type;
     }
 
     public CustomCrossbowWeaponItem(ModFactions faction, ModRangedWeaponTypes type) {
-        super(new Item.Settings().maxDamage(type.durability));
+        super(new Item.Properties().durability(type.durability));
         this.faction = faction;
         this.subFaction = null;
         this.type = type;
     }
 
     public CustomCrossbowWeaponItem(ModSubFactions subFaction, ModRangedWeaponTypes type) {
-        super(new Item.Settings().maxDamage(type.durability));
+        super(new Item.Properties().durability(type.durability));
         this.faction = subFaction.getParent();
         this.subFaction = subFaction;
         this.type = type;
     }
 
-    public Predicate<ItemStack> getHeldProjectiles() {
-        return BOW_PROJECTILES;
+    public Predicate<ItemStack> getSupportedHeldProjectiles() {
+        return ARROW_ONLY;
     }
 
-    public Predicate<ItemStack> getProjectiles() {
-        return BOW_PROJECTILES;
+    public Predicate<ItemStack> getAllSupportedProjectiles() {
+        return ARROW_ONLY;
     }
 
     @Override
-    public List<Text> getAdditionalShiftLines(ItemStack stack) {
-        List<Text> list = new ArrayList<>(List.of());
+    public List<Component> getAdditionalShiftLines(ItemStack stack) {
+        List<Component> list = new ArrayList<>(List.of());
 
-        list.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + ".weapon_type").append(Text.translatable("tooltip." + MiddleEarth.MOD_ID + "." + this.type.name)));
+        list.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + ".weapon_type").append(Component.translatable("tooltip." + MiddleEarth.MOD_ID + "." + this.type.name)));
 
         return list;
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag type) {
         appendBaseTooltip(tooltip, stack, this.faction, this.subFaction);
-        super.appendTooltip(stack, context, tooltip, type);
+        super.appendHoverText(stack, context, tooltip, type);
     }
 
     @Override
-    public Text getName(ItemStack stack) {
-        if(Registries.ITEM.getId(this).getPath().contains("_noble")
-                || Registries.ITEM.getId(this).getPath().contains("_elite")
-                || Registries.ITEM.getId(this).getPath().contains("uruk_hai")
-                || Registries.ITEM.getId(this).getPath().contains("heyday")
-                || Registries.ITEM.getId(this).getPath().contains("numenorean")){
-            return Text.translatable(this.getTranslationKey(stack)).formatted(Formatting.GOLD);
+    public Component getName(ItemStack stack) {
+        if(BuiltInRegistries.ITEM.getKey(this).getPath().contains("_noble")
+                || BuiltInRegistries.ITEM.getKey(this).getPath().contains("_elite")
+                || BuiltInRegistries.ITEM.getKey(this).getPath().contains("uruk_hai")
+                || BuiltInRegistries.ITEM.getKey(this).getPath().contains("heyday")
+                || BuiltInRegistries.ITEM.getKey(this).getPath().contains("numenorean")){
+            return Component.translatable(this.getDescriptionId(stack)).withStyle(ChatFormatting.GOLD);
         }
         return super.getName(stack);
     }

@@ -1,8 +1,15 @@
 package net.jukoz.me.client.model.equipment.head.helmets;
 
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.entity.model.EntityModelPartNames;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartNames;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.world.entity.LivingEntity;
 
 public class DwarvenMinerHelmetModel<T extends LivingEntity> extends HelmetAddonModel<T> {
 
@@ -10,49 +17,49 @@ public class DwarvenMinerHelmetModel<T extends LivingEntity> extends HelmetAddon
         super(root);
     }
 
-    public static TexturedModelData getTexturedModelData() {
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
+    public static LayerDefinition getTexturedModelData() {
+        MeshDefinition modelData = new MeshDefinition();
+        PartDefinition modelPartData = modelData.getRoot();
 
-        modelPartData.addChild(EntityModelPartNames.HAT, ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        modelPartData.addOrReplaceChild(PartNames.HAT, CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        ModelPartData head = modelPartData.addChild(EntityModelPartNames.HEAD, ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        PartDefinition head = modelPartData.addOrReplaceChild(PartNames.HEAD, CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        ModelPartData head_addon_gr = head.addChild("head_addon_gr", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.8F, 0.0F));
+        PartDefinition head_addon_gr = head.addOrReplaceChild("head_addon_gr", CubeListBuilder.create(), PartPose.offset(0.0F, 0.8F, 0.0F));
 
-        head_addon_gr.addChild("addon_flaps", ModelPartBuilder.create().uv(0, 20).cuboid(-4.0F, 0.8F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.9F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
-        ModelPartData addon_candles = head_addon_gr.addChild("addon_candles", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        head_addon_gr.addOrReplaceChild("addon_flaps", CubeListBuilder.create().texOffs(0, 20).addBox(-4.0F, 0.8F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.9F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition addon_candles = head_addon_gr.addOrReplaceChild("addon_candles", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        ModelPartData addon_right_candle = addon_candles.addChild("addon_right_candle", ModelPartBuilder.create().uv(0, 0).cuboid(-1.0F, -2.0F, 1.0F, 2.0F, 2.0F, 4.0F, new Dilation(0.0F))
-                .uv(20, 12).cuboid(-1.0F, -2.0F, 5.0F, 2.0F, 2.0F, 1.0F, new Dilation(0.1F))
-                .uv(0, 14).cuboid(-1.0F, -2.0F, -3.0F, 2.0F, 1.0F, 4.0F, new Dilation(0.0F))
-                .uv(8, 0).cuboid(-2.0F, -2.0F, -4.0F, 4.0F, 0.0F, 4.0F, new Dilation(0.0F))
-                .uv(0, 22).cuboid(-1.0F, -6.0F, -3.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(-5.5F, -4.5F, -4.5F));
+        PartDefinition addon_right_candle = addon_candles.addOrReplaceChild("addon_right_candle", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -2.0F, 1.0F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(20, 12).addBox(-1.0F, -2.0F, 5.0F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.1F))
+                .texOffs(0, 14).addBox(-1.0F, -2.0F, -3.0F, 2.0F, 1.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(8, 0).addBox(-2.0F, -2.0F, -4.0F, 4.0F, 0.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 22).addBox(-1.0F, -6.0F, -3.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-5.5F, -4.5F, -4.5F));
 
-        addon_right_candle.addChild("flame_r1", ModelPartBuilder.create().uv(0, 21).cuboid(0.0F, 0.0F, -0.5F, 0.0F, 1.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -7.0F, -2.0F, 0.0F, 0.7854F, 0.0F));
-        addon_right_candle.addChild("flame_r2", ModelPartBuilder.create().uv(0, 21).cuboid(0.0F, 0.0F, -0.5F, 0.0F, 1.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -7.0F, -2.0F, 0.0F, -0.7854F, 0.0F));
+        addon_right_candle.addOrReplaceChild("flame_r1", CubeListBuilder.create().texOffs(0, 21).addBox(0.0F, 0.0F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -7.0F, -2.0F, 0.0F, 0.7854F, 0.0F));
+        addon_right_candle.addOrReplaceChild("flame_r2", CubeListBuilder.create().texOffs(0, 21).addBox(0.0F, 0.0F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -7.0F, -2.0F, 0.0F, -0.7854F, 0.0F));
 
-        ModelPartData addon_left_candle = addon_candles.addChild("addon_left_candle", ModelPartBuilder.create().uv(0, 0).mirrored().cuboid(-1.0F, -2.0F, 1.0F, 2.0F, 2.0F, 4.0F, new Dilation(0.0F)).mirrored(false)
-                .uv(20, 12).mirrored().cuboid(-1.0F, -2.0F, 5.0F, 2.0F, 2.0F, 1.0F, new Dilation(0.1F)).mirrored(false)
-                .uv(0, 14).mirrored().cuboid(-1.0F, -2.0F, -3.0F, 2.0F, 1.0F, 4.0F, new Dilation(0.0F)).mirrored(false)
-                .uv(8, 0).mirrored().cuboid(-2.0F, -2.0F, -4.0F, 4.0F, 0.0F, 4.0F, new Dilation(0.0F)).mirrored(false)
-                .uv(0, 22).mirrored().cuboid(-1.0F, -6.0F, -3.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(5.5F, -4.5F, -4.5F));
+        PartDefinition addon_left_candle = addon_candles.addOrReplaceChild("addon_left_candle", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-1.0F, -2.0F, 1.0F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false)
+                .texOffs(20, 12).mirror().addBox(-1.0F, -2.0F, 5.0F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.1F)).mirror(false)
+                .texOffs(0, 14).mirror().addBox(-1.0F, -2.0F, -3.0F, 2.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false)
+                .texOffs(8, 0).mirror().addBox(-2.0F, -2.0F, -4.0F, 4.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false)
+                .texOffs(0, 22).mirror().addBox(-1.0F, -6.0F, -3.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(5.5F, -4.5F, -4.5F));
 
-        addon_left_candle.addChild("flame_r3", ModelPartBuilder.create().uv(0, 21).mirrored().cuboid(0.0F, 0.0F, -0.5F, 0.0F, 1.0F, 1.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.of(0.0F, -7.0F, -2.0F, 0.0F, -0.7854F, 0.0F));
-        addon_left_candle.addChild("flame_r4", ModelPartBuilder.create().uv(0, 21).mirrored().cuboid(0.0F, 0.0F, -0.5F, 0.0F, 1.0F, 1.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.of(0.0F, -7.0F, -2.0F, 0.0F, 0.7854F, 0.0F));
+        addon_left_candle.addOrReplaceChild("flame_r3", CubeListBuilder.create().texOffs(0, 21).mirror().addBox(0.0F, 0.0F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, -7.0F, -2.0F, 0.0F, -0.7854F, 0.0F));
+        addon_left_candle.addOrReplaceChild("flame_r4", CubeListBuilder.create().texOffs(0, 21).mirror().addBox(0.0F, 0.0F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, -7.0F, -2.0F, 0.0F, 0.7854F, 0.0F));
 
-        modelPartData.addChild(EntityModelPartNames.BODY, ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
-        modelPartData.addChild(EntityModelPartNames.RIGHT_ARM, ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
-        modelPartData.addChild(EntityModelPartNames.LEFT_ARM, ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+        modelPartData.addOrReplaceChild(PartNames.RIGHT_ARM, CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+        modelPartData.addOrReplaceChild(PartNames.LEFT_ARM, CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        modelPartData.addChild(EntityModelPartNames.RIGHT_LEG, ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
-        modelPartData.addChild(EntityModelPartNames.LEFT_LEG, ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        modelPartData.addOrReplaceChild(PartNames.RIGHT_LEG, CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+        modelPartData.addOrReplaceChild(PartNames.LEFT_LEG, CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        return TexturedModelData.of(modelData, 64, 64);
+        return LayerDefinition.create(modelData, 64, 64);
     }
 
     @Override
-    public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+    public void setupAnim(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 
     }
 }

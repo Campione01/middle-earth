@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/gundabad_hobgoblin_plate_small_horn_helmet"
+  }
+}

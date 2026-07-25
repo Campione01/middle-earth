@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_axe_head": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:axe_head"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:burzum_steel_axe_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_axe_head"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:burzum_steel_axe_artisan"
+    ]
+  }
+}

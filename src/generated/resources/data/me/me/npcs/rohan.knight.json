@@ -1,0 +1,129 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "color": 8340546,
+              "id": "me:rohirric_reinforced_leather_vest"
+            },
+            {
+              "color": 5648429,
+              "id": "me:rohirric_reinforced_leather_vest"
+            },
+            {
+              "color": 8340546,
+              "id": "me:rohirric_reinforced_leather_scale_vest"
+            },
+            {
+              "color": 5648429,
+              "id": "me:rohirric_reinforced_leather_scale_vest"
+            },
+            {
+              "color": 8340546,
+              "id": "me:rohirric_braced_mail_shirt"
+            },
+            {
+              "color": 5648429,
+              "id": "me:rohirric_braced_mail_shirt"
+            },
+            {
+              "color": 8340546,
+              "id": "me:rohirric_leather_scale_vest"
+            },
+            {
+              "color": 5648429,
+              "id": "me:rohirric_leather_scale_vest"
+            },
+            {
+              "color": 8340546,
+              "id": "me:rohirric_leather_vest"
+            },
+            {
+              "color": 5648429,
+              "id": "me:rohirric_leather_vest"
+            }
+          ]
+        },
+        "feet": {
+          "pool": [
+            {
+              "id": "me:sturdy_boots"
+            },
+            {
+              "id": "me:travelling_boots"
+            },
+            {
+              "id": "me:high_cut_boots"
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:rohirric_soldier_helmet",
+              "weight": 6
+            },
+            {
+              "id": "me:rohirric_militia_helmet",
+              "weight": 6
+            },
+            {
+              "id": "me:rohirric_braced_militia_helmet",
+              "weight": 3
+            },
+            {
+              "id": "me:rohirric_reinforced_militia_helmet",
+              "weight": 3
+            },
+            {
+              "id": "me:rohirric_ornamented_militia_helmet"
+            },
+            {
+              "id": "me:rohirric_ornamented_soldier_helmet"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:rohirric_sword"
+            },
+            {
+              "id": "me:rohirric_axe"
+            },
+            {
+              "id": "me:rohirric_spear"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:rohirric_shield",
+              "weight": 3
+            },
+            {
+              "id": "me:rohirric_bucking_horse_shield"
+            },
+            {
+              "id": "me:rohirric_galloping_horse_shield"
+            },
+            {
+              "id": "me:rohirric_horse_head_shield"
+            },
+            {
+              "id": "me:rohirric_plainsman_shield"
+            },
+            {
+              "id": "me:rohirric_twin_horses_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:rohan.knight",
+  "race": "me:human"
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:cobbled_dolomite_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:cobbled_dolomite_vertical_slab"
+  }
+}

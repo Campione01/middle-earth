@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/orcish_brown_fur_boots",
+    "layer1": "me:item/orcish_brown_fur_boots_overlay"
+  }
+}

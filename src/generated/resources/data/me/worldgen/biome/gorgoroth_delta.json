@@ -1,0 +1,96 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 2695711,
+    "foliage_color": 2169880,
+    "grass_color": 3156775,
+    "sky_color": 2762018,
+    "water_color": 4869697,
+    "water_fog_color": 1513734
+  },
+  "features": [
+    [],
+    [
+      "me:lava_magma_pool"
+    ],
+    [],
+    [],
+    [
+      "me:large_pumice_columns",
+      "me:small_basalt_columns",
+      "me:small_pumice_columns"
+    ],
+    [],
+    [
+      "minecraft:ore_coal_upper"
+    ],
+    [],
+    [],
+    [
+      "me:ash_block_ore",
+      "me:ashen_dirt_stone_ore",
+      "me:ashen_stone_gravel",
+      "me:ashen_stone_sand",
+      "me:big_boulder_ashen_stone",
+      "me:big_boulder_basalt",
+      "me:black_sand_ore",
+      "me:medium_boulder_ashen_stone",
+      "me:medium_boulder_basalt",
+      "me:patch_basalt",
+      "me:patch_basalt_rare",
+      "me:patch_blackstone",
+      "me:patch_pumice",
+      "me:patch_pumice_sparse",
+      "me:pumice_column",
+      "me:pumice_column_large",
+      "me:small_boulder_ashen_stone",
+      "me:small_boulder_basalt",
+      "me:smooth_basalt_ore",
+      "minecraft:delta",
+      "minecraft:glow_lichen"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [
+      {
+        "type": "minecraft:bat",
+        "maxCount": 4,
+        "minCount": 2,
+        "weight": 8
+      }
+    ],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "me:warg",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 3
+      },
+      {
+        "type": "me:stone_troll",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 3
+      },
+      {
+        "type": "minecraft:wolf",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 3
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.7
+}

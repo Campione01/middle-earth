@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gondorian_shield": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:gondorian_shield"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:gondorian_converted_shield_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gondorian_shield"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:gondorian_converted_shield_artisan"
+    ]
+  }
+}

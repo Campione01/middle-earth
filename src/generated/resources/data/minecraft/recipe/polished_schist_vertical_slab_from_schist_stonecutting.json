@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:schist"
+  },
+  "result": {
+    "count": 2,
+    "id": "me:polished_schist_vertical_slab"
+  }
+}

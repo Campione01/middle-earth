@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:zigilaban_trapdoor_from_zigilaban_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_zigilaban": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:zigilaban"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_zigilaban"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:zigilaban_trapdoor_from_zigilaban_stonecutting"
+    ]
+  }
+}

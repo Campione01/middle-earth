@@ -1,0 +1,82 @@
+{
+  "banner": {
+    "base_color": "white",
+    "patterns": [
+      {
+        "dye_color": "yellow",
+        "id": "me:cloth"
+      },
+      {
+        "dye_color": "yellow",
+        "id": "minecraft:gradient"
+      },
+      {
+        "dye_color": "white",
+        "id": "me:star_and_leaf"
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "disposition": "GOOD",
+  "faction_selection_order_index": 5,
+  "faction_type": "FACTION",
+  "id": "me:lothlorien",
+  "joinable": true,
+  "npcs": {
+    "ranks": [
+      {
+        "pool": [
+          "me:lothlorien.militia"
+        ],
+        "rank": "MILITIA"
+      },
+      {
+        "pool": [
+          "me:lothlorien.lord"
+        ],
+        "rank": "LEADER"
+      },
+      {
+        "pool": [
+          "me:lothlorien.ranger",
+          "me:lothlorien.ranger_archer",
+          "me:lothlorien.soldier"
+        ],
+        "rank": "SOLDIER"
+      },
+      {
+        "pool": [
+          "me:lothlorien.veteran"
+        ],
+        "rank": "VETERAN"
+      },
+      {
+        "pool": [
+          "me:lothlorien.militia"
+        ],
+        "rank": "CIVILIAN"
+      },
+      {
+        "pool": [
+          "me:lothlorien.knight",
+          "me:lothlorien.knight_archer"
+        ],
+        "rank": "KNIGHT"
+      }
+    ]
+  },
+  "spawns": {
+    "data": [
+      {
+        "coordinates": {
+          "x": 1614.0,
+          "y": 0.0,
+          "z": 1215.0
+        },
+        "dynamic": 1,
+        "id": "me:lothlorien.cerin_amroth"
+      }
+    ]
+  }
+}

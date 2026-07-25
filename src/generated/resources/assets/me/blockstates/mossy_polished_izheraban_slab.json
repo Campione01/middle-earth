@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/mossy_polished_izheraban_slab"
+    },
+    "type=double": {
+      "model": "me:block/mossy_polished_izheraban"
+    },
+    "type=top": {
+      "model": "me:block/mossy_polished_izheraban_slab_top"
+    }
+  }
+}

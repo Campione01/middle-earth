@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "me:block/galonn_brickwork",
+    "side": "me:block/galonn_brickwork",
+    "top": "me:block/galonn_brickwork"
+  }
+}

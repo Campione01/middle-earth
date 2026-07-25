@@ -7,11 +7,10 @@ import net.jukoz.me.utils.IdentifierUtil;
 import net.jukoz.me.world.dimension.ModDimensions;
 import net.jukoz.me.world.map.MiddleEarthMapConfigs;
 import net.jukoz.me.world.map.MiddleEarthMapUtils;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Vector2d;
 import org.joml.Vector3d;
 import org.joml.Vector3i;
@@ -19,12 +18,12 @@ import org.joml.Vector3i;
 public class SpawnData {
     public static final Codec<SpawnData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("id").forGetter(SpawnData::getIdentifierValue),
-            Vec3d.CODEC.fieldOf("coordinates").forGetter(SpawnData::getCoordinates),
+            Vec3.CODEC.fieldOf("coordinates").forGetter(SpawnData::getCoordinates),
             Codec.BOOL.fieldOf("dynamic").forGetter(SpawnData::isDynamic))
             .apply(instance, SpawnData::new));
 
-    private Identifier identifier;
-    private Vec3d coordinates;
+    private ResourceLocation identifier;
+    private Vec3 coordinates;
     private boolean isDynamic = false;
 
     /**
@@ -33,41 +32,41 @@ public class SpawnData {
      * @param coordinates
      * @param isDynamic
      */
-    public SpawnData(String identifier, Vec3d coordinates, Boolean isDynamic) {
+    public SpawnData(String identifier, Vec3 coordinates, Boolean isDynamic) {
         this.identifier = IdentifierUtil.getIdentifierFromString(identifier);
         this.isDynamic = isDynamic;
 
         if(isDynamic)
-            this.coordinates = new Vec3d(coordinates.x, 0, coordinates.z);
+            this.coordinates = new Vec3(coordinates.x, 0, coordinates.z);
         else
             this.coordinates = coordinates;
     }
 
-    public SpawnData(Identifier identifier, Vector2d coordinate){
-        this(identifier, new Vec3d(coordinate.x, 0, coordinate.y));
+    public SpawnData(ResourceLocation identifier, Vector2d coordinate){
+        this(identifier, new Vec3(coordinate.x, 0, coordinate.y));
         isDynamic = true;
     }
 
-    public SpawnData(Identifier identifier, Vec3d coordinate){
+    public SpawnData(ResourceLocation identifier, Vec3 coordinate){
         this.identifier = identifier;
         this.coordinates = coordinate;
     }
 
-    public static SpawnData deserialize(NbtCompound compound) {
-        NbtCompound coordinateCompound = compound.getCompound("coordinates");
+    public static SpawnData deserialize(CompoundTag compound) {
+        CompoundTag coordinateCompound = compound.getCompound("coordinates");
         double x = coordinateCompound.getDouble("x");
         double y = coordinateCompound.getDouble("y");
         double z = coordinateCompound.getDouble("z");
-        Vec3d coordinate = new Vec3d(x, y, z);
+        Vec3 coordinate = new Vec3(x, y, z);
         boolean isDynamic = compound.getBoolean("dynamic");
 
         return new SpawnData(compound.getString("id"), coordinate, isDynamic);
     }
 
-    public static NbtCompound serialize(SpawnData spawnData) {
-        NbtCompound serializedCompound = new NbtCompound();
+    public static CompoundTag serialize(SpawnData spawnData) {
+        CompoundTag serializedCompound = new CompoundTag();
 
-        NbtCompound coordinateCompound = new NbtCompound();
+        CompoundTag coordinateCompound = new CompoundTag();
         coordinateCompound.putDouble("x", spawnData.coordinates.x);
         coordinateCompound.putDouble("y", spawnData.coordinates.y);
         coordinateCompound.putDouble("z", spawnData.coordinates.z);
@@ -78,7 +77,7 @@ public class SpawnData {
         return serializedCompound;
     }
 
-    public Identifier getIdentifier(){
+    public ResourceLocation getIdentifier(){
         return identifier;
     }
 
@@ -86,7 +85,7 @@ public class SpawnData {
         return this.identifier.toString();
     }
 
-    public Vec3d getCoordinates() {
+    public Vec3 getCoordinates() {
         return coordinates;
     }
 

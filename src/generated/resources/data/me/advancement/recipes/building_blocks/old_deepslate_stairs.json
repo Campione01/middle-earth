@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_old_deepslate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:old_deepslate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:old_deepslate_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_old_deepslate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:old_deepslate_stairs"
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 10661315,
+    "foliage_color": 7111523,
+    "grass_color": 7572570,
+    "sky_color": 8097212,
+    "water_color": 5206453,
+    "water_fog_color": 460588
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "me:ashen_gravel",
+      "me:ashen_sand",
+      "me:big_boulder_basalt",
+      "me:medium_boulder_basalt",
+      "me:patch_blackstone",
+      "me:patch_common_scorched_grass",
+      "me:patch_common_scorched_shrub",
+      "me:patch_common_scorched_tuft",
+      "me:patch_common_tough_berry_bush",
+      "me:patch_dead_heather",
+      "me:patch_dying_grass",
+      "me:rare_fir_tree",
+      "me:rare_spruce_tree",
+      "me:scarce_black_pine_tree",
+      "me:scorched_tree",
+      "me:small_boulder_basalt",
+      "me:sparse_pine_tree",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_dirt",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_gravel",
+      "minecraft:ore_tuff"
+    ],
+    [],
+    [],
+    [
+      "me:grassy_dirt_ore",
+      "me:patch_dead_rushes",
+      "me:patch_shriveled_shrub",
+      "me:patch_small_dry_shrub",
+      "minecraft:glow_lichen",
+      "minecraft:patch_berry_common"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.5
+}

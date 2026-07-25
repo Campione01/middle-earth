@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:jadeite_bricks_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:jadeite_bricks_vertical_slab"
+  }
+}

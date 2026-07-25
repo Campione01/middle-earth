@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_hematite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:hematite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:hematite_vertical_slab_from_hematite_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_hematite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:hematite_vertical_slab_from_hematite_stonecutting"
+    ]
+  }
+}

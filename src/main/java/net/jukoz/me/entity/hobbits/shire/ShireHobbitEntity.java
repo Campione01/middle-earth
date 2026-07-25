@@ -19,22 +19,33 @@ import net.jukoz.me.resources.MiddleEarthRaces;
 import net.jukoz.me.resources.datas.Disposition;
 import net.jukoz.me.resources.datas.factions.FactionLookup;
 import net.jukoz.me.resources.datas.npcs.data.NpcRank;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 
 public class ShireHobbitEntity extends NpcEntity {
@@ -42,9 +53,9 @@ public class ShireHobbitEntity extends NpcEntity {
     private static float FLEE_SPEED_MIN = 0.8f;
     private static float FLEE_SPEED_MAX = 1.2f;
 
-    public ShireHobbitEntity(EntityType<? extends NpcEntity> entityType, World world) {
+    public ShireHobbitEntity(EntityType<? extends NpcEntity> entityType, Level world) {
         super(entityType, world);
-        String name = this.getDefaultName().toString();
+        String name = this.getTypeName().toString();
         if(name.contains("civilian")){
             this.setRank(NpcRank.CIVILIAN);
         }else if(name.contains("bounder")){
@@ -55,66 +66,66 @@ public class ShireHobbitEntity extends NpcEntity {
         }
     }
     @Override
-    protected Identifier getFactionId() {
+    protected ResourceLocation getFactionId() {
         return MiddleEarthFactions.SHIRE.getId();
     }
     @Override
-    protected Identifier getRaceId() { return MiddleEarthRaces.HOBBIT.getId(); }
+    protected ResourceLocation getRaceId() { return MiddleEarthRaces.HOBBIT.getId(); }
     @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
-        entityData = super.initialize(world, difficulty, spawnReason, entityData);
-        Random random = world.getRandom();
-        this.initEquipment(random, difficulty);
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData) {
+        entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
+        RandomSource random = world.getRandom();
+        this.populateDefaultEquipmentSlots(random, difficulty);
         return entityData;
     }
 
     @Override
-    protected void initGoals() {
-        Identifier factionId = getFactionId();
+    protected void registerGoals() {
+        ResourceLocation factionId = getFactionId();
         if(factionId == null)
             disposition = Disposition.NEUTRAL;
         else {
             try {
-                disposition = FactionLookup.getFactionById(getWorld(), factionId).getDisposition();
+                disposition = FactionLookup.getFactionById(level(), factionId).getDisposition();
             } catch (FactionIdentifierException e) {
                 disposition = Disposition.NEUTRAL; // Attacks everyone, no judgement made
             }
         }
 
         int i = 0;
-        this.goalSelector.add(++i, new SwimGoal(this));
-        this.goalSelector.add(++i, new FleeEntityGoal<>(this, TrollEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
-        this.goalSelector.add(++i, new FleeEntityGoal<>(this, MordorBlackUrukEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
-        this.goalSelector.add(++i, new FleeEntityGoal<>(this, MistyHobgoblinEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
-        this.goalSelector.add(++i, new FleeEntityGoal<>(this, MordorOrcEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
-        this.goalSelector.add(++i, new FleeEntityGoal<>(this, MistyGoblinEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
-        this.goalSelector.add(++i, new FleeEntityGoal<>(this, BanditHumanEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
-        this.goalSelector.add(++i, new FleeEntityGoal<>(this, MirkwoodSpiderEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
-        this.goalSelector.add(++i, new ProjectileAttackGoal(this, 1.0, 12, 24, 20.0f));
-        this.goalSelector.add(++i, new WanderAroundFarGoal(this, 1.0));
-        this.goalSelector.add(++i, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
-        this.goalSelector.add(++i, new LookAroundGoal(this));
+        this.goalSelector.addGoal(++i, new FloatGoal(this));
+        this.goalSelector.addGoal(++i, new AvoidEntityGoal<>(this, TrollEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
+        this.goalSelector.addGoal(++i, new AvoidEntityGoal<>(this, MordorBlackUrukEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
+        this.goalSelector.addGoal(++i, new AvoidEntityGoal<>(this, MistyHobgoblinEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
+        this.goalSelector.addGoal(++i, new AvoidEntityGoal<>(this, MordorOrcEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
+        this.goalSelector.addGoal(++i, new AvoidEntityGoal<>(this, MistyGoblinEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
+        this.goalSelector.addGoal(++i, new AvoidEntityGoal<>(this, BanditHumanEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
+        this.goalSelector.addGoal(++i, new AvoidEntityGoal<>(this, MirkwoodSpiderEntity.class, FLEE_DISTANCE, FLEE_SPEED_MIN, FLEE_SPEED_MAX));
+        this.goalSelector.addGoal(++i, new RangedAttackGoal(this, 1.0, 12, 24, 20.0f));
+        this.goalSelector.addGoal(++i, new WaterAvoidingRandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(++i, new LookAtPlayerGoal(this, Player.class, 6.0f));
+        this.goalSelector.addGoal(++i, new RandomLookAroundGoal(this));
         i = 1;
-        this.targetSelector.add(++i, new RevengeGoal(this).setGroupRevenge());
+        this.targetSelector.addGoal(++i, new HurtByTargetGoal(this).setAlertOthers());
         initGoodTargetSelector(i);
     }
 
-    public static DefaultAttributeContainer.Builder setSoldierAttributes() {
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0)
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 1.0)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48.0)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0);
+    public static AttributeSupplier.Builder setSoldierAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MOVEMENT_SPEED, 0.3f)
+                .add(Attributes.MAX_HEALTH, 20.0)
+                .add(Attributes.ATTACK_SPEED, 1.0)
+                .add(Attributes.FOLLOW_RANGE, 48.0)
+                .add(Attributes.ATTACK_DAMAGE, 1.0);
     }
-    public static DefaultAttributeContainer.Builder setKnightAttributes() {
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 22.0)
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 1.0)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48.0)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.5);
+    public static AttributeSupplier.Builder setKnightAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MOVEMENT_SPEED, 0.3f)
+                .add(Attributes.MAX_HEALTH, 22.0)
+                .add(Attributes.ATTACK_SPEED, 1.0)
+                .add(Attributes.FOLLOW_RANGE, 48.0)
+                .add(Attributes.ATTACK_DAMAGE, 1.5);
     }
 
     public ShireHobbitVariant getVariant() {
@@ -122,26 +133,26 @@ public class ShireHobbitEntity extends NpcEntity {
     }
 
     @Override
-    protected void applyDamage(DamageSource source, float amount) {
-        if(source.getAttacker() instanceof ShireHobbitEntity){
+    protected void actuallyHurt(DamageSource source, float amount) {
+        if(source.getEntity() instanceof ShireHobbitEntity){
             return;
         }
-        super.applyDamage(source, amount);
+        super.actuallyHurt(source, amount);
     }
 
     @Override
-    public void shootAt(LivingEntity target, float pullProgress) {
+    public void performRangedAttack(LivingEntity target, float pullProgress) {
         Item item = ModResourceItems.PEBBLE;
         ItemStack itemStack = new ItemStack(item);
         double d = target.getX() - this.getX();
-        double e = target.getBodyY(0.3333333333333333) - this.getY();
+        double e = target.getY(0.3333333333333333) - this.getY();
         double f = target.getZ() - this.getZ();
         double g = Math.sqrt(d * d + f * f);
 
-        PebbleEntity pebbleEntity = new PebbleEntity(getWorld(), this, PebbleItem.DAMAGE);
+        PebbleEntity pebbleEntity = new PebbleEntity(level(), this, PebbleItem.DAMAGE);
         pebbleEntity.setItem(itemStack);
-        pebbleEntity.setVelocity(d, e + g * (double)0.2f, f, 0.8f, 14 - getWorld().getDifficulty().getId() * 4);
-        getWorld().spawnEntity(pebbleEntity);
-        this.playSound(SoundEvents.ENTITY_SNOWBALL_THROW, 1.0f, 1.0f / (this.getRandom().nextFloat() * 0.05f + 0.8f));
+        pebbleEntity.shoot(d, e + g * (double)0.2f, f, 0.8f, 14 - level().getDifficulty().getId() * 4);
+        level().addFreshEntity(pebbleEntity);
+        this.playSound(SoundEvents.SNOWBALL_THROW, 1.0f, 1.0f / (this.getRandom().nextFloat() * 0.05f + 0.8f));
     }
 }

@@ -1,0 +1,29 @@
+{
+  "type": "me:artisan_table",
+  "category": "hood",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:black_dye"
+    },
+    {
+      "item": "me:fabric"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:gondorian_citadel_guard_hood"
+  }
+}

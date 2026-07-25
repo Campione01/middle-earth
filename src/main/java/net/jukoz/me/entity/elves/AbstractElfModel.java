@@ -1,11 +1,11 @@
 package net.jukoz.me.entity.elves;
 
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.world.entity.AgeableMob;
 
 
-public abstract class AbstractElfModel<T extends PassiveEntity> extends BipedEntityModel<T> {
+public abstract class AbstractElfModel<T extends AgeableMob> extends HumanoidModel<T> {
     protected AbstractElfModel(ModelPart pRoot) {
         super(pRoot);
     }

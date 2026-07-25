@@ -1,0 +1,468 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 2825239,
+              "id": "me:leather_vest",
+              "weight": 3
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 4271910,
+              "id": "me:leather_vest",
+              "weight": 2
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:leather_vest"
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 2825239,
+              "id": "me:leather_scale_vest",
+              "weight": 3
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 4271910,
+              "id": "me:leather_scale_vest",
+              "weight": 2
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:leather_scale_vest"
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 2825239,
+              "id": "me:gambeson",
+              "weight": 3
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 4271910,
+              "id": "me:gambeson",
+              "weight": 2
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:gambeson"
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 2825239,
+              "id": "me:arming_coat",
+              "weight": 3
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 4271910,
+              "id": "me:arming_coat",
+              "weight": 2
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:arming_coat"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 2825239,
+              "id": "me:arming_coat",
+              "weight": 3
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 4271910,
+              "id": "me:arming_coat",
+              "weight": 2
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:arming_coat"
+            }
+          ]
+        },
+        "feet": {
+          "pool": [
+            {
+              "id": "me:shoes"
+            },
+            {
+              "id": "me:sturdy_boots"
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "minecraft:air",
+              "weight": 6
+            },
+            {
+              "id": "me:bycocket",
+              "weight": 4
+            },
+            {
+              "colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:bycocket"
+            },
+            {
+              "id": "me:woven_hat"
+            },
+            {
+              "id": "me:leather_skullcap",
+              "weight": 4
+            },
+            {
+              "colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:leather_skullcap"
+            },
+            {
+              "id": "me:gambeson_cap",
+              "weight": 4
+            },
+            {
+              "color": 2825239,
+              "id": "me:gambeson_cap",
+              "weight": 3
+            },
+            {
+              "color": 4271910,
+              "id": "me:gambeson_cap",
+              "weight": 2
+            },
+            {
+              "colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:gambeson_cap"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:mail_skirt",
+              "weight": 3
+            },
+            {
+              "color": 2825239,
+              "id": "me:arming_coat",
+              "weight": 3
+            },
+            {
+              "color": 4271910,
+              "id": "me:arming_coat",
+              "weight": 2
+            },
+            {
+              "colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:arming_skirt"
+            },
+            {
+              "color": 2825239,
+              "id": "me:elven_arming_coat",
+              "weight": 3
+            },
+            {
+              "color": 4271910,
+              "id": "me:elven_arming_coat",
+              "weight": 2
+            },
+            {
+              "colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:elven_arming_coat"
+            },
+            {
+              "color": 2825239,
+              "id": "me:orcish_leather_skirt",
+              "weight": 3
+            },
+            {
+              "color": 4271910,
+              "id": "me:orcish_leather_skirt",
+              "weight": 2
+            },
+            {
+              "colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:elven_arming_coat"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:bronze_sword",
+              "weight": 3
+            },
+            {
+              "id": "me:bronze_spear",
+              "weight": 3
+            },
+            {
+              "id": "me:iron_spear",
+              "weight": 2
+            },
+            {
+              "id": "minecraft:iron_sword"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:heater_shield",
+              "weight": 4
+            },
+            {
+              "id": "me:round_shield",
+              "weight": 4
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            },
+            {
+              "id": "me:crude_dagger"
+            },
+            {
+              "id": "me:bronze_dagger"
+            },
+            {
+              "id": "me:iron_dagger"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:bandit.thug",
+  "race": "me:human"
+}

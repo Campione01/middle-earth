@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/axe_head",
+    "layer1": "me:trims/items/axe_head_trim_amethyst"
+  }
+}

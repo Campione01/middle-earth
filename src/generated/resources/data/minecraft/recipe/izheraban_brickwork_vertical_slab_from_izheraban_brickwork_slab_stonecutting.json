@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:izheraban_brickwork_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:izheraban_brickwork_vertical_slab"
+  }
+}

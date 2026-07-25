@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:beech_roofing_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:beech_roofing_vertical_slab"
+  }
+}

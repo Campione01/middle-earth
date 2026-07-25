@@ -1,0 +1,17 @@
+{
+  "type": "me:artisan_table",
+  "category": "medium_shield",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:gondorian_shield"
+    },
+    {
+      "item": "me:mordor_banner_pattern"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:gondorian_converted_shield"
+  }
+}

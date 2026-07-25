@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:spruce_shingles_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:spruce_shingles_vertical_slab"
+  }
+}

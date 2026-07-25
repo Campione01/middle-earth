@@ -1,14 +1,24 @@
 package net.jukoz.me.block;
 
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
-import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.jukoz.me.compat.neoforge.api.registry.FlammableBlockRegistry;
+import net.jukoz.me.compat.neoforge.api.registry.FuelRegistry;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.block.special.OxidizableVerticalSlabBlock;
 import net.jukoz.me.block.special.OxidizableWallBlock;
 import net.jukoz.me.block.special.verticalSlabs.VerticalSlabBlock;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.block.*;
-import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.WeatheringCopper;
+import net.minecraft.world.level.block.WeatheringCopperFullBlock;
+import net.minecraft.world.level.block.WeatheringCopperSlabBlock;
+import net.minecraft.world.level.block.WeatheringCopperStairBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class OtherBlockSets {
     public static MiscBlockSet TREATED_WOOD = registerMiscSet("treated_wood", null, Blocks.OAK_WOOD, true);
@@ -131,11 +141,11 @@ public class OtherBlockSets {
     public static RoofBlockSet OFF_YELLOW_ROOF_TILES = registerClaySet("off_yellow_roof_tiles", null);
 
 
-    public static RoofBlockSet THATCH = registerThatchSet("thatch", Oxidizable.OxidationLevel.UNAFFECTED);
-    public static RoofBlockSet WEATHERED_THATCH = registerThatchSet("weathered_thatch", Oxidizable.OxidationLevel.EXPOSED);
-    public static RoofBlockSet AGED_THATCH = registerThatchSet("aged_thatch", Oxidizable.OxidationLevel.WEATHERED);
-    public static RoofBlockSet OLD_THATCH = registerThatchSet("old_thatch", Oxidizable.OxidationLevel.OXIDIZED);
-    public static RoofBlockSet ROTTEN_THATCH = registerThatchSet("rotten_thatch", Oxidizable.OxidationLevel.OXIDIZED);
+    public static RoofBlockSet THATCH = registerThatchSet("thatch", WeatheringCopper.WeatherState.UNAFFECTED);
+    public static RoofBlockSet WEATHERED_THATCH = registerThatchSet("weathered_thatch", WeatheringCopper.WeatherState.EXPOSED);
+    public static RoofBlockSet AGED_THATCH = registerThatchSet("aged_thatch", WeatheringCopper.WeatherState.WEATHERED);
+    public static RoofBlockSet OLD_THATCH = registerThatchSet("old_thatch", WeatheringCopper.WeatherState.OXIDIZED);
+    public static RoofBlockSet ROTTEN_THATCH = registerThatchSet("rotten_thatch", WeatheringCopper.WeatherState.OXIDIZED);
 
     public static RoofBlockSet WAXED_THATCH = registerWaxedThatchSet("waxed_thatch");
     public static RoofBlockSet WAXED_WEATHERED_THATCH = registerWaxedThatchSet("waxed_weathered_thatch");
@@ -288,19 +298,19 @@ public class OtherBlockSets {
         Block block = null;
 
         if (origin == null) {
-            block = ModBlocks.registerWoodBlock(name, new Block(AbstractBlock.Settings.copy(Blocks.OAK_PLANKS)),true);
+            block = ModBlocks.registerWoodBlock(name, new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)),true);
         }else {
-            block = ModBlocks.registerWoodBlock(name, new Block(AbstractBlock.Settings.copy(origin)),false);
+            block = ModBlocks.registerWoodBlock(name, new Block(BlockBehaviour.Properties.ofFullCopy(origin)),false);
         }
 
-        Block slab = ModBlocks.registerWoodBlock(name + "_slab", new SlabBlock(AbstractBlock.Settings.copy(block)),true);
+        Block slab = ModBlocks.registerWoodBlock(name + "_slab", new SlabBlock(BlockBehaviour.Properties.ofFullCopy(block)),true);
 
-        Block verticalSlab = ModBlocks.registerWoodBlock(name + "_vertical_slab", new VerticalSlabBlock(AbstractBlock.Settings.copy(block)),true);
+        Block verticalSlab = ModBlocks.registerWoodBlock(name + "_vertical_slab", new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(block)),true);
 
-        Block stairs = ModBlocks.registerWoodBlock(name + "_stairs", new StairsBlock(block.getDefaultState(),
-                AbstractBlock.Settings.copy(block)),true);
+        Block stairs = ModBlocks.registerWoodBlock(name + "_stairs", new StairBlock(block.defaultBlockState(),
+                BlockBehaviour.Properties.ofFullCopy(block)),true);
 
-        Block wall = ModBlocks.registerWoodBlock(name + "_wall", new WallBlock(AbstractBlock.Settings.copy(block)),true);
+        Block wall = ModBlocks.registerWoodBlock(name + "_wall", new WallBlock(BlockBehaviour.Properties.ofFullCopy(block)),true);
 
         FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
         FlammableBlockRegistry.getDefaultInstance().add(slab, 5, 20);
@@ -322,36 +332,36 @@ public class OtherBlockSets {
         Block block = null;
 
         if (origin == null) {
-            block = ModBlocks.registerStoneBlock(name, new Block(AbstractBlock.Settings.copy(Blocks.TERRACOTTA).requiresTool()),true);
+            block = ModBlocks.registerStoneBlock(name, new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.TERRACOTTA).requiresCorrectToolForDrops()),true);
         }else {
-            block = ModBlocks.registerStoneBlock(name, new Block(AbstractBlock.Settings.copy(origin).requiresTool()),true);
+            block = ModBlocks.registerStoneBlock(name, new Block(BlockBehaviour.Properties.ofFullCopy(origin).requiresCorrectToolForDrops()),true);
         }
 
-        Block slab = ModBlocks.registerStoneBlock(name + "_slab", new SlabBlock(AbstractBlock.Settings.copy(block).requiresTool()),true);
+        Block slab = ModBlocks.registerStoneBlock(name + "_slab", new SlabBlock(BlockBehaviour.Properties.ofFullCopy(block).requiresCorrectToolForDrops()),true);
 
-        Block verticalSlab = ModBlocks.registerStoneBlock(name + "_vertical_slab", new VerticalSlabBlock(AbstractBlock.Settings.copy(block).requiresTool()),true);
+        Block verticalSlab = ModBlocks.registerStoneBlock(name + "_vertical_slab", new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(block).requiresCorrectToolForDrops()),true);
 
-        Block stairs = ModBlocks.registerStoneBlock(name + "_stairs", new StairsBlock(block.getDefaultState(),
-                AbstractBlock.Settings.copy(block).requiresTool()),true);
+        Block stairs = ModBlocks.registerStoneBlock(name + "_stairs", new StairBlock(block.defaultBlockState(),
+                BlockBehaviour.Properties.ofFullCopy(block).requiresCorrectToolForDrops()),true);
 
-        Block wall = ModBlocks.registerStoneBlock(name + "_wall", new WallBlock(AbstractBlock.Settings.copy(block).requiresTool()),true);
+        Block wall = ModBlocks.registerStoneBlock(name + "_wall", new WallBlock(BlockBehaviour.Properties.ofFullCopy(block).requiresCorrectToolForDrops()),true);
 
 
         return new RoofBlockSet(block, slab, verticalSlab, stairs, wall, origin);
     }
 
-    private static RoofBlockSet registerThatchSet(String name, Oxidizable.OxidationLevel level) {
+    private static RoofBlockSet registerThatchSet(String name, WeatheringCopper.WeatherState level) {
 
-        Block block = ModBlocks.registerMiscBlock(name, new OxidizableBlock(level, AbstractBlock.Settings.copy(Blocks.HAY_BLOCK)),true);
+        Block block = ModBlocks.registerMiscBlock(name, new WeatheringCopperFullBlock(level, BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK)),true);
 
-        Block slab = ModBlocks.registerMiscBlock(name + "_slab", new OxidizableSlabBlock(level, AbstractBlock.Settings.copy(block)),true);
+        Block slab = ModBlocks.registerMiscBlock(name + "_slab", new WeatheringCopperSlabBlock(level, BlockBehaviour.Properties.ofFullCopy(block)),true);
 
-        Block verticalSlab = ModBlocks.registerMiscBlock(name + "_vertical_slab", new OxidizableVerticalSlabBlock(level, AbstractBlock.Settings.copy(block)),true);
+        Block verticalSlab = ModBlocks.registerMiscBlock(name + "_vertical_slab", new OxidizableVerticalSlabBlock(level, BlockBehaviour.Properties.ofFullCopy(block)),true);
 
-        Block stairs = ModBlocks.registerMiscBlock(name + "_stairs", new OxidizableStairsBlock(level, block.getDefaultState(),
-                AbstractBlock.Settings.copy(block)),true);
+        Block stairs = ModBlocks.registerMiscBlock(name + "_stairs", new WeatheringCopperStairBlock(level, block.defaultBlockState(),
+                BlockBehaviour.Properties.ofFullCopy(block)),true);
 
-        Block wall = ModBlocks.registerMiscBlock(name + "_wall", new OxidizableWallBlock(level, AbstractBlock.Settings.copy(block)),true);
+        Block wall = ModBlocks.registerMiscBlock(name + "_wall", new OxidizableWallBlock(level, BlockBehaviour.Properties.ofFullCopy(block)),true);
 
 
         FlammableBlockRegistry.getDefaultInstance().add(block, 5, 60);
@@ -366,16 +376,16 @@ public class OtherBlockSets {
 
     private static RoofBlockSet registerWaxedThatchSet(String name) {
 
-        Block block = ModBlocks.registerMiscBlock(name, new Block(AbstractBlock.Settings.copy(Blocks.HAY_BLOCK)),true);
+        Block block = ModBlocks.registerMiscBlock(name, new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK)),true);
 
-        Block slab = ModBlocks.registerMiscBlock(name + "_slab", new SlabBlock(AbstractBlock.Settings.copy(block)),true);
+        Block slab = ModBlocks.registerMiscBlock(name + "_slab", new SlabBlock(BlockBehaviour.Properties.ofFullCopy(block)),true);
 
-        Block verticalSlab = ModBlocks.registerMiscBlock(name + "_vertical_slab", new VerticalSlabBlock(AbstractBlock.Settings.copy(block)),true);
+        Block verticalSlab = ModBlocks.registerMiscBlock(name + "_vertical_slab", new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(block)),true);
 
-        Block stairs = ModBlocks.registerMiscBlock(name + "_stairs", new StairsBlock(block.getDefaultState(),
-                AbstractBlock.Settings.copy(block)),true);
+        Block stairs = ModBlocks.registerMiscBlock(name + "_stairs", new StairBlock(block.defaultBlockState(),
+                BlockBehaviour.Properties.ofFullCopy(block)),true);
 
-        Block wall = ModBlocks.registerMiscBlock(name + "_wall", new WallBlock(AbstractBlock.Settings.copy(block)),true);
+        Block wall = ModBlocks.registerMiscBlock(name + "_wall", new WallBlock(BlockBehaviour.Properties.ofFullCopy(block)),true);
 
         FlammableBlockRegistry.getDefaultInstance().add(block, 5, 60);
         FlammableBlockRegistry.getDefaultInstance().add(slab, 5, 60);
@@ -389,19 +399,19 @@ public class OtherBlockSets {
     private static MiscBlockSet registerMiscSet(String name, Block origin, Block copy, boolean isPillar) {
         Block block;
         if (isPillar){
-            block = ModBlocks.registerMiscBlock(name, new PillarBlock(AbstractBlock.Settings.copy(copy)),true);
+            block = ModBlocks.registerMiscBlock(name, new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(copy)),true);
         } else {
-            block = ModBlocks.registerMiscBlock(name, new Block(AbstractBlock.Settings.copy(copy)),true);
+            block = ModBlocks.registerMiscBlock(name, new Block(BlockBehaviour.Properties.ofFullCopy(copy)),true);
         }
 
-        Block slab = ModBlocks.registerMiscBlock(name + "_slab", new SlabBlock(AbstractBlock.Settings.copy(block)),true);
+        Block slab = ModBlocks.registerMiscBlock(name + "_slab", new SlabBlock(BlockBehaviour.Properties.ofFullCopy(block)),true);
 
-        Block verticalSlab = ModBlocks.registerMiscBlock(name + "_vertical_slab", new VerticalSlabBlock(AbstractBlock.Settings.copy(block)),true);
+        Block verticalSlab = ModBlocks.registerMiscBlock(name + "_vertical_slab", new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(block)),true);
 
-        Block stairs = ModBlocks.registerMiscBlock(name + "_stairs", new StairsBlock(block.getDefaultState(),
-                AbstractBlock.Settings.copy(block)),true);
+        Block stairs = ModBlocks.registerMiscBlock(name + "_stairs", new StairBlock(block.defaultBlockState(),
+                BlockBehaviour.Properties.ofFullCopy(block)),true);
 
-        Block wall = ModBlocks.registerMiscBlock(name + "_wall", new WallBlock(AbstractBlock.Settings.copy(block)),false);
+        Block wall = ModBlocks.registerMiscBlock(name + "_wall", new WallBlock(BlockBehaviour.Properties.ofFullCopy(block)),false);
 
         FlammableBlockRegistry.getDefaultInstance().add(block, 5, 60);
         FlammableBlockRegistry.getDefaultInstance().add(slab, 5, 60);

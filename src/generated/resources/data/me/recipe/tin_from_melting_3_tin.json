@@ -1,0 +1,17 @@
+{
+  "type": "me:alloying",
+  "amount": 432,
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "me:tin"
+    },
+    {
+      "tag": "me:tin"
+    },
+    {
+      "tag": "me:tin"
+    }
+  ],
+  "output": "tin"
+}

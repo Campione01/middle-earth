@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:erebor_scale_hauberk"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:scale_mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:erebor_plate_chestplate"
+  }
+}

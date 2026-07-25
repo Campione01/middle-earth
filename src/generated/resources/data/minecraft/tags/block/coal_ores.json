@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "me:gonluin_coal_ore",
+    "me:ashen_coal_ore",
+    "me:limestone_coal_ore",
+    "me:calcite_coal_ore",
+    "me:slate_coal_ore",
+    "me:ironstone_coal_ore"
+  ]
+}

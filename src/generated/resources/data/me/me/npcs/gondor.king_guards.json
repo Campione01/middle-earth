@@ -1,0 +1,44 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "id": "me:gondorian_kings_guard_chestplate"
+        },
+        "feet": {
+          "id": "me:gondorian_kings_guard_boots"
+        },
+        "head": {
+          "id": "me:gondorian_kings_guard_helmet"
+        },
+        "legs": {
+          "id": "me:gondorian_kings_guard_leggings"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_noble_spear",
+              "weight": 3
+            },
+            {
+              "id": "me:gondorian_noble_longsword"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_kings_guard_tower_shield",
+              "weight": 8
+            },
+            {
+              "id": "me:gondorian_tower_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:gondor.king_guards",
+  "race": "me:human"
+}

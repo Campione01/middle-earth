@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_edhel_steel_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:edhel_steel_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:edhel_steel_from_melting_1_edhel_steel_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_edhel_steel_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:edhel_steel_from_melting_1_edhel_steel_ingot"
+    ]
+  }
+}

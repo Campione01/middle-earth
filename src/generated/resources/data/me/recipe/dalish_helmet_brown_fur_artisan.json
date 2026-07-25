@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:fur"
+    },
+    {
+      "item": "me:dalish_helmet"
+    },
+    {
+      "item": "me:fur"
+    },
+    {
+      "item": "me:fur"
+    },
+    {
+      "item": "me:fur"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:dalish_helmet_brown_fur"
+  }
+}

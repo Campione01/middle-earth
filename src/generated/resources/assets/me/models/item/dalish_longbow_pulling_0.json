@@ -1,0 +1,6 @@
+{
+  "parent": "me:item/longbow",
+  "textures": {
+    "layer0": "me:item/dalish_longbow_pulling_0"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:smooth_izheraban"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:smooth_izheraban_stairs"
+  }
+}

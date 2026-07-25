@@ -1,0 +1,126 @@
+{
+  "banner": {
+    "base_color": "white",
+    "patterns": [
+      {
+        "dye_color": "green",
+        "id": "me:cloth"
+      },
+      {
+        "dye_color": "lime",
+        "id": "minecraft:gradient"
+      },
+      {
+        "dye_color": "white",
+        "id": "me:horse_head"
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "disposition": "GOOD",
+  "faction_selection_order_index": 1,
+  "faction_type": "FACTION",
+  "id": "me:rohan",
+  "joinable": true,
+  "npcs": {
+    "ranks": [
+      {
+        "pool": [
+          "me:rohan.militia"
+        ],
+        "rank": "MILITIA"
+      },
+      {
+        "pool": [
+          "me:rohan.horse_lord",
+          "me:rohan.eorling_marhsal"
+        ],
+        "rank": "LEADER"
+      },
+      {
+        "pool": [
+          "me:rohan.soldier"
+        ],
+        "rank": "SOLDIER"
+      },
+      {
+        "pool": [
+          "me:rohan.knight",
+          "me:rohan.royal_guard"
+        ],
+        "rank": "VETERAN"
+      },
+      {
+        "pool": [
+          "me:human.civilian"
+        ],
+        "rank": "CIVILIAN"
+      },
+      {
+        "pool": [
+          "me:rohan.knight"
+        ],
+        "rank": "KNIGHT"
+      }
+    ]
+  },
+  "spawns": {
+    "data": [
+      {
+        "coordinates": {
+          "x": 1600.0,
+          "y": 0.0,
+          "z": 1660.0
+        },
+        "dynamic": 1,
+        "id": "me:rohan.aldburg"
+      },
+      {
+        "coordinates": {
+          "x": 1525.0,
+          "y": 0.0,
+          "z": 1525.0
+        },
+        "dynamic": 1,
+        "id": "me:rohan.westemnet"
+      },
+      {
+        "coordinates": {
+          "x": 1675.0,
+          "y": 0.0,
+          "z": 1475.0
+        },
+        "dynamic": 1,
+        "id": "me:rohan.the_wold"
+      },
+      {
+        "coordinates": {
+          "x": 1525.0,
+          "y": 0.0,
+          "z": 1600.0
+        },
+        "dynamic": 1,
+        "id": "me:rohan.edoras"
+      },
+      {
+        "coordinates": {
+          "x": 1470.0,
+          "y": 0.0,
+          "z": 1555.0
+        },
+        "dynamic": 1,
+        "id": "me:rohan.helms_deep"
+      },
+      {
+        "coordinates": {
+          "x": 1715.0,
+          "y": 0.0,
+          "z": 1575.0
+        },
+        "dynamic": 1,
+        "id": "me:rohan.eastemnet"
+      }
+    ]
+  }
+}

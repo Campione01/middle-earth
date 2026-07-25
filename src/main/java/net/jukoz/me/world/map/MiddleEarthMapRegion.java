@@ -29,7 +29,9 @@ public class MiddleEarthMapRegion {
     public MapBasedCustomBiome getBiome(Vector2i imageCoordinates){
         try {
             if(biomeImage != null){
-                return MapBasedBiomePool.getBiomeByColor(biomeImage.getRGB(imageCoordinates.x, imageCoordinates.y));
+                int x = clamp(imageCoordinates.x, 0, biomeImage.getWidth() - 1);
+                int y = clamp(imageCoordinates.y, 0, biomeImage.getHeight() - 1);
+                return MapBasedBiomePool.getBiomeByColor(biomeImage.getRGB(x, y));
             }
         } catch (Exception exception){
             return MapBasedBiomePool.defaultBiome;
@@ -39,7 +41,9 @@ public class MiddleEarthMapRegion {
 
     public Color getHeightColor(Vector2i imageCoordinates) {
         if(heightImage != null){
-            return new Color(heightImage.getRGB(imageCoordinates.x, imageCoordinates.y));
+            int x = clamp(imageCoordinates.x, 0, heightImage.getWidth() - 1);
+            int y = clamp(imageCoordinates.y, 0, heightImage.getHeight() - 1);
+            return new Color(heightImage.getRGB(x, y));
         }
         return new Color(Math.abs(MapBasedBiomePool.defaultBiome.getHeight()), 1, 0);
     }
@@ -54,5 +58,9 @@ public class MiddleEarthMapRegion {
 
     private double calculateDistance(double x1, double y1, double x2, double y2) {
             return Point2D.distance(x1, y1, x2, y2);
+    }
+
+    private static int clamp(int value, int min, int max) {
+        return Math.max(min, Math.min(max, value));
     }
 }

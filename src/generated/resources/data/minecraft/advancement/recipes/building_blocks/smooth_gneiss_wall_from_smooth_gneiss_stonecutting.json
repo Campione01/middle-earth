@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_smooth_gneiss": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:smooth_gneiss"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:smooth_gneiss_wall_from_smooth_gneiss_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_smooth_gneiss"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:smooth_gneiss_wall_from_smooth_gneiss_stonecutting"
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:dwarven_mail_hauberk"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:longbeard_partisan_outfit"
+  }
+}

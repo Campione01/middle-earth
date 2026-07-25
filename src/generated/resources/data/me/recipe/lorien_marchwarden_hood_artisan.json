@@ -1,0 +1,29 @@
+{
+  "type": "me:artisan_table",
+  "category": "hood",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:gray_dye"
+    },
+    {
+      "item": "me:fabric"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:lorien_marchwarden_hood"
+  }
+}

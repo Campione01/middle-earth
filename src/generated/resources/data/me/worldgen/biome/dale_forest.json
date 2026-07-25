@@ -1,0 +1,138 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 12178175,
+    "foliage_color": 4820272,
+    "grass_color": 6393176,
+    "sky_color": 8230911,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:disk_clay",
+      "minecraft:disk_gravel",
+      "minecraft:disk_sand",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_dirt",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_gravel",
+      "minecraft:ore_tuff"
+    ],
+    [],
+    [],
+    [
+      "me:big_boulder_stone",
+      "me:birch_tree",
+      "me:coarse_dirt_ore",
+      "me:common_oak_tree",
+      "me:common_pine_tree",
+      "me:common_spruce_tree",
+      "me:fir_tree",
+      "me:forest_moss_disk",
+      "me:gravel_ore",
+      "me:holly_tree",
+      "me:larch_tree",
+      "me:maple_tree",
+      "me:medium_boulder_stone",
+      "me:orange_maple_tree",
+      "me:patch_false_oatgrass",
+      "me:patch_forest_moss",
+      "me:patch_forest_moss_carpet",
+      "me:patch_grass",
+      "me:patch_tall_grass",
+      "me:patch_wild_beetroot",
+      "me:patch_wild_cucumber",
+      "me:patch_wild_flax",
+      "me:patch_wild_garlic",
+      "me:podzol_ore",
+      "me:red_maple_tree",
+      "me:scarce_maple_tree",
+      "me:scarce_orange_maple_tree",
+      "me:scarce_red_maple_tree",
+      "me:scarce_silver_maple_tree",
+      "me:scarce_silver_orange_maple_tree",
+      "me:scarce_silver_red_maple_tree",
+      "me:scarce_silver_yellow_maple_tree",
+      "me:scarce_yellow_maple_tree",
+      "me:silver_maple_tree",
+      "me:silver_orange_maple_tree",
+      "me:silver_red_maple_tree",
+      "me:silver_yellow_maple_tree",
+      "me:small_boulder_stone",
+      "me:spruce_bush_tree",
+      "me:yellow_maple_tree",
+      "minecraft:brown_mushroom_normal",
+      "minecraft:flower_default",
+      "minecraft:glow_lichen",
+      "minecraft:patch_pumpkin",
+      "minecraft:patch_sugar_cane",
+      "minecraft:red_mushroom_normal"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "minecraft:sheep",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 12
+      },
+      {
+        "type": "minecraft:pig",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
+      },
+      {
+        "type": "minecraft:chicken",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
+      },
+      {
+        "type": "minecraft:cow",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 8
+      },
+      {
+        "type": "minecraft:wolf",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 3
+      },
+      {
+        "type": "me:deer",
+        "maxCount": 4,
+        "minCount": 1,
+        "weight": 10
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.5
+}

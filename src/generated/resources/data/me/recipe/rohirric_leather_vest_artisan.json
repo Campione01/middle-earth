@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:arming_coat"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:fabric"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:rohirric_leather_vest"
+  }
+}

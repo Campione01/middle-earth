@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "me:block/galonn",
+    "side": "me:block/galonn",
+    "top": "me:block/galonn"
+  }
+}

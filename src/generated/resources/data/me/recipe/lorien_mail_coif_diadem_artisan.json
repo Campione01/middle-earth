@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:elven_mail_coif"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:lorien_diadem"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:lorien_mail_coif_diadem"
+  }
+}

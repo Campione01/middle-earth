@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_limestone_brickwork": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:limestone_brickwork"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:limestone_brickwork_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_limestone_brickwork"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:limestone_brickwork_stairs"
+    ]
+  }
+}

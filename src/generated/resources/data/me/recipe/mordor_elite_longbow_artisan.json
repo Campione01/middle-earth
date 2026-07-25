@@ -1,0 +1,29 @@
+{
+  "type": "me:artisan_table",
+  "category": "bow",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "tag": "minecraft:wooden_fences"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "me:rod"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "tag": "minecraft:wooden_fences"
+    },
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:mordor_elite_longbow"
+  }
+}

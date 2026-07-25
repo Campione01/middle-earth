@@ -5,10 +5,10 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.jukoz.me.item.ModDataComponentTypes;
 import net.jukoz.me.item.utils.armor.hoods.ModHoods;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.util.math.ColorHelper;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.FastColor;
+import net.minecraft.world.item.ItemStack;
 
 public record HoodDataComponent(boolean down, ModHoods hood, int hoodColor) {
 
@@ -21,7 +21,7 @@ public record HoodDataComponent(boolean down, ModHoods hood, int hoodColor) {
     public static final Codec<HoodDataComponent> CODEC = Codec.withAlternative(BASE_CODEC, Codec.BOOL, (enabled) -> {
         return new HoodDataComponent(false, ModHoods.HOOD, CustomDyeableDataComponent.DEFAULT_COLOR);
     });
-    public static final PacketCodec<ByteBuf, HoodDataComponent> PACKET_CODEC  = PacketCodec.tuple(PacketCodecs.BOOL, HoodDataComponent::down, ModHoods.PACKET_CODEC, HoodDataComponent::getHood, PacketCodecs.INTEGER, HoodDataComponent::hoodColor, HoodDataComponent::new);
+    public static final StreamCodec<ByteBuf, HoodDataComponent> PACKET_CODEC  = StreamCodec.composite(ByteBufCodecs.BOOL, HoodDataComponent::down, ModHoods.PACKET_CODEC, HoodDataComponent::getHood, ByteBufCodecs.INT, HoodDataComponent::hoodColor, HoodDataComponent::new);
     ;
 
     public HoodDataComponent(boolean down, ModHoods hood, int hoodColor) {
@@ -32,7 +32,7 @@ public record HoodDataComponent(boolean down, ModHoods hood, int hoodColor) {
 
     public static int getColor(ItemStack stack, int defaultColor) {
         HoodDataComponent hoodDataComponent = stack.get(ModDataComponentTypes.HOOD_DATA);
-        return hoodDataComponent != null ? ColorHelper.Argb.fullAlpha(hoodDataComponent.hoodColor) : defaultColor;
+        return hoodDataComponent != null ? FastColor.ARGB32.opaque(hoodDataComponent.hoodColor) : defaultColor;
     }
 
     public static HoodDataComponent newHood(ModHoods hood) {

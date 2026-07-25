@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/nurgon_slab"
+    },
+    "type=double": {
+      "model": "me:block/nurgon"
+    },
+    "type=top": {
+      "model": "me:block/nurgon_slab_top"
+    }
+  }
+}

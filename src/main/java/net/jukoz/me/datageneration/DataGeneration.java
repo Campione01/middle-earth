@@ -1,12 +1,10 @@
 package net.jukoz.me.datageneration;
 
-import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.jukoz.me.item.utils.ModSmithingTrimMaterials;
-import net.jukoz.me.item.utils.ModSmithingTrimPatterns;
 import net.jukoz.me.resources.MiddleEarthFactions;
 import net.jukoz.me.resources.MiddleEarthNpcs;
 import net.jukoz.me.resources.MiddleEarthRaces;
+import net.jukoz.me.item.utils.ModSmithingTrimMaterials;
+import net.jukoz.me.item.utils.ModSmithingTrimPatterns;
 import net.jukoz.me.world.biomes.surface.ModBiomes;
 import net.jukoz.me.world.biomes.caves.ModCaveBiomes;
 import net.jukoz.me.world.features.boulder.BoulderConfiguredFeatures;
@@ -22,55 +20,54 @@ import net.jukoz.me.world.features.underground.CavesConfiguredFeatures;
 import net.jukoz.me.world.features.underground.CavesPlacedFeatures;
 import net.jukoz.me.world.features.vegetation.ModVegetationConfiguredFeatures;
 import net.jukoz.me.world.features.vegetation.ModVegetationPlacedFeatures;
-import net.minecraft.registry.RegistryBuilder;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
-public class DataGeneration implements DataGeneratorEntrypoint {
+public class DataGeneration {
     public static boolean isDataGen = false;
 
-    @Override
-    public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
-        isDataGen = true;
-
-        HelpingGenerator.generateFiles();
-
-        var pack = fabricDataGenerator.createPack();
-        pack.addProvider(BlockTagProvider::new);
-        pack.addProvider(BlockLootTableProvider::new);
-        pack.addProvider(ItemTagProvider::new);
-        pack.addProvider(ModelProvider::new);
-        pack.addProvider(RecipeProvider::new);
-        pack.addProvider(ArtisanTableHandheldRecipeProvider::new);
-        pack.addProvider(ArtisanTableArmorRecipeProvider::new);
-        pack.addProvider(RaceProvider::new);
-        pack.addProvider(NpcProvider::new);
-        pack.addProvider(FactionProvider::new);
-        pack.addProvider(DataWorldGenerator::new);
+    public static RegistrySetBuilder createRegistrySetBuilder() {
+        return buildRegistryEntries(new RegistrySetBuilder());
     }
 
-    @Override
-    public void buildRegistry(RegistryBuilder registryBuilder) {
-        DataGeneratorEntrypoint.super.buildRegistry(registryBuilder);
-        registryBuilder.addRegistry(RegistryKeys.BIOME, ModBiomes::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.BIOME, ModCaveBiomes::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ModTreeConfiguredFeatures::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ModVegetationConfiguredFeatures::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, BoulderConfiguredFeatures::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, OreConfiguredFeatures::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, CavesConfiguredFeatures::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ModMiscConfiguredFeatures::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, MushroomTreeConfiguredFeatures::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, ModTreePlacedFeatures::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, ModVegetationPlacedFeatures::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, BoulderPlacedFeatures::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, OrePlacedFeatures::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, CavesPlacedFeatures::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, ModMiscPlacedFeatures::bootstrap);
+    public static RegistrySetBuilder buildRegistryEntries(RegistrySetBuilder registryBuilder) {
+        registryBuilder.add(Registries.BIOME, DataGeneration::bootstrapBiomes);
+        registryBuilder.add(Registries.CONFIGURED_FEATURE, DataGeneration::bootstrapConfiguredFeatures);
+        registryBuilder.add(Registries.PLACED_FEATURE, DataGeneration::bootstrapPlacedFeatures);
+        registryBuilder.add(Registries.TRIM_MATERIAL, ModSmithingTrimMaterials::bootstrap);
+        registryBuilder.add(Registries.TRIM_PATTERN, ModSmithingTrimPatterns::bootstrap);
         // Dynamic
-        registryBuilder.addRegistry(MiddleEarthRaces.RACE_KEY, MiddleEarthRaces::bootstrap);
-        registryBuilder.addRegistry(MiddleEarthNpcs.NPC_KEY, MiddleEarthNpcs::bootstrap);
-        registryBuilder.addRegistry(MiddleEarthFactions.FACTION_KEY, MiddleEarthFactions::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.TRIM_MATERIAL, ModSmithingTrimMaterials::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.TRIM_PATTERN, ModSmithingTrimPatterns::bootstrap);
+        registryBuilder.add(MiddleEarthRaces.RACE_KEY, MiddleEarthRaces::bootstrap);
+        registryBuilder.add(MiddleEarthNpcs.NPC_KEY, MiddleEarthNpcs::bootstrap);
+        registryBuilder.add(MiddleEarthFactions.FACTION_KEY, MiddleEarthFactions::bootstrap);
+        return registryBuilder;
+    }
+
+    private static void bootstrapBiomes(BootstrapContext<Biome> context) {
+        ModBiomes.bootstrap(context);
+        ModCaveBiomes.bootstrap(context);
+    }
+
+    private static void bootstrapConfiguredFeatures(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+        ModTreeConfiguredFeatures.bootstrap(context);
+        ModVegetationConfiguredFeatures.bootstrap(context);
+        BoulderConfiguredFeatures.bootstrap(context);
+        OreConfiguredFeatures.bootstrap(context);
+        CavesConfiguredFeatures.bootstrap(context);
+        ModMiscConfiguredFeatures.bootstrap(context);
+        MushroomTreeConfiguredFeatures.bootstrap(context);
+    }
+
+    private static void bootstrapPlacedFeatures(BootstrapContext<PlacedFeature> context) {
+        ModTreePlacedFeatures.bootstrap(context);
+        ModVegetationPlacedFeatures.bootstrap(context);
+        BoulderPlacedFeatures.bootstrap(context);
+        OrePlacedFeatures.bootstrap(context);
+        CavesPlacedFeatures.bootstrap(context);
+        ModMiscPlacedFeatures.bootstrap(context);
     }
 }

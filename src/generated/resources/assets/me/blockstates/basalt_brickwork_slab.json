@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/basalt_brickwork_slab"
+    },
+    "type=double": {
+      "model": "me:block/basalt_brickwork"
+    },
+    "type=top": {
+      "model": "me:block/basalt_brickwork_slab_top"
+    }
+  }
+}

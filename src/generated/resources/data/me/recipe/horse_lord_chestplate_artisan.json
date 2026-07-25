@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:rohirric_scale_hauberk"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:armor_plate"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:horse_lord_chestplate"
+  }
+}

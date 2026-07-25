@@ -1,0 +1,86 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:barding_soldier_chestplate"
+            },
+            {
+              "id": "me:dalish_scale_hauberk"
+            },
+            {
+              "cape": "barding_surcoat",
+              "id": "me:barding_soldier_chestplate"
+            },
+            {
+              "cape": "barding_surcoat",
+              "id": "me:dalish_scale_hauberk"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:barding_plated_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:barding_soldier_helmet"
+            },
+            {
+              "id": "me:dalish_burgonet"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:dalish_mail_coat"
+            },
+            {
+              "id": "me:barding_mail_skirt"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:dalish_noble_sword"
+            },
+            {
+              "id": "me:dalish_noble_axe"
+            },
+            {
+              "id": "me:dalish_longsword"
+            },
+            {
+              "id": "me:dalish_noble_longsword"
+            },
+            {
+              "id": "me:dalish_noble_spear"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "minecraft:air"
+            },
+            {
+              "id": "me:dalish_barding_braced_shield"
+            },
+            {
+              "id": "me:dalish_barding_oval_shield"
+            },
+            {
+              "id": "me:dalish_barding_heavy_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:dale.veteran",
+  "race": "me:human"
+}

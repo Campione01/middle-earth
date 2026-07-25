@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "neutral",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:kettle_hat"
+  }
+}

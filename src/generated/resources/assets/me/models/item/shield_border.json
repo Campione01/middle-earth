@@ -1,0 +1,134 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "me:item/shield_border_jade_trim",
+      "predicate": {
+        "trim_type": 0.001
+      }
+    },
+    {
+      "model": "me:item/shield_border_tin_trim",
+      "predicate": {
+        "trim_type": 0.002
+      }
+    },
+    {
+      "model": "me:item/shield_border_lead_trim",
+      "predicate": {
+        "trim_type": 0.003
+      }
+    },
+    {
+      "model": "me:item/shield_border_silver_trim",
+      "predicate": {
+        "trim_type": 0.004
+      }
+    },
+    {
+      "model": "me:item/shield_border_bronze_trim",
+      "predicate": {
+        "trim_type": 0.005
+      }
+    },
+    {
+      "model": "me:item/shield_border_steel_trim",
+      "predicate": {
+        "trim_type": 0.006
+      }
+    },
+    {
+      "model": "me:item/shield_border_crude_trim",
+      "predicate": {
+        "trim_type": 0.007
+      }
+    },
+    {
+      "model": "me:item/shield_border_burzum_steel_trim",
+      "predicate": {
+        "trim_type": 0.008
+      }
+    },
+    {
+      "model": "me:item/shield_border_edhel_steel_trim",
+      "predicate": {
+        "trim_type": 0.009
+      }
+    },
+    {
+      "model": "me:item/shield_border_khazad_steel_trim",
+      "predicate": {
+        "trim_type": 0.011
+      }
+    },
+    {
+      "model": "me:item/shield_border_mithril_trim",
+      "predicate": {
+        "trim_type": 0.012
+      }
+    },
+    {
+      "model": "me:item/shield_border_quartz_trim",
+      "predicate": {
+        "trim_type": 0.1
+      }
+    },
+    {
+      "model": "me:item/shield_border_iron_darker_trim",
+      "predicate": {
+        "trim_type": 0.2
+      }
+    },
+    {
+      "model": "me:item/shield_border_netherite_trim",
+      "predicate": {
+        "trim_type": 0.3
+      }
+    },
+    {
+      "model": "me:item/shield_border_redstone_trim",
+      "predicate": {
+        "trim_type": 0.4
+      }
+    },
+    {
+      "model": "me:item/shield_border_copper_trim",
+      "predicate": {
+        "trim_type": 0.5
+      }
+    },
+    {
+      "model": "me:item/shield_border_gold_trim",
+      "predicate": {
+        "trim_type": 0.6
+      }
+    },
+    {
+      "model": "me:item/shield_border_emerald_trim",
+      "predicate": {
+        "trim_type": 0.7
+      }
+    },
+    {
+      "model": "me:item/shield_border_diamond_trim",
+      "predicate": {
+        "trim_type": 0.8
+      }
+    },
+    {
+      "model": "me:item/shield_border_lapis_trim",
+      "predicate": {
+        "trim_type": 0.9
+      }
+    },
+    {
+      "model": "me:item/shield_border_amethyst_trim",
+      "predicate": {
+        "trim_type": 1.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "me:item/shield_border"
+  }
+}

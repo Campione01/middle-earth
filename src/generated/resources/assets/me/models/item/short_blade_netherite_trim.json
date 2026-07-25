@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/short_blade",
+    "layer1": "me:trims/items/short_blade_trim_netherite"
+  }
+}

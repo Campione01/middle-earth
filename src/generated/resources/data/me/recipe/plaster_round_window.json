@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "W": {
+      "item": "me:plaster"
+    }
+  },
+  "pattern": [
+    "WSW",
+    "SGS",
+    "WSW"
+  ],
+  "result": {
+    "count": 4,
+    "id": "me:plaster_round_window"
+  }
+}

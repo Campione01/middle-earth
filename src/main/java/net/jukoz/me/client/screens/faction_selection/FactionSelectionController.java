@@ -1,6 +1,6 @@
 package net.jukoz.me.client.screens.faction_selection;
 
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.jukoz.me.compat.neoforge.api.client.networking.v1.ClientPlayNetworking;
 import net.jukoz.me.network.packets.C2S.*;
 import net.jukoz.me.resources.datas.Disposition;
 import net.jukoz.me.resources.datas.FactionType;
@@ -11,12 +11,12 @@ import net.jukoz.me.resources.datas.factions.data.SpawnData;
 import net.jukoz.me.resources.datas.factions.data.SpawnDataHandler;
 import net.jukoz.me.resources.datas.races.Race;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Vector2d;
 import org.joml.Vector2i;
 
@@ -35,12 +35,12 @@ public class FactionSelectionController {
     private int currentRaceIndex;
     private int currentSubFactionIndex;
     private int currentSpawnIndex;
-    private AbstractClientPlayerEntity player;
+    private AbstractClientPlayer player;
     private FactionSelectionScreen screen;
     public boolean mapFocusToggle = true;
     List<Disposition> dispositionsWithContent = new ArrayList<>();
     private float currentDelay;
-    public FactionSelectionController(FactionSelectionScreen screen, AbstractClientPlayerEntity player, float delay){
+    public FactionSelectionController(FactionSelectionScreen screen, AbstractClientPlayer player, float delay){
         this.player = player;
         this.screen = screen;
         this.currentDelay = delay;
@@ -69,7 +69,7 @@ public class FactionSelectionController {
 
 
     private void addFactionsByDisposition(Disposition disposition) {
-        List<Faction> foundFaction = new ArrayList<>(FactionLookup.getFactionsByDisposition(player.getWorld(), disposition).values().stream().toList());
+        List<Faction> foundFaction = new ArrayList<>(FactionLookup.getFactionsByDisposition(player.level(), disposition).values().stream().toList());
         foundFaction.sort(Comparator.comparingInt(Faction::getFactionSelectionOrderIndex));
         factions.put(disposition, foundFaction);
         if(!factions.get(disposition).isEmpty())
@@ -91,7 +91,7 @@ public class FactionSelectionController {
         races = null;
         Faction currentFaction = getCurrentlySelectedFaction();
         if(currentFaction == null) return;
-        races = currentFaction.getRaces(player.getWorld());
+        races = currentFaction.getRaces(player.level());
         screen.updateEquipment();
         screen.reassignTexts(getRaceListText(), getCurrentFactionDescriptions());
     }
@@ -268,7 +268,7 @@ public class FactionSelectionController {
         return spawns != null && !spawns.isEmpty();
     }
 
-    private Identifier getCurrentSpawnIdentifier(){
+    private ResourceLocation getCurrentSpawnIdentifier(){
         if(!haveSpawns())
             processSpawnList(0);
         if(!haveSpawns())
@@ -277,7 +277,7 @@ public class FactionSelectionController {
     }
     public String getCurrentSpawnKey(){
         if(haveSpawns()){
-            Identifier spawnId = getCurrentSpawnIdentifier();
+            ResourceLocation spawnId = getCurrentSpawnIdentifier();
             return SpawnDataHandler.getTranslatableKey(spawnId);
         }
         return "spawn.me.none";
@@ -290,25 +290,25 @@ public class FactionSelectionController {
     }
 
 
-    public void confirmSpawnSelection(AbstractClientPlayerEntity player){
+    public void confirmSpawnSelection(AbstractClientPlayer player){
         Faction faction = getCurrentlySelectedFaction();
         if(faction == null || !haveSpawns() || !canConfirm()) return;
 
         SpawnData spawn = spawns.get(currentSpawnIndex);
-        Vec3d coordinate = spawn.getCoordinates();
+        Vec3 coordinate = spawn.getCoordinates();
         if(spawn.isDynamic()){
-            ClientPlayNetworking.send(new PacketTeleportToDynamicCoordinate(coordinate.getX(), coordinate.getZ(), true));
+            ClientPlayNetworking.send(new PacketTeleportToDynamicCoordinate(coordinate.x(), coordinate.z(), true));
         } else {
-            ClientPlayNetworking.send(new PacketTeleportToCustomCoordinate(coordinate.getX(), coordinate.getY(), coordinate.getZ(), true));
+            ClientPlayNetworking.send(new PacketTeleportToCustomCoordinate(coordinate.x(), coordinate.y(), coordinate.z(), true));
         }
 
         ClientPlayNetworking.send(new PacketSetRace(races.get(currentRaceIndex).getId().toString()));
         ClientPlayNetworking.send(new PacketSetAffiliation(getCurrentDisposition().name(), getCurrentlySelectedFaction().getId().toString(), spawn.getIdentifier().toString()));
         if(player != null){
-            BlockPos overworldBlockPos = player.getBlockPos();
+            BlockPos overworldBlockPos = player.blockPosition();
             ClientPlayNetworking.send(new PacketSetSpawnData(overworldBlockPos.getX(), overworldBlockPos.getY(), overworldBlockPos.getZ()));
         }
-        screen.close();
+        screen.onClose();
     }
 
     public Disposition getCurrentDisposition(){
@@ -327,7 +327,7 @@ public class FactionSelectionController {
     public Faction getCurrentSubfaction(){
         Faction faction = getCurrentFaction();
         if(faction == null) return null;
-        return faction.getSubfaction(player.getWorld(), currentSubFactionIndex);
+        return faction.getSubfaction(player.level(), currentSubFactionIndex);
     }
 
     public Faction getCurrentlySelectedFaction(){
@@ -352,7 +352,7 @@ public class FactionSelectionController {
         return factions;
     }
 
-    public NpcGearData getCurrentPreview(World world) {
+    public NpcGearData getCurrentPreview(Level world) {
         Faction currentFaction = getCurrentlySelectedFaction();
         races = currentFaction.getRaces(world);
         NpcGearData data = currentFaction.getPreviewGear(world, races.get(currentRaceIndex));
@@ -388,13 +388,13 @@ public class FactionSelectionController {
         return currentSpawnIndex;
     }
 
-    public HashMap<Identifier, Text> getSearchBarPool(World world) {
-        HashMap<Identifier, Text> pool = new HashMap<>();
+    public HashMap<ResourceLocation, Component> getSearchBarPool(Level world) {
+        HashMap<ResourceLocation, Component> pool = new HashMap<>();
         for(List<Faction> factionsByDisposition : factions.values()){
             for(Faction faction : factionsByDisposition){
                 pool.put(faction.getId(), faction.tryGetShortName());
                 if(faction.getFactionType() == FactionType.FACTION && faction.getSubFactions() != null){
-                    for(Identifier identifier : faction.getSubFactions()){
+                    for(ResourceLocation identifier : faction.getSubFactions()){
                         Faction subfaction = faction.getSubfactionById(world, identifier);
                         pool.put(subfaction.getId(), subfaction.tryGetShortName());
                     }
@@ -411,7 +411,7 @@ public class FactionSelectionController {
         }
     }
 
-    public List<Text> getCurrentFactionDescriptions() {
+    public List<Component> getCurrentFactionDescriptions() {
         Faction faction = getCurrentlySelectedFaction();
         if(faction != null){
             return faction.getDescription();
@@ -419,10 +419,10 @@ public class FactionSelectionController {
         return null;
     }
 
-    public List<Text> getRaceListText() {
+    public List<Component> getRaceListText() {
         Faction faction = getCurrentlySelectedFaction();
         if(faction != null){
-            return List.of(faction.getRaceListText(player.getWorld()));
+            return List.of(faction.getRaceListText(player.level()));
         }
         return null;
     }
@@ -441,7 +441,7 @@ public class FactionSelectionController {
         }
     }
 
-    public void setFactionId(Identifier id) {
+    public void setFactionId(ResourceLocation id) {
         for(Disposition disp : factions.keySet()){
             for(Faction fac : factions.get(disp)){
                 boolean foundFaction = false;
@@ -449,7 +449,7 @@ public class FactionSelectionController {
                 if(fac.getId() == id){
                     foundFaction = true;
                 } else {
-                    List<Identifier> subfactions = fac.getSubFactions();
+                    List<ResourceLocation> subfactions = fac.getSubFactions();
                     if(subfactions != null && !subfactions.isEmpty()){
                         if(subfactions.contains(id)){
                             subfactionIndex = fac.getSubFactions().indexOf(id);

@@ -1,0 +1,63 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:galadhrim_lord_chestplate",
+              "weight": 3
+            },
+            {
+              "cape": "galadhrim_lord_surcoat",
+              "id": "me:galadhrim_lord_chestplate"
+            },
+            {
+              "cape": "galadhrim_cape",
+              "id": "me:galadhrim_lord_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:galadhrim_lord_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:galadhrim_lord_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "id": "me:galadhrim_lord_leggings"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:lorien_noble_axe"
+            },
+            {
+              "id": "me:lorien_noble_sword"
+            },
+            {
+              "id": "me:lorien_noble_spear"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:galadhrim_lord_shield",
+              "weight": 3
+            },
+            {
+              "id": "me:galadhrim_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:lothlorien.lord",
+  "race": "me:elf"
+}

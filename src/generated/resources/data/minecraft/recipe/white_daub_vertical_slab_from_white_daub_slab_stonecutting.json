@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:white_daub_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:white_daub_vertical_slab"
+  }
+}

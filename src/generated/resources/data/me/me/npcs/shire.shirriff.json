@@ -1,0 +1,57 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "color": 11047793,
+              "id": "me:surcoat"
+            },
+            {
+              "color": 3367737,
+              "id": "me:surcoat"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:sturdy_boots"
+        },
+        "head": {
+          "id": "me:shirriff_hat"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:steel_sword"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            },
+            {
+              "id": "me:pipe",
+              "weight": 3
+            },
+            {
+              "id": "me:clay_pipe",
+              "weight": 2
+            },
+            {
+              "id": "me:brimmingbend_pipe"
+            },
+            {
+              "id": "minecraft:book"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:shire.shirriff",
+  "race": "me:hobbit"
+}

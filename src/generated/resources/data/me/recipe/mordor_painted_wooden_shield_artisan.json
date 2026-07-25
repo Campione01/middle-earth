@@ -1,0 +1,17 @@
+{
+  "type": "me:artisan_table",
+  "category": "light_shield",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:mordor_wooden_shield"
+    },
+    {
+      "item": "me:mordor_banner_pattern"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:mordor_painted_wooden_shield"
+  }
+}

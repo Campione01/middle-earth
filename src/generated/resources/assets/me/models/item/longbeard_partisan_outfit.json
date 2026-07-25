@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/longbeard_partisan_outfit",
+    "layer1": "me:item/longbeard_partisan_outfit_overlay"
+  }
+}

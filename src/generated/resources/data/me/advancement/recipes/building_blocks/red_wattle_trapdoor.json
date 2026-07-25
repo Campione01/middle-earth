@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:red_wattle_trapdoor"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wattle_trapdoor": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:wattle_trapdoor"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_wattle_trapdoor"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:red_wattle_trapdoor"
+    ]
+  }
+}

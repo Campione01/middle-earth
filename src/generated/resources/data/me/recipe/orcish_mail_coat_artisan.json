@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "leggings",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:orcish_mail_coat"
+  }
+}

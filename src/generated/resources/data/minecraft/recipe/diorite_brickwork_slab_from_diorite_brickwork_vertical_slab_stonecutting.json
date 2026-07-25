@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:diorite_brickwork_vertical_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:diorite_brickwork_slab"
+  }
+}

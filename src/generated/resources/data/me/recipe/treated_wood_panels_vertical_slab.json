@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:treated_wood_panels_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:treated_wood_panels_vertical_slab"
+  }
+}

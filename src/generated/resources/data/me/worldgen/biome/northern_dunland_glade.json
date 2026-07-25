@@ -1,0 +1,142 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 13753556,
+    "foliage_color": 6659405,
+    "grass_color": 7250265,
+    "sky_color": 7903218,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:disk_clay",
+      "minecraft:disk_gravel",
+      "minecraft:disk_sand",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_dirt",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_gravel",
+      "minecraft:ore_tuff"
+    ],
+    [],
+    [],
+    [
+      "me:big_boulder_andesite",
+      "me:big_boulder_dolomite",
+      "me:coarse_dirt_ore",
+      "me:flower_green_jewel",
+      "me:flower_lilac",
+      "me:flowers_yellow",
+      "me:gravel_ore",
+      "me:ivy_growth",
+      "me:medium_boulder_andesite",
+      "me:medium_boulder_dolomite",
+      "me:oak_bush_tree",
+      "me:patch_bracken",
+      "me:patch_brown_bolete",
+      "me:patch_brown_bolete_tiller",
+      "me:patch_false_oatgrass",
+      "me:patch_grass",
+      "me:patch_morsel",
+      "me:patch_morsel_tiller",
+      "me:patch_sedum_yellow",
+      "me:patch_tuft_grass",
+      "me:patch_wheat_grass",
+      "me:patch_white_mushroom",
+      "me:patch_white_mushroom_tiller",
+      "me:patch_wild_beetroot",
+      "me:patch_wild_grass",
+      "me:patch_wild_potato",
+      "me:small_boulder_andesite",
+      "me:small_boulder_dolomite",
+      "me:sparse_pine_tree",
+      "me:spruce_bush_tree",
+      "minecraft:brown_mushroom_normal",
+      "minecraft:flower_default",
+      "minecraft:glow_lichen",
+      "minecraft:patch_berry_rare",
+      "minecraft:patch_grass_taiga",
+      "minecraft:patch_large_fern",
+      "minecraft:red_mushroom_normal",
+      "minecraft:trees_plains"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "minecraft:rabbit",
+        "maxCount": 4,
+        "minCount": 2,
+        "weight": 4
+      },
+      {
+        "type": "minecraft:fox",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 2
+      },
+      {
+        "type": "minecraft:wolf",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 3
+      },
+      {
+        "type": "minecraft:sheep",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 12
+      },
+      {
+        "type": "minecraft:pig",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
+      },
+      {
+        "type": "minecraft:chicken",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
+      },
+      {
+        "type": "minecraft:cow",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 8
+      },
+      {
+        "type": "me:deer",
+        "maxCount": 4,
+        "minCount": 1,
+        "weight": 10
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.5
+}

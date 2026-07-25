@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "leggings",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:mordor_scale_coat"
+  }
+}

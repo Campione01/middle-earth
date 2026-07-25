@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:stripped_spruce_wood_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:stripped_spruce_wood_vertical_slab"
+  }
+}

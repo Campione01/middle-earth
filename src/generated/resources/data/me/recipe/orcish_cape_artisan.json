@@ -1,0 +1,38 @@
+{
+  "type": "me:artisan_table",
+  "category": "cape",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:fabric"
+    },
+    {
+      "tag": "me:bones"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "tag": "me:bones"
+    },
+    {
+      "tag": "me:bones"
+    },
+    {
+      "tag": "me:bones"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:orcish_cape"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/thick_ladder",
+  "textures": {
+    "particle": "me:block/willow_ladder",
+    "texture": "me:block/willow_ladder"
+  }
+}

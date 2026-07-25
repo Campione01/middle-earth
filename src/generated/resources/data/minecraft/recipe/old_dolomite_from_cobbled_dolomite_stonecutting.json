@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:cobbled_dolomite"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:old_dolomite"
+  }
+}

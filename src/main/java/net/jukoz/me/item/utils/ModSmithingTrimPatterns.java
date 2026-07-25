@@ -3,40 +3,41 @@ package net.jukoz.me.item.utils;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.item.ModResourceItems;
 import net.jukoz.me.item.ModToolItems;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.trim.ArmorTrimPattern;
-import net.minecraft.item.trim.ArmorTrimPattern;
-import net.minecraft.item.trim.ArmorTrimPatterns;
-import net.minecraft.registry.*;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-
+import net.minecraft.Util;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.network.chat.Component;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.armortrim.TrimPattern;
 import java.util.Map;
 import java.util.Optional;
 
 public class ModSmithingTrimPatterns {
-    public static final RegistryKey<ArmorTrimPattern> SMITHING_PART = of("smithing_part");
+    public static final ResourceKey<TrimPattern> SMITHING_PART = of("smithing_part");
 
-    public static void bootstrap(Registerable<ArmorTrimPattern> registry) {
+    public static void bootstrap(BootstrapContext<TrimPattern> registry) {
         register(registry, ModToolItems.SMITHING_HAMMER, SMITHING_PART);
     }
 
 
-    public static Optional<RegistryEntry.Reference<ArmorTrimPattern>> get(RegistryWrapper.WrapperLookup registriesLookup, ItemStack stack) {
-        return registriesLookup.getWrapperOrThrow(RegistryKeys.TRIM_PATTERN).streamEntries().filter(pattern -> stack.itemMatches(((ArmorTrimPattern)pattern.value()).templateItem())).findFirst();
+    public static Optional<Holder.Reference<TrimPattern>> get(HolderLookup.Provider registriesLookup, ItemStack stack) {
+        return registriesLookup.lookupOrThrow(Registries.TRIM_PATTERN).listElements().filter(pattern -> stack.is(((TrimPattern)pattern.value()).templateItem())).findFirst();
     }
 
-    public static void register(Registerable<ArmorTrimPattern> registry, Item template, RegistryKey<ArmorTrimPattern> key) {
-        ArmorTrimPattern armorTrimPattern = new ArmorTrimPattern(key.getValue(), Registries.ITEM.getEntry(template), Text.translatable(Util.createTranslationKey("trim_pattern", key.getValue())), false);
+    public static void register(BootstrapContext<TrimPattern> registry, Item template, ResourceKey<TrimPattern> key) {
+        TrimPattern armorTrimPattern = new TrimPattern(key.location(), BuiltInRegistries.ITEM.wrapAsHolder(template), Component.translatable(Util.makeDescriptionId("trim_pattern", key.location())), false);
         registry.register(key, armorTrimPattern);
     }
 
-    private static RegistryKey<ArmorTrimPattern> of(String id) {
-        return RegistryKey.of(RegistryKeys.TRIM_PATTERN, Identifier.of(MiddleEarth.MOD_ID, id));
+    private static ResourceKey<TrimPattern> of(String id) {
+        return ResourceKey.create(Registries.TRIM_PATTERN, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, id));
     }
 }

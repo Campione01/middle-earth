@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "f": {
+      "item": "me:red_flowers"
+    },
+    "l": {
+      "tag": "minecraft:leaves"
+    }
+  },
+  "pattern": [
+    "lfl",
+    "lfl"
+  ],
+  "result": {
+    "count": 8,
+    "id": "me:red_flower_growth"
+  }
+}

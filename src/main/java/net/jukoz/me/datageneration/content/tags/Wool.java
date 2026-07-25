@@ -1,10 +1,9 @@
 package net.jukoz.me.datageneration.content.tags;
 
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
+import net.jukoz.me.compat.neoforge.api.registry.FlammableBlockRegistry;
 import net.jukoz.me.block.ModBlocks;
 import net.jukoz.me.block.ModNatureBlocks;
-import net.minecraft.block.Block;
-
+import net.minecraft.world.level.block.Block;
 import java.util.ArrayList;
 import java.util.List;
 

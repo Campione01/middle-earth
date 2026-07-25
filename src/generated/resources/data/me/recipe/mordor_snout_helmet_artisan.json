@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:helmet_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:mordor_snout_helmet"
+  }
+}

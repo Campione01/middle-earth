@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:polished_medgon"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:polished_medgon_wall"
+  }
+}

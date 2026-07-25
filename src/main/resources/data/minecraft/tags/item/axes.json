@@ -1,10 +1,6 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "#fabric:axes",
-      "required": false
-    },
     "me:khazad_steel_axe",
     "me:crude_axe",
     "me:burzum_steel_axe",

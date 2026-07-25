@@ -1,11 +1,11 @@
 package net.jukoz.me.block.special.forge;
 
 import net.jukoz.me.item.ModResourceItems;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
-public enum MetalTypes implements StringIdentifiable {
+public enum MetalTypes implements StringRepresentable {
     EMPTY(-1, "empty", null, null, false, 0),
 
     COPPER(0, "copper", Items.COPPER_INGOT, null, true, 11823181),
@@ -58,7 +58,7 @@ public enum MetalTypes implements StringIdentifiable {
     }
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return name;
     }
 

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "me:block/treated_wood_carved_beam_top",
+    "side": "me:block/treated_wood_carved_beam"
+  }
+}

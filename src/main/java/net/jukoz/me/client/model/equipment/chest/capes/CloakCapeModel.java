@@ -3,9 +3,9 @@ package net.jukoz.me.client.model.equipment.chest.capes;
 import net.jukoz.me.client.model.equipment.chest.ChestplateAddonModel;
 import net.jukoz.me.utils.ToRad;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.entity.model.EntityModelPartNames;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
 
 public class CloakCapeModel<T extends LivingEntity>  extends ChestplateAddonModel<T> {
     private static final float MAX_ANGLE_CLOAK = 80f;
@@ -26,29 +26,29 @@ public class CloakCapeModel<T extends LivingEntity>  extends ChestplateAddonMode
     }
 
     @Override
-    public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        this.cape.traverse().forEach(ModelPart::resetTransform);
-        Vec3d velocity = entity.getVelocity();
-        double sqrVel = velocity.lengthSquared();
+    public void setupAnim(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        this.cape.getAllParts().forEach(ModelPart::resetPose);
+        Vec3 velocity = entity.getDeltaMovement();
+        double sqrVel = velocity.lengthSqr();
         double speed = (sqrVel * 0.35f) + Math.sqrt(Math.abs(limbDistance)) * 0.4f;
         double degree;
 
-        if (entity.isInSneakingPose()) {
-            this.cape.pivotZ = 0.0f;
-            this.cape.pivotY = 0.0f;
+        if (entity.isCrouching()) {
+            this.cape.z = 0.0f;
+            this.cape.y = 0.0f;
             degree = 5f + (speed * (MAX_ANGLE_CLOAK / 2));
         } else {
-            this.cape.pivotZ = 0;
-            this.cape.pivotY = 0.0f;
+            this.cape.z = 0;
+            this.cape.y = 0.0f;
             degree = (MAX_ANGLE_CLOAK * speed);
         }
         degree = Math.max(0.0F, degree);
         degree = Math.min(MAX_ANGLE_CLOAK, degree);
 
-        double result = entity.getRotationVector().dotProduct(velocity);
+        double result = entity.getLookAngle().dot(velocity);
 
         if(result > 0) {
-            this.cape.pitch = ToRad.ex(degree);
+            this.cape.xRot = ToRad.ex(degree);
         }
     }
 

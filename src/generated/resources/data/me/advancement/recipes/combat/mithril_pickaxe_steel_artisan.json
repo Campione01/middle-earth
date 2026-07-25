@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pickaxe_head": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:pickaxe_head"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:mithril_pickaxe_steel_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pickaxe_head"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:mithril_pickaxe_steel_artisan"
+    ]
+  }
+}

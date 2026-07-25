@@ -3,46 +3,49 @@ package net.jukoz.me.entity.beasts;
 import net.jukoz.me.resources.StateSaverAndLoader;
 import net.jukoz.me.resources.datas.Disposition;
 import net.jukoz.me.resources.datas.RaceType;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.passive.AbstractHorseEntity;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.StackReference;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.world.entity.*;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntityEvent;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SlotAccess;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
 // Beasts are mostly aggressive Entities which work much like wolves, while also allowing the player to mount them.
-public class AbstractBeastEntity extends AbstractHorseEntity {
-    public static final TrackedData<Boolean> CHARGING = DataTracker.registerData(AbstractBeastEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Boolean> SITTING = DataTracker.registerData(AbstractBeastEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private static final TrackedData<Boolean> CHEST = DataTracker.registerData(AbstractBeastEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private static final TrackedData<Boolean> RUNNING = DataTracker.registerData(AbstractBeastEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+public class AbstractBeastEntity extends AbstractHorse {
+    public static final EntityDataAccessor<Boolean> CHARGING = SynchedEntityData.defineId(AbstractBeastEntity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(AbstractBeastEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> CHEST = SynchedEntityData.defineId(AbstractBeastEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> RUNNING = SynchedEntityData.defineId(AbstractBeastEntity.class, EntityDataSerializers.BOOLEAN);
 
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState attackAnimationState = new AnimationState();
@@ -60,23 +63,22 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
 
     public static final int ATTACK_COOLDOWN = 10;
     public static final float RESISTANCE = 0.15f;
-    protected Vec3d targetDir = Vec3d.ZERO;
+    protected Vec3 targetDir = Vec3.ZERO;
 
     // Initializing ====================================================================================================
-    protected AbstractBeastEntity(EntityType<? extends AbstractBeastEntity> entityType, World world) {
+    protected AbstractBeastEntity(EntityType<? extends AbstractBeastEntity> entityType, Level world) {
         super(entityType, world);
     }
 
-    protected void initDataTracker(DataTracker.Builder builder) {
-        super.initDataTracker(builder);
-        builder.add(CHARGING, false);
-        builder.add(SITTING, false);
-        builder.add(CHEST, false);
-        builder.add(RUNNING, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(CHARGING, false);
+        builder.define(SITTING, false);
+        builder.define(CHEST, false);
+        builder.define(RUNNING, false);
     }
 
-    @Override
-    protected void initAttributes(Random random) {
+    protected void randomizeReinforcementsChance(RandomSource random) {
 
     }
 
@@ -85,19 +87,19 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
     }
 
     @Override
-    public void onTrackedDataSet(TrackedData<?> data) {
-        if (!this.firstUpdate && CHARGING.equals(data)) {
+    public void onSyncedDataUpdated(EntityDataAccessor<?> data) {
+        if (!this.firstTick && CHARGING.equals(data)) {
             this.chargeTimeout = this.chargeTimeout == 0 ? maxChargeCooldown() : this.chargeTimeout;
         }
-        super.onTrackedDataSet(data);
+        super.onSyncedDataUpdated(data);
     }
 
-    private StackReference createInventoryStackReference(final int slot, final Predicate<ItemStack> predicate) {
-        return new StackReference(){
+    private SlotAccess createInventoryStackReference(final int slot, final Predicate<ItemStack> predicate) {
+        return new SlotAccess(){
 
             @Override
             public ItemStack get() {
-                return AbstractBeastEntity.this.items.getStack(slot);
+                return AbstractBeastEntity.this.inventory.getItem(slot);
             }
 
             @Override
@@ -105,26 +107,26 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
                 if (!predicate.test(stack)) {
                     return false;
                 }
-                AbstractBeastEntity.this.items.setStack(slot, stack);
-                AbstractBeastEntity.this.updateSaddledFlag();
+                AbstractBeastEntity.this.inventory.setItem(slot, stack);
+                AbstractBeastEntity.this.syncSaddleToClients();
                 return true;
             }
         };
     }
 
     @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
+    public void addAdditionalSaveData(CompoundTag nbt) {
+        super.addAdditionalSaveData(nbt);
         nbt.putBoolean("Sitting", this.isSitting());
         nbt.putBoolean("ChestedBeast", this.hasChest());
         if (this.hasChest()) {
-            NbtList nbtList = new NbtList();
-            for(int i = 2; i < this.items.size(); ++i) {
-                ItemStack itemStack = this.items.getStack(i);
+            ListTag nbtList = new ListTag();
+            for(int i = 2; i < this.inventory.getContainerSize(); ++i) {
+                ItemStack itemStack = this.inventory.getItem(i);
                 if (!itemStack.isEmpty()) {
-                    NbtCompound nbtCompound = new NbtCompound();
+                    CompoundTag nbtCompound = new CompoundTag();
                     nbtCompound.putByte("Slot", (byte)i);
-                    nbtList.add(itemStack.encode(this.getRegistryManager(), nbtCompound));
+                    nbtList.add(itemStack.save(this.registryAccess(), nbtCompound));
                 }
             }
             nbt.put("Items", nbtList);
@@ -132,23 +134,23 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
     }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
+    public void readAdditionalSaveData(CompoundTag nbt) {
+        super.readAdditionalSaveData(nbt);
         this.setSitting(nbt.getBoolean("Sitting"));
         this.setHasChest(nbt.getBoolean("ChestedBeast"));
-        this.onChestedStatusChanged();
+        this.createInventory();
         if (this.hasChest()) {
-            NbtList nbtList = nbt.getList("Items", 10);
+            ListTag nbtList = nbt.getList("Items", 10);
 
             for(int i = 0; i < nbtList.size(); ++i) {
-                NbtCompound nbtCompound = nbtList.getCompound(i);
+                CompoundTag nbtCompound = nbtList.getCompound(i);
                 int j = nbtCompound.getByte("Slot") & 255;
-                if (j >= 2 && j < this.items.size()) {
-                    this.items.setStack(j, (ItemStack)ItemStack.fromNbt(this.getRegistryManager(), nbtCompound).orElse(ItemStack.EMPTY));
+                if (j >= 2 && j < this.inventory.getContainerSize()) {
+                    this.inventory.setItem(j, (ItemStack)ItemStack.parse(this.registryAccess(), nbtCompound).orElse(ItemStack.EMPTY));
                 }
             }
         }
-        this.updateSaddledFlag();
+        this.syncSaddleToClients();
     }
 
     // Getters and Setters =============================================================================================
@@ -168,18 +170,18 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
     }
 
     public boolean hasChest() {
-        return this.dataTracker.get(CHEST);
+        return this.entityData.get(CHEST);
     }
 
     public void setHasChest(boolean hasChest) {
-        this.dataTracker.set(CHEST, hasChest);
+        this.entityData.set(CHEST, hasChest);
     }
 
     public boolean canCarryChest() {
         return true;
     }
     public final boolean cannotFollowOwner() {
-        return this.isSitting() || this.hasVehicle() || this.mightBeLeashed() || this.getOwner() != null && this.getOwner().isSpectator();
+        return this.isSitting() || this.isPassenger() || this.mayBeLeashed() || this.getOwner() != null && this.getOwner().isSpectator();
     }
 
     public boolean shouldAttackWhenMounted() {
@@ -187,15 +189,15 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
     }
 
     public boolean canCharge() {
-        return !this.isSitting() && !this.hasPassengers();
+        return !this.isSitting() && !this.isVehicle();
     }
 
     public boolean isRunning() {
-        return this.dataTracker.get(RUNNING);
+        return this.entityData.get(RUNNING);
     }
 
     public void setRunning(boolean running) {
-        this.dataTracker.set(RUNNING, running);
+        this.entityData.set(RUNNING, running);
     }
 
     @Override
@@ -204,14 +206,14 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
     }
 
     public double getMountedHeightOffset() {
-        float f = Math.min(0.25F, this.limbAnimator.getSpeed());
-        float g = this.limbAnimator.getPos();
-        return (double)this.getHeight() - 0.19 + (double)(0.12F * MathHelper.cos(g * 1.5F) * 2.0F * f);
+        float f = Math.min(0.25F, this.walkAnimation.speed());
+        float g = this.walkAnimation.position();
+        return (double)this.getBbHeight() - 0.19 + (double)(0.12F * Mth.cos(g * 1.5F) * 2.0F * f);
     }
 
-    public PlayerEntity getOwner() {
-        if(this.getOwnerUuid() != null) {
-            return getPlayerByUuid(this.getOwnerUuid());
+    public Player getOwner() {
+        if(this.getOwnerUUID() != null) {
+            return getPlayerByUuid(this.getOwnerUUID());
         }
         return null;
     }
@@ -225,16 +227,16 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
     }
 
     @Override
-    public boolean isPersistent() {
-        return isTame();
+    public boolean isPersistenceRequired() {
+        return isTamed();
     }
 
     public boolean isSitting() {
-        return this.dataTracker.get(SITTING);
+        return this.entityData.get(SITTING);
     }
 
     public void setSitting(boolean sitting) {
-        this.dataTracker.set(SITTING, sitting);
+        this.entityData.set(SITTING, sitting);
     }
 
     public boolean isCommandItem(ItemStack stack) {
@@ -242,11 +244,11 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
     }
 
     public void setCharging(boolean charging) {
-        this.dataTracker.set(CHARGING, charging);
+        this.entityData.set(CHARGING, charging);
     }
 
     public boolean isCharging() {
-        return this.dataTracker.get(CHARGING);
+        return this.entityData.get(CHARGING);
     }
 
     public int getChargeTimeout() {
@@ -264,16 +266,16 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
     }
 
     protected float getAttackDamage() {
-        return (float)this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+        return (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
     }
 
     // Equipment =======================================================================================================
 
-    protected void dropInventory() {
-        super.dropInventory();
+    protected void dropEquipment() {
+        super.dropEquipment();
         if (this.hasChest()) {
-            if (!this.getWorld().isClient) {
-                this.dropItem(Blocks.CHEST);
+            if (!this.level().isClientSide) {
+                this.spawnAtLocation(Blocks.CHEST);
             }
 
             this.setHasChest(false);
@@ -281,55 +283,55 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
     }
 
     @Override
-    public StackReference getStackReference(int mappedIndex) {
+    public SlotAccess getSlot(int mappedIndex) {
         int j;
         int i = mappedIndex - 400;
-        if (i >= 0 && i < 2 && i < this.items.size()) {
+        if (i >= 0 && i < 2 && i < this.inventory.getContainerSize()) {
             if (i == 0) {
-                return this.createInventoryStackReference(i, stack -> stack.isEmpty() || stack.isOf(Items.SADDLE));
+                return this.createInventoryStackReference(i, stack -> stack.isEmpty() || stack.is(Items.SADDLE));
             }
             if (i == 1) {
-                return StackReference.EMPTY;
+                return SlotAccess.NULL;
             }
         }
-        if ((j = mappedIndex - 500 + 2) >= 2 && j < this.items.size()) {
-            return StackReference.of(this.items, j);
+        if ((j = mappedIndex - 500 + 2) >= 2 && j < this.inventory.getContainerSize()) {
+            return SlotAccess.forContainer(this.inventory, j);
         }
-        return super.getStackReference(mappedIndex);
+        return super.getSlot(mappedIndex);
     }
 
     public int getInventoryColumns() {
         return this.hasChest() ? 5 : 0;
     }
 
-    private void addChest(PlayerEntity player, ItemStack chest) {
+    private void addChest(Player player, ItemStack chest) {
         if(canCarryChest()) {
             this.setHasChest(true);
             this.playAddChestSound();
-            if (!player.getAbilities().creativeMode) {
-                chest.decrement(1);
+            if (!player.getAbilities().instabuild) {
+                chest.shrink(1);
             }
-            this.onChestedStatusChanged();
+            this.createInventory();
         }
     }
 
     protected void playAddChestSound() {
-        this.playSound(SoundEvents.ENTITY_DONKEY_CHEST, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+        this.playSound(SoundEvents.DONKEY_CHEST, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
     }
 
     @Override
-    public SoundEvent getSaddleSound() {
-        return super.getSaddleSound();
+    public SoundEvent getSaddleSoundEvent() {
+        return super.getSaddleSoundEvent();
     }
 
     @Override
-    protected float getSaddledSpeed(PlayerEntity controllingPlayer) {
-        return this.isSitting() ? 0 : super.getSaddledSpeed(controllingPlayer);
+    protected float getRiddenSpeed(Player controllingPlayer) {
+        return this.isSitting() ? 0 : super.getRiddenSpeed(controllingPlayer);
     }
 
     // Move Set and Behavior ===========================================================================================
     @Override
-    protected void jump(float strength, Vec3d movementInput) {
+    protected void executeRidersJump(float strength, Vec3 movementInput) {
         if(this.isSitting()) {
             this.setSitting(false);
         }
@@ -341,9 +343,9 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
 
 
     @Override
-    public void startJumping(int height) {
+    public void handleStartJump(int height) {
         if(!this.isSitting()) {
-            this.playSound(SoundEvents.ENTITY_CAMEL_DASH, 1.0f, 1.0f);
+            this.playSound(SoundEvents.CAMEL_DASH, 1.0f, 1.0f);
             this.setCharging(true);
         }
         else {
@@ -351,62 +353,62 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
         }
     }
 
-    public void tryBonding(PlayerEntity player) {
-        if(random.nextDouble() <= 0.1d || player.isInCreativeMode()) {
+    public void tryBonding(Player player) {
+        if(random.nextDouble() <= 0.1d || player.hasInfiniteMaterials()) {
             this.tameBeast(player);
-            this.getWorld().sendEntityStatus(this, EntityStatuses.ADD_POSITIVE_PLAYER_REACTION_PARTICLES);
+            this.level().broadcastEntityEvent(this, EntityEvent.TAMING_SUCCEEDED);
 
             this.chargeTimeout = 0;
         }
         else {
-            this.getWorld().sendEntityStatus(this, EntityStatuses.ADD_NEGATIVE_PLAYER_REACTION_PARTICLES);
+            this.level().broadcastEntityEvent(this, EntityEvent.TAMING_FAILED);
         }
     }
 
-    protected void tameBeast(PlayerEntity player) {
-        if (player instanceof ServerPlayerEntity) {
-            this.setOwnerUuid(player.getUuid());
-            this.setTame(true);
-            Criteria.TAME_ANIMAL.trigger((ServerPlayerEntity)player, this);
+    protected void tameBeast(Player player) {
+        if (player instanceof ServerPlayer) {
+            this.setOwnerUUID(player.getUUID());
+            this.setTamed(true);
+            CriteriaTriggers.TAME_ANIMAL.trigger((ServerPlayer)player, this);
         }
     }
 
     @Override
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        boolean bl = !this.isBaby() && this.isTame() && player.shouldCancelInteraction();
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        boolean bl = !this.isBaby() && this.isTamed() && player.isSecondaryUseActive();
 
-        ItemStack itemStack = player.getStackInHand(hand);
+        ItemStack itemStack = player.getItemInHand(hand);
 
-        if(isBondingItem(player.getStackInHand(hand)) && !this.isTame() && this.isTamable()) {
-            if(!this.getWorld().isClient()) {
+        if(isBondingItem(player.getItemInHand(hand)) && !this.isTamed() && this.isTamable()) {
+            if(!this.level().isClientSide()) {
                 this.tryBonding(player);
-                this.eat(player, hand, itemStack);
+                this.usePlayerItem(player, hand, itemStack);
             }
-            return ActionResult.success(this.getWorld().isClient());
+            return InteractionResult.sidedSuccess(this.level().isClientSide());
         }
 
-        if(this.isTame() && this.isTamable()) {
+        if(this.isTamed() && this.isTamable()) {
             if(isCommandItem(itemStack) && player == getOwner()) {
                 this.setSitting(!isSitting());
-                return ActionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
 
-            if (itemStack.isOf(Items.CHEST) && !this.hasChest()) {
+            if (itemStack.is(Items.CHEST) && !this.hasChest()) {
                 this.addChest(player, itemStack);
-                return ActionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
 
-            if(!(isCommandItem(itemStack) || isBreedingItem(itemStack) || itemStack.isOf(Items.CHEST)) && this.isMountable()) {
-                super.interactMob(player, hand);
+            if(!(isCommandItem(itemStack) || isFood(itemStack) || itemStack.is(Items.CHEST)) && this.isMountable()) {
+                super.mobInteract(player, hand);
             }
         }
 
-        return ActionResult.FAIL;
+        return InteractionResult.FAIL;
     }
 
     @Override
-    public ActionResult interactHorse(PlayerEntity player, ItemStack stack) {
-        return super.interactHorse(player, stack);
+    public InteractionResult fedFood(Player player, ItemStack stack) {
+        return super.fedFood(player, stack);
     }
 
     public boolean isBondingItem(ItemStack itemStack) {
@@ -414,12 +416,12 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
     }
 
     @Override
-    public boolean damage(DamageSource source, float amount) {
-        if(!source.equals(getDamageSources().drown()) && !source.equals(getDamageSources().lava())
-                && !source.equals(getDamageSources().cramming()) && !source.equals(getDamageSources().magic())) {
+    public boolean hurt(DamageSource source, float amount) {
+        if(!source.equals(damageSources().drown()) && !source.equals(damageSources().lava())
+                && !source.equals(damageSources().cramming()) && !source.equals(damageSources().magic())) {
             amount *= (1 - RESISTANCE);
         }
-        return super.damage(source, amount);
+        return super.hurt(source, amount);
     }
 
     public void chargeAttack() {
@@ -431,18 +433,18 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
         super.tick();
 
         if(this.getTarget() != null) {
-            this.getLookControl().lookAt(this.getTarget());
+            this.getLookControl().setLookAt(this.getTarget());
         }
 
         if(this.isCharging()) {
             chargeAttack();
-            if(!chargeAnimationState.isRunning()) {
-                this.chargeAnimationState.start(this.age);
+            if(!chargeAnimationState.isStarted()) {
+                this.chargeAnimationState.start(this.tickCount);
             }
         }
         if(this.chargeTimeout <= (maxChargeCooldown() - chargeDuration()) || !isCharging()) {
             this.setCharging(false);
-            this.targetDir = Vec3d.ZERO;
+            this.targetDir = Vec3.ZERO;
         }
         if(!this.isCharging()) {
             this.chargeAnimationState.stop();
@@ -452,19 +454,19 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
         }
 
         if(this.hasControllingPassenger() && !this.shouldAttackWhenMounted()) {
-            this.setAttacker(null);
-            this.setAttacking(null);
+            this.setLastHurtByMob(null);
+            this.setLastHurtByPlayer(null);
             this.setTarget(null);
         }
 
-        if (this.getWorld().isClient) {
+        if (this.level().isClientSide) {
             setupAnimationStates();
         }
     }
 
     @Override
-    public void tickMovement() {
-        super.tickMovement();
+    public void aiStep() {
+        super.aiStep();
         if (this.attackTicksLeft > 0) {
             --this.attackTicksLeft;
         }
@@ -472,18 +474,18 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
 
     // =================================================================================================================
 
-    protected void setChildAttribute(PassiveEntity other, AbstractHorseEntity child, RegistryEntry<EntityAttribute> attribute, double min, double max) {
-        double d = this.calculateAttributeBaseValue(this.getAttributeBaseValue(attribute), other.getAttributeBaseValue(attribute), min, max, this.random);
-        child.getAttributeInstance(attribute).setBaseValue(d);
+    protected void setOffspringAttribute(AgeableMob other, AbstractHorse child, Holder<Attribute> attribute, double min, double max) {
+        double d = this.createOffspringAttribute(this.getAttributeBaseValue(attribute), other.getAttributeBaseValue(attribute), min, max, this.random);
+        child.getAttribute(attribute).setBaseValue(d);
     }
 
-    static double calculateAttributeBaseValue(double parentBase, double otherParentBase, double min, double max, Random random) {
+    static double createOffspringAttribute(double parentBase, double otherParentBase, double min, double max, RandomSource random) {
         double g;
         if (max <= min) {
             throw new IllegalArgumentException("Incorrect range for an attribute");
         }
-        parentBase = MathHelper.clamp(parentBase, min, max);
-        otherParentBase = MathHelper.clamp(otherParentBase, min, max);
+        parentBase = Mth.clamp(parentBase, min, max);
+        otherParentBase = Mth.clamp(otherParentBase, min, max);
         double d = 0.15 * (max - min);
         double f = (parentBase + otherParentBase) / 2.0;
         double e = Math.abs(parentBase - otherParentBase) + d * 2.0;
@@ -500,42 +502,42 @@ public class AbstractBeastEntity extends AbstractHorseEntity {
     }
 
     @Override
-    public void handleStatus(byte status) {
-        if (status == EntityStatuses.PLAY_ATTACK_SOUND) {
+    public void handleEntityEvent(byte status) {
+        if (status == EntityEvent.START_ATTACKING) {
             this.attackTicksLeft = ATTACK_COOLDOWN;
-            this.attackAnimationState.start(this.age);
+            this.attackAnimationState.start(this.tickCount);
         }
-        if (status == EntityStatuses.ADD_POSITIVE_PLAYER_REACTION_PARTICLES) {
-            this.spawnPlayerReactionParticles(true);
-        } else if (status == EntityStatuses.ADD_NEGATIVE_PLAYER_REACTION_PARTICLES) {
-            this.spawnPlayerReactionParticles(false);
+        if (status == EntityEvent.TAMING_SUCCEEDED) {
+            this.spawnTamingParticles(true);
+        } else if (status == EntityEvent.TAMING_FAILED) {
+            this.spawnTamingParticles(false);
         } else {
-            super.handleStatus(status);
+            super.handleEntityEvent(status);
         }
     }
 
-    public PlayerEntity getPlayerByUuid(UUID uuid) {
-        for (int i = 0; i < this.getWorld().getPlayers().size(); ++i) {
-            PlayerEntity playerEntity = this.getWorld().getPlayers().get(i);
-            if (!uuid.equals(playerEntity.getUuid())) continue;
+    public Player getPlayerByUuid(UUID uuid) {
+        for (int i = 0; i < this.level().players().size(); ++i) {
+            Player playerEntity = this.level().players().get(i);
+            if (!uuid.equals(playerEntity.getUUID())) continue;
             return playerEntity;
         }
         return null;
     }
 
     @Override
-    protected void updateLimbs(float posDelta) {
-        float f = this.getPose() == EntityPose.STANDING ? Math.min(posDelta * 6.0f, 1.0f) : 0.0f;
-        this.limbAnimator.updateLimbs(f, 0.2f);
+    protected void updateWalkAnimation(float posDelta) {
+        float f = this.getPose() == Pose.STANDING ? Math.min(posDelta * 6.0f, 1.0f) : 0.0f;
+        this.walkAnimation.update(f, 0.2f);
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(SoundEvents.ENTITY_WARDEN_STEP, 0.15F, 2.0F);
+        this.playSound(SoundEvents.WARDEN_STEP, 0.15F, 2.0F);
     }
 
     @Override
-    public boolean cannotBeSilenced() {
-        return super.cannotBeSilenced();
+    public boolean alwaysAccepts() {
+        return super.alwaysAccepts();
     }
 }

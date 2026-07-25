@@ -10,18 +10,18 @@ import net.jukoz.me.resources.datas.races.RaceLookup;
 import net.jukoz.me.resources.datas.races.RaceUtil;
 import net.jukoz.me.utils.IdentifierUtil;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Identifier;
 
 public class PacketSetRace extends ClientToServerPacket<PacketSetRace>
 {
-    public static final Id<PacketSetRace> ID = new Id<>(Identifier.of(MiddleEarth.MOD_ID, "packet_set_race"));
+    public static final Type<PacketSetRace> ID = new Type<>(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "packet_set_race"));
 
-    public static final PacketCodec<RegistryByteBuf, PacketSetRace> CODEC = PacketCodec.tuple(
-            PacketCodecs.STRING, p -> p.race,
+    public static final StreamCodec<RegistryFriendlyByteBuf, PacketSetRace> CODEC = StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8, p -> p.race,
             PacketSetRace::new
     );
 
@@ -33,12 +33,12 @@ public class PacketSetRace extends ClientToServerPacket<PacketSetRace>
     }
 
     @Override
-    public Id<PacketSetRace> getId() {
+    public Type<PacketSetRace> type() {
         return ID;
     }
 
     @Override
-    public PacketCodec<RegistryByteBuf, PacketSetRace> streamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, PacketSetRace> streamCodec() {
         return CODEC;
     }
 
@@ -47,7 +47,7 @@ public class PacketSetRace extends ClientToServerPacket<PacketSetRace>
         MinecraftServer server = context.player().getServer();
         server.execute(() -> {
             try{
-                RaceUtil.updateRace(context.player(), RaceLookup.getRace(context.player().getWorld(), IdentifierUtil.getIdentifierFromString(race)), true);
+                RaceUtil.updateRace(context.player(), RaceLookup.getRace(context.player().level(), IdentifierUtil.getIdentifierFromString(race)), true);
             } catch (Exception e){
                 LoggerUtil.logError("PacketSetRace::Tried setting race for player.", e);
             }

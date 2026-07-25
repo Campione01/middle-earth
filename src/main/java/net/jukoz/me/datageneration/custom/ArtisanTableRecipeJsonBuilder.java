@@ -1,37 +1,37 @@
 package net.jukoz.me.datageneration.custom;
 
-import net.fabricmc.fabric.impl.recipe.ingredient.builtin.ComponentsIngredient;
+import net.jukoz.me.compat.neoforge.impl.recipe.ingredient.builtin.ComponentsIngredient;
 import net.jukoz.me.recipe.ArtisanRecipe;
 import net.jukoz.me.resources.datas.Disposition;
-import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.AdvancementCriterion;
-import net.minecraft.advancement.AdvancementRequirements;
-import net.minecraft.advancement.AdvancementRewards;
-import net.minecraft.advancement.criterion.RecipeUnlockedCriterion;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.core.NonNullList;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class ArtisanTableRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
+public class ArtisanTableRecipeJsonBuilder implements RecipeBuilder {
 
     private final RecipeCategory category;
     private final String tab;
-    private final DefaultedList<Ingredient> inputs = DefaultedList.of();
+    private final NonNullList<Ingredient> inputs = NonNullList.create();
     private final ItemStack output;
     private final Disposition disposition;
-    private final Map<String, AdvancementCriterion<?>> criteria = new LinkedHashMap<>();
+    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     private String group;
 
     public ArtisanTableRecipeJsonBuilder(RecipeCategory category, ItemStack output, String tab, Disposition disposition) {
@@ -42,13 +42,13 @@ public class ArtisanTableRecipeJsonBuilder implements CraftingRecipeJsonBuilder 
     }
 
     @Override
-    public CraftingRecipeJsonBuilder group(@Nullable String group) {
+    public RecipeBuilder group(@Nullable String group) {
         this.group = group;
         return this;
     }
 
     @Override
-    public Item getOutputItem() {
+    public Item getResult() {
         return this.output.getItem();
     }
 
@@ -60,10 +60,10 @@ public class ArtisanTableRecipeJsonBuilder implements CraftingRecipeJsonBuilder 
     }
 
     public ArtisanTableRecipeJsonBuilder input(TagKey<Item> tag) {
-        return this.input(Ingredient.fromTag(tag));
+        return this.input(Ingredient.of(tag));
     }
 
-    public ArtisanTableRecipeJsonBuilder input(ItemConvertible itemProvider) {
+    public ArtisanTableRecipeJsonBuilder input(ItemLike itemProvider) {
         return this.input(itemProvider, 1);
     }
 
@@ -71,9 +71,9 @@ public class ArtisanTableRecipeJsonBuilder implements CraftingRecipeJsonBuilder 
         return this.input(ingredient.toVanilla(), 1);
     }
 
-    public ArtisanTableRecipeJsonBuilder input(ItemConvertible itemProvider, int size) {
+    public ArtisanTableRecipeJsonBuilder input(ItemLike itemProvider, int size) {
         for(int i = 0; i < size; ++i) {
-            this.input(Ingredient.ofItems(itemProvider));
+            this.input(Ingredient.of(itemProvider));
         }
         return this;
     }
@@ -90,22 +90,22 @@ public class ArtisanTableRecipeJsonBuilder implements CraftingRecipeJsonBuilder 
     }
 
     @Override
-    public void offerTo(RecipeExporter exporter, Identifier recipeId) {
+    public void save(RecipeOutput exporter, ResourceLocation recipeId) {
         this.validate(recipeId);
-        Advancement.Builder builder = exporter.getAdvancementBuilder().criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).criteriaMerger(AdvancementRequirements.CriterionMerger.OR);
+        Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(builder);
-        this.criteria.forEach(builder::criterion);
+        this.criteria.forEach(builder::addCriterion);
         ArtisanRecipe artisanRecipe = new ArtisanRecipe(this.tab, this.output, this.inputs, this.disposition.toString().toLowerCase());
-        exporter.accept(recipeId, artisanRecipe, builder.build(recipeId.withPrefixedPath("recipes/" + this.category.getName() + "/")));
+        exporter.accept(recipeId, artisanRecipe, builder.build(recipeId.withPrefix("recipes/" + this.category.getFolderName() + "/")));
     }
 
     @Override
-    public ArtisanTableRecipeJsonBuilder criterion(String string, AdvancementCriterion<?> advancementCriterion) {
+    public ArtisanTableRecipeJsonBuilder unlockedBy(String string, Criterion<?> advancementCriterion) {
         this.criteria.put(string, advancementCriterion);
         return this;
     }
 
-    private void validate(Identifier recipeId) {
+    private void validate(ResourceLocation recipeId) {
         if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + String.valueOf(recipeId));
         }

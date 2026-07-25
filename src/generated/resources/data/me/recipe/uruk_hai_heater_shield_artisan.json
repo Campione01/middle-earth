@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "medium_shield",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:crude_nugget"
+    },
+    {
+      "item": "me:crude_ingot"
+    },
+    {
+      "item": "me:crude_nugget"
+    },
+    {
+      "item": "me:crude_ingot"
+    },
+    {
+      "item": "me:shield_border"
+    },
+    {
+      "item": "me:crude_ingot"
+    },
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:uruk_hai_heater_shield"
+  }
+}

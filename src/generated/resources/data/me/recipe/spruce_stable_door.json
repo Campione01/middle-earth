@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "minecraft:spruce_planks"
+    },
+    "S": {
+      "tag": "me:steel_nuggets"
+    }
+  },
+  "pattern": [
+    "SPP",
+    "PPP",
+    "SPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:spruce_stable_door"
+  }
+}

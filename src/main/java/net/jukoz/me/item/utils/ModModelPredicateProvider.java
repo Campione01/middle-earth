@@ -6,10 +6,10 @@ import net.jukoz.me.item.ModWeaponItems;
 import net.jukoz.me.item.items.weapons.artefacts.ArtefactCustomGlowingDaggerWeaponItem;
 import net.jukoz.me.item.items.weapons.artefacts.ArtefactCustomGlowingLongswordWeaponItem;
 import net.jukoz.me.item.items.weapons.artefacts.ArtefactCustomLongswordWeaponItem;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.Item;
 import net.jukoz.me.item.items.PipeItem;
 
 public class ModModelPredicateProvider {
@@ -89,43 +89,43 @@ public class ModModelPredicateProvider {
     }
 
     private static void registerBow(Item bow) {
-        ModelPredicateProviderRegistry.register(bow, Identifier.of("pull"),
+        ItemProperties.register(bow, ResourceLocation.parse("pull"),
                 (stack, world, entity, seed) -> {
                    if(entity == null) return 0.0f;
-                   else if (entity.getActiveItem() != stack) return 0.0f;
-                   return (float)(stack.getMaxUseTime(entity) - entity.getItemUseTimeLeft()) / 20.0f;
+                   else if (entity.getUseItem() != stack) return 0.0f;
+                   return (float)(stack.getUseDuration(entity) - entity.getUseItemRemainingTicks()) / 20.0f;
                 });
 
-        ModelPredicateProviderRegistry.register(bow, Identifier.of("pulling"),
-                (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0f : 0.0f);
+        ItemProperties.register(bow, ResourceLocation.parse("pulling"),
+                (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0f : 0.0f);
     }
 
     private static void registerLongbow(Item bow) {
-        ModelPredicateProviderRegistry.register(bow, Identifier.of("pull"),
+        ItemProperties.register(bow, ResourceLocation.parse("pull"),
                 (stack, world, entity, seed) -> {
                     if(entity == null) return 0.0f;
-                    else if (entity.getActiveItem() != stack) return 0.0f;
-                    return (float)(stack.getMaxUseTime(entity) - entity.getItemUseTimeLeft()) / 30.0f;
+                    else if (entity.getUseItem() != stack) return 0.0f;
+                    return (float)(stack.getUseDuration(entity) - entity.getUseItemRemainingTicks()) / 30.0f;
                 });
 
-        ModelPredicateProviderRegistry.register(bow, Identifier.of("pulling"),
-                (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0f : 0.0f);
+        ItemProperties.register(bow, ResourceLocation.parse("pulling"),
+                (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0f : 0.0f);
     }
 
     private static void registerCrossbow(Item crossbow) {
-        ModelPredicateProviderRegistry.register(crossbow, Identifier.of("pull"),
+        ItemProperties.register(crossbow, ResourceLocation.parse("pull"),
                 (stack, world, entity, seed) -> {
                     if (entity == null) {
                         return 0.0F;
                     } else {
-                        return CrossbowItem.isCharged(stack) ? 0.0F : (float)(stack.getMaxUseTime(entity) - entity.getItemUseTimeLeft()) / (float)CrossbowItem.getPullTime(stack, entity);
+                        return CrossbowItem.isCharged(stack) ? 0.0F : (float)(stack.getUseDuration(entity) - entity.getUseItemRemainingTicks()) / (float)CrossbowItem.getChargeDuration(stack, entity);
                     }
                 });
 
-        ModelPredicateProviderRegistry.register(crossbow, Identifier.of("pulling"),
-                (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && !CrossbowItem.isCharged(stack) ? 1.0F : 0.0F);
+        ItemProperties.register(crossbow, ResourceLocation.parse("pulling"),
+                (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack && !CrossbowItem.isCharged(stack) ? 1.0F : 0.0F);
 
-        ModelPredicateProviderRegistry.register(crossbow, Identifier.of("charged"),
+        ItemProperties.register(crossbow, ResourceLocation.parse("charged"),
                 (stack, world, entity, seed) -> CrossbowItem.isCharged(stack) ? 1.0F : 0.0F);
     }
 
@@ -138,36 +138,36 @@ public class ModModelPredicateProvider {
     }
 
     private static void registerShield(Item shield) {
-        ModelPredicateProviderRegistry.register(shield, Identifier.of("blocking"),
-                (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
+        ItemProperties.register(shield, ResourceLocation.parse("blocking"),
+                (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
     }
 
     private static void registerSpear(Item spear) {
-        ModelPredicateProviderRegistry.register(spear, Identifier.of("holding"),
-                (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
+        ItemProperties.register(spear, ResourceLocation.parse("holding"),
+                (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
     }
 
     private static void registerArtefact(Item artefact) {
-        ModelPredicateProviderRegistry.register(artefact, Identifier.of("broken"),
+        ItemProperties.register(artefact, ResourceLocation.parse("broken"),
                 (stack, world, entity, seed) -> ArtefactCustomLongswordWeaponItem.isUsable(stack) ? 0.0F : 1.0F);
     }
 
     private static void registerGlowingArtefact(Item artefact) {
-        ModelPredicateProviderRegistry.register(artefact, Identifier.of("broken"),
+        ItemProperties.register(artefact, ResourceLocation.parse("broken"),
                 (stack, world, entity, seed) -> ArtefactCustomLongswordWeaponItem.isUsable(stack) ? 0.0F : 1.0F);
 
         if (artefact instanceof ArtefactCustomGlowingLongswordWeaponItem item){
-            ModelPredicateProviderRegistry.register(item, Identifier.of("glowing"),
+            ItemProperties.register(item, ResourceLocation.parse("glowing"),
                     (stack, world, entity, seed) -> ArtefactCustomGlowingLongswordWeaponItem.shouldBeGlowing(world, entity) ? 1.0F : 0.0F);
         }
         if (artefact instanceof ArtefactCustomGlowingDaggerWeaponItem item){
-            ModelPredicateProviderRegistry.register(item, Identifier.of("glowing"),
+            ItemProperties.register(item, ResourceLocation.parse("glowing"),
                     (stack, world, entity, seed) -> ArtefactCustomGlowingDaggerWeaponItem.shouldBeGlowing(world, entity) ? 1.0F : 0.0F);
         }
     }
 
     private static void registerPipeModel(Item pipe){
-        ModelPredicateProviderRegistry.register(pipe, Identifier.of("smoking"),
+        ItemProperties.register(pipe, ResourceLocation.parse("smoking"),
                 (stack, world, entity, seed) -> {
                     if (stack.getItem() instanceof PipeItem pipeItem) {
                         return pipeItem.isSmoking() ? 1.0F : 0.0F;

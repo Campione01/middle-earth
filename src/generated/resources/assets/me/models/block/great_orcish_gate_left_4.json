@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/large_door_left",
+  "textures": {
+    "all": "me:block/great_orcish_gate_4",
+    "particle": "me:block/great_orcish_gate_4"
+  }
+}

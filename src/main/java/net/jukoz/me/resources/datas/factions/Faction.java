@@ -2,7 +2,7 @@ package net.jukoz.me.resources.datas.factions;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.fabricmc.fabric.api.util.NbtType;
+import net.jukoz.me.compat.neoforge.api.util.NbtType;
 import net.jukoz.me.resources.MiddleEarthFactions;
 import net.jukoz.me.resources.datas.Disposition;
 import net.jukoz.me.resources.datas.FactionType;
@@ -16,24 +16,20 @@ import net.jukoz.me.resources.datas.races.Race;
 import net.jukoz.me.resources.datas.races.RaceLookup;
 import net.jukoz.me.utils.IdentifierUtil;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.block.entity.BannerPattern;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.component.type.BannerPatternsComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableTextContent;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatternLayers;
 import java.util.*;
 
 
@@ -46,37 +42,37 @@ public class Faction {
             Codec.BOOL.fieldOf("joinable").forGetter(Faction::getJoinable),
             Codec.STRING.fieldOf("disposition").forGetter(Faction::getDispositionString),
             Codec.STRING.fieldOf("faction_type").forGetter(Faction::getFactionTypeString),
-            Identifier.CODEC.optionalFieldOf("parent_faction").forGetter(Faction::getParentFactionIdentifier),
-            Codec.list(Identifier.CODEC).optionalFieldOf("subfaction").forGetter(Faction::getSubfactionIds),
-            NbtCompound.CODEC.optionalFieldOf("npcs").forGetter(Faction::getNpcValues),
-            NbtCompound.CODEC.optionalFieldOf("banner").forGetter(Faction::getBannerNbt),
-            NbtCompound.CODEC.optionalFieldOf("spawns").forGetter(Faction::getSpawnDataNbt),
+            ResourceLocation.CODEC.optionalFieldOf("parent_faction").forGetter(Faction::getParentFactionIdentifier),
+            Codec.list(ResourceLocation.CODEC).optionalFieldOf("subfaction").forGetter(Faction::getSubfactionIds),
+            CompoundTag.CODEC.optionalFieldOf("npcs").forGetter(Faction::getNpcValues),
+            CompoundTag.CODEC.optionalFieldOf("banner").forGetter(Faction::getBannerNbt),
+            CompoundTag.CODEC.optionalFieldOf("spawns").forGetter(Faction::getSpawnDataNbt),
             Codec.list(Codec.STRING, 0, 5).optionalFieldOf("command_join").forGetter(Faction::getJoinCommands),
             Codec.list(Codec.STRING, 0, 5).optionalFieldOf("command_leave").forGetter(Faction::getLeaveCommands)
         ).apply(instance, Faction::new));
 
-    private final Identifier id;
+    private final ResourceLocation id;
     private final Integer factionSelectionOrderIndex;
     private final String translatableKey;
     private final boolean joinable;
     private final Disposition disposition;
     private final FactionType factionType;
-    private final Identifier parentFactionId;
-    private final HashMap<NpcRank, List<Identifier>> npcDatasByRank;
+    private final ResourceLocation parentFactionId;
+    private final HashMap<NpcRank, List<ResourceLocation>> npcDatasByRank;
     private final BannerData bannerData;
     private final SpawnDataHandler spawnDataHandler;
-    private List<Identifier> subFactions = null;
+    private List<ResourceLocation> subFactions = null;
     private List<String> joinCommands;
     private List<String> leaveCommands;
     public List<Race> races = null;
-    private List<Text> descriptions = null;
-    private Text raceList = null;
+    private List<Component> descriptions = null;
+    private Component raceList = null;
 
-    public Faction(String id, Integer factionSelectionOrderIndex, Boolean joinable, String disposition, String factionType, Optional<Identifier> parentFaction, Optional<List<Identifier>> newSubFactions, Optional<NbtCompound> npcs, Optional<NbtCompound> bannerDataNbt, Optional<NbtCompound> spawnsNbt, Optional<List<String>> joinCommands, Optional<List<String>> leaveCommands) {
+    public Faction(String id, Integer factionSelectionOrderIndex, Boolean joinable, String disposition, String factionType, Optional<ResourceLocation> parentFaction, Optional<List<ResourceLocation>> newSubFactions, Optional<CompoundTag> npcs, Optional<CompoundTag> bannerDataNbt, Optional<CompoundTag> spawnsNbt, Optional<List<String>> joinCommands, Optional<List<String>> leaveCommands) {
         this.id = IdentifierUtil.getIdentifierFromString(id);
 
         this.factionSelectionOrderIndex = factionSelectionOrderIndex; // TODO : Validation, rework this part in the future
-        this.translatableKey = "faction.".concat(this.id.toTranslationKey());
+        this.translatableKey = "faction.".concat(this.id.toLanguageKey());
         this.joinable = joinable;
         this.disposition = Disposition.valueOf(disposition.toUpperCase());
 
@@ -90,12 +86,12 @@ public class Faction {
 
         this.npcDatasByRank = new HashMap<>();
         npcs.ifPresent(nbtCompound -> {
-            NbtList list = nbtCompound.getList("ranks", NbtType.COMPOUND);
+            ListTag list = nbtCompound.getList("ranks", NbtType.COMPOUND);
             for(int i = 0; i < list.size(); i++){
-                NbtCompound rankCompound = list.getCompound(i);
+                CompoundTag rankCompound = list.getCompound(i);
                 NpcRank rank = NpcRank.valueOf(rankCompound.getString("rank").toUpperCase());
-                NbtList npcDataList = rankCompound.getList("pool", NbtType.STRING);
-                List<Identifier> dataList = new ArrayList<>();
+                ListTag npcDataList = rankCompound.getList("pool", NbtType.STRING);
+                List<ResourceLocation> dataList = new ArrayList<>();
                 for(int j = 0; j < npcDataList.size(); j++){
                     dataList.add(IdentifierUtil.getIdentifierFromString(npcDataList.getString(j)));
                 }
@@ -117,7 +113,7 @@ public class Faction {
         verifyData();
     }
 
-    public Faction(String name, Boolean joinable, Disposition disposition, FactionType factionType, Identifier parentFactionId, List<Identifier> subFactions, HashMap<NpcRank, List<NpcData>> npcDatas, BannerData bannerData, SpawnDataHandler spawnDataHandler, List<String> joinCommand, List<String> leaveCommand){
+    public Faction(String name, Boolean joinable, Disposition disposition, FactionType factionType, ResourceLocation parentFactionId, List<ResourceLocation> subFactions, HashMap<NpcRank, List<NpcData>> npcDatas, BannerData bannerData, SpawnDataHandler spawnDataHandler, List<String> joinCommand, List<String> leaveCommand){
         this.id = IdentifierUtil.getIdentifierFromString(name);
 
         if(factionSelectionOrderIndexPerDisposition == null)
@@ -134,7 +130,7 @@ public class Faction {
             factionSelectionOrderIndexPerDisposition.put(disposition, List.of(initialIndex));
         }
 
-        this.translatableKey = "faction.".concat(this.id.toTranslationKey());
+        this.translatableKey = "faction.".concat(this.id.toLanguageKey());
         this.joinable = joinable;
         this.disposition = disposition;
         this.factionType = factionType;
@@ -145,7 +141,7 @@ public class Faction {
         } else{
             this.npcDatasByRank = new HashMap<>();
             for(NpcRank rank : npcDatas.keySet()){
-                List<Identifier> listOfIdentifiers = new ArrayList<>();
+                List<ResourceLocation> listOfIdentifiers = new ArrayList<>();
                 for(NpcData data : npcDatas.get(rank)){
                     listOfIdentifiers.add(data.getId());
                 }
@@ -201,43 +197,43 @@ public class Faction {
         return joinable;
     }
 
-    private Optional<Identifier> getParentFactionIdentifier() {
+    private Optional<ResourceLocation> getParentFactionIdentifier() {
         if(this.parentFactionId == null)
             return Optional.empty();
         return Optional.of(this.parentFactionId);
     }
-    public Identifier getParentFactionId() {
+    public ResourceLocation getParentFactionId() {
         return parentFactionId;
     }
 
-    private Optional<List<Identifier>> getSubfactionIds() {
+    private Optional<List<ResourceLocation>> getSubfactionIds() {
         if(this.subFactions == null)
             return Optional.empty();
         return Optional.of(subFactions);
     }
-    private Optional<NbtCompound> getBannerNbt() {
+    private Optional<CompoundTag> getBannerNbt() {
         if(this.bannerData == null)
             return Optional.empty();
         return this.bannerData.getNbt();
     }
-    private Optional<NbtCompound> getSpawnDataNbt() {
+    private Optional<CompoundTag> getSpawnDataNbt() {
         if(this.spawnDataHandler == null)
             return Optional.empty();
 
         return this.spawnDataHandler.serializeNbt();
     }
 
-    public Optional<NbtCompound> getNpcValues() {
+    public Optional<CompoundTag> getNpcValues() {
         if(this.npcDatasByRank == null || this.npcDatasByRank.isEmpty())
             return Optional.empty();
-        NbtCompound nbtCompound = new NbtCompound();
-        NbtList ranks = new NbtList();
+        CompoundTag nbtCompound = new CompoundTag();
+        ListTag ranks = new ListTag();
         for(NpcRank rank : this.npcDatasByRank.keySet()){
-            NbtCompound rankNbt = new NbtCompound();
+            CompoundTag rankNbt = new CompoundTag();
             rankNbt.putString("rank", rank.toString().toUpperCase());
-            NbtList identifiers = new NbtList();
-            for(Identifier npcDataIdentifier : this.npcDatasByRank.get(rank).stream().toList()) {
-                identifiers.add(NbtString.of(npcDataIdentifier.toString()));
+            ListTag identifiers = new ListTag();
+            for(ResourceLocation npcDataIdentifier : this.npcDatasByRank.get(rank).stream().toList()) {
+                identifiers.add(StringTag.valueOf(npcDataIdentifier.toString()));
             }
             rankNbt.put("pool", identifiers);
             ranks.add(rankNbt);
@@ -263,7 +259,7 @@ public class Faction {
     return id.toString();
     }
 
-    public NpcData getRandomGear(World world, NpcRank npcRank, Race race) {
+    public NpcData getRandomGear(Level world, NpcRank npcRank, Race race) {
         if(!this.npcDatasByRank.containsKey(npcRank))
             return null;
         List<NpcData> npcDataList = NpcDataLookup.getAllNpcDatasFromRace(world, getNpcPoolFromRank(npcRank), race.getId());
@@ -273,11 +269,11 @@ public class Faction {
         return npcDataList.get(random.nextInt(0, npcDataList.size()));
     }
 
-    public NpcGearData getPreviewGear(World world, Race selectedRace){
+    public NpcGearData getPreviewGear(Level world, Race selectedRace){
         if(selectedRace == null)
             return NpcGearData.Create();
 
-        List<Identifier> identifiersToUse = new ArrayList<>();
+        List<ResourceLocation> identifiersToUse = new ArrayList<>();
         identifiersToUse.addAll(getNpcPoolFromRank(NpcRank.MILITIA));
         identifiersToUse.addAll(getNpcPoolFromRank(NpcRank.SOLDIER));
         identifiersToUse.addAll(getNpcPoolFromRank(NpcRank.KNIGHT));
@@ -292,7 +288,7 @@ public class Faction {
         return foundNpcData.getGear();
     }
 
-    private List<Identifier> getNpcPoolFromRank(NpcRank npcRank) {
+    private List<ResourceLocation> getNpcPoolFromRank(NpcRank npcRank) {
         return this.npcDatasByRank.get(npcRank);
     }
 
@@ -301,20 +297,20 @@ public class Faction {
         return bannerData.getBaseDye();
     }
 
-    public List<BannerData.BannerPatternWithColor> getBannerPatternsWithColors(World world) {
+    public List<BannerData.BannerPatternWithColor> getBannerPatternsWithColors(Level world) {
         if(bannerData == null) return null;
         return bannerData.getBannerPatternsWithColors(world);
     }
 
-    public ItemStack getBannerItem(World world){
-        return bannerData.getBannerItem(world, Text.translatable("block.me.faction_banner", getFullName()).formatted(Formatting.GOLD));
+    public ItemStack getBannerItem(Level world){
+        return bannerData.getBannerItem(world, Component.translatable("block.me.faction_banner", getFullName()).withStyle(ChatFormatting.GOLD));
     }
 
-    public List<Identifier> getSubFactions(){
+    public List<ResourceLocation> getSubFactions(){
         return subFactions;
     }
 
-    public Faction getSubfaction(World world, int index){
+    public Faction getSubfaction(Level world, int index){
         if(world == null || this.subFactions == null || index >= this.subFactions.size())
             return null;
         return getSubfactionById(world, subFactions.get(index));
@@ -337,7 +333,7 @@ public class Faction {
     public SpawnDataHandler getSpawnData() {
         return spawnDataHandler; }
 
-    public Identifier getId() {
+    public ResourceLocation getId() {
         return id;
     }
 
@@ -345,26 +341,26 @@ public class Faction {
         return id.getPath();
     }
 
-    public MutableText getFullName() {
-        return MutableText.of(new TranslatableTextContent(translatableKey, "", TranslatableTextContent.EMPTY_ARGUMENTS));
+    public MutableComponent getFullName() {
+        return MutableComponent.create(new TranslatableContents(translatableKey, "", TranslatableContents.NO_ARGS));
     }
 
-    public MutableText tryGetShortName() {
+    public MutableComponent tryGetShortName() {
         String target = translatableKey.concat(".fallback");
-        String fallback = Text.translatable(translatableKey).getString();
-        return MutableText.of(new TranslatableTextContent(target, fallback, TranslatableTextContent.EMPTY_ARGUMENTS));
+        String fallback = Component.translatable(translatableKey).getString();
+        return MutableComponent.create(new TranslatableContents(target, fallback, TranslatableContents.NO_ARGS));
     }
 
-    public Faction getSubfactionById(World world, Identifier id) {
+    public Faction getSubfactionById(Level world, ResourceLocation id) {
         if(subFactions == null)
             return null;
-        return world.getRegistryManager().get(MiddleEarthFactions.FACTION_KEY).get(id);
+        return world.registryAccess().registryOrThrow(MiddleEarthFactions.FACTION_KEY).get(id);
     }
 
-    public List<Race> getRaces(World world) {
+    public List<Race> getRaces(Level world) {
         if(races != null) return races;
 
-        List<Identifier> allRaceIds = new ArrayList<>();
+        List<ResourceLocation> allRaceIds = new ArrayList<>();
         for(NpcRank rank : this.npcDatasByRank.keySet()){
             List<NpcData> datas = NpcDataLookup.getAllNpcDatas(world, this.npcDatasByRank.get(rank));
             for(NpcData data : datas){
@@ -380,14 +376,14 @@ public class Faction {
         return joinable;
     }
 
-    public List<Text> getDescription() {
+    public List<Component> getDescription() {
         if(descriptions == null){
             descriptions = new ArrayList<>();
             boolean hasDescription = true;
             String base = "description.me.%s.description_%s".formatted(id.getPath(), "%s");
             while(hasDescription){
                 String langPath = base.formatted(descriptions.size());
-                Text text = Text.translatable(langPath);
+                Component text = Component.translatable(langPath);
                 if(!Objects.equals(text.getString(), langPath)){
                     descriptions.add(text);
                 } else {
@@ -398,7 +394,7 @@ public class Faction {
         return descriptions;
     }
 
-    public Text getRaceListText(World world) {
+    public Component getRaceListText(Level world) {
         if(raceList == null){
             StringBuilder raceListStringBuilder = new StringBuilder();
             if(races == null)
@@ -408,12 +404,12 @@ public class Faction {
                 if(race != races.getLast())
                     raceListStringBuilder.append(", ");
             }
-            raceList = Text.literal(raceListStringBuilder.toString());
+            raceList = Component.literal(raceListStringBuilder.toString());
         }
         return raceList;
     }
 
-    public BannerPatternsComponent getBannerPatternComponents(RegistryEntryLookup<BannerPattern> bannerPatternLookup) {
+    public BannerPatternLayers getBannerPatternComponents(HolderGetter<BannerPattern> bannerPatternLookup) {
         if(bannerData == null)
             return null;
         return bannerData.getBannerPatternComponents(bannerPatternLookup);

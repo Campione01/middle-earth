@@ -1,0 +1,503 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_cuirass",
+              "weight": 3
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_cuirass"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_cuirass"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_cuirass"
+            },
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_cuirass",
+              "weight": 3
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_cuirass"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_cuirass"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_cuirass"
+            },
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_painted_cuirass",
+              "weight": 3
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_painted_cuirass"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_painted_cuirass"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_painted_cuirass"
+            },
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_chestplate",
+              "weight": 3
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_chestplate"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_chestplate"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_chestplate"
+            },
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_chestplate",
+              "weight": 3
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_chestplate"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_chestplate"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_chestplate"
+            },
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_gorget_hauberk",
+              "weight": 3
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_gorget_hauberk"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_gorget_hauberk"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_gorget_hauberk"
+            },
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_gorget_hauberk",
+              "weight": 3
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_gorget_hauberk"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_gorget_hauberk"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_gorget_hauberk"
+            },
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_degraded_gondorian_chestplate"
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_degraded_gondorian_chestplate"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_degraded_gondorian_chestplate"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_degraded_gondorian_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "pool": [
+            {
+              "id": "me:orcish_sandals"
+            },
+            {
+              "id": "me:orcish_black_fur_boots"
+            },
+            {
+              "id": "me:orcish_brown_fur_boots"
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            },
+            {
+              "id": "me:mordor_helmet",
+              "weight": 3
+            },
+            {
+              "hood": "hood",
+              "hood_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_helmet",
+              "weight": 2
+            },
+            {
+              "id": "me:mordor_nasal_helmet",
+              "weight": 3
+            },
+            {
+              "hood": "hood",
+              "hood_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_nasal_helmet",
+              "weight": 2
+            },
+            {
+              "id": "me:mordor_kettle_hat",
+              "weight": 2
+            },
+            {
+              "id": "me:mordor_kettle_hat_with_coif",
+              "weight": 2
+            },
+            {
+              "id": "me:mordor_mandible_helmet"
+            },
+            {
+              "hood": "hood",
+              "hood_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:mordor_sallet"
+            },
+            {
+              "id": "me:mordor_crest_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_strip_leather_skirt"
+            },
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_leather_skirt"
+            },
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_leg_bracer"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:mordor_spear",
+              "weight": 3
+            },
+            {
+              "id": "me:mordor_axe",
+              "weight": 2
+            },
+            {
+              "id": "me:mordor_falchion",
+              "weight": 2
+            },
+            {
+              "id": "me:orc_sword",
+              "weight": 2
+            },
+            {
+              "id": "me:orc_axe",
+              "weight": 2
+            },
+            {
+              "id": "me:orc_spear",
+              "weight": 2
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:mordor_braced_shield",
+              "weight": 3
+            },
+            {
+              "id": "me:mordor_black_braced_shield",
+              "weight": 2
+            },
+            {
+              "id": "me:mordor_painted_braced_shield",
+              "weight": 2
+            },
+            {
+              "id": "me:mordor_large_shield",
+              "weight": 3
+            },
+            {
+              "id": "me:mordor_black_large_shield",
+              "weight": 2
+            },
+            {
+              "id": "me:mordor_painted_large_shield",
+              "weight": 2
+            },
+            {
+              "id": "me:gondorian_converted_shield"
+            },
+            {
+              "id": "minecraft:air"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:mordor.orc_soldier",
+  "race": "me:orc"
+}

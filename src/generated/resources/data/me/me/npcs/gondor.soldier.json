@@ -1,0 +1,80 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:gondorian_tabbard"
+            },
+            {
+              "id": "me:gondorian_leather_cuirass"
+            },
+            {
+              "id": "me:gondorian_leather_chestplate"
+            },
+            {
+              "id": "me:gondorian_soldier_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:gondorian_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:gondorian_cabasset_helmet"
+            },
+            {
+              "id": "me:gondorian_soldier_helmet",
+              "weight": 2
+            },
+            {
+              "id": "me:kettle_hat"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:gondorian_mail_coat"
+            },
+            {
+              "color": 5592678,
+              "id": "me:arming_skirt",
+              "weight": 2
+            },
+            {
+              "color": 2502447,
+              "id": "me:arming_skirt",
+              "weight": 2
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "minecraft:air"
+            },
+            {
+              "id": "me:gondorian_shield"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_sword"
+            },
+            {
+              "id": "me:gondorian_axe"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:gondor.soldier",
+  "race": "me:human"
+}

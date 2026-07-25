@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "leggings",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:galadhrim_leggings"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:galadhrim_lord_leggings"
+  }
+}

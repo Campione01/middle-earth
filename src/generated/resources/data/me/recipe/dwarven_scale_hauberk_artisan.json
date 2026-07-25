@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:dwarven_scale_hauberk"
+  }
+}

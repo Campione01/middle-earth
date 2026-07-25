@@ -6,8 +6,8 @@ import net.jukoz.me.config.ModServerConfigs;
 import net.jukoz.me.network.contexts.ClientPacketContext;
 import net.jukoz.me.utils.LoggerUtil;
 import net.jukoz.me.world.dimension.ModDimensions;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.world.World;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.level.Level;
 
 /**
  * Client side only
@@ -15,9 +15,9 @@ import net.minecraft.world.World;
 public class OnboardingScreenHandler {
     public static void handle(ClientPacketContext context, boolean havePlayerData, float delay){
         try{
-            World world = context.player().getWorld();
+            Level world = context.player().level();
             if(ModDimensions.isInOverworld(world)){
-                MinecraftClient client = MinecraftClient.getInstance();
+                Minecraft client = Minecraft.getInstance();
                 if(!havePlayerData){
                     client.setScreen(new FactionSelectionScreen(delay));
                 } else {

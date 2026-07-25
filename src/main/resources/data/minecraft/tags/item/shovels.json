@@ -1,10 +1,6 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "#fabric:shovels",
-      "required": false
-    },
     "me:khazad_steel_shovel",
     "me:crude_shovel",
     "me:burzum_steel_shovel",

@@ -2,29 +2,29 @@ package net.jukoz.me.block.special;
 
 import com.mojang.serialization.MapCodec;
 import net.jukoz.me.block.ModNatureBlocks;
-import net.minecraft.block.AbstractPlantStemBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.VineLogic;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.GrowingPlantHeadBlock;
+import net.minecraft.world.level.block.NetherVines;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class MirkwoodVinesBottomBlock extends AbstractPlantStemBlock {
-    public static final MapCodec<MirkwoodVinesBottomBlock> CODEC = MirkwoodVinesBottomBlock.createCodec(MirkwoodVinesBottomBlock::new);
+public class MirkwoodVinesBottomBlock extends GrowingPlantHeadBlock {
+    public static final MapCodec<MirkwoodVinesBottomBlock> CODEC = MirkwoodVinesBottomBlock.simpleCodec(MirkwoodVinesBottomBlock::new);
 
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(4.0, 9.0, 4.0, 12.0, 16.0, 12.0);
+    protected static final VoxelShape SHAPE = Block.box(4.0, 9.0, 4.0, 12.0, 16.0, 12.0);
 
-    public MirkwoodVinesBottomBlock(Settings settings) {
+    public MirkwoodVinesBottomBlock(Properties settings) {
         super(settings, Direction.DOWN, SHAPE, false, 0.05);
     }
 
     @Override
-    protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        BlockPos blockPos = pos.offset(this.growthDirection.getOpposite());
+    protected boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+        BlockPos blockPos = pos.relative(this.growthDirection.getOpposite());
         BlockState blockState = world.getBlockState(blockPos);
         if (!this.canAttachTo(blockState)) {
             return false;
@@ -33,26 +33,26 @@ public class MirkwoodVinesBottomBlock extends AbstractPlantStemBlock {
         }
     }
 
-    public boolean isBlockStateValid(BlockState blockState, WorldView world, BlockPos blockPos) {
-        boolean isValid = blockState.isIn(BlockTags.LOGS) || blockState.isIn(BlockTags.LEAVES) || blockState.isOf(this.getStem())
-                || blockState.isOf(this.getPlant()) || blockState.isSideSolidFullSquare(world, blockPos, this.growthDirection);
+    public boolean isBlockStateValid(BlockState blockState, LevelReader world, BlockPos blockPos) {
+        boolean isValid = blockState.is(BlockTags.LOGS) || blockState.is(BlockTags.LEAVES) || blockState.is(this.getHeadBlock())
+                || blockState.is(this.getBodyBlock()) || blockState.isFaceSturdy(world, blockPos, this.growthDirection);
         return isValid;
     }
 
     @Override
-    protected MapCodec<? extends AbstractPlantStemBlock> getCodec() {
+    protected MapCodec<? extends GrowingPlantHeadBlock> codec() {
         return CODEC;
     }
 
-    protected int getGrowthLength(Random random) {
+    protected int getBlocksToGrowWhenBonemealed(RandomSource random) {
         return random.nextInt(5);
     }
 
-    protected Block getPlant() {
+    protected Block getBodyBlock() {
         return ModNatureBlocks.MIRKWOOD_VINES_PLANT;
     }
 
-    protected boolean chooseStemState(BlockState state) {
-        return VineLogic.isValidForWeepingStem(state);
+    protected boolean canGrowInto(BlockState state) {
+        return NetherVines.isValidGrowthState(state);
     }
 }

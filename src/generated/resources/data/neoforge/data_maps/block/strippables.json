@@ -1,0 +1,106 @@
+{
+  "values": {
+    "me:beech_log": {
+      "stripped_block": "me:stripped_beech_log"
+    },
+    "me:beech_wood": {
+      "stripped_block": "me:stripped_beech_wood"
+    },
+    "me:black_lebethron_log": {
+      "stripped_block": "me:stripped_black_lebethron_log"
+    },
+    "me:black_lebethron_wood": {
+      "stripped_block": "me:stripped_black_lebethron_wood"
+    },
+    "me:black_pine_log": {
+      "stripped_block": "me:stripped_black_pine_log"
+    },
+    "me:black_pine_wood": {
+      "stripped_block": "me:stripped_black_pine_wood"
+    },
+    "me:chestnut_log": {
+      "stripped_block": "me:stripped_chestnut_log"
+    },
+    "me:chestnut_wood": {
+      "stripped_block": "me:stripped_chestnut_wood"
+    },
+    "me:fir_log": {
+      "stripped_block": "me:stripped_fir_log"
+    },
+    "me:fir_wood": {
+      "stripped_block": "me:stripped_fir_wood"
+    },
+    "me:holly_log": {
+      "stripped_block": "me:stripped_holly_log"
+    },
+    "me:holly_wood": {
+      "stripped_block": "me:stripped_holly_wood"
+    },
+    "me:larch_log": {
+      "stripped_block": "me:stripped_larch_log"
+    },
+    "me:larch_wood": {
+      "stripped_block": "me:stripped_larch_wood"
+    },
+    "me:mallorn_log": {
+      "stripped_block": "me:stripped_mallorn_log"
+    },
+    "me:mallorn_wood": {
+      "stripped_block": "me:stripped_mallorn_wood"
+    },
+    "me:maple_log": {
+      "stripped_block": "me:stripped_maple_log"
+    },
+    "me:maple_wood": {
+      "stripped_block": "me:stripped_maple_wood"
+    },
+    "me:mirkwood_log": {
+      "stripped_block": "me:stripped_mirkwood_log"
+    },
+    "me:mirkwood_wood": {
+      "stripped_block": "me:stripped_mirkwood_wood"
+    },
+    "me:palm_log": {
+      "stripped_block": "me:stripped_palm_log"
+    },
+    "me:palm_wood": {
+      "stripped_block": "me:stripped_palm_wood"
+    },
+    "me:pine_log": {
+      "stripped_block": "me:stripped_pine_log"
+    },
+    "me:pine_wood": {
+      "stripped_block": "me:stripped_pine_wood"
+    },
+    "me:scorched_log": {
+      "stripped_block": "me:stripped_scorched_log"
+    },
+    "me:scorched_wood": {
+      "stripped_block": "me:stripped_scorched_wood"
+    },
+    "me:silver_maple_log": {
+      "stripped_block": "me:stripped_silver_maple_log"
+    },
+    "me:silver_maple_wood": {
+      "stripped_block": "me:stripped_silver_maple_wood"
+    },
+    "me:white_lebethron_log": {
+      "stripped_block": "me:stripped_white_lebethron_log"
+    },
+    "me:white_lebethron_wood": {
+      "stripped_block": "me:stripped_white_lebethron_wood"
+    },
+    "me:white_palm_log": {
+      "stripped_block": "me:stripped_white_palm_log"
+    },
+    "me:white_palm_wood": {
+      "stripped_block": "me:stripped_white_palm_wood"
+    },
+    "me:willow_log": {
+      "stripped_block": "me:stripped_willow_log"
+    },
+    "me:willow_wood": {
+      "stripped_block": "me:stripped_willow_wood"
+    }
+  }
+}

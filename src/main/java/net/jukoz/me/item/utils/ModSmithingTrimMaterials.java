@@ -3,34 +3,33 @@ package net.jukoz.me.item.utils;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.block.StoneBlockSets;
 import net.jukoz.me.item.ModResourceItems;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.trim.ArmorTrimMaterial;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-
+import net.minecraft.Util;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.armortrim.TrimMaterial;
 import java.util.Map;
 
 public class ModSmithingTrimMaterials {
-    public static final RegistryKey<ArmorTrimMaterial> BRONZE = of("bronze");
-    public static final RegistryKey<ArmorTrimMaterial> BURZUM_STEEL = of("burzum_steel");
-    public static final RegistryKey<ArmorTrimMaterial> CRUDE = of("crude");
-    public static final RegistryKey<ArmorTrimMaterial> EDHEL_STEEL = of("edhel_steel");
-    public static final RegistryKey<ArmorTrimMaterial> JADE = of("jade");
-    public static final RegistryKey<ArmorTrimMaterial> KHAZAD_STEEL = of("khazad_steel");
-    public static final RegistryKey<ArmorTrimMaterial> LEAD = of("lead");
-    public static final RegistryKey<ArmorTrimMaterial> MITHRIL = of("mithril");
-    public static final RegistryKey<ArmorTrimMaterial> SILVER = of("silver");
-    public static final RegistryKey<ArmorTrimMaterial> STEEL = of("steel");
-    public static final RegistryKey<ArmorTrimMaterial> TIN = of("tin");
+    public static final ResourceKey<TrimMaterial> BRONZE = of("bronze");
+    public static final ResourceKey<TrimMaterial> BURZUM_STEEL = of("burzum_steel");
+    public static final ResourceKey<TrimMaterial> CRUDE = of("crude");
+    public static final ResourceKey<TrimMaterial> EDHEL_STEEL = of("edhel_steel");
+    public static final ResourceKey<TrimMaterial> JADE = of("jade");
+    public static final ResourceKey<TrimMaterial> KHAZAD_STEEL = of("khazad_steel");
+    public static final ResourceKey<TrimMaterial> LEAD = of("lead");
+    public static final ResourceKey<TrimMaterial> MITHRIL = of("mithril");
+    public static final ResourceKey<TrimMaterial> SILVER = of("silver");
+    public static final ResourceKey<TrimMaterial> STEEL = of("steel");
+    public static final ResourceKey<TrimMaterial> TIN = of("tin");
 
-    public static void bootstrap(Registerable<ArmorTrimMaterial> registry) {
+    public static void bootstrap(BootstrapContext<TrimMaterial> registry) {
         register(registry, BRONZE, ModResourceItems.BRONZE_INGOT, Style.EMPTY.withColor(13151627), 0.005f);
         register(registry, BURZUM_STEEL, ModResourceItems.BURZUM_STEEL_INGOT, Style.EMPTY.withColor(5985355), 0.008f);
         register(registry, CRUDE, ModResourceItems.CRUDE_INGOT, Style.EMPTY.withColor(7560021), 0.007f);
@@ -44,16 +43,16 @@ public class ModSmithingTrimMaterials {
         register(registry, TIN, ModResourceItems.TIN_INGOT, Style.EMPTY.withColor(13026492), 0.002f);
     }
 
-    private static void register(Registerable<ArmorTrimMaterial> registry, RegistryKey<ArmorTrimMaterial> key, Item ingredient, Style style, float itemModelIndex) {
+    private static void register(BootstrapContext<TrimMaterial> registry, ResourceKey<TrimMaterial> key, Item ingredient, Style style, float itemModelIndex) {
         register(registry, key, ingredient, style, itemModelIndex, Map.of());
     }
 
-    private static void register(Registerable<ArmorTrimMaterial> registry, RegistryKey<ArmorTrimMaterial> key, Item ingredient, Style style, float itemModelIndex, Map<RegistryEntry<ArmorMaterial>, String> overrideArmorMaterials) {
-        ArmorTrimMaterial armorTrimMaterial = ArmorTrimMaterial.of(key.getValue().getPath(), ingredient, itemModelIndex, Text.translatable(Util.createTranslationKey("trim_material", key.getValue())).fillStyle(style), overrideArmorMaterials);
+    private static void register(BootstrapContext<TrimMaterial> registry, ResourceKey<TrimMaterial> key, Item ingredient, Style style, float itemModelIndex, Map<Holder<ArmorMaterial>, String> overrideArmorMaterials) {
+        TrimMaterial armorTrimMaterial = TrimMaterial.create(key.location().getPath(), ingredient, itemModelIndex, Component.translatable(Util.makeDescriptionId("trim_material", key.location())).withStyle(style), overrideArmorMaterials);
         registry.register(key, armorTrimMaterial);
     }
 
-    private static RegistryKey<ArmorTrimMaterial> of(String id) {
-        return RegistryKey.of(RegistryKeys.TRIM_MATERIAL, Identifier.of(MiddleEarth.MOD_ID, id));
+    private static ResourceKey<TrimMaterial> of(String id) {
+        return ResourceKey.create(Registries.TRIM_MATERIAL, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, id));
     }
 }

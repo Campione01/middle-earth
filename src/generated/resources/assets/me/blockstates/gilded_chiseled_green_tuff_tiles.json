@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "me:block/gilded_chiseled_green_tuff_tiles_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "me:block/gilded_chiseled_green_tuff_tiles"
+    },
+    "axis=z": {
+      "model": "me:block/gilded_chiseled_green_tuff_tiles_horizontal",
+      "x": 90
+    }
+  }
+}

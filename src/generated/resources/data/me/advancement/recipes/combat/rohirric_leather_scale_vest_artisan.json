@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_arming_coat": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:arming_coat"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:rohirric_leather_scale_vest_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_arming_coat"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:rohirric_leather_scale_vest_artisan"
+    ]
+  }
+}

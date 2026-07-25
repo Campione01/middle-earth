@@ -5,9 +5,8 @@ import net.jukoz.me.datageneration.content.loot_tables.BlockDrops;
 import net.jukoz.me.datageneration.content.loot_tables.LeavesDrops;
 import net.jukoz.me.datageneration.content.models.*;
 import net.jukoz.me.datageneration.content.tags.*;
-import net.minecraft.block.PillarBlock;
-import net.minecraft.registry.Registries;
-
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import java.util.Objects;
 
 public class HelpingGenerator {
@@ -252,7 +251,7 @@ public class HelpingGenerator {
         SimpleBlockModel.blocks.addAll(LeavesSets.blocks);
 
         for (MushroomBlockSets.MushroomBlockSet set : MushroomBlockSets.sets) {
-            if(!Objects.equals(Registries.BLOCK.getId(set.stem()).getPath(), "mushroom_stem")) {
+            if(!Objects.equals(BuiltInRegistries.BLOCK.getKey(set.stem()).getPath(), "mushroom_stem")) {
                 SimpleBlockModel.blocks.add(set.stem());
 
                 MineableAxe.blocks.add(set.stem());
@@ -365,7 +364,7 @@ public class HelpingGenerator {
         }
 
         for (OtherBlockSets.MiscBlockSet set : OtherBlockSets.specialWoodSets) {
-            if (set.block() instanceof PillarBlock){
+            if (set.block() instanceof RotatedPillarBlock){
                 SimplePillarModel.blocks.add(new SimplePillarModel.Pillar(set.block()));
             } else {
                 SimpleBlockModel.blocks.add(set.block());

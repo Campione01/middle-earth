@@ -1,0 +1,499 @@
+{
+  "values": {
+    "me:beach_grass": {
+      "chance": 0.3
+    },
+    "me:beech_sapling": {
+      "chance": 0.3
+    },
+    "me:bell_pepper": {
+      "chance": 0.5
+    },
+    "me:bell_pepper_seeds": {
+      "chance": 0.3
+    },
+    "me:berry_holly_leaves": {
+      "chance": 0.4
+    },
+    "me:berry_pie": {
+      "chance": 1.0
+    },
+    "me:black_pine_sapling": {
+      "chance": 0.3
+    },
+    "me:bracken": {
+      "chance": 0.3
+    },
+    "me:brown_bolete": {
+      "chance": 0.65
+    },
+    "me:brown_bolete_block": {
+      "chance": 0.85
+    },
+    "me:brown_bolete_tiller": {
+      "chance": 0.4
+    },
+    "me:brown_grass": {
+      "chance": 0.3
+    },
+    "me:cave_amanita": {
+      "chance": 0.65
+    },
+    "me:cave_amanita_block": {
+      "chance": 0.85
+    },
+    "me:cave_amanita_tiller": {
+      "chance": 0.4
+    },
+    "me:chestnut_sapling": {
+      "chance": 0.3
+    },
+    "me:coastal_panic_grass": {
+      "chance": 0.3
+    },
+    "me:corrupted_moss": {
+      "chance": 0.35
+    },
+    "me:corrupted_moss_block": {
+      "chance": 0.65
+    },
+    "me:corrupted_moss_carpet": {
+      "chance": 0.3
+    },
+    "me:cucumber": {
+      "chance": 0.5
+    },
+    "me:cucumber_seeds": {
+      "chance": 0.3
+    },
+    "me:dark_mushroom_stem": {
+      "chance": 0.5
+    },
+    "me:dead_heather": {
+      "chance": 0.3
+    },
+    "me:dead_rushes": {
+      "chance": 0.3
+    },
+    "me:deep_firecap": {
+      "chance": 0.65
+    },
+    "me:deep_firecap_block": {
+      "chance": 0.85
+    },
+    "me:deep_firecap_tiller": {
+      "chance": 0.4
+    },
+    "me:dry_grass": {
+      "chance": 0.3
+    },
+    "me:dry_heather": {
+      "chance": 0.3
+    },
+    "me:dry_larch_leaves": {
+      "chance": 0.2
+    },
+    "me:dry_pine_leaves": {
+      "chance": 0.2
+    },
+    "me:dying_grass": {
+      "chance": 0.3
+    },
+    "me:elanor": {
+      "chance": 0.65
+    },
+    "me:fallen_leaves": {
+      "chance": 0.3
+    },
+    "me:fallen_mallorn_leaves": {
+      "chance": 0.3
+    },
+    "me:fallen_mirkwood_leaves": {
+      "chance": 0.3
+    },
+    "me:false_oatgrass": {
+      "chance": 0.3
+    },
+    "me:fir_sapling": {
+      "chance": 0.3
+    },
+    "me:flax": {
+      "chance": 0.3
+    },
+    "me:flax_seeds": {
+      "chance": 0.3
+    },
+    "me:flowering_mallorn_leaves": {
+      "chance": 0.4
+    },
+    "me:forest_moss": {
+      "chance": 0.35
+    },
+    "me:forest_moss_block": {
+      "chance": 0.65
+    },
+    "me:forest_moss_carpet": {
+      "chance": 0.3
+    },
+    "me:frozen_grass": {
+      "chance": 0.1
+    },
+    "me:frozen_shrub": {
+      "chance": 0.1
+    },
+    "me:frozen_tuft": {
+      "chance": 0.1
+    },
+    "me:garlic": {
+      "chance": 0.5
+    },
+    "me:ghostshroom": {
+      "chance": 0.65
+    },
+    "me:ghostshroom_tiller": {
+      "chance": 0.4
+    },
+    "me:giant_horokaka": {
+      "chance": 0.65
+    },
+    "me:grass_tuft": {
+      "chance": 0.3
+    },
+    "me:gray_mushroom_stem": {
+      "chance": 0.5
+    },
+    "me:green_jewel_cornflower": {
+      "chance": 0.65
+    },
+    "me:green_shrub": {
+      "chance": 0.5
+    },
+    "me:grim_grass": {
+      "chance": 0.3
+    },
+    "me:heath": {
+      "chance": 0.3
+    },
+    "me:heather": {
+      "chance": 0.5
+    },
+    "me:holly_sapling": {
+      "chance": 0.3
+    },
+    "me:horokaka": {
+      "chance": 0.5
+    },
+    "me:larch_sapling": {
+      "chance": 0.3
+    },
+    "me:lavender": {
+      "chance": 0.65
+    },
+    "me:lebethron_leaves": {
+      "chance": 0.3
+    },
+    "me:lebethron_sapling": {
+      "chance": 0.3
+    },
+    "me:leek": {
+      "chance": 0.5
+    },
+    "me:lembas": {
+      "chance": 1.0
+    },
+    "me:lettuce": {
+      "chance": 0.5
+    },
+    "me:lettuce_seeds": {
+      "chance": 0.3
+    },
+    "me:light_blue_flowers": {
+      "chance": 0.65
+    },
+    "me:magenta_flowers": {
+      "chance": 0.65
+    },
+    "me:maggoty_bread": {
+      "chance": 0.8
+    },
+    "me:mallorn_sapling": {
+      "chance": 0.3
+    },
+    "me:mallos": {
+      "chance": 0.65
+    },
+    "me:maple_leaves": {
+      "chance": 0.3
+    },
+    "me:mirkwood_hanging_roots": {
+      "chance": 0.3
+    },
+    "me:mirkwood_roots": {
+      "chance": 0.3
+    },
+    "me:mirkwood_sapling": {
+      "chance": 0.3
+    },
+    "me:mirkwood_spider_egg": {
+      "chance": 0.8
+    },
+    "me:morgul_ivy": {
+      "chance": 0.4
+    },
+    "me:morsel": {
+      "chance": 0.65
+    },
+    "me:morsel_tiller": {
+      "chance": 0.4
+    },
+    "me:moss": {
+      "chance": 0.35
+    },
+    "me:onion": {
+      "chance": 0.5
+    },
+    "me:orange_flowers": {
+      "chance": 0.65
+    },
+    "me:orange_maple_leaves": {
+      "chance": 0.3
+    },
+    "me:palm_sapling": {
+      "chance": 0.3
+    },
+    "me:pine_branches": {
+      "chance": 0.2
+    },
+    "me:pine_sapling": {
+      "chance": 0.3
+    },
+    "me:pinecone": {
+      "chance": 0.3
+    },
+    "me:pink_flowers": {
+      "chance": 0.65
+    },
+    "me:pipeweed": {
+      "chance": 0.3
+    },
+    "me:pipeweed_seeds": {
+      "chance": 0.3
+    },
+    "me:purple_flowers": {
+      "chance": 0.65
+    },
+    "me:red_flowers": {
+      "chance": 0.65
+    },
+    "me:red_heather": {
+      "chance": 0.5
+    },
+    "me:red_maple_leaves": {
+      "chance": 0.3
+    },
+    "me:reed_block": {
+      "chance": 0.5
+    },
+    "me:reed_slab": {
+      "chance": 0.5
+    },
+    "me:reed_stairs": {
+      "chance": 0.5
+    },
+    "me:reed_vertical_slab": {
+      "chance": 0.5
+    },
+    "me:reed_wall": {
+      "chance": 0.5
+    },
+    "me:reeds": {
+      "chance": 0.3
+    },
+    "me:sack_of_horsefeed": {
+      "chance": 1.0
+    },
+    "me:scorched_grass": {
+      "chance": 0.1
+    },
+    "me:scorched_shrub": {
+      "chance": 0.1
+    },
+    "me:scorched_tuft": {
+      "chance": 0.1
+    },
+    "me:sedum": {
+      "chance": 0.3
+    },
+    "me:short_bulrush": {
+      "chance": 0.3
+    },
+    "me:short_cattails": {
+      "chance": 0.3
+    },
+    "me:shriveled_shrub": {
+      "chance": 0.3
+    },
+    "me:sky_firecap": {
+      "chance": 0.65
+    },
+    "me:sky_firecap_block": {
+      "chance": 0.85
+    },
+    "me:sky_firecap_tiller": {
+      "chance": 0.4
+    },
+    "me:small_dry_shrub": {
+      "chance": 0.3
+    },
+    "me:straw": {
+      "chance": 0.3
+    },
+    "me:straw_block": {
+      "chance": 0.5
+    },
+    "me:straw_slab": {
+      "chance": 0.5
+    },
+    "me:straw_stairs": {
+      "chance": 0.5
+    },
+    "me:straw_vertical_slab": {
+      "chance": 0.5
+    },
+    "me:straw_wall": {
+      "chance": 0.5
+    },
+    "me:strawberry": {
+      "chance": 0.5
+    },
+    "me:tall_trumpet_shroom": {
+      "chance": 0.85
+    },
+    "me:tall_wild_wheat": {
+      "chance": 0.5
+    },
+    "me:tan_shrub": {
+      "chance": 0.5
+    },
+    "me:temperate_grass": {
+      "chance": 0.3
+    },
+    "me:tomato": {
+      "chance": 0.5
+    },
+    "me:tomato_seeds": {
+      "chance": 0.3
+    },
+    "me:tough_berries": {
+      "chance": 0.3
+    },
+    "me:trumpet_shroom": {
+      "chance": 0.65
+    },
+    "me:tubeshroom": {
+      "chance": 0.65
+    },
+    "me:vegetable_skewer": {
+      "chance": 1.0
+    },
+    "me:vegetable_soup": {
+      "chance": 1.0
+    },
+    "me:violet_caps": {
+      "chance": 0.65
+    },
+    "me:violet_caps_tiller": {
+      "chance": 0.4
+    },
+    "me:wheatgrass": {
+      "chance": 0.3
+    },
+    "me:white_flowers": {
+      "chance": 0.65
+    },
+    "me:white_lebethron_sapling": {
+      "chance": 0.3
+    },
+    "me:white_mushroom": {
+      "chance": 0.65
+    },
+    "me:white_mushroom_tiller": {
+      "chance": 0.4
+    },
+    "me:white_palm_sapling": {
+      "chance": 0.3
+    },
+    "me:wild_beetroot": {
+      "chance": 0.5
+    },
+    "me:wild_bell_pepper": {
+      "chance": 0.5
+    },
+    "me:wild_carrot": {
+      "chance": 0.5
+    },
+    "me:wild_cucumber": {
+      "chance": 0.5
+    },
+    "me:wild_flax": {
+      "chance": 0.5
+    },
+    "me:wild_garlic": {
+      "chance": 0.5
+    },
+    "me:wild_grass": {
+      "chance": 0.3
+    },
+    "me:wild_leek": {
+      "chance": 0.5
+    },
+    "me:wild_lettuce": {
+      "chance": 0.5
+    },
+    "me:wild_onion": {
+      "chance": 0.5
+    },
+    "me:wild_pipeweed": {
+      "chance": 0.5
+    },
+    "me:wild_potato": {
+      "chance": 0.5
+    },
+    "me:wild_tomato": {
+      "chance": 0.5
+    },
+    "me:wild_wheat": {
+      "chance": 0.5
+    },
+    "me:wildergrass": {
+      "chance": 0.3
+    },
+    "me:willow_sapling": {
+      "chance": 0.3
+    },
+    "me:yellow_amanita": {
+      "chance": 0.65
+    },
+    "me:yellow_amanita_block": {
+      "chance": 0.85
+    },
+    "me:yellow_amanita_tiller": {
+      "chance": 0.4
+    },
+    "me:yellow_flower": {
+      "chance": 0.65
+    },
+    "me:yellow_flowers": {
+      "chance": 0.65
+    },
+    "me:yellow_maple_leaves": {
+      "chance": 0.3
+    },
+    "me:yellow_sedum": {
+      "chance": 0.3
+    },
+    "me:yellow_trollius": {
+      "chance": 0.65
+    }
+  }
+}

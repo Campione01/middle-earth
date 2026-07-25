@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "L": {
+      "item": "me:larch_planks"
+    },
+    "S": {
+      "tag": "me:steel_ingots"
+    }
+  },
+  "pattern": [
+    "LLL",
+    "LSL",
+    "LLL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:larch_hobbit_door"
+  }
+}

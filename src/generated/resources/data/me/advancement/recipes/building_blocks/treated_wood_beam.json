@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:treated_wood_beam"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_treated_wood": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:treated_wood"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_treated_wood"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:treated_wood_beam"
+    ]
+  }
+}

@@ -1,0 +1,282 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:arming_coat",
+              "weight": 2
+            },
+            {
+              "color": 2832741,
+              "id": "me:arming_coat",
+              "weight": 2
+            },
+            {
+              "color": 1581112,
+              "id": "me:arming_coat"
+            },
+            {
+              "color": 13006400,
+              "id": "me:arming_coat"
+            },
+            {
+              "color": 8538412,
+              "id": "me:arming_coat"
+            },
+            {
+              "color": 15256475,
+              "id": "me:arming_coat"
+            },
+            {
+              "color": 11047793,
+              "id": "me:arming_coat"
+            }
+          ]
+        },
+        "feet": {
+          "pool": [
+            {
+              "id": "me:gondorian_boots"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 2
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:leather_skullcap"
+            },
+            {
+              "id": "me:gambeson_cap"
+            },
+            {
+              "color": 11047793,
+              "id": "me:leather_skullcap"
+            },
+            {
+              "color": 11047793,
+              "id": "me:gambeson_cap"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:arming_skirt"
+            },
+            {
+              "color": 1581112,
+              "id": "me:arming_skirt"
+            },
+            {
+              "color": 8538412,
+              "id": "me:arming_skirt"
+            },
+            {
+              "color": 11047793,
+              "id": "me:arming_skirt"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 2
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:bronze_spear",
+              "weight": 4
+            },
+            {
+              "id": "me:bronze_sword",
+              "weight": 3
+            },
+            {
+              "id": "me:bronze_axe",
+              "weight": 3
+            },
+            {
+              "id": "me:iron_spear",
+              "weight": 2
+            },
+            {
+              "id": "minecraft:iron_sword"
+            },
+            {
+              "id": "minecraft:iron_axe"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:kite_shield"
+            },
+            {
+              "id": "me:heater_shield"
+            },
+            {
+              "id": "me:round_shield"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 5
+            }
+          ]
+        }
+      },
+      {
+        "chest": {
+          "pool": [
+            {
+              "color": 6842749,
+              "id": "me:gambeson"
+            },
+            {
+              "color": 5592678,
+              "id": "me:gambeson"
+            },
+            {
+              "color": 4412243,
+              "id": "me:gambeson"
+            },
+            {
+              "color": 2502447,
+              "id": "me:gambeson"
+            }
+          ]
+        },
+        "feet": {
+          "pool": [
+            {
+              "id": "me:gondorian_boots"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 2
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:kettle_hat",
+              "weight": 2
+            },
+            {
+              "id": "me:gambeson_cowl"
+            },
+            {
+              "color": 6842749,
+              "id": "me:gambeson_cowl"
+            },
+            {
+              "color": 5592678,
+              "id": "me:gambeson_cowl"
+            },
+            {
+              "color": 4412243,
+              "id": "me:gambeson_cowl"
+            },
+            {
+              "color": 2502447,
+              "id": "me:gambeson_cowl"
+            },
+            {
+              "id": "me:gambeson_cap"
+            },
+            {
+              "color": 6842749,
+              "id": "me:gambeson_cap"
+            },
+            {
+              "color": 5592678,
+              "id": "me:gambeson_cap"
+            },
+            {
+              "color": 4412243,
+              "id": "me:gambeson_cap"
+            },
+            {
+              "color": 2502447,
+              "id": "me:gambeson_cap"
+            },
+            {
+              "id": "me:open_face_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:gondorian_mail_coat"
+            },
+            {
+              "color": 5592678,
+              "id": "me:arming_skirt",
+              "weight": 4
+            },
+            {
+              "color": 2502447,
+              "id": "me:arming_skirt",
+              "weight": 4
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 7
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:bronze_spear",
+              "weight": 2
+            },
+            {
+              "id": "me:bronze_sword"
+            },
+            {
+              "id": "me:bronze_axe"
+            },
+            {
+              "id": "me:iron_spear",
+              "weight": 2
+            },
+            {
+              "id": "minecraft:iron_sword"
+            },
+            {
+              "id": "minecraft:iron_axe"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:kite_shield"
+            },
+            {
+              "id": "me:heater_shield"
+            },
+            {
+              "id": "me:round_shield"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 5
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:gondor.militia",
+  "race": "me:human"
+}

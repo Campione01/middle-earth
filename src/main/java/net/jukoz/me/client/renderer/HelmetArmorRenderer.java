@@ -1,6 +1,7 @@
 package net.jukoz.me.client.renderer;
 
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.jukoz.me.compat.neoforge.api.client.rendering.v1.ArmorRenderer;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.MiddleEarthClient;
 import net.jukoz.me.client.model.equipment.CustomHelmetModel;
@@ -12,15 +13,14 @@ import net.jukoz.me.item.items.armor.CustomHelmetItem;
 import net.jukoz.me.item.utils.armor.ModArmorModels;
 import net.jukoz.me.item.utils.armor.ModDyeablePieces;
 import net.jukoz.me.recipe.ModTags;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 
 public class HelmetArmorRenderer implements ArmorRenderer {
 
@@ -36,58 +36,58 @@ public class HelmetArmorRenderer implements ArmorRenderer {
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, BipedEntityModel<LivingEntity> contextModel) {
-        this.customHelmetModel = new CustomHelmetModel<>(MinecraftClient.getInstance().getEntityModelLoader().getModelPart(MiddleEarthClient.CUSTOM_ARMOR_HELMET));
-        this.hoodModel = new CloakHoodModel<>(MinecraftClient.getInstance().getEntityModelLoader().getModelPart(MiddleEarthClient.HOOD_MODEL_LAYER));
+    public void render(PoseStack matrices, MultiBufferSource vertexConsumers, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, HumanoidModel<LivingEntity> contextModel) {
+        this.customHelmetModel = new CustomHelmetModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(MiddleEarthClient.CUSTOM_ARMOR_HELMET));
+        this.hoodModel = new CloakHoodModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(MiddleEarthClient.HOOD_MODEL_LAYER));
 
         boolean dyeable = false;
 
         if (slot == EquipmentSlot.HEAD) {
-            contextModel.copyBipedStateTo(customHelmetModel);
-            customHelmetModel.setVisible(false);
+            contextModel.copyPropertiesTo(customHelmetModel);
+            customHelmetModel.setAllVisible(false);
             customHelmetModel.head.visible = true;
             customHelmetModel.hat.visible = true;
             customHelmetModel.body.visible = true;
             customHelmetModel.leftArm.visible = true;
             customHelmetModel.rightArm.visible = true;
 
-            if(stack.isIn(ModTags.DYEABLE)) {
+            if(stack.is(ModTags.DYEABLE)) {
                 dyeable = true;
             }
 
-            String texture = "textures/models/armor/" + Registries.ITEM.getId(stack.getItem()).getPath() + ".png";
-            ModArmorRenderer.renderArmor(matrices, vertexConsumers, light, stack, customHelmetModel, Identifier.of(MiddleEarth.MOD_ID, texture), dyeable);
+            String texture = "textures/models/armor/" + BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath() + ".png";
+            ModArmorRenderer.renderArmor(matrices, vertexConsumers, light, stack, customHelmetModel, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, texture), dyeable);
 
             if (this.helmetModel != null) {
-                contextModel.copyBipedStateTo(this.helmetModel);
-                this.helmetModel.setVisible(false);
+                contextModel.copyPropertiesTo(this.helmetModel);
+                this.helmetModel.setAllVisible(false);
                 this.helmetModel.head.visible = true;
-                this.helmetModel.setAngles(entity, entity.limbAnimator.getPos(), entity.limbAnimator.getSpeed(),(float)entity.age + MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(true), contextModel.head.yaw, contextModel.head.pitch);
+                this.helmetModel.setupAnim(entity, entity.walkAnimation.position(), entity.walkAnimation.speed(),(float)entity.tickCount + Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true), contextModel.head.yRot, contextModel.head.xRot);
                 if(texture.contains("_helmet.png")){
-                    ModArmorRenderer.renderArmor(matrices, vertexConsumers, light, stack, this.helmetModel, Identifier.of(MiddleEarth.MOD_ID, texture.replaceAll("_helmet.png", "_addition.png")), dyeable);
+                    ModArmorRenderer.renderArmor(matrices, vertexConsumers, light, stack, this.helmetModel, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, texture.replaceAll("_helmet.png", "_addition.png")), dyeable);
                 } else {
-                    ModArmorRenderer.renderArmor(matrices, vertexConsumers, light, stack, this.helmetModel, Identifier.of(MiddleEarth.MOD_ID, texture.replaceAll(".png", "_addition.png")), dyeable);
+                    ModArmorRenderer.renderArmor(matrices, vertexConsumers, light, stack, this.helmetModel, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, texture.replaceAll(".png", "_addition.png")), dyeable);
                 }
             }
 
             HoodDataComponent hoodDataComponent = stack.get(ModDataComponentTypes.HOOD_DATA);
 
             if(hoodDataComponent != null) {
-                Identifier textureHood;
+                ResourceLocation textureHood;
                 if (hoodDataComponent.down()){
-                    textureHood = Identifier.of(MiddleEarth.MOD_ID, "textures/models/hood/" + hoodDataComponent.hood().getName().toLowerCase() + "_down.png");
+                    textureHood = ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "textures/models/hood/" + hoodDataComponent.hood().getName().toLowerCase() + "_down.png");
                     this.hoodModel = ModArmorModels.ModHoodPairedModels.valueOf(hoodDataComponent.hood().getName().toUpperCase()).getModel().getArmoredDownModel();
                 } else {
-                    textureHood = Identifier.of(MiddleEarth.MOD_ID, "textures/models/hood/" + hoodDataComponent.hood().getName().toLowerCase() + ".png");
+                    textureHood = ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "textures/models/hood/" + hoodDataComponent.hood().getName().toLowerCase() + ".png");
                     this.hoodModel = ModArmorModels.ModHoodPairedModels.valueOf(hoodDataComponent.hood().getName().toUpperCase()).getModel().getArmoredModel();
                 }
-                contextModel.copyBipedStateTo(hoodModel);
-                hoodModel.setVisible(false);
+                contextModel.copyPropertiesTo(hoodModel);
+                hoodModel.setAllVisible(false);
                 hoodModel.hat.visible = true;
                 if (ModDyeablePieces.dyeableHoods.containsKey(hoodDataComponent.getHood())) {
                     HoodRenderer.renderDyeableHood(matrices, vertexConsumers, light, stack, hoodModel, textureHood, true);
                     if (ModDyeablePieces.dyeableHoods.get(hoodDataComponent.hood())){
-                        ModArmorRenderer.renderTranslucentPiece(matrices, vertexConsumers, light, stack, hoodModel, Identifier.of(MiddleEarth.MOD_ID, textureHood.getPath().replaceAll(".png", "_overlay.png")));
+                        ModArmorRenderer.renderTranslucentPiece(matrices, vertexConsumers, light, stack, hoodModel, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, textureHood.getPath().replaceAll(".png", "_overlay.png")));
                     }
                 } else {
                     ModArmorRenderer.renderTranslucentPiece(matrices, vertexConsumers, light, stack, hoodModel, textureHood);

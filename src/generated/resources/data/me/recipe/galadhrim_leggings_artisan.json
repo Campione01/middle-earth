@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "leggings",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:lorien_scale_coat"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:galadhrim_leggings"
+  }
+}

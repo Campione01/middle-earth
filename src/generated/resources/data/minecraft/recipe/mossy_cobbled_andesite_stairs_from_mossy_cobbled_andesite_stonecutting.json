@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:mossy_cobbled_andesite"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:mossy_cobbled_andesite_stairs"
+  }
+}

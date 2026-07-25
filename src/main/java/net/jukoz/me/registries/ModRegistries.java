@@ -1,6 +1,8 @@
 package net.jukoz.me.registries;
 
-import net.fabricmc.fabric.api.registry.*;
+import net.jukoz.me.utils.NeoForgeRegistrationBridge;
+
+import net.jukoz.me.compat.neoforge.api.registry.*;
 import net.jukoz.me.block.*;
 import net.jukoz.me.datageneration.content.models.HotMetalsModel;
 import net.jukoz.me.datageneration.content.models.SimpleDyeableItemModel;
@@ -8,23 +10,21 @@ import net.jukoz.me.datageneration.content.tags.LeavesSets;
 import net.jukoz.me.datageneration.content.tags.Saplings;
 import net.jukoz.me.item.*;
 import net.jukoz.me.item.dataComponents.CustomDyeableDataComponent;
+import net.jukoz.me.mixin.ShovelItemMixin;
 import net.jukoz.me.recipe.ModTags;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeveledCauldronBlock;
-import net.minecraft.block.cauldron.CauldronBehavior;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.pathing.PathNodeType;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.ItemActionResult;
-import net.minecraft.util.math.random.Random;
-
+import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.pathfinder.PathType;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -146,10 +146,17 @@ public class ModRegistries {
     }
 
     public static void registerTillableBlocks() {
-        TillableBlockRegistry.register(ModBlocks.DRY_DIRT, HoeItem::canTillFarmland, HoeItem.createTillAction(Blocks.FARMLAND.getDefaultState()));
-        TillableBlockRegistry.register(ModBlocks.DIRTY_ROOTS, HoeItem::canTillFarmland, HoeItem.createTillAction(Blocks.FARMLAND.getDefaultState()));
-        TillableBlockRegistry.register(ModBlocks.GRASSY_DIRT, HoeItem::canTillFarmland, HoeItem.createTillAction(Blocks.FARMLAND.getDefaultState()));
-        TillableBlockRegistry.register(ModBlocks.TURF, HoeItem::canTillFarmland, HoeItem.createTillAction(Blocks.FARMLAND.getDefaultState()));
+        TillableBlockRegistry.register(ModBlocks.DRY_DIRT, HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(Blocks.FARMLAND.defaultBlockState()));
+        TillableBlockRegistry.register(ModBlocks.DIRTY_ROOTS, HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(Blocks.FARMLAND.defaultBlockState()));
+        TillableBlockRegistry.register(ModBlocks.GRASSY_DIRT, HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(Blocks.FARMLAND.defaultBlockState()));
+        TillableBlockRegistry.register(ModBlocks.TURF, HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(Blocks.FARMLAND.defaultBlockState()));
+    }
+
+    public static void registerFlattenableBlocks() {
+        ShovelItemMixin.getFlattenables().put(ModBlocks.DRY_DIRT, Blocks.DIRT_PATH.defaultBlockState());
+        ShovelItemMixin.getFlattenables().put(ModBlocks.DIRTY_ROOTS, Blocks.DIRT_PATH.defaultBlockState());
+        ShovelItemMixin.getFlattenables().put(ModBlocks.GRASSY_DIRT, Blocks.DIRT_PATH.defaultBlockState());
+        ShovelItemMixin.getFlattenables().put(ModBlocks.TURF, Blocks.DIRT_PATH.defaultBlockState());
     }
 
     public static void registerAgingCopperBlocks() {
@@ -566,48 +573,48 @@ public class ModRegistries {
     }
 
     //This not good but will do for now until more cases appear
-    public static final CauldronBehavior CLEAN_ITEM = (state, world, pos, player, hand, stack) -> {
-        if (!world.isClient) {
-            player.giveItemStack(new ItemStack(Items.BONE));
-            stack.decrement(1);
+    public static final CauldronInteraction CLEAN_ITEM = (state, world, pos, player, hand, stack) -> {
+        if (!world.isClientSide) {
+            player.addItem(new ItemStack(Items.BONE));
+            stack.shrink(1);
         }
-        return ItemActionResult.success(world.isClient);
+        return ItemInteractionResult.sidedSuccess(world.isClientSide);
     };
 
-    public static final CauldronBehavior CLEAN_CUSTOM_DYEABLE_ITEM = (state, world, pos, player, hand, stack) -> {
-        if (!stack.isIn(ModTags.DYEABLE)) {
-            return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    public static final CauldronInteraction CLEAN_CUSTOM_DYEABLE_ITEM = (state, world, pos, player, hand, stack) -> {
+        if (!stack.is(ModTags.DYEABLE)) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
-        if (!stack.contains(ModDataComponentTypes.DYE_DATA)) {
-            return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (!stack.has(ModDataComponentTypes.DYE_DATA)) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
-        if (!world.isClient) {
+        if (!world.isClientSide) {
             stack.set(ModDataComponentTypes.DYE_DATA,
                      new CustomDyeableDataComponent(CustomDyeableDataComponent.DEFAULT_COLOR));
-            player.incrementStat(Stats.CLEAN_ARMOR);
-            LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
+            player.awardStat(Stats.CLEAN_ARMOR);
+            LayeredCauldronBlock.lowerFillLevel(state, world, pos);
         }
-        return ItemActionResult.success(world.isClient);
+        return ItemInteractionResult.sidedSuccess(world.isClientSide);
     };
 
-    public static final CauldronBehavior COOL_DOWN_METAL = (state, world, pos, player, hand, stack) -> {
-        Random random = world.getRandom();
+    public static final CauldronInteraction COOL_DOWN_METAL = (state, world, pos, player, hand, stack) -> {
+        RandomSource random = world.getRandom();
         int smokeAmount = random.nextInt(9) + 4;
         int bigSmokeAmount = random.nextInt(3) + 2;
 
-        if (!stack.contains(ModDataComponentTypes.TEMPERATURE_DATA)) {
-            return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (!stack.has(ModDataComponentTypes.TEMPERATURE_DATA)) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
-        if (!world.isClient) {
+        if (!world.isClientSide) {
             ItemStack originalStack = stack.copy();
             originalStack.setCount(1);
             originalStack.remove(ModDataComponentTypes.TEMPERATURE_DATA);
-            stack.decrement(1);
-            player.getInventory().offerOrDrop(originalStack);
+            stack.shrink(1);
+            player.getInventory().placeItemBackInInventory(originalStack);
 
-            LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
+            LayeredCauldronBlock.lowerFillLevel(state, world, pos);
 
-            world.playSound(null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            world.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
         } else {
             for (int i = 0; i < bigSmokeAmount; i++){
                 world.addParticle(ParticleTypes.POOF,
@@ -628,36 +635,36 @@ public class ModRegistries {
                         0.0f);
             }
         }
-        return ItemActionResult.success(world.isClient);
+        return ItemInteractionResult.sidedSuccess(world.isClientSide);
     };
 
     public static void registerCauldronBehaviour() {
         SimpleDyeableItemModel.items.forEach(item -> {
-            CauldronBehavior.WATER_CAULDRON_BEHAVIOR.map().put(item, CLEAN_CUSTOM_DYEABLE_ITEM);
+            CauldronInteraction.WATER.map().put(item, CLEAN_CUSTOM_DYEABLE_ITEM);
         });
 
         HotMetalsModel.items.forEach(item -> {
-            CauldronBehavior.WATER_CAULDRON_BEHAVIOR.map().put(item, COOL_DOWN_METAL);
+            CauldronInteraction.WATER.map().put(item, COOL_DOWN_METAL);
         });
 
         HotMetalsModel.ingots.forEach(item -> {
-            CauldronBehavior.WATER_CAULDRON_BEHAVIOR.map().put(item, COOL_DOWN_METAL);
+            CauldronInteraction.WATER.map().put(item, COOL_DOWN_METAL);
         });
 
         HotMetalsModel.nuggets.forEach(item -> {
-            CauldronBehavior.WATER_CAULDRON_BEHAVIOR.map().put(item, COOL_DOWN_METAL);
+            CauldronInteraction.WATER.map().put(item, COOL_DOWN_METAL);
         });
 
-        CauldronBehavior.WATER_CAULDRON_BEHAVIOR.map().put(ModResourceItems.DIRTY_BONE, CLEAN_ITEM);
+        CauldronInteraction.WATER.map().put(ModResourceItems.DIRTY_BONE, CLEAN_ITEM);
     }
 
     public static void registerLandPathNodeTypesBlocks() {
-        LandPathNodeTypesRegistry.register(ModNatureBlocks.TOUGH_BERRY_BUSH, PathNodeType.DAMAGE_FIRE, PathNodeType.DAMAGE_FIRE);
-        LandPathNodeTypesRegistry.register(ModDecorativeBlocks.SMALL_BRAZIER, PathNodeType.DAMAGE_FIRE, PathNodeType.DAMAGE_FIRE);
-        LandPathNodeTypesRegistry.register(ModDecorativeBlocks.BIG_BRAZIER, PathNodeType.DAMAGE_FIRE, PathNodeType.DAMAGE_FIRE);
-        LandPathNodeTypesRegistry.register(ModDecorativeBlocks.GILDED_SMALL_BRAZIER, PathNodeType.DAMAGE_FIRE, PathNodeType.DAMAGE_FIRE);
-        LandPathNodeTypesRegistry.register(ModDecorativeBlocks.GILDED_BIG_BRAZIER, PathNodeType.DAMAGE_FIRE, PathNodeType.DAMAGE_FIRE);
-        LandPathNodeTypesRegistry.register(ModDecorativeBlocks.BONFIRE, PathNodeType.DAMAGE_FIRE, PathNodeType.DAMAGE_FIRE);
-        LandPathNodeTypesRegistry.register(ModDecorativeBlocks.FIRE_BOWL, PathNodeType.DAMAGE_FIRE, PathNodeType.DAMAGE_FIRE);
+        LandPathNodeTypesRegistry.register(ModNatureBlocks.TOUGH_BERRY_BUSH, PathType.DAMAGE_FIRE, PathType.DAMAGE_FIRE);
+        LandPathNodeTypesRegistry.register(ModDecorativeBlocks.SMALL_BRAZIER, PathType.DAMAGE_FIRE, PathType.DAMAGE_FIRE);
+        LandPathNodeTypesRegistry.register(ModDecorativeBlocks.BIG_BRAZIER, PathType.DAMAGE_FIRE, PathType.DAMAGE_FIRE);
+        LandPathNodeTypesRegistry.register(ModDecorativeBlocks.GILDED_SMALL_BRAZIER, PathType.DAMAGE_FIRE, PathType.DAMAGE_FIRE);
+        LandPathNodeTypesRegistry.register(ModDecorativeBlocks.GILDED_BIG_BRAZIER, PathType.DAMAGE_FIRE, PathType.DAMAGE_FIRE);
+        LandPathNodeTypesRegistry.register(ModDecorativeBlocks.BONFIRE, PathType.DAMAGE_FIRE, PathType.DAMAGE_FIRE);
+        LandPathNodeTypesRegistry.register(ModDecorativeBlocks.FIRE_BOWL, PathType.DAMAGE_FIRE, PathType.DAMAGE_FIRE);
     }
 }

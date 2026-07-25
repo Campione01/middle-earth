@@ -1,18 +1,13 @@
 package net.jukoz.me.resources.datas.npcs.data;
 
-import net.fabricmc.fabric.api.util.NbtType;
+import net.jukoz.me.compat.neoforge.api.util.NbtType;
 import net.jukoz.me.item.ModEquipmentItems;
 import net.jukoz.me.item.ModWeaponItems;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,7 +20,7 @@ public class NpcGearData {
     public static NpcGearData create() {
         return new NpcGearData();
     }
-    public NpcGearData(NbtCompound gearNbt) {
+    public NpcGearData(CompoundTag gearNbt) {
         this.gears = new HashMap<>();
         addSlot(gearNbt, EquipmentSlot.HEAD);
         addSlot(gearNbt, EquipmentSlot.CHEST);
@@ -35,9 +30,9 @@ public class NpcGearData {
         addSlot(gearNbt, EquipmentSlot.OFFHAND);
     }
 
-    private void addSlot(NbtCompound gearNbt, EquipmentSlot equipmentSlot) {
-        if(gearNbt.get(equipmentSlot.asString()) != null){
-            NbtCompound slotNbt = gearNbt.getCompound(equipmentSlot.asString());
+    private void addSlot(CompoundTag gearNbt, EquipmentSlot equipmentSlot) {
+        if(gearNbt.get(equipmentSlot.getSerializedName()) != null){
+            CompoundTag slotNbt = gearNbt.getCompound(equipmentSlot.getSerializedName());
             this.gears.put(equipmentSlot, NpcGearSlotData.readNbt(slotNbt));
         }
     }
@@ -60,14 +55,14 @@ public class NpcGearData {
         return gears.get(slot).getItemStack();
     }
 
-    public static NbtCompound createNbt(NpcGearData gearData){
-        NbtCompound nbt = new NbtCompound();
+    public static CompoundTag createNbt(NpcGearData gearData){
+        CompoundTag nbt = new CompoundTag();
         for(EquipmentSlot slot : gearData.gears.keySet()){
             nbt.put(slot.getName().toLowerCase(), NpcGearSlotData.createNbt(gearData.gears.get(slot)));
         }
         return nbt;
     }
-    public static NpcGearData readNbt(NbtCompound nbt){
+    public static NpcGearData readNbt(CompoundTag nbt){
         return new NpcGearData(nbt);
     }
 }

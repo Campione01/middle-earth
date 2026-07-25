@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "me:block/lily_pads"
+      },
+      {
+        "model": "me:block/lily_pads",
+        "y": 90
+      },
+      {
+        "model": "me:block/lily_pads",
+        "y": 180
+      },
+      {
+        "model": "me:block/lily_pads",
+        "y": 270
+      }
+    ]
+  }
+}

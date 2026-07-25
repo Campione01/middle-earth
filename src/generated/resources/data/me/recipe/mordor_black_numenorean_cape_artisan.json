@@ -1,0 +1,38 @@
+{
+  "type": "me:artisan_table",
+  "category": "cape",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:steel_nugget"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "me:steel_nugget"
+    },
+    {
+      "item": "minecraft:black_dye"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:black_dye"
+    },
+    {
+      "item": "minecraft:red_dye"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:red_dye"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:mordor_black_numenorean_cape"
+  }
+}

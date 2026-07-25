@@ -1,0 +1,335 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 2825239,
+              "id": "me:rohirric_leather_vest",
+              "weight": 3
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 4271910,
+              "id": "me:rohirric_leather_vest",
+              "weight": 2
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:rohirric_leather_vest"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 2825239,
+              "id": "me:rohirric_leather_scale_vest",
+              "weight": 3
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 4271910,
+              "id": "me:rohirric_leather_scale_vest",
+              "weight": 2
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:rohirric_leather_scale_vest"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 2825239,
+              "id": "me:gundabad_leather_scale_coat",
+              "weight": 3
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 4271910,
+              "id": "me:gundabad_leather_scale_coat",
+              "weight": 2
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:gundabad_leather_scale_coat"
+            },
+            {
+              "cape": "tan_fur",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 2825239,
+              "id": "me:gundabad_leather_scale_coat",
+              "weight": 3
+            },
+            {
+              "cape": "tan_fur",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 4271910,
+              "id": "me:gundabad_leather_scale_coat",
+              "weight": 2
+            },
+            {
+              "cape": "black_fur",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:gundabad_leather_scale_coat"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 2825239,
+              "id": "me:orcish_leather_chestplate",
+              "weight": 3
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "color": 4271910,
+              "id": "me:orcish_leather_chestplate",
+              "weight": 2
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                4407354,
+                2825239,
+                4271910,
+                1782304,
+                1973810,
+                3281169,
+                2637082,
+                2703681,
+                6107913
+              ],
+              "id": "me:orcish_leather_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "pool": [
+            {
+              "id": "me:shoes"
+            },
+            {
+              "id": "me:sturdy_boots"
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:rusted_orcish_mail_coif"
+            },
+            {
+              "id": "me:kettle_hat"
+            },
+            {
+              "id": "me:open_face_helmet"
+            },
+            {
+              "id": "me:kettle_hat_with_coif"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:steel_sword"
+            },
+            {
+              "id": "me:steel_spear"
+            },
+            {
+              "id": "me:steel_axe"
+            },
+            {
+              "id": "me:gondorian_sword"
+            },
+            {
+              "id": "me:erebor_sword"
+            },
+            {
+              "id": "me:dalish_sword"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "minecraft:air",
+              "weight": 4
+            },
+            {
+              "id": "me:round_shield",
+              "weight": 3
+            },
+            {
+              "id": "me:heater_shield",
+              "weight": 3
+            },
+            {
+              "id": "me:mordor_wooden_shield"
+            },
+            {
+              "id": "me:mordor_round_shield"
+            },
+            {
+              "id": "me:mordor_braced_shield"
+            },
+            {
+              "id": "me:gundabad_wooden_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:bandit.mercenary",
+  "race": "me:human"
+}

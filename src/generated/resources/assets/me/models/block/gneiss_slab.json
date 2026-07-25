@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "me:block/gneiss",
+    "side": "me:block/gneiss",
+    "top": "me:block/gneiss"
+  }
+}

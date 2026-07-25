@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/zigilaban_slab"
+    },
+    "type=double": {
+      "model": "me:block/zigilaban"
+    },
+    "type=top": {
+      "model": "me:block/zigilaban_slab_top"
+    }
+  }
+}

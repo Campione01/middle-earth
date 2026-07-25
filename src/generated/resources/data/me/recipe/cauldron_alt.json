@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "me:tin_block"
+    },
+    "T": {
+      "item": "me:tin_ingot"
+    }
+  },
+  "pattern": [
+    "T T",
+    "T T",
+    "TBT"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:cauldron"
+  }
+}

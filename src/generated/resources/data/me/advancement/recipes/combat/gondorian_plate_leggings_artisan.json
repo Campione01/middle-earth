@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gondorian_mail_coat": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:gondorian_mail_coat"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:gondorian_plate_leggings_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gondorian_mail_coat"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:gondorian_plate_leggings_artisan"
+    ]
+  }
+}

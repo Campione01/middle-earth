@@ -1,0 +1,20 @@
+{
+  "type": "me:artisan_table",
+  "category": "pickaxe",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:pickaxe_head"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:burzum_steel_pickaxe"
+  }
+}

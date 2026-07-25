@@ -1,0 +1,20 @@
+{
+  "type": "me:artisan_table",
+  "category": "sword",
+  "disposition": "neutral",
+  "ingredients": [
+    {
+      "item": "me:blade"
+    },
+    {
+      "item": "me:sword_hilt"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:steel_sword"
+  }
+}

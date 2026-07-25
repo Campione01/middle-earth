@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_rohirric_scale_jacket": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:rohirric_scale_jacket"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:eorling_marshal_leggings_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_rohirric_scale_jacket"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:eorling_marshal_leggings_artisan"
+    ]
+  }
+}

@@ -1,19 +1,19 @@
 package net.jukoz.me.datageneration;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
+import net.jukoz.me.compat.neoforge.api.datagen.v1.NeoForgeDataOutput;
+import net.jukoz.me.compat.neoforge.api.datagen.v1.provider.NeoForgeDynamicRegistryProvider;
 import net.jukoz.me.resources.MiddleEarthFactions;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.core.HolderLookup;
 import java.util.concurrent.CompletableFuture;
 
-public class FactionProvider extends FabricDynamicRegistryProvider {
-    public FactionProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+public class FactionProvider extends NeoForgeDynamicRegistryProvider {
+    public FactionProvider(NeoForgeDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
-        entries.addAll(registries.getWrapperOrThrow(MiddleEarthFactions.FACTION_KEY));
+    protected void configure(HolderLookup.Provider registries, Entries entries) {
+        entries.addAll(registries.lookupOrThrow(MiddleEarthFactions.FACTION_KEY));
     }
 
     @Override

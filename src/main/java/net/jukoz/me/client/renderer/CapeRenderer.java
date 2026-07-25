@@ -1,6 +1,6 @@
 package net.jukoz.me.client.renderer;
 
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
+import net.jukoz.me.compat.neoforge.api.client.rendering.v1.ArmorRenderer;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.MiddleEarthClient;
 import net.jukoz.me.client.model.equipment.chest.ChestplateAddonModel;
@@ -11,24 +11,20 @@ import net.jukoz.me.item.dataComponents.CustomDyeableDataComponent;
 import net.jukoz.me.item.items.armor.CapeChestplateItem;
 import net.jukoz.me.item.utils.armor.ModArmorModels;
 import net.jukoz.me.item.utils.armor.ModDyeablePieces;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper;
-
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import java.util.Objects;
 
 public class CapeRenderer implements ArmorRenderer {
@@ -39,43 +35,43 @@ public class CapeRenderer implements ArmorRenderer {
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, BipedEntityModel<LivingEntity> contextModel) {
-        this.capeModel = new CloakCapeModel<>(MinecraftClient.getInstance().getEntityModelLoader().getModelPart(MiddleEarthClient.CAPE_MODEL_LAYER));
+    public void render(PoseStack matrices, MultiBufferSource vertexConsumers, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, HumanoidModel<LivingEntity> contextModel) {
+        this.capeModel = new CloakCapeModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(MiddleEarthClient.CAPE_MODEL_LAYER));
 
         if (slot == EquipmentSlot.CHEST) {
             CapeDataComponent capeDataComponent = stack.get(ModDataComponentTypes.CAPE_DATA);
 
             if (capeDataComponent != null) {
                 this.capeModel = ModArmorModels.ModCapePairedModels.valueOf(capeDataComponent.cape().getName().toUpperCase()).getModel().getUnarmoredModel();
-                contextModel.copyBipedStateTo(capeModel);
-                capeModel.setVisible(false);
+                contextModel.copyPropertiesTo(capeModel);
+                capeModel.setAllVisible(false);
                 capeModel.body.visible = true;
                 capeModel.rightArm.visible = true;
                 capeModel.leftArm.visible = true;
                 capeModel.rightLeg.visible = true;
                 capeModel.leftLeg.visible = true;
-                this.capeModel.setAngles(entity, entity.limbAnimator.getPos(), entity.limbAnimator.getSpeed(), (float) entity.age + MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(true), contextModel.head.yaw, contextModel.head.roll);
+                this.capeModel.setupAnim(entity, entity.walkAnimation.position(), entity.walkAnimation.speed(), (float) entity.tickCount + Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true), contextModel.head.yRot, contextModel.head.zRot);
 
                 if (ModDyeablePieces.dyeableCapes.containsKey(capeDataComponent.getCape())) {
-                    renderDyeableCape(matrices, vertexConsumers, light, stack, capeModel, Identifier.of(MiddleEarth.MOD_ID, "textures/models/cape/" + capeDataComponent.cape().getName() + ".png"), false);
+                    renderDyeableCape(matrices, vertexConsumers, light, stack, capeModel, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "textures/models/cape/" + capeDataComponent.cape().getName() + ".png"), false);
                     if (ModDyeablePieces.dyeableCapes.get(capeDataComponent.cape())){
-                        ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, capeModel, Identifier.of(MiddleEarth.MOD_ID, "textures/models/cape/" + capeDataComponent.cape().getName() + "_overlay.png"));
+                        ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, capeModel, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "textures/models/cape/" + capeDataComponent.cape().getName() + "_overlay.png"));
                     }
                 } else {
-                    ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, capeModel, Identifier.of(MiddleEarth.MOD_ID, "textures/models/cape/" + capeDataComponent.cape().getName() + ".png"));
+                    ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, capeModel, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "textures/models/cape/" + capeDataComponent.cape().getName() + ".png"));
                 }
             }
         }
     }
 
-    static void renderDyeableCape(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, ItemStack stack, Model model, Identifier texture, boolean chestplate) {
-        VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumers, RenderLayer.getArmorCutoutNoCull(texture), stack.hasGlint());
+    static void renderDyeableCape(PoseStack matrices, MultiBufferSource vertexConsumers, int light, ItemStack stack, Model model, ResourceLocation texture, boolean chestplate) {
+        VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(vertexConsumers, RenderType.armorCutoutNoCull(texture), stack.hasFoil());
         int color;
         if (chestplate){
-            color =  ColorHelper.Argb.fullAlpha(stack.get(ModDataComponentTypes.CAPE_DATA).capeColor());
+            color =  FastColor.ARGB32.opaque(stack.get(ModDataComponentTypes.CAPE_DATA).capeColor());
         } else {
             color = CustomDyeableDataComponent.getColor(stack, CustomDyeableDataComponent.DEFAULT_COLOR);
         }
-        model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, color);
+        model.renderToBuffer(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, color);
     }
 }

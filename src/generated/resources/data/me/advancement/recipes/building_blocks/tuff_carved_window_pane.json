@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:tuff_carved_window_pane"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tuff_carved_window": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:tuff_carved_window"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tuff_carved_window"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:tuff_carved_window_pane"
+    ]
+  }
+}

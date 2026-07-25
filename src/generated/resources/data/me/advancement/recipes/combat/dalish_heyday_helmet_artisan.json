@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dalish_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:dalish_helmet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:dalish_heyday_helmet_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dalish_helmet"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:dalish_heyday_helmet_artisan"
+    ]
+  }
+}

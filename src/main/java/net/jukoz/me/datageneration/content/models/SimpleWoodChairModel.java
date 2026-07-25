@@ -2,9 +2,8 @@ package net.jukoz.me.datageneration.content.models;
 
 import net.jukoz.me.block.ModBlocks;
 import net.jukoz.me.block.ModDecorativeBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import java.util.ArrayList;
 import java.util.List;
 

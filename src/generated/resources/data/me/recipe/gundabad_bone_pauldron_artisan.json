@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "tag": "me:bones"
+    },
+    {
+      "tag": "me:bones"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:gundabad_bone_pauldron"
+  }
+}

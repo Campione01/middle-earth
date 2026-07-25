@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "N": {
+      "item": "me:burzum_steel_block"
+    },
+    "S": {
+      "item": "me:burzum_steel_ingot"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "SNS",
+    "NNN"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:great_orcish_gate"
+  }
+}

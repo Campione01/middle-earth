@@ -1,0 +1,53 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "feet": {
+          "pool": [
+            {
+              "id": "me:sturdy_boots"
+            },
+            {
+              "id": "me:work_shoes",
+              "weight": 2
+            },
+            {
+              "id": "me:shoes",
+              "weight": 2
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:leather_skullcap",
+              "weight": 2
+            },
+            {
+              "id": "me:straw_hat",
+              "weight": 2
+            },
+            {
+              "id": "me:woven_hat",
+              "weight": 2
+            },
+            {
+              "id": "me:bycocket",
+              "weight": 1
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 4
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:human.civilian",
+  "race": "me:human"
+}

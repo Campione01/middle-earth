@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/dirty_roots_slab"
+    },
+    "type=double": {
+      "model": "me:block/dirty_roots"
+    },
+    "type=top": {
+      "model": "me:block/dirty_roots_slab_top"
+    }
+  }
+}

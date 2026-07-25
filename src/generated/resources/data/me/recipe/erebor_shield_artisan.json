@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "medium_shield",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "me:bronze_nugget"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:shield_border"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:erebor_shield"
+  }
+}

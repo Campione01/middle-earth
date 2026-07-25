@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/nurgon_tiles_slab"
+    },
+    "type=double": {
+      "model": "me:block/nurgon_tiles"
+    },
+    "type=top": {
+      "model": "me:block/nurgon_tiles_slab_top"
+    }
+  }
+}

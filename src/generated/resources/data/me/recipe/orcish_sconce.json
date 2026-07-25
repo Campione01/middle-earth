@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "N": {
+      "item": "me:crude_nugget"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "T": {
+      "item": "minecraft:torch"
+    }
+  },
+  "pattern": [
+    "NTN",
+    " S "
+  ],
+  "result": {
+    "count": 2,
+    "id": "me:orcish_sconce"
+  }
+}

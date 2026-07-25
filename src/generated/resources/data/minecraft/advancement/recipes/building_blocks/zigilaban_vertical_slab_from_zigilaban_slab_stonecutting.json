@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:zigilaban_vertical_slab_from_zigilaban_slab_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_zigilaban_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:zigilaban_slab"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_zigilaban_slab"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:zigilaban_vertical_slab_from_zigilaban_slab_stonecutting"
+    ]
+  }
+}

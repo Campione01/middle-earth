@@ -1,0 +1,39 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "id": "me:gondorian_citadel_guard_chestplate"
+        },
+        "feet": {
+          "id": "me:gondorian_citadel_guard_boots"
+        },
+        "head": {
+          "id": "me:gondorian_citadel_guard_helmet"
+        },
+        "legs": {
+          "id": "me:gondorian_citadel_guard_leggings"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_noble_sword"
+            },
+            {
+              "id": "me:gondorian_noble_axe"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_knight_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:gondor.citadel_guards",
+  "race": "me:human"
+}

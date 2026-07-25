@@ -4,29 +4,28 @@ import net.jukoz.me.item.ModDataComponentTypes;
 import net.jukoz.me.item.dataComponents.CapeDataComponent;
 import net.jukoz.me.item.items.armor.CapeChestplateItem;
 import net.jukoz.me.item.items.armor.CustomChestplateItem;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.SpecialCraftingRecipe;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.recipe.input.CraftingRecipeInput;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.world.World;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
 
 
-public class ArmorCapeRecipe extends SpecialCraftingRecipe {
+public class ArmorCapeRecipe extends CustomRecipe {
 
-    public ArmorCapeRecipe(CraftingRecipeCategory category) {
+    public ArmorCapeRecipe(CraftingBookCategory category) {
         super(category);
     }
 
     @Override
-    public boolean matches(CraftingRecipeInput input, World world) {
+    public boolean matches(CraftingInput input, Level world) {
         ItemStack itemStackChest = ItemStack.EMPTY;
         ItemStack itemStackCape = ItemStack.EMPTY;
 
-        for(int i = 0; i < input.getSize(); ++i) {
-            ItemStack itemStack2 = input.getStackInSlot(i);
+        for(int i = 0; i < input.size(); ++i) {
+            ItemStack itemStack2 = input.getItem(i);
             if (!itemStack2.isEmpty()) {
                 if (itemStack2.getItem() instanceof CustomChestplateItem) {
                     if (!itemStackChest.isEmpty()) {
@@ -45,12 +44,12 @@ public class ArmorCapeRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(CraftingRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack assemble(CraftingInput input, HolderLookup.Provider lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack cape = ItemStack.EMPTY;
 
-        for(int i = 0; i < input.getSize(); ++i) {
-            ItemStack itemStack2 = input.getStackInSlot(i);
+        for(int i = 0; i < input.size(); ++i) {
+            ItemStack itemStack2 = input.getItem(i);
             if (!itemStack2.isEmpty()) {
                 if (itemStack2.getItem() instanceof CustomChestplateItem) {
                     if (!itemStack.isEmpty()) {
@@ -81,7 +80,7 @@ public class ArmorCapeRecipe extends SpecialCraftingRecipe {
         }
     }
 
-    public boolean fits(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return width * height >= 2;
     }
 

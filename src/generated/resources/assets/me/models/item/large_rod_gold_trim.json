@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/large_rod",
+    "layer1": "me:trims/items/large_rod_trim_gold"
+  }
+}

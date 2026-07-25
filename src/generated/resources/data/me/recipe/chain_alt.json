@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "tag": "me:steel_nuggets"
+    },
+    "N": {
+      "tag": "me:steel_ingots"
+    }
+  },
+  "pattern": [
+    "N",
+    "I",
+    "N"
+  ],
+  "result": {
+    "count": 4,
+    "id": "minecraft:chain"
+  }
+}

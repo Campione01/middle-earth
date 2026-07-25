@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:gneiss_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:gneiss_vertical_slab"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "me:tan_clay_bricks"
+    },
+    "S": {
+      "item": "me:plaster"
+    }
+  },
+  "pattern": [
+    "SB"
+  ],
+  "result": {
+    "count": 2,
+    "id": "me:tan_clay_brickwork"
+  }
+}

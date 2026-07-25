@@ -1,0 +1,56 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:dalish_mail_hauberk"
+            },
+            {
+              "id": "me:dalish_scale_hauberk"
+            },
+            {
+              "id": "me:dalish_scale_hauberk"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:dalish_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:dalish_helmet_brown_fur"
+            },
+            {
+              "id": "me:dalish_helmet_black_fur"
+            },
+            {
+              "id": "me:dalish_helmet_tan_fur"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:dalish_mail_coat"
+            },
+            {
+              "id": "me:arming_skirt"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:dalish_noble_longbow"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:dale.knight_archer",
+  "race": "me:human"
+}

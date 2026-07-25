@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:stripped_black_pine_wood"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "me:black_pine_planks"
+  }
+}

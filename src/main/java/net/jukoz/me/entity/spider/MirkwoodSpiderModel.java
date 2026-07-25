@@ -1,11 +1,16 @@
 package net.jukoz.me.entity.spider;
 
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.MathHelper;
-
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,133 +107,133 @@ public class MirkwoodSpiderModel extends EntityModel<MirkwoodSpiderEntity> {
         oddBottomLegs.add(bottom_leg7);
     }
 
-    public static TexturedModelData getTexturedModelData() {
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
-        ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 20.0F, -5.5F));
+    public static LayerDefinition getTexturedModelData() {
+        MeshDefinition modelData = new MeshDefinition();
+        PartDefinition modelPartData = modelData.getRoot();
+        PartDefinition body = modelPartData.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 20.0F, -5.5F));
 
-        ModelPartData leg_right = body.addChild("leg_right", ModelPartBuilder.create().uv(13, 45).cuboid(-3.0F, -5.0F, -10.0F, 1.0F, 3.0F, 11.0F, new Dilation(0.0F)), ModelTransform.pivot(-1.0F, 2.0F, 5.5F));
+        PartDefinition leg_right = body.addOrReplaceChild("leg_right", CubeListBuilder.create().texOffs(13, 45).addBox(-3.0F, -5.0F, -10.0F, 1.0F, 3.0F, 11.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, 2.0F, 5.5F));
 
-        ModelPartData leg1 = leg_right.addChild("leg1", ModelPartBuilder.create().uv(33, 8).cuboid(-11.8F, -3.0F, -1.0F, 13.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(-3.2F, -1.5F, -0.2F));
+        PartDefinition leg1 = leg_right.addOrReplaceChild("leg1", CubeListBuilder.create().texOffs(33, 8).addBox(-11.8F, -3.0F, -1.0F, 13.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(-3.2F, -1.5F, -0.2F));
 
-        ModelPartData bottom_leg1 = leg1.addChild("bottom_leg1", ModelPartBuilder.create().uv(22, 21).cuboid(-17.5F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(-11.4F, -2.0F, 0.0F));
+        PartDefinition bottom_leg1 = leg1.addOrReplaceChild("bottom_leg1", CubeListBuilder.create().texOffs(22, 21).addBox(-17.5F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(-11.4F, -2.0F, 0.0F));
 
-        ModelPartData leg2 = leg_right.addChild("leg2", ModelPartBuilder.create().uv(46, 16).cuboid(-9.8F, -3.0F, -1.0F, 11.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(-3.2F, -1.5F, -3.0F));
+        PartDefinition leg2 = leg_right.addOrReplaceChild("leg2", CubeListBuilder.create().texOffs(46, 16).addBox(-9.8F, -3.0F, -1.0F, 11.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(-3.2F, -1.5F, -3.0F));
 
-        ModelPartData bottom_leg2 = leg2.addChild("bottom_leg2", ModelPartBuilder.create().uv(22, 25).cuboid(-17.5F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(-9.4F, -2.0F, 0.0F));
+        PartDefinition bottom_leg2 = leg2.addOrReplaceChild("bottom_leg2", CubeListBuilder.create().texOffs(22, 25).addBox(-17.5F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(-9.4F, -2.0F, 0.0F));
 
-        ModelPartData leg3 = leg_right.addChild("leg3", ModelPartBuilder.create().uv(46, 12).cuboid(-9.8F, -3.0F, -1.0F, 11.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(-3.2F, -1.5F, -5.8F));
+        PartDefinition leg3 = leg_right.addOrReplaceChild("leg3", CubeListBuilder.create().texOffs(46, 12).addBox(-9.8F, -3.0F, -1.0F, 11.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(-3.2F, -1.5F, -5.8F));
 
-        ModelPartData bottom_leg3 = leg3.addChild("bottom_leg3", ModelPartBuilder.create().uv(22, 21).cuboid(-17.5F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(-9.4F, -2.0F, 0.0F));
+        PartDefinition bottom_leg3 = leg3.addOrReplaceChild("bottom_leg3", CubeListBuilder.create().texOffs(22, 21).addBox(-17.5F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(-9.4F, -2.0F, 0.0F));
 
-        ModelPartData leg4 = leg_right.addChild("leg4", ModelPartBuilder.create().uv(33, 4).cuboid(-11.8F, -3.0F, -1.0F, 13.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(-3.2F, -1.5F, -8.5F));
+        PartDefinition leg4 = leg_right.addOrReplaceChild("leg4", CubeListBuilder.create().texOffs(33, 4).addBox(-11.8F, -3.0F, -1.0F, 13.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(-3.2F, -1.5F, -8.5F));
 
-        ModelPartData bottom_leg4 = leg4.addChild("bottom_leg4", ModelPartBuilder.create().uv(22, 25).cuboid(-17.5F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(-11.4F, -2.0F, 0.0F));
+        PartDefinition bottom_leg4 = leg4.addOrReplaceChild("bottom_leg4", CubeListBuilder.create().texOffs(22, 25).addBox(-17.5F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(-11.4F, -2.0F, 0.0F));
 
-        ModelPartData leg_left = body.addChild("leg_left", ModelPartBuilder.create().uv(0, 37).cuboid(3.1F, -5.1F, -10.0F, 1.0F, 3.0F, 11.0F, new Dilation(0.0F)), ModelTransform.of(7.1F, 2.1F, -3.5F, 0.0F, 3.1416F, 0.0F));
+        PartDefinition leg_left = body.addOrReplaceChild("leg_left", CubeListBuilder.create().texOffs(0, 37).addBox(3.1F, -5.1F, -10.0F, 1.0F, 3.0F, 11.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(7.1F, 2.1F, -3.5F, 0.0F, 3.1416F, 0.0F));
 
-        ModelPartData leg5 = leg_left.addChild("leg5", ModelPartBuilder.create().uv(33, 4).cuboid(-11.9F, -3.0F, -1.0F, 13.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(3.0F, -1.6F, -0.2F));
+        PartDefinition leg5 = leg_left.addOrReplaceChild("leg5", CubeListBuilder.create().texOffs(33, 4).addBox(-11.9F, -3.0F, -1.0F, 13.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(3.0F, -1.6F, -0.2F));
 
-        ModelPartData bottom_leg5 = leg5.addChild("bottom_leg5", ModelPartBuilder.create().uv(22, 25).cuboid(-17.4F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(-11.6F, -2.0F, 0.0F));
+        PartDefinition bottom_leg5 = leg5.addOrReplaceChild("bottom_leg5", CubeListBuilder.create().texOffs(22, 25).addBox(-17.4F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(-11.6F, -2.0F, 0.0F));
 
-        ModelPartData leg6 = leg_left.addChild("leg6", ModelPartBuilder.create().uv(26, 45).cuboid(-9.9F, -3.0F, -1.0F, 11.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(3.0F, -1.6F, -3.0F));
+        PartDefinition leg6 = leg_left.addOrReplaceChild("leg6", CubeListBuilder.create().texOffs(26, 45).addBox(-9.9F, -3.0F, -1.0F, 11.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(3.0F, -1.6F, -3.0F));
 
-        ModelPartData bottom_leg6 = leg6.addChild("bottom_leg6", ModelPartBuilder.create().uv(22, 21).cuboid(-17.4F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(-9.6F, -2.0F, 0.0F));
+        PartDefinition bottom_leg6 = leg6.addOrReplaceChild("bottom_leg6", CubeListBuilder.create().texOffs(22, 21).addBox(-17.4F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(-9.6F, -2.0F, 0.0F));
 
-        ModelPartData leg7 = leg_left.addChild("leg7", ModelPartBuilder.create().uv(46, 16).cuboid(-9.9F, -3.0F, -1.0F, 11.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(3.0F, -1.6F, -5.8F));
+        PartDefinition leg7 = leg_left.addOrReplaceChild("leg7", CubeListBuilder.create().texOffs(46, 16).addBox(-9.9F, -3.0F, -1.0F, 11.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(3.0F, -1.6F, -5.8F));
 
-        ModelPartData bottom_leg7 = leg7.addChild("bottom_leg7", ModelPartBuilder.create().uv(22, 25).cuboid(-17.4F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(-9.6F, -2.0F, 0.0F));
+        PartDefinition bottom_leg7 = leg7.addOrReplaceChild("bottom_leg7", CubeListBuilder.create().texOffs(22, 25).addBox(-17.4F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(-9.6F, -2.0F, 0.0F));
 
-        ModelPartData leg8 = leg_left.addChild("leg8", ModelPartBuilder.create().uv(33, 0).cuboid(-11.9F, -3.0F, -1.0F, 13.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(3.0F, -1.6F, -8.5F));
+        PartDefinition leg8 = leg_left.addOrReplaceChild("leg8", CubeListBuilder.create().texOffs(33, 0).addBox(-11.9F, -3.0F, -1.0F, 13.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(3.0F, -1.6F, -8.5F));
 
-        ModelPartData bottom_leg8 = leg8.addChild("bottom_leg8", ModelPartBuilder.create().uv(22, 21).cuboid(-17.4F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new Dilation(-0.05F)), ModelTransform.pivot(-11.6F, -2.0F, 0.0F));
+        PartDefinition bottom_leg8 = leg8.addOrReplaceChild("bottom_leg8", CubeListBuilder.create().texOffs(22, 21).addBox(-17.4F, -1.0F, -1.0F, 18.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offset(-11.6F, -2.0F, 0.0F));
 
-        ModelPartData thorax = body.addChild("thorax", ModelPartBuilder.create().uv(0, 21).cuboid(-2.0F, -6.0F, -9.0F, 6.0F, 6.0F, 10.0F, new Dilation(0.0F)), ModelTransform.pivot(-1.0F, 0.0F, 5.5F));
+        PartDefinition thorax = body.addOrReplaceChild("thorax", CubeListBuilder.create().texOffs(0, 21).addBox(-2.0F, -6.0F, -9.0F, 6.0F, 6.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, 0.0F, 5.5F));
 
-        ModelPartData abdomen = thorax.addChild("abdomen", ModelPartBuilder.create().uv(0, 0).cuboid(-5.0F, -6.0F, -0.5F, 10.0F, 8.0F, 13.0F, new Dilation(0.5F)), ModelTransform.pivot(1.0F, -2.0F, 1.5F));
+        PartDefinition abdomen = thorax.addOrReplaceChild("abdomen", CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -6.0F, -0.5F, 10.0F, 8.0F, 13.0F, new CubeDeformation(0.5F)), PartPose.offset(1.0F, -2.0F, 1.5F));
 
-        ModelPartData face = body.addChild("face", ModelPartBuilder.create().uv(24, 29).cuboid(-3.0F, -10.0F, -14.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.01F)), ModelTransform.pivot(-1.0F, 2.0F, 3.5F));
+        PartDefinition face = body.addOrReplaceChild("face", CubeListBuilder.create().texOffs(24, 29).addBox(-3.0F, -10.0F, -14.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.01F)), PartPose.offset(-1.0F, 2.0F, 3.5F));
 
-        ModelPartData fang1 = face.addChild("fang1", ModelPartBuilder.create().uv(0, 5).cuboid(-0.75F, -0.5F, -6.0F, 2.0F, 3.0F, 2.0F, new Dilation(0.1F)), ModelTransform.of(-1.5F, -3.75F, -10.0F, 0.0F, 0.0F, -0.2182F));
+        PartDefinition fang1 = face.addOrReplaceChild("fang1", CubeListBuilder.create().texOffs(0, 5).addBox(-0.75F, -0.5F, -6.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(-1.5F, -3.75F, -10.0F, 0.0F, 0.0F, -0.2182F));
 
-        ModelPartData cube_r1 = fang1.addChild("cube_r1", ModelPartBuilder.create().uv(8, 0).cuboid(1.0F, -3.2961F, -5.5433F, 1.0F, 2.0F, 1.0F, new Dilation(0.1F)), ModelTransform.of(-1.25F, 3.5F, 0.5F, 0.3927F, 0.0F, 0.0F));
+        PartDefinition cube_r1 = fang1.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(8, 0).addBox(1.0F, -3.2961F, -5.5433F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(-1.25F, 3.5F, 0.5F, 0.3927F, 0.0F, 0.0F));
 
-        ModelPartData fang2 = face.addChild("fang2", ModelPartBuilder.create().uv(0, 0).cuboid(-1.25F, -0.5F, -5.0F, 2.0F, 3.0F, 2.0F, new Dilation(0.1F)), ModelTransform.of(3.5F, -3.75F, -11.0F, 0.0F, 0.0F, 0.2182F));
+        PartDefinition fang2 = face.addOrReplaceChild("fang2", CubeListBuilder.create().texOffs(0, 0).addBox(-1.25F, -0.5F, -5.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(3.5F, -3.75F, -11.0F, 0.0F, 0.0F, 0.2182F));
 
-        ModelPartData cube_r2 = fang2.addChild("cube_r2", ModelPartBuilder.create().uv(7, 4).cuboid(1.0F, -3.2961F, -5.5433F, 1.0F, 2.0F, 1.0F, new Dilation(0.1F)), ModelTransform.of(-1.75F, 3.5F, 1.5F, 0.3927F, 0.0F, 0.0F));
+        PartDefinition cube_r2 = fang2.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(7, 4).addBox(1.0F, -3.2961F, -5.5433F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(-1.75F, 3.5F, 1.5F, 0.3927F, 0.0F, 0.0F));
 
-        ModelPartData eyes = face.addChild("eyes", ModelPartBuilder.create().uv(6, 21).cuboid(1.25F, -5.75F, -12.5F, 1.0F, 1.0F, 1.0F, new Dilation(-0.1F))
-                .uv(7, 11).cuboid(-0.5F, -7.3F, -12.0F, 1.0F, 1.0F, 1.0F, new Dilation(0.3F))
-                .uv(4, 10).cuboid(-2.25F, -7.25F, -10.9F, 1.0F, 1.0F, 1.0F, new Dilation(0.0F))
-                .uv(0, 10).cuboid(-0.25F, -5.75F, -12.5F, 1.0F, 1.0F, 1.0F, new Dilation(-0.1F))
-                .uv(6, 25).cuboid(-2.25F, -6.0F, -12.25F, 1.0F, 1.0F, 1.0F, new Dilation(0.0F))
-                .uv(7, 9).cuboid(3.25F, -7.25F, -10.9F, 1.0F, 1.0F, 1.0F, new Dilation(0.0F))
-                .uv(0, 29).cuboid(3.25F, -6.0F, -12.25F, 1.0F, 1.0F, 1.0F, new Dilation(0.0F))
-                .uv(8, 7).cuboid(1.5F, -7.3F, -12.0F, 1.0F, 1.0F, 1.0F, new Dilation(0.3F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
-        return TexturedModelData.of(modelData, 128, 128);
+        PartDefinition eyes = face.addOrReplaceChild("eyes", CubeListBuilder.create().texOffs(6, 21).addBox(1.25F, -5.75F, -12.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F))
+                .texOffs(7, 11).addBox(-0.5F, -7.3F, -12.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.3F))
+                .texOffs(4, 10).addBox(-2.25F, -7.25F, -10.9F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 10).addBox(-0.25F, -5.75F, -12.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F))
+                .texOffs(6, 25).addBox(-2.25F, -6.0F, -12.25F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(7, 9).addBox(3.25F, -7.25F, -10.9F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 29).addBox(3.25F, -6.0F, -12.25F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(8, 7).addBox(1.5F, -7.3F, -12.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.3F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        return LayerDefinition.create(modelData, 128, 128);
     }
 
     @Override
-    public void setAngles(MirkwoodSpiderEntity entity, float limbAngle, float limbDistance, float ageInTicks, float headYaw, float headPitch) {
-        float cosVal = (MathHelper.cos(limbAngle * 1.4F) * 0.3F) * limbDistance;
-        float cosTime = MathHelper.cos(ageInTicks * 0.15F) * 0.6F;
+    public void setupAnim(MirkwoodSpiderEntity entity, float limbAngle, float limbDistance, float ageInTicks, float headYaw, float headPitch) {
+        float cosVal = (Mth.cos(limbAngle * 1.4F) * 0.3F) * limbDistance;
+        float cosTime = Mth.cos(ageInTicks * 0.15F) * 0.6F;
 
         float percentage = (float) entity.getClimbingTicks() / MirkwoodSpiderEntity.CLIMBING_TIME_TRANSITION;
 
         if(percentage > 0) {
-            cosVal = MathHelper.cos(ageInTicks * 0.3F) * 0.6F;
+            cosVal = Mth.cos(ageInTicks * 0.3F) * 0.6F;
 
         }
 
         for(ModelPart leg : oddLegs) {
-            leg.roll = UPPER_LEGS_ROLL + (cosVal / 3);
-            leg.pitch = cosVal;
-            leg.yaw = cosVal / 4;
+            leg.zRot = UPPER_LEGS_ROLL + (cosVal / 3);
+            leg.xRot = cosVal;
+            leg.yRot = cosVal / 4;
         }
         for(ModelPart leg : evenLegs) {
-            leg.roll = UPPER_LEGS_ROLL - (cosVal / 3);
-            leg.pitch = -cosVal;
-            leg.yaw = -cosVal / 4;
+            leg.zRot = UPPER_LEGS_ROLL - (cosVal / 3);
+            leg.xRot = -cosVal;
+            leg.yRot = -cosVal / 4;
         }
 
         for(ModelPart bottomLeg : oddBottomLegs) {
-            bottomLeg.roll = BOTTOM_LEGS_ROLL;
-            bottomLeg.pitch = -cosVal;
-            bottomLeg.yaw = 0;
+            bottomLeg.zRot = BOTTOM_LEGS_ROLL;
+            bottomLeg.xRot = -cosVal;
+            bottomLeg.yRot = 0;
         }
         for(ModelPart bottomLeg : evenBottomLegs) {
-            bottomLeg.roll = BOTTOM_LEGS_ROLL;
-            bottomLeg.pitch = cosVal;
-            bottomLeg.yaw = 0;
+            bottomLeg.zRot = BOTTOM_LEGS_ROLL;
+            bottomLeg.xRot = cosVal;
+            bottomLeg.yRot = 0;
         }
 
-        this.leg1.yaw += LEGS_MARGIN_ANGLE * LEGS_MARGIN_ANGLE_MULTIPLIER;
-        this.leg2.yaw += LEGS_MARGIN_ANGLE;
-        this.leg5.yaw += 0.15f + LEGS_MARGIN_ANGLE * LEGS_MARGIN_ANGLE_MULTIPLIER;
-        this.leg6.yaw += LEGS_MARGIN_ANGLE;
-        this.leg3.yaw -= LEGS_MARGIN_ANGLE;
-        this.leg4.yaw -= 0.15f + LEGS_MARGIN_ANGLE * LEGS_MARGIN_ANGLE_MULTIPLIER;
-        this.leg7.yaw -= LEGS_MARGIN_ANGLE;
-        this.leg8.yaw -= LEGS_MARGIN_ANGLE * LEGS_MARGIN_ANGLE_MULTIPLIER;
+        this.leg1.yRot += LEGS_MARGIN_ANGLE * LEGS_MARGIN_ANGLE_MULTIPLIER;
+        this.leg2.yRot += LEGS_MARGIN_ANGLE;
+        this.leg5.yRot += 0.15f + LEGS_MARGIN_ANGLE * LEGS_MARGIN_ANGLE_MULTIPLIER;
+        this.leg6.yRot += LEGS_MARGIN_ANGLE;
+        this.leg3.yRot -= LEGS_MARGIN_ANGLE;
+        this.leg4.yRot -= 0.15f + LEGS_MARGIN_ANGLE * LEGS_MARGIN_ANGLE_MULTIPLIER;
+        this.leg7.yRot -= LEGS_MARGIN_ANGLE;
+        this.leg8.yRot -= LEGS_MARGIN_ANGLE * LEGS_MARGIN_ANGLE_MULTIPLIER;
 
-        this.bottom_leg1.yaw += 0.2f;
-        this.bottom_leg4.yaw -= 0.2f;
-        this.bottom_leg5.yaw += 0.2f;
-        this.bottom_leg8.yaw -= 0.2f;
+        this.bottom_leg1.yRot += 0.2f;
+        this.bottom_leg4.yRot -= 0.2f;
+        this.bottom_leg5.yRot += 0.2f;
+        this.bottom_leg8.yRot -= 0.2f;
 
-        this.fang1.roll = cosTime / 8;
-        this.fang2.roll = -cosTime / 8;
-        this.fang1.pitch = -cosVal / 5;
-        this.fang2.pitch = cosVal / 5;
+        this.fang1.zRot = cosTime / 8;
+        this.fang2.zRot = -cosTime / 8;
+        this.fang1.xRot = -cosVal / 5;
+        this.fang2.xRot = cosVal / 5;
 
-        this.abdomen.pitch = -0.15f + (cosVal / 7);
+        this.abdomen.xRot = -0.15f + (cosVal / 7);
 
-        this.body.pitch = -1.5f * percentage;
-        this.abdomen.pitch += (0.7f * percentage) + (0.04 * cosTime);
+        this.body.xRot = -1.5f * percentage;
+        this.abdomen.xRot += (0.7f * percentage) + (0.04 * cosTime);
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+    public void renderToBuffer(PoseStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
         this.body.render(matrices, vertices, light, overlay, color);
 
     }

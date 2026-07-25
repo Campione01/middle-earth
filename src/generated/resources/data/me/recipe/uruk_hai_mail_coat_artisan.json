@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "leggings",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:uruk_hai_mail_coat"
+  }
+}

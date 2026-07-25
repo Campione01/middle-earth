@@ -1,0 +1,82 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:erebor_plate_chestplate"
+            },
+            {
+              "cape": "surcoat",
+              "cape_color": 4940404,
+              "id": "me:erebor_plate_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "pool": [
+            {
+              "id": "me:dwarven_boots",
+              "weight": 3
+            },
+            {
+              "id": "me:erebor_plate_boots"
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:erebor_plate_helmet"
+            },
+            {
+              "id": "me:erebor_guard_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:erebor_plate_leggings"
+            },
+            {
+              "id": "me:erebor_scale_coat"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:erebor_noble_sword",
+              "weight": 3
+            },
+            {
+              "id": "me:erebor_noble_axe",
+              "weight": 3
+            },
+            {
+              "id": "me:erebor_noble_longsword"
+            },
+            {
+              "id": "me:erebor_noble_spear"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:erebor_reinforced_tower_shield"
+            },
+            {
+              "id": "me:erebor_reinforced_shield",
+              "weight": 5
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:longbeards.erebor.veteran",
+  "race": "me:dwarf"
+}

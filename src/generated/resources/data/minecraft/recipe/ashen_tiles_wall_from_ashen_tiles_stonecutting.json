@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:ashen_tiles"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:ashen_tiles_wall"
+  }
+}

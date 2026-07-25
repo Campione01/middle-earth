@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:maple_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:maple_vertical_slab"
+  }
+}

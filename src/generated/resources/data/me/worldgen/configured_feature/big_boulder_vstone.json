@@ -1,0 +1,21 @@
+{
+  "type": "me:big_boulder",
+  "config": {
+    "blockstates": [
+      {
+        "Name": "minecraft:stone"
+      },
+      {
+        "Name": "minecraft:cobblestone"
+      },
+      {
+        "Name": "minecraft:mossy_cobblestone"
+      }
+    ],
+    "height": 4.35,
+    "length": 5.85,
+    "random_size": 1.7,
+    "randomness": 0.34,
+    "width": 4.1
+  }
+}

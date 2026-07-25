@@ -2,32 +2,31 @@ package net.jukoz.me.entity.spider;
 
 
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.entity.model.ModEntityModelLayers;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-
+import net.minecraft.Util;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.ResourceLocation;
 import java.util.Map;
 
-public class MirkwoodSpiderRenderer extends MobEntityRenderer<MirkwoodSpiderEntity, MirkwoodSpiderModel> {
+public class MirkwoodSpiderRenderer extends MobRenderer<MirkwoodSpiderEntity, MirkwoodSpiderModel> {
     private static final String PATH = "textures/entities/spiders/";
 
-    public MirkwoodSpiderRenderer(EntityRendererFactory.Context context) {
+    public MirkwoodSpiderRenderer(EntityRendererProvider.Context context) {
         this(context, 0.45F, ModEntityModelLayers.SPIDER);
     }
 
-    protected MirkwoodSpiderRenderer(EntityRendererFactory.Context ctx, float shadowRadius, EntityModelLayer layer) {
-        super(ctx, new MirkwoodSpiderModel(ctx.getPart(layer)), shadowRadius);
+    protected MirkwoodSpiderRenderer(EntityRendererProvider.Context ctx, float shadowRadius, ModelLayerLocation layer) {
+        super(ctx, new MirkwoodSpiderModel(ctx.bakeLayer(layer)), shadowRadius);
     }
 
     @Override
-    public Identifier getTexture(MirkwoodSpiderEntity entity) {
-        return Identifier.of(MiddleEarth.MOD_ID, LOCATION_BY_VARIANT.get(entity.getVariant()));
+    public ResourceLocation getTextureLocation(MirkwoodSpiderEntity entity) {
+        return ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, LOCATION_BY_VARIANT.get(entity.getVariant()));
     }
 
     public static final Map<MirkwoodSpiderVariants, String> LOCATION_BY_VARIANT =
@@ -41,9 +40,9 @@ public class MirkwoodSpiderRenderer extends MobEntityRenderer<MirkwoodSpiderEnti
             });
 
     @Override
-    public void render(MirkwoodSpiderEntity entity, float entityYaw, float partialTick, MatrixStack poseStack,
-                       VertexConsumerProvider bufferSource, int packedLight) {
-        if(entity.age > MirkwoodSpiderEntity.ADULT_AGE){
+    public void render(MirkwoodSpiderEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
+                       MultiBufferSource bufferSource, int packedLight) {
+        if(entity.tickCount > MirkwoodSpiderEntity.ADULT_AGE){
             poseStack.scale(1,1,1);
         } else {
             poseStack.scale(0.5f, 0.5f, 0.5f);

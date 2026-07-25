@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:schist"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:schist_button"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "mount_armor",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:broadhoof_goat_padded_armor"
+  }
+}

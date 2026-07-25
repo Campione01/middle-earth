@@ -1,0 +1,91 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "color": 3419175,
+              "id": "me:gambeson"
+            },
+            {
+              "color": 11047793,
+              "id": "me:gambeson"
+            },
+            {
+              "color": 5846046,
+              "id": "me:gambeson"
+            },
+            {
+              "cape": "cloak",
+              "cape_color": 3419175,
+              "color": 3419175,
+              "id": "me:arming_coat"
+            },
+            {
+              "cape": "cloak",
+              "cape_color": 3419175,
+              "color": 11047793,
+              "id": "me:arming_coat"
+            },
+            {
+              "cape": "cloak",
+              "cape_color": 3419175,
+              "color": 5846046,
+              "id": "me:arming_coat"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:sturdy_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:straw_hat",
+              "weight": 2
+            },
+            {
+              "id": "me:woven_hat",
+              "weight": 2
+            },
+            {
+              "color": 5846046,
+              "id": "me:bycocket",
+              "weight": 2
+            },
+            {
+              "id": "me:kettle_hat"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:bronze_sword"
+            },
+            {
+              "id": "minecraft:iron_sword"
+            },
+            {
+              "id": "me:steel_sword"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            },
+            {
+              "id": "me:round_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:shire.militia",
+  "race": "me:hobbit"
+}

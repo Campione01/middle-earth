@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/snowy_dirt_slab"
+    },
+    "type=double": {
+      "model": "me:block/snowy_dirt"
+    },
+    "type=top": {
+      "model": "me:block/snowy_dirt_slab_top"
+    }
+  }
+}

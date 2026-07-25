@@ -1,16 +1,14 @@
 package net.jukoz.me.event;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.jukoz.me.client.screens.MiddleEarthMapScreen;
-import net.jukoz.me.network.packets.C2S.ForgeOutputPacket;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.jukoz.me.compat.neoforge.api.client.networking.v1.ClientPlayNetworking;
 import net.jukoz.me.network.packets.C2S.HoodStateTogglePacket;
-import net.jukoz.me.resources.datas.races.RaceUtil;
-import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.Text;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import org.lwjgl.glfw.GLFW;
 
 public class KeyInputHandler {
@@ -20,51 +18,59 @@ public class KeyInputHandler {
     public static final String ME_KEY_MAP_TELEPORT = "key.me.map_teleport";
     public static final String ME_KEY_MAP_FULLSCREEN_TOGGLE = "key.me.map_fullscreen_toggle";
 
-    public static KeyBinding hoodStateToggleKey;
+    public static KeyMapping hoodStateToggleKey;
     // Used in MiddleEarthMapScreen
-    public static KeyBinding mapTeleportKey;
-    public static KeyBinding mapFullscreenToggle;
+    public static KeyMapping mapTeleportKey;
+    public static KeyMapping mapFullscreenToggle;
 
-    public static void registerKeyInputs(){
-        var ref = new Object() {
-            int counter = 0;
-        };
+    private static boolean registeredClientEvents;
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if(hoodStateToggleKey.isPressed()) {
-                if (ref.counter == 0) {
-                    ref.counter = 1;
-                    assert client.player != null;
-                    ClientPlayNetworking.send(new HoodStateTogglePacket());
-                }
-            } else {
-                ref.counter = 0;
-            }
-        });
+    public static void register(IEventBus modEventBus) {
+        createKeyMappings();
+        modEventBus.addListener(KeyInputHandler::registerKeyMappings);
+        if (!registeredClientEvents) {
+            NeoForge.EVENT_BUS.addListener(KeyInputHandler::onClientTick);
+            registeredClientEvents = true;
+        }
     }
 
-    public static void register(){
-        hoodStateToggleKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+    private static void createKeyMappings() {
+        if (hoodStateToggleKey != null) {
+            return;
+        }
+
+        hoodStateToggleKey = new KeyMapping(
                 ME_KEY_HOOD_STATE_TOGGLE,
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_J,
                 ME_KEY_CATEGORY
-        ));
+        );
 
-        mapTeleportKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        mapTeleportKey = new KeyMapping(
                 ME_KEY_MAP_TELEPORT,
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_N,
                 ME_KEY_CATEGORY
-        ));
+        );
 
-        mapFullscreenToggle = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        mapFullscreenToggle = new KeyMapping(
                 ME_KEY_MAP_FULLSCREEN_TOGGLE,
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_M,
                 ME_KEY_CATEGORY
-        ));
+        );
+    }
 
-        registerKeyInputs();
+    private static void registerKeyMappings(RegisterKeyMappingsEvent event) {
+        createKeyMappings();
+        event.register(hoodStateToggleKey);
+        event.register(mapTeleportKey);
+        event.register(mapFullscreenToggle);
+    }
+
+    private static void onClientTick(ClientTickEvent.Post event) {
+        if (hoodStateToggleKey != null && Minecraft.getInstance().player != null && hoodStateToggleKey.consumeClick()) {
+            ClientPlayNetworking.send(new HoodStateTogglePacket());
+        }
     }
 }

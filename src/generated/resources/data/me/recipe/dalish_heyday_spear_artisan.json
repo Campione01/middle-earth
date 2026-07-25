@@ -1,0 +1,20 @@
+{
+  "type": "me:artisan_table",
+  "category": "spear",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:short_blade"
+    },
+    {
+      "item": "me:rod"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:dalish_heyday_spear"
+  }
+}

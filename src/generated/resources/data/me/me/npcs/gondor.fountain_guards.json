@@ -1,0 +1,25 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "id": "me:gondorian_fountain_guard_chestplate"
+        },
+        "feet": {
+          "id": "me:gondorian_fountain_guard_boots"
+        },
+        "head": {
+          "id": "me:gondorian_fountain_guard_helmet"
+        },
+        "legs": {
+          "id": "me:gondorian_fountain_guard_leggings"
+        },
+        "mainhand": {
+          "id": "me:gondorian_fountain_guard_spear"
+        }
+      }
+    ]
+  },
+  "id": "me:gondor.fountain_guards",
+  "race": "me:human"
+}

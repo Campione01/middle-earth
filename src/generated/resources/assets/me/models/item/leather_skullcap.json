@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/leather_skullcap",
+    "layer1": "me:item/leather_skullcap_overlay"
+  }
+}

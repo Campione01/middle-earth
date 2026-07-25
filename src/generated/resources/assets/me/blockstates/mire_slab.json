@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/mire_slab"
+    },
+    "type=double": {
+      "model": "me:block/mire"
+    },
+    "type=top": {
+      "model": "me:block/mire_slab_top"
+    }
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_leather_strap"
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_leather_strap"
+            },
+            {
+              "cape": "orcish_shoulders",
+              "cape_colors": [
+                3944757,
+                4865076
+              ],
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_leather_strap"
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                3944757,
+                4865076
+              ],
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "cape": "orcish_shoulders",
+              "cape_colors": [
+                3944757,
+                4865076
+              ],
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_cape"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:orcish_sandals"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            },
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:leather_skullcap",
+              "weight": 4
+            },
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:hood",
+              "weight": 3
+            },
+            {
+              "id": "me:rusted_orcish_mail_coif"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_strip_leather_skirt"
+            },
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_leather_skirt"
+            },
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_leg_bracer"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:crude_spear",
+              "weight": 4
+            },
+            {
+              "id": "me:crude_axe",
+              "weight": 3
+            },
+            {
+              "id": "me:crude_dagger",
+              "weight": 2
+            },
+            {
+              "id": "me:orc_knife",
+              "weight": 2
+            },
+            {
+              "id": "me:crude_pickaxe"
+            },
+            {
+              "id": "me:crude_hoe"
+            },
+            {
+              "id": "me:crude_shovel"
+            },
+            {
+              "id": "me:crude_falchion"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:gundabad_wooden_shield"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:misty_mountains_goblins.goblin_snaga",
+  "race": "me:orc"
+}

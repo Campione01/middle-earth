@@ -1,0 +1,67 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "feet": {
+          "id": "me:uruk_hai_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:uruk_hai_painted_berserker_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "colors": [
+                3156776,
+                6639943
+              ],
+              "id": "me:orcish_strip_leather_skirt"
+            },
+            {
+              "colors": [
+                3156776,
+                6639943
+              ],
+              "id": "me:orcish_leather_skirt"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:uruk_hai_falchion",
+              "weight": 3
+            },
+            {
+              "id": "me:uruk_hai_spear",
+              "weight": 2
+            },
+            {
+              "id": "me:uruk_hai_warblade"
+            },
+            {
+              "id": "me:uruk_hai_axe"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:torch_of_orthanc",
+              "weight": 4
+            },
+            {
+              "id": "minecraft:air"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:isengard.uruk_hai_berserker",
+  "race": "me:uruk"
+}

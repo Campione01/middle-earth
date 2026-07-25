@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:green_tuff"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:green_tuff_button"
+  }
+}

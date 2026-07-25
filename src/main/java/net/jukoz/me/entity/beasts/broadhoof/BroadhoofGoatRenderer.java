@@ -1,6 +1,7 @@
 package net.jukoz.me.entity.beasts.broadhoof;
 
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.entity.beasts.broadhoof.features.BroadhoofGoatArmorFeatureRenderer;
 import net.jukoz.me.entity.beasts.broadhoof.features.BroadhoofGoatSaddleFeatureRenderer;
@@ -11,27 +12,25 @@ import net.jukoz.me.entity.beasts.warg.features.WargArmorFeatureRenderer;
 import net.jukoz.me.entity.beasts.warg.features.WargEyesFeatureRenderer;
 import net.jukoz.me.entity.beasts.warg.features.WargSaddleFeatureRenderer;
 import net.jukoz.me.entity.model.ModEntityModelLayers;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-
+import net.minecraft.Util;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.ResourceLocation;
 import java.util.Map;
 
-public class BroadhoofGoatRenderer extends MobEntityRenderer<BroadhoofGoatEntity,BroadhoofGoatModel> {
+public class BroadhoofGoatRenderer extends MobRenderer<BroadhoofGoatEntity,BroadhoofGoatModel> {
     private static final String PATH = "textures/entities/broadhoof_goat/";
     private static final float SIZE = 1f;
 
-    public BroadhoofGoatRenderer(EntityRendererFactory.Context context) {
-        super(context, new BroadhoofGoatModel(context.getPart(ModEntityModelLayers.BROADHOOF_GOAT)), 0.8f);
-        this.addFeature(new BroadhoofGoatArmorFeatureRenderer(this, context.getModelLoader()));
-        this.addFeature(new BroadhoofGoatSaddleFeatureRenderer(this, context.getModelLoader()));
+    public BroadhoofGoatRenderer(EntityRendererProvider.Context context) {
+        super(context, new BroadhoofGoatModel(context.bakeLayer(ModEntityModelLayers.BROADHOOF_GOAT)), 0.8f);
+        this.addLayer(new BroadhoofGoatArmorFeatureRenderer(this, context.getModelSet()));
+        this.addLayer(new BroadhoofGoatSaddleFeatureRenderer(this, context.getModelSet()));
     }
 
     @Override
-    public void render(BroadhoofGoatEntity entity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+    public void render(BroadhoofGoatEntity entity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i) {
         if(entity.isBaby()) {
             matrixStack.scale(SIZE / 2, SIZE / 2, SIZE / 2);
         } else {
@@ -42,34 +41,34 @@ public class BroadhoofGoatRenderer extends MobEntityRenderer<BroadhoofGoatEntity
     }
 
     @Override
-    public Identifier getTexture(BroadhoofGoatEntity entity) {
+    public ResourceLocation getTextureLocation(BroadhoofGoatEntity entity) {
         return LOCATION_BY_VARIANT.get(entity.getVariant());
     }
 
-    public static final Map<BroadhoofGoatVariant, Identifier> LOCATION_BY_VARIANT =
+    public static final Map<BroadhoofGoatVariant, ResourceLocation> LOCATION_BY_VARIANT =
             Util.make(Maps.newEnumMap(BroadhoofGoatVariant.class), (map) -> {
                 map.put(BroadhoofGoatVariant.GRAY,
-                        Identifier.of(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_gray.png"));
+                        ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_gray.png"));
                 map.put(BroadhoofGoatVariant.GRAY_BEARD,
-                        Identifier.of(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_gray_beard.png"));
+                        ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_gray_beard.png"));
                 map.put(BroadhoofGoatVariant.GRAY_BEARD_YOUNG,
-                        Identifier.of(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_gray_beard_young.png"));
+                        ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_gray_beard_young.png"));
                 map.put(BroadhoofGoatVariant.PATCHED,
-                        Identifier.of(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_patched.png"));
+                        ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_patched.png"));
                 map.put(BroadhoofGoatVariant.RED,
-                        Identifier.of(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_red.png"));
+                        ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_red.png"));
                 map.put(BroadhoofGoatVariant.RED_WITH_PATCH,
-                        Identifier.of(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_red_with_patch.png"));
+                        ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_red_with_patch.png"));
                 map.put(BroadhoofGoatVariant.RED_WITH_SPOTS,
-                        Identifier.of(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_red_with_spots.png"));
+                        ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_red_with_spots.png"));
                 map.put(BroadhoofGoatVariant.WHITE,
-                        Identifier.of(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_white.png"));
+                        ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_white.png"));
                 map.put(BroadhoofGoatVariant.BLACK,
-                        Identifier.of(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_black.png"));
+                        ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_black.png"));
                 map.put(BroadhoofGoatVariant.BLACK_MASK,
-                        Identifier.of(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_black_mask.png"));
+                        ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_black_mask.png"));
                 map.put(BroadhoofGoatVariant.BROWN,
-                        Identifier.of(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_brown.png"));
+                        ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, PATH + "broadhoof_goat_brown.png"));
 
             });
 }

@@ -2,14 +2,13 @@ package net.jukoz.me.item.utils.armor.capes;
 
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.util.StringIdentifiable;
-import net.minecraft.util.function.ValueLists;
-
 import java.util.function.IntFunction;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ByIdMap;
+import net.minecraft.util.StringRepresentable;
 
-public enum ModCapes implements StringIdentifiable {
+public enum ModCapes implements StringRepresentable {
     CAPE(0,"cape"),
     SURCOAT(1,"surcoat"),
     CLOAK(2,"cloak"),
@@ -65,12 +64,12 @@ public enum ModCapes implements StringIdentifiable {
     ORTHANC_GUARD_CAPE(41,"orthanc_guard_cape"),
     ;
 
-    private static final IntFunction<ModCapes> BY_ID = ValueLists.createIdToValueFunction(ModCapes::getId, ModCapes.values(), ValueLists.OutOfBoundsHandling.ZERO);;
+    private static final IntFunction<ModCapes> BY_ID = ByIdMap.continuous(ModCapes::getId, ModCapes.values(), ByIdMap.OutOfBoundsStrategy.ZERO);;
     private final String name;
     private final int id;
 
-    public static final Codec<ModCapes> CODEC = StringIdentifiable.createBasicCodec(ModCapes::values);
-    public static final PacketCodec<ByteBuf, ModCapes> PACKET_CODEC = PacketCodecs.indexed(BY_ID, ModCapes::getId);
+    public static final Codec<ModCapes> CODEC = StringRepresentable.fromValues(ModCapes::values);
+    public static final StreamCodec<ByteBuf, ModCapes> PACKET_CODEC = ByteBufCodecs.idMapper(BY_ID, ModCapes::getId);
 
 
     ModCapes(int id, String name){
@@ -88,7 +87,7 @@ public enum ModCapes implements StringIdentifiable {
 
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return this.name;
     }
 }

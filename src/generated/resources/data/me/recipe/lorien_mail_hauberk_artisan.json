@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:elven_mail_hauberk"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:lorien_mail_hauberk"
+  }
+}

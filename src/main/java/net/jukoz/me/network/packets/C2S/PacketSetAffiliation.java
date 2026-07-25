@@ -8,22 +8,22 @@ import net.jukoz.me.resources.datas.factions.Faction;
 import net.jukoz.me.resources.datas.factions.FactionLookup;
 import net.jukoz.me.resources.datas.factions.FactionUtil;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
+import net.minecraft.world.InteractionHand;
 
 public class PacketSetAffiliation extends ClientToServerPacket<PacketSetAffiliation>
 {
-    public static final CustomPayload.Id<PacketSetAffiliation> ID = new CustomPayload.Id<>(Identifier.of(MiddleEarth.MOD_ID, "packet_set_affiliation"));
+    public static final CustomPacketPayload.Type<PacketSetAffiliation> ID = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "packet_set_affiliation"));
 
-    public static final PacketCodec<RegistryByteBuf, PacketSetAffiliation> CODEC = PacketCodec.tuple(
-            PacketCodecs.STRING, p -> p.dispositionName,
-            PacketCodecs.STRING, p -> p.factionName,
-            PacketCodecs.STRING, p -> p.spawnName,
+    public static final StreamCodec<RegistryFriendlyByteBuf, PacketSetAffiliation> CODEC = StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8, p -> p.dispositionName,
+            ByteBufCodecs.STRING_UTF8, p -> p.factionName,
+            ByteBufCodecs.STRING_UTF8, p -> p.spawnName,
             PacketSetAffiliation::new
     );
 
@@ -39,12 +39,12 @@ public class PacketSetAffiliation extends ClientToServerPacket<PacketSetAffiliat
     }
 
     @Override
-    public Id<PacketSetAffiliation> getId() {
+    public Type<PacketSetAffiliation> type() {
         return ID;
     }
 
     @Override
-    public PacketCodec<RegistryByteBuf, PacketSetAffiliation> streamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, PacketSetAffiliation> streamCodec() {
         return CODEC;
     }
 
@@ -53,12 +53,12 @@ public class PacketSetAffiliation extends ClientToServerPacket<PacketSetAffiliat
         MinecraftServer server = context.player().getServer();
         server.execute(() -> {
             try{
-                Identifier factionId = Identifier.of(factionName);
-                Faction faction = FactionLookup.getFactionById(context.player().getWorld(), factionId);
-                Identifier spawnId = Identifier.of(spawnName);
+                ResourceLocation factionId = ResourceLocation.parse(factionName);
+                Faction faction = FactionLookup.getFactionById(context.player().level(), factionId);
+                ResourceLocation spawnId = ResourceLocation.parse(spawnName);
                 FactionUtil.updateFaction(context.player(), faction, spawnId);
-                if(!context.player().isCreative() && context.player().getMainHandStack().getItem() instanceof StarlightPhialItem)
-                    context.player().getStackInHand(Hand.MAIN_HAND).decrement(1);
+                if(!context.player().isCreative() && context.player().getMainHandItem().getItem() instanceof StarlightPhialItem)
+                    context.player().getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
             } catch (Exception e){
                 LoggerUtil.logError("AffiliationPacket::Tried getting affiliation packet and couldn't fetch any.", e);
             }

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/long_blade",
+    "layer1": "me:trims/items/long_blade_trim_steel"
+  }
+}

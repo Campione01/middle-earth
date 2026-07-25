@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:bronze_nugget"
+    },
+    {
+      "item": "me:bronze_nugget"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:rohirric_ornamented_leather_helmet"
+  }
+}

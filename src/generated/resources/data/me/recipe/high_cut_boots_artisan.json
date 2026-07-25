@@ -1,0 +1,23 @@
+{
+  "type": "me:artisan_table",
+  "category": "boots",
+  "disposition": "neutral",
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:high_cut_boots"
+  }
+}

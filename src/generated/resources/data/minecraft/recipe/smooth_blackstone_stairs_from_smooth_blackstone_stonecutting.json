@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:smooth_blackstone"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:smooth_blackstone_stairs"
+  }
+}

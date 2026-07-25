@@ -5,13 +5,10 @@ import net.jukoz.me.item.utils.MEEquipmentTooltip;
 import net.jukoz.me.item.utils.ModShieldTypes;
 import net.jukoz.me.utils.ModFactions;
 import net.jukoz.me.utils.ModSubFactions;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,32 +23,32 @@ public class ArtefactCustomShieldItem extends CustomShieldItem implements MEEqui
     }
 
     @Override
-    public List<Text> getAdditionalShiftLines(ItemStack stack) {
-        List<Text> list = new ArrayList<>(List.of());
-        list.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + "." + this.type.name));
+    public List<Component> getAdditionalShiftLines(ItemStack stack) {
+        List<Component> list = new ArrayList<>(List.of());
+        list.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + "." + this.type.name));
         return list;
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag type) {
         appendBaseArtefactTooltip(tooltip, stack);
     }
 
     @Override
-    public Text getName(ItemStack stack) {
-        return Text.translatable(this.getTranslationKey(stack)).formatted(Formatting.AQUA).formatted(Formatting.ITALIC);
+    public Component getName(ItemStack stack) {
+        return Component.translatable(this.getDescriptionId(stack)).withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC);
     }
 
     @Override
-    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+    public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
         return false;
     }
 
     @Override
-    public boolean isItemBarVisible(ItemStack stack) {
-        if(stack.getDamage() == stack.getMaxDamage() - 1) {
+    public boolean isBarVisible(ItemStack stack) {
+        if(stack.getDamageValue() == stack.getMaxDamage() - 1) {
             return false;
-        } else if( stack.getDamage() >= 1) {
+        } else if( stack.getDamageValue() >= 1) {
             return true;
         } else {
             return false;

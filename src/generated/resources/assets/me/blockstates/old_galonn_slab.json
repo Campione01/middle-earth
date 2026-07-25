@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/old_galonn_slab"
+    },
+    "type=double": {
+      "model": "me:block/old_galonn"
+    },
+    "type=top": {
+      "model": "me:block/old_galonn_slab_top"
+    }
+  }
+}

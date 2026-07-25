@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:red_wattle_and_white_daub_pillar_alt"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wattle_and_white_daub_pillar": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:wattle_and_white_daub_pillar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_wattle_and_white_daub_pillar"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:red_wattle_and_white_daub_pillar_alt"
+    ]
+  }
+}

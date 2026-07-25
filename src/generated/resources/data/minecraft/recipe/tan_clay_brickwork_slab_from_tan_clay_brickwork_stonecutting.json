@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:tan_clay_brickwork"
+  },
+  "result": {
+    "count": 2,
+    "id": "me:tan_clay_brickwork_slab"
+  }
+}

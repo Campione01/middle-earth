@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:simple_larch_gate"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:rickety_simple_larch_door"
+  }
+}

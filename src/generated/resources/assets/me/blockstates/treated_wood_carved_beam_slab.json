@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/treated_wood_carved_beam_slab"
+    },
+    "type=double": {
+      "model": "me:block/treated_wood_carved_beam"
+    },
+    "type=top": {
+      "model": "me:block/treated_wood_carved_beam_slab_top"
+    }
+  }
+}

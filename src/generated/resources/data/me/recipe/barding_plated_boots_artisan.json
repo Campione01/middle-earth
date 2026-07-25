@@ -1,0 +1,23 @@
+{
+  "type": "me:artisan_table",
+  "category": "boots",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:barding_plated_boots"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:zigilaban"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:polished_zigilaban_stairs"
+  }
+}

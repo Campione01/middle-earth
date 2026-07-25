@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dolomite_pillar": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:dolomite_pillar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:cracked_dolomite_pillar"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dolomite_pillar"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:cracked_dolomite_pillar"
+    ]
+  }
+}

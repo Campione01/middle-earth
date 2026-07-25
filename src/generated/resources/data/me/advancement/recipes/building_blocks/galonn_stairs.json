@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_galonn": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:galonn"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:galonn_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_galonn"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:galonn_stairs"
+    ]
+  }
+}

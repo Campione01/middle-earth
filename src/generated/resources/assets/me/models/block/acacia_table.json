@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/wood_table_template",
+  "textures": {
+    "all": "me:block/acacia_table",
+    "particle": "me:block/acacia_table"
+  }
+}

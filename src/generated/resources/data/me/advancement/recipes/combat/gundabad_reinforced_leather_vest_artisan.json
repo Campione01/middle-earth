@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_orcish_leather_scale_vest": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:orcish_leather_scale_vest"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:gundabad_reinforced_leather_vest_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_orcish_leather_scale_vest"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:gundabad_reinforced_leather_vest_artisan"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/galonn_tiles_slab"
+    },
+    "type=double": {
+      "model": "me:block/galonn_tiles"
+    },
+    "type=top": {
+      "model": "me:block/galonn_tiles_slab_top"
+    }
+  }
+}

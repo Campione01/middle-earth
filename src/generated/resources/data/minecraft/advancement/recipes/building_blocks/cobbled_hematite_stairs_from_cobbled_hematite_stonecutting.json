@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cobbled_hematite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:cobbled_hematite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:cobbled_hematite_stairs_from_cobbled_hematite_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cobbled_hematite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:cobbled_hematite_stairs_from_cobbled_hematite_stonecutting"
+    ]
+  }
+}

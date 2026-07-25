@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/rocks_stage_3_template",
+  "textures": {
+    "all": "me:block/izheraban",
+    "particle": "me:block/izheraban"
+  }
+}

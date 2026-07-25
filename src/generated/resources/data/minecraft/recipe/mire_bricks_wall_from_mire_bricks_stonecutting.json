@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:mire_bricks"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:mire_bricks_wall"
+  }
+}

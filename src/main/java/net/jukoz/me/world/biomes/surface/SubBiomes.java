@@ -1,15 +1,14 @@
 package net.jukoz.me.world.biomes.surface;
 
 import net.jukoz.me.world.biomes.MEBiomeKeys;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.world.biome.Biome;
-
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biome;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SubBiomes {
-    public static HashMap<RegistryKey<Biome>, SubBiome> subBiomesMap;
+    public static HashMap<ResourceKey<Biome>, SubBiome> subBiomesMap;
 
     public static void loadSubBiomes() {
         subBiomesMap = new HashMap<>();
@@ -193,7 +192,7 @@ public class SubBiomes {
                 .addSubBiomeData(0.36f, 1.0f, MEBiomeKeys.HARAD_WOODS));
     }
 
-    public static boolean isSubBiome(RegistryKey<Biome> biomeRegistryKey) {
+    public static boolean isSubBiome(ResourceKey<Biome> biomeRegistryKey) {
         AtomicBoolean containsBiome = new AtomicBoolean(false);
         subBiomesMap.forEach((key, value) -> {
             if(value.containsSubBiome(biomeRegistryKey)) {
@@ -203,12 +202,12 @@ public class SubBiomes {
         return containsBiome.get();
     }
 
-    public static SubBiome getSubBiome(RegistryKey<Biome> biomeRegistryKey) {
+    public static SubBiome getSubBiome(ResourceKey<Biome> biomeRegistryKey) {
         return subBiomesMap.get(biomeRegistryKey);
     }
 
-    public static SubBiome getSubBiomeFromChild(RegistryKey<Biome> biomeRegistryKey) {
-        for(Map.Entry<RegistryKey<Biome>, SubBiome> entry : subBiomesMap.entrySet()) {
+    public static SubBiome getSubBiomeFromChild(ResourceKey<Biome> biomeRegistryKey) {
+        for(Map.Entry<ResourceKey<Biome>, SubBiome> entry : subBiomesMap.entrySet()) {
             if(entry.getValue().containsSubBiome(biomeRegistryKey)) {
                 return entry.getValue();
             }

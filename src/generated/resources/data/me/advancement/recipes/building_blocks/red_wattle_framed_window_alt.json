@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:red_wattle_framed_window_alt"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wattle_framed_window": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:wattle_framed_window"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_wattle_framed_window"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:red_wattle_framed_window_alt"
+    ]
+  }
+}

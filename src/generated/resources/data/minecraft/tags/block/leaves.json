@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "me:lebethron_leaves",
+    "me:berry_holly_leaves",
+    "me:dry_larch_leaves",
+    "me:flowering_mallorn_leaves",
+    "me:maple_leaves",
+    "me:orange_maple_leaves",
+    "me:red_maple_leaves",
+    "me:yellow_maple_leaves",
+    "me:dry_pine_leaves",
+    "me:beech_leaves",
+    "me:larch_leaves",
+    "me:chestnut_leaves",
+    "me:holly_leaves",
+    "me:fir_leaves",
+    "me:mallorn_leaves",
+    "me:mirkwood_leaves",
+    "me:palm_leaves",
+    "me:pine_leaves",
+    "me:black_pine_leaves",
+    "me:willow_leaves"
+  ]
+}

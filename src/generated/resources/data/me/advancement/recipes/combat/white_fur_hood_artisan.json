@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_hood": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:hood"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:white_fur_hood_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_hood"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:white_fur_hood_artisan"
+    ]
+  }
+}

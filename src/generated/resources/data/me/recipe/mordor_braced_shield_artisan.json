@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "medium_shield",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "me:crude_nugget"
+    },
+    {
+      "item": "me:shield_border"
+    },
+    {
+      "item": "me:crude_nugget"
+    },
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:mordor_braced_shield"
+  }
+}

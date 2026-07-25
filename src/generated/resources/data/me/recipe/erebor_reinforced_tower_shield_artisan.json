@@ -1,0 +1,38 @@
+{
+  "type": "me:artisan_table",
+  "category": "heavy_shield",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:khazad_steel_nugget"
+    },
+    {
+      "item": "me:khazad_steel_ingot"
+    },
+    {
+      "item": "me:khazad_steel_nugget"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "me:shield_plate"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "me:khazad_steel_nugget"
+    },
+    {
+      "item": "me:khazad_steel_ingot"
+    },
+    {
+      "item": "me:khazad_steel_nugget"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:erebor_reinforced_tower_shield"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "me:artisan_table",
+  "category": "hood",
+  "disposition": "neutral",
+  "ingredients": [
+    {
+      "item": "me:fur"
+    },
+    {
+      "item": "me:hood"
+    },
+    {
+      "item": "me:fur"
+    },
+    {
+      "item": "me:fur"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "me:fur"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:brown_fur_hood"
+  }
+}

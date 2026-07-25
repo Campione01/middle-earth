@@ -4,42 +4,41 @@ import net.jukoz.me.item.items.armor.CustomHelmetItem;
 import net.jukoz.me.item.utils.armor.ExtendedArmorMaterial;
 import net.jukoz.me.utils.ModFactions;
 import net.jukoz.me.utils.ModSubFactions;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import java.util.List;
 
 public class CustomArtefactHelmetItem extends CustomHelmetItem {
-    public CustomArtefactHelmetItem(ExtendedArmorMaterial material, Settings settings, ModFactions faction) {
+    public CustomArtefactHelmetItem(ExtendedArmorMaterial material, Properties settings, ModFactions faction) {
         super(material, settings, faction);
     }
 
-    public CustomArtefactHelmetItem(ExtendedArmorMaterial material, Settings settings, ModSubFactions subFaction) {
+    public CustomArtefactHelmetItem(ExtendedArmorMaterial material, Properties settings, ModSubFactions subFaction) {
         super(material, settings, subFaction);
     }
 
     @Override
-    public Text getName(ItemStack stack) {
-        return Text.translatable(this.getTranslationKey(stack)).formatted(Formatting.AQUA).formatted(Formatting.ITALIC);
+    public Component getName(ItemStack stack) {
+        return Component.translatable(this.getDescriptionId(stack)).withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC);
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag type) {
         appendBaseArtefactTooltip(tooltip, stack);
     }
 
     @Override
-    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+    public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
         return false;
     }
 
     @Override
-    public boolean isItemBarVisible(ItemStack stack) {
-        if(stack.getDamage() == stack.getMaxDamage() - 1) {
+    public boolean isBarVisible(ItemStack stack) {
+        if(stack.getDamageValue() == stack.getMaxDamage() - 1) {
             return false;
-        } else if( stack.getDamage() >= 1) {
+        } else if( stack.getDamageValue() >= 1) {
             return true;
         } else {
             return false;

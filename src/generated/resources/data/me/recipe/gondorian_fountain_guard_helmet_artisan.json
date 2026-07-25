@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:mithril_nugget"
+    },
+    {
+      "item": "me:gondorian_captain_helmet"
+    },
+    {
+      "item": "me:mithril_nugget"
+    },
+    {
+      "item": "me:swan_feather"
+    },
+    {
+      "item": "me:swan_feather"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:gondorian_fountain_guard_helmet"
+  }
+}

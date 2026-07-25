@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/willow_roofing_slab"
+    },
+    "type=double": {
+      "model": "me:block/willow_roofing"
+    },
+    "type=top": {
+      "model": "me:block/willow_roofing_slab_top"
+    }
+  }
+}

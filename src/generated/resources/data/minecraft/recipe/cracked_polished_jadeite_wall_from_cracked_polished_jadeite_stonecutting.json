@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:cracked_polished_jadeite"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:cracked_polished_jadeite_wall"
+  }
+}

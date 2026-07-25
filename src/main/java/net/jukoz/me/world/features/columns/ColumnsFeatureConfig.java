@@ -2,18 +2,16 @@ package net.jukoz.me.world.features.columns;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.intprovider.IntProvider;
-import net.minecraft.world.gen.feature.BasaltColumnsFeatureConfig;
-import net.minecraft.world.gen.feature.FeatureConfig;
-
 import java.util.function.BiFunction;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
-public class ColumnsFeatureConfig implements FeatureConfig {
+public class ColumnsFeatureConfig implements FeatureConfiguration {
     public static final Codec<ColumnsFeatureConfig> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
-                    IntProvider.createValidatingCodec(0, 3).fieldOf("reach").forGetter(config -> config.reach),
-                    IntProvider.createValidatingCodec(1, 10).fieldOf("height").forGetter(config -> config.height),
+                    IntProvider.codec(0, 3).fieldOf("reach").forGetter(config -> config.reach),
+                    IntProvider.codec(1, 10).fieldOf("height").forGetter(config -> config.height),
                     BlockState.CODEC.fieldOf("blockstate").forGetter(config -> config.blockState)
             ).apply(instance, ColumnsFeatureConfig::new));
 

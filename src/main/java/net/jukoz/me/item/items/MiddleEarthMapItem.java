@@ -1,29 +1,22 @@
 package net.jukoz.me.item.items;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.jukoz.me.client.screens.MiddleEarthMapScreen;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.World;
+import net.jukoz.me.utils.ClientSideAccess;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class MiddleEarthMapItem extends Item {
-    public MiddleEarthMapItem(Settings settings) {
+    public MiddleEarthMapItem(Properties settings) {
         super(settings);
     }
 
-    @Environment(EnvType.CLIENT)
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        if(world.isClient) {
-            if (mc.currentScreen == null) {
-                mc.setScreen(new MiddleEarthMapScreen());
-            }
+    public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
+        if(world.isClientSide) {
+            ClientSideAccess.openMiddleEarthMap();
         }
         return super.use(world, user, hand);
     }

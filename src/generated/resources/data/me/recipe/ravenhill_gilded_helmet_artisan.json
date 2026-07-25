@@ -1,0 +1,17 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:erebor_gilded_mail_coif"
+    },
+    {
+      "item": "me:ravenhill_helmet"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:ravenhill_gilded_helmet"
+  }
+}

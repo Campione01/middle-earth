@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_galonn_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:galonn_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:galonn_bricks_stairs_from_galonn_bricks_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_galonn_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:galonn_bricks_stairs_from_galonn_bricks_stonecutting"
+    ]
+  }
+}

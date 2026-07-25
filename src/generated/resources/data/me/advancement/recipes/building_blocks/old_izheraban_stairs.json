@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_old_izheraban": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:old_izheraban"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:old_izheraban_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_old_izheraban"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:old_izheraban_stairs"
+    ]
+  }
+}

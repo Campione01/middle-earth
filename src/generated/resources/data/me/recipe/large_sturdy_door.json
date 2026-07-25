@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "tag": "me:steel_ingots"
+    }
+  },
+  "pattern": [
+    "SPP",
+    "PPP",
+    "SPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:large_sturdy_door"
+  }
+}

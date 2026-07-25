@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/hematite_brickwork_slab"
+    },
+    "type=double": {
+      "model": "me:block/hematite_brickwork"
+    },
+    "type=top": {
+      "model": "me:block/hematite_brickwork_slab_top"
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "cape": "barding_sergeant_cape",
+              "id": "me:barding_sergeant_chestplate",
+              "weight": 3
+            },
+            {
+              "id": "me:barding_sergeant_chestplate"
+            },
+            {
+              "cape": "barding_sergeant_cape",
+              "id": "me:barding_soldier_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:barding_plated_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:barding_soldier_helmet"
+            },
+            {
+              "id": "me:barding_sergeant_helmet",
+              "weight": 3
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:barding_mail_skirt"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:dalish_noble_sword"
+            },
+            {
+              "id": "me:dalish_noble_axe"
+            },
+            {
+              "id": "me:dalish_longsword"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "minecraft:air"
+            },
+            {
+              "id": "me:dalish_royal_heavy_shield"
+            },
+            {
+              "id": "me:dalish_royal_round_shield"
+            },
+            {
+              "id": "me:dalish_barding_heavy_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:dale.sergeant",
+  "race": "me:human"
+}

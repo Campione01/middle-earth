@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/thick_large_door_right_open",
+  "textures": {
+    "all": "me:block/hidden_dwarven_door_3",
+    "particle": "me:block/hidden_dwarven_door_3"
+  }
+}

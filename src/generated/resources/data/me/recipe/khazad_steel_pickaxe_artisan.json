@@ -1,0 +1,20 @@
+{
+  "type": "me:artisan_table",
+  "category": "pickaxe",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:pickaxe_head"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:khazad_steel_pickaxe"
+  }
+}

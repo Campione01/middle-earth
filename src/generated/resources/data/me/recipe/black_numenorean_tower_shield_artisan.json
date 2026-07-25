@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "medium_shield",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "minecraft:red_dye"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "minecraft:black_dye"
+    },
+    {
+      "item": "me:shield_border"
+    },
+    {
+      "item": "minecraft:black_dye"
+    },
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:black_numenorean_tower_shield"
+  }
+}

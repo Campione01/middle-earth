@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "leggings",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:rohirric_scale_jacket"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    },
+    {
+      "item": "me:scale_mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:eorling_marshal_leggings"
+  }
+}

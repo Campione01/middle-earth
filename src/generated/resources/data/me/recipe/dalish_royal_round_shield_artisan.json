@@ -1,0 +1,38 @@
+{
+  "type": "me:artisan_table",
+  "category": "heavy_shield",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "item": "minecraft:light_blue_dye"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "me:shield_plate"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:dalish_royal_round_shield"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "me:anvil_shaping",
+  "amount": 160,
+  "ingredient": {
+    "item": "me:large_rod"
+  },
+  "output": {
+    "count": 1,
+    "id": "me:pickaxe_head"
+  }
+}

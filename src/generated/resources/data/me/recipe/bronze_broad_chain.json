@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "me:bronze_ingot"
+    },
+    "N": {
+      "item": "me:bronze_nugget"
+    }
+  },
+  "pattern": [
+    "NN",
+    "II",
+    "NN"
+  ],
+  "result": {
+    "count": 8,
+    "id": "me:bronze_broad_chain"
+  }
+}

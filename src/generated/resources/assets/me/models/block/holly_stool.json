@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/wood_stool_template",
+  "textures": {
+    "all": "me:block/holly_chair",
+    "particle": "me:block/holly_chair"
+  }
+}

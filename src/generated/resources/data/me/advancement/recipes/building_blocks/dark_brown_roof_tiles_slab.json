@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dark_brown_roof_tiles": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:dark_brown_roof_tiles"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:dark_brown_roof_tiles_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dark_brown_roof_tiles"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:dark_brown_roof_tiles_slab"
+    ]
+  }
+}

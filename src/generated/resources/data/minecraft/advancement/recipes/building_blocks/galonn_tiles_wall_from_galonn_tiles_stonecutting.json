@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_galonn_tiles": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:galonn_tiles"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:galonn_tiles_wall_from_galonn_tiles_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_galonn_tiles"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:galonn_tiles_wall_from_galonn_tiles_stonecutting"
+    ]
+  }
+}

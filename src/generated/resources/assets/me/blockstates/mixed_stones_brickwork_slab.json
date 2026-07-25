@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/mixed_stones_brickwork_slab"
+    },
+    "type=double": {
+      "model": "me:block/mixed_stones_brickwork"
+    },
+    "type=top": {
+      "model": "me:block/mixed_stones_brickwork_slab_top"
+    }
+  }
+}

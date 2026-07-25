@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_glass_pane_noside",
+  "textures": {
+    "pane": "me:block/waxed_oxidized_copper_bars"
+  }
+}

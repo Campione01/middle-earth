@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/medgon_slab"
+    },
+    "type=double": {
+      "model": "me:block/medgon"
+    },
+    "type=top": {
+      "model": "me:block/medgon_slab_top"
+    }
+  }
+}

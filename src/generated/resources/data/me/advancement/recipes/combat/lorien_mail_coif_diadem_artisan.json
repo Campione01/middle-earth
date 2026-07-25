@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_elven_mail_coif": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:elven_mail_coif"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:lorien_mail_coif_diadem_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_elven_mail_coif"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:lorien_mail_coif_diadem_artisan"
+    ]
+  }
+}

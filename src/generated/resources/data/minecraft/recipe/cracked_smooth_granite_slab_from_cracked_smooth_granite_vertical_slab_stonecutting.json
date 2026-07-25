@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:cracked_smooth_granite_vertical_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:cracked_smooth_granite_slab"
+  }
+}

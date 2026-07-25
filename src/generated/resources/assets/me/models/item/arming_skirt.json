@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/arming_skirt",
+    "layer1": "me:item/arming_skirt_overlay"
+  }
+}

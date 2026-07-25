@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/ironstone_bricks_slab"
+    },
+    "type=double": {
+      "model": "me:block/ironstone_bricks"
+    },
+    "type=top": {
+      "model": "me:block/ironstone_bricks_slab_top"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/cobbled_hematite_slab"
+    },
+    "type=double": {
+      "model": "me:block/cobbled_hematite"
+    },
+    "type=top": {
+      "model": "me:block/cobbled_hematite_slab_top"
+    }
+  }
+}

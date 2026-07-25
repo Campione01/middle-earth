@@ -1,0 +1,21 @@
+{
+  "type": "me:big_boulder",
+  "config": {
+    "blockstates": [
+      {
+        "Name": "me:gneiss"
+      },
+      {
+        "Name": "me:gneiss"
+      },
+      {
+        "Name": "me:smooth_gneiss"
+      }
+    ],
+    "height": 1.6,
+    "length": 2.1,
+    "random_size": 0.6,
+    "randomness": 0.21,
+    "width": 1.5
+  }
+}

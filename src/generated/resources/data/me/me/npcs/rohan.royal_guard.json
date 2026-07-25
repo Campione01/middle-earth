@@ -1,0 +1,44 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:rohirric_scale_hauberk",
+              "weight": 6
+            },
+            {
+              "id": "me:rohirric_ornamented_scale_hauberk"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:high_cut_boots"
+        },
+        "head": {
+          "id": "me:rohirric_royal_guard_helmet"
+        },
+        "legs": {
+          "id": "me:rohirric_scale_jacket"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:rohirric_noble_spear",
+              "weight": 6
+            },
+            {
+              "id": "me:rohirric_noble_sword"
+            }
+          ]
+        },
+        "offhand": {
+          "id": "me:rohirric_royal_guard_shield"
+        }
+      }
+    ]
+  },
+  "id": "me:rohan.royal_guard",
+  "race": "me:human"
+}

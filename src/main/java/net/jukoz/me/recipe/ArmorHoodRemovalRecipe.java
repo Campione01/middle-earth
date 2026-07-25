@@ -4,39 +4,39 @@ import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.item.ModDataComponentTypes;
 import net.jukoz.me.item.dataComponents.CustomDyeableDataComponent;
 import net.jukoz.me.item.items.armor.CustomHelmetItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.SpecialCraftingRecipe;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.recipe.input.CraftingRecipeInput;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.world.World;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
 
 
-public class ArmorHoodRemovalRecipe extends SpecialCraftingRecipe {
+public class ArmorHoodRemovalRecipe extends CustomRecipe {
 
-    public ArmorHoodRemovalRecipe(CraftingRecipeCategory category) {
+    public ArmorHoodRemovalRecipe(CraftingBookCategory category) {
         super(category);
     }
 
 
     @Override
-    public DefaultedList<ItemStack> getRemainder(CraftingRecipeInput input) {
-        DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(input.getSize(), ItemStack.EMPTY);
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
+        NonNullList<ItemStack> defaultedList = NonNullList.withSize(input.size(), ItemStack.EMPTY);
 
         for(int i = 0; i < defaultedList.size(); ++i) {
-            ItemStack itemStack = input.getStackInSlot(i);
-            if (itemStack.getItem().hasRecipeRemainder()) {
-                defaultedList.set(i, new ItemStack(itemStack.getItem().getRecipeRemainder()));
+            ItemStack itemStack = input.getItem(i);
+            if (itemStack.getItem().hasCraftingRemainingItem()) {
+                defaultedList.set(i, new ItemStack(itemStack.getItem().getCraftingRemainingItem()));
             } else if (itemStack.getItem() instanceof ShearsItem) {
                 defaultedList.set(i, itemStack.copyWithCount(1));
             }else if (itemStack.get(ModDataComponentTypes.HOOD_DATA) != null){
-                ItemStack hood = new ItemStack(Registries.ITEM.get(Identifier.of(MiddleEarth.MOD_ID, itemStack.get(ModDataComponentTypes.HOOD_DATA).hood().getName())));
+                ItemStack hood = new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, itemStack.get(ModDataComponentTypes.HOOD_DATA).hood().getName())));
                 hood.set(ModDataComponentTypes.HOOD_DATA, itemStack.get(ModDataComponentTypes.HOOD_DATA));
                 hood.set(ModDataComponentTypes.DYE_DATA, new CustomDyeableDataComponent(itemStack.get(ModDataComponentTypes.HOOD_DATA).hoodColor()));
                 defaultedList.set(i, hood);
@@ -47,12 +47,12 @@ public class ArmorHoodRemovalRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingRecipeInput input, World world) {
+    public boolean matches(CraftingInput input, Level world) {
         ItemStack itemStackHelmet = ItemStack.EMPTY;
         ItemStack itemStackHood = ItemStack.EMPTY;
 
-        for(int i = 0; i < input.getSize(); ++i) {
-            ItemStack itemStack2 = input.getStackInSlot(i);
+        for(int i = 0; i < input.size(); ++i) {
+            ItemStack itemStack2 = input.getItem(i);
             if (!itemStack2.isEmpty()) {
                 if (itemStack2.getItem() instanceof CustomHelmetItem && itemStack2.get(ModDataComponentTypes.HOOD_DATA) != null) {
                     if (!itemStackHelmet.isEmpty()) {
@@ -60,7 +60,7 @@ public class ArmorHoodRemovalRecipe extends SpecialCraftingRecipe {
                     }
                     itemStackHelmet = itemStack2;
                 } else {
-                    if (!itemStack2.isOf(Items.SHEARS)) {
+                    if (!itemStack2.is(Items.SHEARS)) {
                         return false;
                     }
                     itemStackHood = itemStack2;
@@ -71,11 +71,11 @@ public class ArmorHoodRemovalRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(CraftingRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack assemble(CraftingInput input, HolderLookup.Provider lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
 
-        for(int i = 0; i < input.getSize(); ++i) {
-            ItemStack itemStack2 = input.getStackInSlot(i);
+        for(int i = 0; i < input.size(); ++i) {
+            ItemStack itemStack2 = input.getItem(i);
             if (!itemStack2.isEmpty()) {
                 if (itemStack2.getItem() instanceof CustomHelmetItem && itemStack2.get(ModDataComponentTypes.HOOD_DATA) != null) {
                     if (!itemStack.isEmpty()) {
@@ -84,7 +84,7 @@ public class ArmorHoodRemovalRecipe extends SpecialCraftingRecipe {
 
                     itemStack = itemStack2.copy();
                 } else {
-                    if (!itemStack2.isOf(Items.SHEARS)) {
+                    if (!itemStack2.is(Items.SHEARS)) {
                         return ItemStack.EMPTY;
                     }
                 }
@@ -99,7 +99,7 @@ public class ArmorHoodRemovalRecipe extends SpecialCraftingRecipe {
         }
     }
 
-    public boolean fits(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return width * height >= 2;
     }
 

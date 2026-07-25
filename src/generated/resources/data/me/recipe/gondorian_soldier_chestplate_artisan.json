@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:gondorian_mail_hauberk"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:gondorian_soldier_chestplate"
+  }
+}

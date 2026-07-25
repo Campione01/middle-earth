@@ -1,0 +1,17 @@
+{
+  "type": "me:artisan_table",
+  "category": "medium_shield",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:mordor_painted_braced_shield"
+    },
+    {
+      "item": "minecraft:black_dye"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:mordor_black_braced_shield"
+  }
+}

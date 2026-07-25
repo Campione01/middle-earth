@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:mossy_smooth_calcite"
+  },
+  "result": {
+    "count": 2,
+    "id": "me:mossy_smooth_calcite_vertical_slab"
+  }
+}

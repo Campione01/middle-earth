@@ -1,8 +1,7 @@
 package net.jukoz.me.datageneration.content.models;
 
 import net.jukoz.me.item.ModDecorativeItems;
-import net.minecraft.item.Item;
-
+import net.minecraft.world.item.Item;
 import java.util.ArrayList;
 import java.util.List;
 

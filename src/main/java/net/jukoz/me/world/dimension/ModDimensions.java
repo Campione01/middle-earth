@@ -1,5 +1,7 @@
 package net.jukoz.me.world.dimension;
 
+import net.jukoz.me.utils.NeoForgeRegistrationBridge;
+
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.config.ModServerConfigs;
 import net.jukoz.me.resources.StateSaverAndLoader;
@@ -9,42 +11,45 @@ import net.jukoz.me.resources.datas.races.RaceUtil;
 import net.jukoz.me.resources.datas.races.data.AttributeData;
 import net.jukoz.me.resources.persistent_datas.PlayerData;
 import net.jukoz.me.utils.LoggerUtil;
+import net.jukoz.me.world.biomes.surface.ModBiomeSource;
 import net.jukoz.me.world.chunkgen.MiddleEarthChunkGenerator;
 import net.jukoz.me.world.chunkgen.map.MiddleEarthHeightMap;
 import net.jukoz.me.world.map.MiddleEarthMapConfigs;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionOptions;
+import net.jukoz.me.world.map.MiddleEarthMapUtils;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.LevelStem;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3i;
 
 public class ModDimensions {
-    public static Identifier ME_DIMENSION_ID = Identifier.of(MiddleEarth.MOD_ID, "middle_earth");
-    public static Identifier OW_DIMENSION_ID = Identifier.of("overworld");
+    public static ResourceLocation ME_DIMENSION_ID = ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "middle_earth");
+    public static ResourceLocation OW_DIMENSION_ID = ResourceLocation.parse("overworld");
 
-    public static final RegistryKey<DimensionOptions> ME_DIMENSION_KEY =
-            RegistryKey.of(RegistryKeys.DIMENSION, ME_DIMENSION_ID);
+    public static final ResourceKey<LevelStem> ME_DIMENSION_KEY =
+            ResourceKey.create(Registries.LEVEL_STEM, ME_DIMENSION_ID);
 
-    public static RegistryKey<World> ME_WORLD_KEY =
-            RegistryKey.of(RegistryKeys.WORLD, ME_DIMENSION_KEY.getValue());
+    public static ResourceKey<Level> ME_WORLD_KEY =
+            ResourceKey.create(Registries.DIMENSION, ME_DIMENSION_KEY.location());
 
-    public static final RegistryKey<DimensionOptions> OW_DIMENSION_KEY =
-            RegistryKey.of(RegistryKeys.DIMENSION, Identifier.of("overworld"));
+    public static final ResourceKey<LevelStem> OW_DIMENSION_KEY =
+            ResourceKey.create(Registries.LEVEL_STEM, ResourceLocation.parse("overworld"));
 
-    public static RegistryKey<World> OW_WORLD_KEY =
-            RegistryKey.of(RegistryKeys.WORLD, OW_DIMENSION_KEY.getValue());
+    public static ResourceKey<Level> OW_WORLD_KEY =
+            ResourceKey.create(Registries.DIMENSION, OW_DIMENSION_KEY.location());
 
     public static void register() {
-        Registry.register(Registries.CHUNK_GENERATOR, ME_DIMENSION_ID, MiddleEarthChunkGenerator.CODEC);
-        ME_WORLD_KEY = RegistryKey.of(RegistryKeys.WORLD, ME_DIMENSION_ID);
+        NeoForgeRegistrationBridge.register(BuiltInRegistries.BIOME_SOURCE, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "middle_earth_biome_source"), ModBiomeSource.CODEC);
+        NeoForgeRegistrationBridge.register(BuiltInRegistries.CHUNK_GENERATOR, ME_DIMENSION_ID, MiddleEarthChunkGenerator.CODEC);
+        ME_WORLD_KEY = ResourceKey.create(Registries.DIMENSION, ME_DIMENSION_ID);
 
         LoggerUtil.logDebugMsg("Registering ModDimensions for " + MiddleEarth.MOD_ID);
     }
@@ -55,57 +60,74 @@ public class ModDimensions {
         return new Vector3i(x, height, z);
     }
 
-    public static void teleportPlayerToMe(PlayerEntity player, Vec3d coordinates, boolean setSpawnPoint, boolean welcomeNeeded){
-        if(!player.getWorld().isClient()) {
-            RegistryKey<World> registryKey = ME_WORLD_KEY;
-            ServerWorld serverWorld = (ServerWorld) player.getWorld();
-            if (serverWorld != null) {
-                serverWorld = serverWorld.getServer().getWorld(registryKey);
+    public static void teleportPlayerToMe(Player player, Vec3 coordinates, boolean setSpawnPoint, boolean welcomeNeeded){
+        if(player.level().isClientSide() || !(player instanceof ServerPlayer serverPlayer)) {
+            return;
+        }
 
-                player.wakeUp();
+        ServerLevel serverWorld = serverPlayer.getServer().getLevel(ME_WORLD_KEY);
+        if (serverWorld == null) {
+            LoggerUtil.logError("Middle-earth dimension is not loaded; cannot teleport player.");
+            return;
+        }
 
-                ((ServerPlayerEntity) player).teleport(serverWorld, coordinates.x , coordinates.y, coordinates.z, 0, 0);
-                player.refreshPositionAfterTeleport(coordinates.x, coordinates.y, coordinates.z);
-                if(setSpawnPoint)
-                    ((ServerPlayerEntity) player).setSpawnPoint(registryKey, new BlockPos((int) coordinates.x, (int) coordinates.y, (int) coordinates.z), player.getYaw(), true, true);
-                if(welcomeNeeded)
-                    FactionUtil.sendOnFactionJoinMessage(player);
-                PlayerData data = StateSaverAndLoader.getPlayerState(player);
-                if(data != null){
-                    Race playerRace = data.getRace(player.getWorld());
-                    if(playerRace != null)
-                        RaceUtil.updateRace(player, playerRace, false);
-                }
+        Vec3 target = getSafeMiddleEarthTeleportTarget(coordinates);
+        BlockPos targetPos = BlockPos.containing(target);
+        serverWorld.getChunk(targetPos);
 
+        serverPlayer.stopSleeping();
+        serverPlayer.teleportTo(serverWorld, target.x, target.y, target.z, serverPlayer.getYRot(), serverPlayer.getXRot());
+        if(setSpawnPoint) {
+            serverPlayer.setRespawnPosition(ME_WORLD_KEY, targetPos, serverPlayer.getYRot(), true, true);
+        }
+        if(welcomeNeeded) {
+            FactionUtil.sendOnFactionJoinMessage(player);
+        }
+        PlayerData data = StateSaverAndLoader.getPlayerStateReadOnly(player);
+        if(data != null){
+            Race playerRace = data.getRace(serverWorld);
+            if(playerRace != null) {
+                RaceUtil.updateRace(player, playerRace, false);
             }
         }
     }
 
-    public static boolean isInMiddleEarth(World world){
-        return world.getRegistryKey().getValue().equals(ME_DIMENSION_ID);
+    public static Vec3 getSafeMiddleEarthTeleportTarget(Vec3 coordinates) {
+        int x = (int) Math.floor(coordinates.x);
+        int z = (int) Math.floor(coordinates.z);
+        if(!MiddleEarthMapUtils.getInstance().isWorldCoordinateInBorder(x, z)) {
+            Vector3i fallback = getSpawnCoordinate();
+            x = fallback.x;
+            z = fallback.z;
+        }
+        Vector3i height = getDimensionHeight(x, z);
+        return new Vec3(x + 0.5D, height.y + 1.0D, z + 0.5D);
     }
 
-    public static boolean isInOverworld(World world){
-        return world.getRegistryKey().getValue().equals(OW_DIMENSION_ID);
+    public static boolean isInMiddleEarth(Level world){
+        return world.dimension().location().equals(ME_DIMENSION_ID);
     }
 
-    public static boolean teleportPlayerToOverworld(PlayerEntity player) {
-        if(!player.getWorld().isClient()) {
-            RegistryKey<World> registryKey = OW_WORLD_KEY;
-            ServerWorld serverWorld = (ServerWorld) player.getWorld();
-            PlayerData data = StateSaverAndLoader.getPlayerState(player);
-            BlockPos coordinate = data.getOverworldSpawnCoordinates();
+    public static boolean isInOverworld(Level world){
+        return world.dimension().location().equals(OW_DIMENSION_ID);
+    }
+
+    public static boolean teleportPlayerToOverworld(Player player) {
+        if(!player.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
+            ResourceKey<Level> registryKey = OW_WORLD_KEY;
+            PlayerData data = StateSaverAndLoader.getPlayerStateReadOnly(player);
+            BlockPos coordinate = data == null ? null : data.getOverworldSpawnCoordinates();
             if(coordinate == null) {
-                coordinate = player.getServer().getOverworld().getSpawnPos();
+                coordinate = player.getServer().overworld().getSharedSpawnPos();
             }
 
+            ServerLevel serverWorld = serverPlayer.getServer().getLevel(registryKey);
             if (serverWorld != null) {
-                serverWorld = serverWorld.getServer().getWorld(registryKey);
+                serverWorld.getChunk(coordinate);
 
-                player.wakeUp();
-                ((ServerPlayerEntity) player).setSpawnPoint(World.OVERWORLD, player.getServer().getOverworld().getSpawnPos(), player.getServer().getOverworld().getSpawnAngle(), true, true);
-                ((ServerPlayerEntity) player).teleport(serverWorld, coordinate.getX() , coordinate.getY(), coordinate.getZ(), 0, 0);
-                player.refreshPositionAfterTeleport(coordinate.getX() , coordinate.getY(), coordinate.getZ());
+                serverPlayer.stopSleeping();
+                serverPlayer.setRespawnPosition(Level.OVERWORLD, player.getServer().overworld().getSharedSpawnPos(), player.getServer().overworld().getSharedSpawnAngle(), true, true);
+                serverPlayer.teleportTo(serverWorld, coordinate.getX() + 0.5D, coordinate.getY(), coordinate.getZ() + 0.5D, serverPlayer.getYRot(), serverPlayer.getXRot());
 
                 if(!ModServerConfigs.ENABLE_KEEP_RACE_ON_DIMENSION_SWAP){
                     AttributeData.reset(player);

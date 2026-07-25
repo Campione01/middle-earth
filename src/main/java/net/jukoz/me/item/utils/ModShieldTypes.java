@@ -1,8 +1,8 @@
 package net.jukoz.me.item.utils;
 
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
 
-public enum ModShieldTypes implements StringIdentifiable {
+public enum ModShieldTypes implements StringRepresentable {
 
     LIGHT_SHIELD("light_shield", 250),
     MEDIUM_SHIELD("medium_shield", 336),
@@ -18,7 +18,7 @@ public enum ModShieldTypes implements StringIdentifiable {
     }
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return this.name;
     }
 }

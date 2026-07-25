@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/gilded_green_tuff_slab"
+    },
+    "type=double": {
+      "model": "me:block/gilded_green_tuff"
+    },
+    "type=top": {
+      "model": "me:block/gilded_green_tuff_slab_top"
+    }
+  }
+}

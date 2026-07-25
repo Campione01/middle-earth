@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:gabbro_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:gabbro_vertical_slab"
+  }
+}

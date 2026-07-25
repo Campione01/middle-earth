@@ -1,0 +1,14 @@
+{
+  "type": "me:cave_columns",
+  "config": {
+    "blockstate": {
+      "Name": "me:pumice"
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 4,
+      "min_inclusive": 1
+    },
+    "reach": 1
+  }
+}

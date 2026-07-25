@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "me:block/old_medgon",
+    "side": "me:block/old_medgon",
+    "top": "me:block/old_medgon"
+  }
+}

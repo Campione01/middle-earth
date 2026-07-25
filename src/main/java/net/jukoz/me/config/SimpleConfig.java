@@ -24,8 +24,8 @@ package net.jukoz.me.config;
  * THE SOFTWARE.
  */
 
-import net.fabricmc.loader.api.FabricLoader;
 import net.jukoz.me.utils.LoggerUtil;
+import net.neoforged.fml.loading.FMLPaths;
 
 import java.io.File;
 import java.io.IOException;
@@ -99,7 +99,7 @@ public class SimpleConfig {
      * @return new config request object
      */
     public static ConfigRequest of( String filename ) {
-        Path path = FabricLoader.getInstance().getConfigDir();
+        Path path = FMLPaths.CONFIGDIR.get();
         return new ConfigRequest( path.resolve( filename + FILE_TYPE).toFile(), filename );
     }
 

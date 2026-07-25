@@ -1,0 +1,20 @@
+{
+  "type": "me:artisan_table",
+  "category": "axe",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:axe_head"
+    },
+    {
+      "item": "me:rod"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:black_numenorean_axe"
+  }
+}

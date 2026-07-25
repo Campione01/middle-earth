@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "light_shield",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "me:crude_ingot"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:mordor_wooden_shield"
+  }
+}

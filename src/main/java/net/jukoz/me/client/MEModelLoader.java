@@ -1,43 +1,38 @@
 package net.jukoz.me.client;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.jukoz.me.compat.neoforge.dist.EnvType;
+import net.jukoz.me.compat.neoforge.dist.Environment;
 import net.jukoz.me.MiddleEarth;
 import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.client.render.TexturedRenderLayers;
-import net.minecraft.client.render.model.BlockStatesLoader;
-import net.minecraft.client.render.model.ModelLoader;
-import net.minecraft.client.render.model.json.JsonUnbakedModel;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.profiler.Profiler;
-
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.BlockStateModelLoader;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.profiling.ProfilerFiller;
 import java.util.List;
 import java.util.Map;
 
 @Environment(EnvType.CLIENT)
-public class MEModelLoader extends ModelLoader {
-    public static final SpriteIdentifier KITE_SHIELD_BASE;
-    public static final SpriteIdentifier KITE_SHIELD_BASE_NO_PATTERN;
-
-    public static final SpriteIdentifier HEATER_SHIELD_BASE;
-    public static final SpriteIdentifier HEATER_SHIELD_BASE_NO_PATTERN;
-
-    public static final SpriteIdentifier ROUND_SHIELD_BASE;
-    public static final SpriteIdentifier ROUND_SHIELD_BASE_NO_PATTERN;
-
-    public MEModelLoader(BlockColors blockColors, Profiler profiler, Map<Identifier, JsonUnbakedModel> jsonUnbakedModels, Map<Identifier, List<BlockStatesLoader.SourceTrackedData>> blockStates) {
+public class MEModelLoader extends ModelBakery {
+    public MEModelLoader(BlockColors blockColors, ProfilerFiller profiler, Map<ResourceLocation, BlockModel> jsonUnbakedModels, Map<ResourceLocation, List<BlockStateModelLoader.LoadedJson>> blockStates) {
         super(blockColors, profiler, jsonUnbakedModels, blockStates);
     }
 
-    static {
-        KITE_SHIELD_BASE = new SpriteIdentifier(TexturedRenderLayers.SHIELD_PATTERNS_ATLAS_TEXTURE, Identifier.of(MiddleEarth.MOD_ID, "entity/kite_shield_base"));
-        KITE_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(TexturedRenderLayers.SHIELD_PATTERNS_ATLAS_TEXTURE, Identifier.of(MiddleEarth.MOD_ID, "entity/kite_shield_base_nopattern"));
+    public static Material kiteShieldBase(boolean hasPattern) {
+        return shieldMaterial(hasPattern ? "entity/kite_shield_base" : "entity/kite_shield_base_nopattern");
+    }
 
-        HEATER_SHIELD_BASE = new SpriteIdentifier(TexturedRenderLayers.SHIELD_PATTERNS_ATLAS_TEXTURE, Identifier.of(MiddleEarth.MOD_ID, "entity/heater_shield_base"));
-        HEATER_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(TexturedRenderLayers.SHIELD_PATTERNS_ATLAS_TEXTURE, Identifier.of(MiddleEarth.MOD_ID, "entity/heater_shield_base_nopattern"));
+    public static Material heaterShieldBase(boolean hasPattern) {
+        return shieldMaterial(hasPattern ? "entity/heater_shield_base" : "entity/heater_shield_base_nopattern");
+    }
 
-        ROUND_SHIELD_BASE = new SpriteIdentifier(TexturedRenderLayers.SHIELD_PATTERNS_ATLAS_TEXTURE, Identifier.of(MiddleEarth.MOD_ID, "entity/round_shield_base"));
-        ROUND_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(TexturedRenderLayers.SHIELD_PATTERNS_ATLAS_TEXTURE, Identifier.of(MiddleEarth.MOD_ID, "entity/round_shield_base_nopattern"));
+    public static Material roundShieldBase(boolean hasPattern) {
+        return shieldMaterial(hasPattern ? "entity/round_shield_base" : "entity/round_shield_base_nopattern");
+    }
+
+    private static Material shieldMaterial(String texture) {
+        return new Material(Sheets.SHIELD_SHEET, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, texture));
     }
 }

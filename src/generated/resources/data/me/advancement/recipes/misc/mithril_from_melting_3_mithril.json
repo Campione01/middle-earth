@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_forge": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:forge"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:mithril_from_melting_3_mithril"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_forge"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:mithril_from_melting_3_mithril"
+    ]
+  }
+}

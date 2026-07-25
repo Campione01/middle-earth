@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/orcish_black_fur_surcoat_with_bone"
+  }
+}

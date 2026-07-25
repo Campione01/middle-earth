@@ -6,10 +6,7 @@ import net.jukoz.me.world.biomes.surface.*;
 import net.jukoz.me.world.map.MiddleEarthMapConfigs;
 import net.jukoz.me.world.map.MiddleEarthMapRuntime;
 import net.jukoz.me.world.map.MiddleEarthMapUtils;
-import net.minecraft.server.world.ServerWorld;
-
 import java.awt.*;
-import java.util.ArrayList;
 
 public class MiddleEarthHeightMap {
     public static final int SMOOTH_BRUSH_SIZE = 4;
@@ -29,7 +26,6 @@ public class MiddleEarthHeightMap {
     public static final float WATER_MULTIPLIER = 0.65f;
     public static final float WATER_PERLIN_DIVIDER = 3.6f;
     private static final int PIXEL_WEIGHT = MiddleEarthMapConfigs.PIXEL_WEIGHT;
-    public static final ArrayList<Float> percentages = new ArrayList<Float>();
     private static MiddleEarthMapRuntime middleEarthMapRuntime;
     private static Float defaultWeightHeight = null;
 
@@ -157,7 +153,6 @@ public class MiddleEarthHeightMap {
     }
 
     private static float getMiddleHeight(float a, float b, float percentage) {
-        if(!percentages.contains(percentage)) percentages.add(percentage);
         float percentage2 = 1 - percentage;
         return (a * percentage2) + (b * percentage);
     }

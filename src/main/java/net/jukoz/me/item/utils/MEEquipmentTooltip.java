@@ -1,93 +1,91 @@
 package net.jukoz.me.item.utils;
 
 import net.jukoz.me.MiddleEarth;
+import net.jukoz.me.utils.ClientSideAccess;
 import net.jukoz.me.utils.ModFactions;
 import net.jukoz.me.utils.ModSubFactions;
-import net.minecraft.block.Block;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ProfileComponent;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ResolvableProfile;
 import java.util.List;
 
 public interface MEEquipmentTooltip {
 
     String COLOR_PREFIX = "#%06X";
 
-    default void appendBaseTooltip(List<Text> tooltip, ItemStack stack, ModFactions faction, ModSubFactions subFaction) {
-        ProfileComponent profileComponent = stack.get(DataComponentTypes.PROFILE);
+    default void appendBaseTooltip(List<Component> tooltip, ItemStack stack, ModFactions faction, ModSubFactions subFaction) {
+        ResolvableProfile profileComponent = stack.get(DataComponents.PROFILE);
 
-        tooltip.add(Text.of(""));
-        if (Screen.hasShiftDown()) {
+        tooltip.add(Component.nullToEmpty(""));
+        if (ClientSideAccess.hasShiftDown()) {
             if (faction != ModFactions.NONE){
-                tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + ".faction").append(Text.translatable("tooltip." + MiddleEarth.MOD_ID + "." + faction.getName())));
+                tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + ".faction").append(Component.translatable("tooltip." + MiddleEarth.MOD_ID + "." + faction.getName())));
             }
             if (subFaction != null) {
-                tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + ".sub_faction").append(Text.translatable("tooltip." + MiddleEarth.MOD_ID + "." + subFaction.getName())));
+                tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + ".sub_faction").append(Component.translatable("tooltip." + MiddleEarth.MOD_ID + "." + subFaction.getName())));
             }
 
             if(!getAdditionalShiftLines(stack).isEmpty()) tooltip.addAll(getAdditionalShiftLines(stack));
 
             if (profileComponent != null && profileComponent.name().isPresent()) {
-                tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + ".artisan").append(profileComponent.name().get()).formatted(Formatting.GRAY));
+                tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + ".artisan").append(profileComponent.name().get()).withStyle(ChatFormatting.GRAY));
             }
 
-            tooltip.add(Text.of(""));
+            tooltip.add(Component.nullToEmpty(""));
         } else {
-            tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + ".shift"));
+            tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + ".shift"));
         }
         if (!getAdditionalAltLines(stack).isEmpty()){
-            if(Screen.hasAltDown()){
-                tooltip.add(Text.of(""));
-                tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + ".customizations"));
+            if(ClientSideAccess.hasAltDown()){
+                tooltip.add(Component.nullToEmpty(""));
+                tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + ".customizations"));
                 tooltip.addAll(getAdditionalAltLines(stack));
             }else {
-                tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + ".alt"));
+                tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + ".alt"));
             }
         }
     }
 
-    default void appendBaseArtefactTooltip(List<Text> tooltip, ItemStack stack) {
-        tooltip.add(Text.of(""));
-        if (Screen.hasShiftDown()) {
+    default void appendBaseArtefactTooltip(List<Component> tooltip, ItemStack stack) {
+        tooltip.add(Component.nullToEmpty(""));
+        if (ClientSideAccess.hasShiftDown()) {
 
-            if(!(stack.getItem() instanceof BlockItem) && !(stack.getDamage() < stack.getMaxDamage() - 1)) {
-                tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + ".broken").formatted(Formatting.GRAY));
+            if(!(stack.getItem() instanceof BlockItem) && !(stack.getDamageValue() < stack.getMaxDamage() - 1)) {
+                tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + ".broken").withStyle(ChatFormatting.GRAY));
             }
 
-            tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + ".artefact").formatted(Formatting.GOLD));
+            tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + ".artefact").withStyle(ChatFormatting.GOLD));
 
             if(!getAdditionalShiftLines(stack).isEmpty()) tooltip.addAll(getAdditionalShiftLines(stack));
 
-            tooltip.add(Text.literal(""));
+            tooltip.add(Component.literal(""));
             
-            tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + "." + Registries.ITEM.getId(stack.getItem()).getPath() + "_lore_0").formatted(Formatting.GRAY).formatted(Formatting.ITALIC));
-            tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + "." + Registries.ITEM.getId(stack.getItem()).getPath() + "_lore_1").formatted(Formatting.GRAY).formatted(Formatting.ITALIC));
+            tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + "." + BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath() + "_lore_0").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+            tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + "." + BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath() + "_lore_1").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
 
         } else {
-            tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + ".shift"));
+            tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + ".shift"));
         }
         if (!getAdditionalAltLines(stack).isEmpty()){
-            if(Screen.hasAltDown()){
-                tooltip.add(Text.of(""));
-                tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + ".customizations"));
+            if(ClientSideAccess.hasAltDown()){
+                tooltip.add(Component.nullToEmpty(""));
+                tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + ".customizations"));
                 tooltip.addAll(getAdditionalAltLines(stack));
             }else {
-                tooltip.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + ".alt"));
+                tooltip.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + ".alt"));
             }
         }
     }
 
-    default List<Text> getAdditionalShiftLines(ItemStack stack) {
+    default List<Component> getAdditionalShiftLines(ItemStack stack) {
         return List.of();
     }
 
-    default List<Text> getAdditionalAltLines(ItemStack stack){
+    default List<Component> getAdditionalAltLines(ItemStack stack){
         return List.of();
     }
 }

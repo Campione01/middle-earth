@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_galonn_brickwork_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:galonn_brickwork_slab"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:galonn_brickwork_vertical_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_galonn_brickwork_slab"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:galonn_brickwork_vertical_slab"
+    ]
+  }
+}

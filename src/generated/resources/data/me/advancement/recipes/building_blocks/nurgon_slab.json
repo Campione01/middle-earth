@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_nurgon": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:nurgon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:nurgon_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_nurgon"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:nurgon_slab"
+    ]
+  }
+}

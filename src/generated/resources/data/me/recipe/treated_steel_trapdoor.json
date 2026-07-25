@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "N": {
+      "tag": "me:steel_nuggets"
+    },
+    "S": {
+      "tag": "me:steel_ingots"
+    }
+  },
+  "pattern": [
+    "NSN",
+    "NSN"
+  ],
+  "result": {
+    "count": 2,
+    "id": "me:treated_steel_trapdoor"
+  }
+}

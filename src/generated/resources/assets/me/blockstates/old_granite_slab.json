@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/old_granite_slab"
+    },
+    "type=double": {
+      "model": "me:block/old_granite"
+    },
+    "type=top": {
+      "model": "me:block/old_granite_slab_top"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/scale_mail",
+    "layer1": "me:trims/items/scale_mail_trim_bronze"
+  }
+}

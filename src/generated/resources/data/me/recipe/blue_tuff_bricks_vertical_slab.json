@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:blue_tuff_bricks_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:blue_tuff_bricks_vertical_slab"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/rohirric_leather_vest",
+    "layer1": "me:item/rohirric_leather_vest_overlay"
+  }
+}

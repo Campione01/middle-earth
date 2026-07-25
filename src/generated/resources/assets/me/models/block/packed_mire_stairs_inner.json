@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "me:block/packed_mire",
+    "side": "me:block/packed_mire",
+    "top": "me:block/packed_mire"
+  }
+}

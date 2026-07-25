@@ -11,12 +11,9 @@ import net.jukoz.me.resources.datas.npcs.NpcData;
 import net.jukoz.me.resources.datas.npcs.data.NpcGearData;
 import net.jukoz.me.resources.datas.npcs.data.NpcGearItemData;
 import net.jukoz.me.resources.datas.npcs.data.NpcGearSlotData;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.Items;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Items;
 import java.util.List;
 
 public class GondorianNpcDataPool {
@@ -57,7 +54,7 @@ public class GondorianNpcDataPool {
     }
 
     static {
-        GONDOR_MILITIA = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "militia"), MiddleEarthRaces.HUMAN, List.of(
+        GONDOR_MILITIA = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "militia"), MiddleEarthRaces.HUMAN, List.of(
 
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create()
@@ -146,7 +143,7 @@ public class GondorianNpcDataPool {
                                 .add(NpcGearItemData.create().withWeight(5))
                         )
         ));
-        GONDOR_SOLDIER = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "soldier"), MiddleEarthRaces.HUMAN, List.of(
+        GONDOR_SOLDIER = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "soldier"), MiddleEarthRaces.HUMAN, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create()
                                 .add(NpcGearItemData.create(ModEquipmentItems.GONDORIAN_CABASSET_HELMET))
@@ -174,7 +171,7 @@ public class GondorianNpcDataPool {
                                 .add(NpcGearItemData.create(ModWeaponItems.GONDORIAN_SHIELD))
                         )
         ));
-        GONDOR_KNIGHT = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "knight"), MiddleEarthRaces.HUMAN, List.of(
+        GONDOR_KNIGHT = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "knight"), MiddleEarthRaces.HUMAN, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.GONDORIAN_PLATE_HELMET)))
                         .add(EquipmentSlot.CHEST, NpcGearSlotData.create()
@@ -208,7 +205,7 @@ public class GondorianNpcDataPool {
                                 .add(NpcGearItemData.create().withWeight(3))
                         )
         ));
-        GONDOR_VETERAN = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "veteran"), MiddleEarthRaces.HUMAN, List.of(
+        GONDOR_VETERAN = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "veteran"), MiddleEarthRaces.HUMAN, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create()
                                 .add(NpcGearItemData.create(ModEquipmentItems.GONDORIAN_PLATE_HELMET).withWeight(10))
@@ -226,7 +223,7 @@ public class GondorianNpcDataPool {
                                 .add(NpcGearItemData.create().withWeight(2))
                         )
         ));
-        GONDOR_LEADER = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "leader"), MiddleEarthRaces.HUMAN, List.of(
+        GONDOR_LEADER = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "leader"), MiddleEarthRaces.HUMAN, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.GONDORIAN_CAPTAIN_HELMET)))
                         .add(EquipmentSlot.CHEST, NpcGearSlotData.create()
@@ -245,7 +242,7 @@ public class GondorianNpcDataPool {
                                 .add(NpcGearItemData.create(ModWeaponItems.GONDORIAN_ORNAMENTED_KNIGHT_SHIELD))
                         )
         ));
-        GONDOR_CITADEL_GUARDS = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "citadel_guards"), MiddleEarthRaces.HUMAN, List.of(
+        GONDOR_CITADEL_GUARDS = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "citadel_guards"), MiddleEarthRaces.HUMAN, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.GONDORIAN_CITADEL_GUARD_HELMET)))
                         .add(EquipmentSlot.CHEST, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.GONDORIAN_CITADEL_GUARD_CHESTPLATE)))
@@ -259,7 +256,7 @@ public class GondorianNpcDataPool {
                                 .add(NpcGearItemData.create(ModWeaponItems.GONDORIAN_KNIGHT_SHIELD))
                         )
         ));
-        GONDOR_FOUNTAIN_GUARDS = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "fountain_guards"), MiddleEarthRaces.HUMAN, List.of(
+        GONDOR_FOUNTAIN_GUARDS = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "fountain_guards"), MiddleEarthRaces.HUMAN, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.GONDORIAN_FOUNTAIN_GUARD_HELMET)))
                         .add(EquipmentSlot.CHEST, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.GONDORIAN_FOUNTAIN_GUARD_CHESTPLATE)))
@@ -267,7 +264,7 @@ public class GondorianNpcDataPool {
                         .add(EquipmentSlot.FEET, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.GONDORIAN_FOUNTAIN_GUARD_BOOTS)))
                         .add(EquipmentSlot.MAINHAND, NpcGearSlotData.create(NpcGearItemData.create(ModWeaponItems.GONDORIAN_FOUNTAIN_GUARD_SPEAR)))
         ));
-        GONDOR_KING_GUARDS = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "king_guards"), MiddleEarthRaces.HUMAN, List.of(
+        GONDOR_KING_GUARDS = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "king_guards"), MiddleEarthRaces.HUMAN, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.GONDORIAN_KINGS_GUARD_HELMET)))
                         .add(EquipmentSlot.CHEST, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.GONDORIAN_KINGS_GUARD_CHESTKPLATE)))

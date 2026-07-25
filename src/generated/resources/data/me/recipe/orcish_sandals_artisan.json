@@ -1,0 +1,23 @@
+{
+  "type": "me:artisan_table",
+  "category": "boots",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:orcish_sandals"
+  }
+}

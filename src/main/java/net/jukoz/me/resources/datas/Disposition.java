@@ -1,9 +1,9 @@
 package net.jukoz.me.resources.datas;
 
 import net.jukoz.me.MiddleEarth;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 
 public enum Disposition {
     GOOD,
@@ -15,7 +15,7 @@ public enum Disposition {
         return super.toString().toLowerCase();
     }
 
-    public MutableText getName() {
-        return Text.translatable("disposition.".concat(Identifier.of(MiddleEarth.MOD_ID, toString()).toTranslationKey()));
+    public MutableComponent getName() {
+        return Component.translatable("disposition.".concat(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, toString()).toLanguageKey()));
     }
 }

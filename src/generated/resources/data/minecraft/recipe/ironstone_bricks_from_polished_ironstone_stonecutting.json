@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:polished_ironstone"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:ironstone_bricks"
+  }
+}

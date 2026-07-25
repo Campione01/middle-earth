@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_izheraban_tiles_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:izheraban_tiles_slab"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:izheraban_tiles_vertical_slab_from_izheraban_tiles_slab_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_izheraban_tiles_slab"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:izheraban_tiles_vertical_slab_from_izheraban_tiles_slab_stonecutting"
+    ]
+  }
+}

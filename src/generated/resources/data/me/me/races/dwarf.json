@@ -1,0 +1,34 @@
+{
+  "type": "DWARF",
+  "attributes": {
+    "datas": [
+      {
+        "id": "minecraft:generic.attack_damage",
+        "value": 1.0
+      },
+      {
+        "id": "minecraft:player.mining_efficiency",
+        "value": 0.15
+      },
+      {
+        "id": "minecraft:generic.max_health",
+        "value": 22.0
+      },
+      {
+        "id": "minecraft:player.entity_interaction_range",
+        "value": 2.75
+      },
+      {
+        "id": "minecraft:generic.scale",
+        "value": 0.81
+      },
+      {
+        "id": "minecraft:generic.movement_speed",
+        "value": 0.09
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "id": "me:dwarf"
+}

@@ -1,0 +1,20 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:bronze_nugget"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:bronze_nugget"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:lorien_diadem"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_polished_gneiss": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:polished_gneiss"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:gneiss_bricks_slab_from_polished_gneiss_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_polished_gneiss"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:gneiss_bricks_slab_from_polished_gneiss_stonecutting"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:dark_red_roof_tiles_vertical_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:dark_red_roof_tiles_slab"
+  }
+}

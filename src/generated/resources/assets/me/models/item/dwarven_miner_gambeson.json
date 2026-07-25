@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/dwarven_miner_gambeson",
+    "layer1": "me:item/dwarven_miner_gambeson_overlay"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "id": "me:horse_lord_chestplate"
+        },
+        "feet": {
+          "id": "me:horse_lord_boots"
+        },
+        "head": {
+          "id": "me:horse_lord_helmet"
+        },
+        "legs": {
+          "id": "me:horse_lord_leggings"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:rohirric_noble_sword"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:rohirric_ornamented_shield"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:rohan.horse_lord",
+  "race": "me:human"
+}

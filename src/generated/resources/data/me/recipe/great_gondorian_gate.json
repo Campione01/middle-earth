@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": {
+      "item": "minecraft:oxidized_copper"
+    },
+    "L": {
+      "item": "me:black_lebethron_planks"
+    },
+    "S": {
+      "item": "me:steel_ingot"
+    }
+  },
+  "pattern": [
+    "LCL",
+    "CCS",
+    "LCL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:great_gondorian_gate"
+  }
+}

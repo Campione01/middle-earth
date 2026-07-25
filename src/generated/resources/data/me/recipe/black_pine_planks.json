@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:black_pine_log"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "me:black_pine_planks"
+  }
+}

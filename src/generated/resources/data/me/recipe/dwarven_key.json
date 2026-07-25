@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "me:khazad_steel_ingot"
+    },
+    "N": {
+      "item": "me:khazad_steel_nugget"
+    }
+  },
+  "pattern": [
+    "IN"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:dwarven_key"
+  }
+}

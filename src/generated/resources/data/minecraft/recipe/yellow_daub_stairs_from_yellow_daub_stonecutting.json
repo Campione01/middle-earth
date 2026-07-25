@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:yellow_daub"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:yellow_daub_stairs"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "me:anvil_shaping",
+  "amount": 120,
+  "ingredient": {
+    "item": "me:rod"
+  },
+  "output": {
+    "count": 1,
+    "id": "me:hoe_head"
+  }
+}

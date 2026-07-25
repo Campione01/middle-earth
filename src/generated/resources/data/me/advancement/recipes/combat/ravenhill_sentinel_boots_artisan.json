@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_armor_plate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:armor_plate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:ravenhill_sentinel_boots_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_armor_plate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:ravenhill_sentinel_boots_artisan"
+    ]
+  }
+}

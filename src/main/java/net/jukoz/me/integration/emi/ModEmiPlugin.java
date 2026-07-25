@@ -1,5 +1,6 @@
 package net.jukoz.me.integration.emi;
 
+import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
@@ -11,24 +12,25 @@ import net.jukoz.me.recipe.AlloyingRecipe;
 import net.jukoz.me.recipe.AnvilShapingRecipe;
 import net.jukoz.me.recipe.ArtisanRecipe;
 import net.jukoz.me.recipe.ModRecipes;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.input.RecipeInput;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.item.crafting.RecipeType;
 
+@EmiEntrypoint
 public class ModEmiPlugin implements EmiPlugin {
-    public static final Identifier MY_SPRITE_SHEET = Identifier.of(MiddleEarth.MOD_ID, "textures/gui/sprites/emi_sprite_sheet.png");
+    public static final ResourceLocation MY_SPRITE_SHEET = ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "textures/gui/sprites/emi_sprite_sheet.png");
     public static final EmiStack ARTISAN_TABLE = EmiStack.of(ModDecorativeBlocks.ARTISAN_TABLE);
     public static final EmiRecipeCategory ARTISAN_TABLE_CATEGORY
-            = new EmiRecipeCategory(Identifier.of(MiddleEarth.MOD_ID, "artisan_table"), ARTISAN_TABLE, new EmiTexture(MY_SPRITE_SHEET, 0, 0, 16, 16));
+            = new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "artisan_table"), ARTISAN_TABLE, new EmiTexture(MY_SPRITE_SHEET, 0, 0, 16, 16));
 
     public static final EmiStack ANVIL_SHAPING = EmiStack.of(ModDecorativeBlocks.TREATED_ANVIL);
     public static final EmiRecipeCategory ANVIL_SHAPING_CATEGORY
-            = new EmiRecipeCategory(Identifier.of(MiddleEarth.MOD_ID, "anvil_shaping"), ANVIL_SHAPING, new EmiTexture(MY_SPRITE_SHEET, 0, 32, 16, 16));
+            = new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "anvil_shaping"), ANVIL_SHAPING, new EmiTexture(MY_SPRITE_SHEET, 0, 32, 16, 16));
 
     public static final EmiStack FORGE = EmiStack.of(ModDecorativeBlocks.FORGE);
     public static final EmiRecipeCategory FORGE_CATEGORY
-            = new EmiRecipeCategory(Identifier.of(MiddleEarth.MOD_ID, "forge"), FORGE, new EmiTexture(MY_SPRITE_SHEET, 0, 16, 16, 16));
+            = new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "forge"), FORGE, new EmiTexture(MY_SPRITE_SHEET, 0, 16, 16, 16));
 
     @Override
     public void register(EmiRegistry registry) {
@@ -55,6 +57,6 @@ public class ModEmiPlugin implements EmiPlugin {
     }
 
     private static <C extends RecipeInput, T extends Recipe<C>> Iterable<T> getRecipes(EmiRegistry registry, RecipeType<T> type) {
-        return registry.getRecipeManager().listAllOfType(type).stream().map(e -> e.value())::iterator;
+        return registry.getRecipeManager().getAllRecipesFor(type).stream().map(e -> e.value())::iterator;
     }
 }

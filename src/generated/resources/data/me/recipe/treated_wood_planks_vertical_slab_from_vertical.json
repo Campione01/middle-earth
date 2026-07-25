@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:treated_wood_planks_vertical_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:treated_wood_planks_slab"
+  }
+}

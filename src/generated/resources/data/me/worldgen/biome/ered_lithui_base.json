@@ -1,0 +1,73 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 2629407,
+    "foliage_color": 3486247,
+    "grass_color": 5129527,
+    "sky_color": 3747117,
+    "water_color": 6450777,
+    "water_fog_color": 1513734
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:ore_coal_upper"
+    ],
+    [],
+    [],
+    [
+      "me:ash_block_ore",
+      "me:ashen_dirt_stone_ore",
+      "me:ashen_gravel_dirt",
+      "me:ashen_gravel_sand",
+      "me:ashen_stone_gravel",
+      "me:ashen_stone_sand",
+      "me:patch_basalt",
+      "me:patch_blackstone",
+      "me:patch_common_tough_berry_bush",
+      "me:patch_pumice_sparse",
+      "me:patch_scorched_grass",
+      "me:patch_scorched_shrub",
+      "me:patch_scorched_tuft",
+      "me:patch_shriveled_shrub",
+      "me:pumice_column",
+      "minecraft:glow_lichen"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [
+      {
+        "type": "minecraft:bat",
+        "maxCount": 4,
+        "minCount": 2,
+        "weight": 8
+      }
+    ],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "me:warg",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 6
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.7
+}

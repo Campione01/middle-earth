@@ -7,20 +7,20 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.recipe.AlloyingRecipe;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class ForgeEmiRecipe implements EmiRecipe {
-    private final Identifier id;
+    private final ResourceLocation id;
     private final List<EmiIngredient> inputs;
     private final String output;
     private final int outputAmount;
 
     public ForgeEmiRecipe(AlloyingRecipe recipe){
-        this.id = Identifier.of(MiddleEarth.MOD_ID, "/forge" + "/" + recipe.getAlloyResult() + recipe.getAmount());
+        this.id = ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "/forge" + "/" + recipe.getAlloyResult() + recipe.getAmount());
         this.inputs = recipe.getIngredients().stream().map(i -> EmiIngredient.of(i)).toList();
         this.output = recipe.getAlloyResult();
         this.outputAmount = recipe.getAmount();
@@ -32,7 +32,7 @@ public class ForgeEmiRecipe implements EmiRecipe {
     }
 
     @Override
-    public @Nullable Identifier getId() {
+    public @Nullable ResourceLocation getId() {
         return id;
     }
 
@@ -62,7 +62,7 @@ public class ForgeEmiRecipe implements EmiRecipe {
             widgets.addSlot(inputs.get(i), 20 * i, 0);
         }
 
-        widgets.addText(Text.translatable("tooltip." + MiddleEarth.MOD_ID +".liquid_" + output), 0, 30, 0, false);
-        widgets.addText(Text.of(String.valueOf(outputAmount)), 0, 40, 0, false);
+        widgets.addText(Component.translatable("tooltip." + MiddleEarth.MOD_ID +".liquid_" + output), 0, 30, 0, false);
+        widgets.addText(Component.nullToEmpty(String.valueOf(outputAmount)), 0, 40, 0, false);
     }
 }

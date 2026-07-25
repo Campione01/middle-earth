@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/polished_galonn_slab"
+    },
+    "type=double": {
+      "model": "me:block/polished_galonn"
+    },
+    "type=top": {
+      "model": "me:block/polished_galonn_slab_top"
+    }
+  }
+}

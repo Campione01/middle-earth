@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "L": {
+      "item": "me:lead_nugget"
+    }
+  },
+  "pattern": [
+    "LGL",
+    "GLG",
+    "LGL"
+  ],
+  "result": {
+    "count": 4,
+    "id": "me:lead_glass"
+  }
+}

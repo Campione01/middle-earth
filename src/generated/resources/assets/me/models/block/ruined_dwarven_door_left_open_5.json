@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/large_door_left_open",
+  "textures": {
+    "all": "me:block/ruined_dwarven_door_5",
+    "particle": "me:block/ruined_dwarven_door_5"
+  }
+}

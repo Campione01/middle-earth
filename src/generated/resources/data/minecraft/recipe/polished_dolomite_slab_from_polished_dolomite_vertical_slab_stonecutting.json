@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:polished_dolomite_vertical_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:polished_dolomite_slab"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:mangrove_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:mangrove_vertical_slab"
+  }
+}

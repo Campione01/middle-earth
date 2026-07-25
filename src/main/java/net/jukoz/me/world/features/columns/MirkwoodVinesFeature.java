@@ -5,35 +5,35 @@ import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.block.ModBlocks;
 import net.jukoz.me.block.ModNatureBlocks;
 import net.jukoz.me.block.WoodBlockSets;
-import net.minecraft.block.*;
-import net.minecraft.item.Item;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.world.level.block.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.GrowingPlantHeadBlock;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class MirkwoodVinesFeature  extends Feature<DefaultFeatureConfig> {
-    public MirkwoodVinesFeature(Codec<DefaultFeatureConfig> configCodec) {
+public class MirkwoodVinesFeature  extends Feature<NoneFeatureConfiguration> {
+    public MirkwoodVinesFeature(Codec<NoneFeatureConfiguration> configCodec) {
         super(configCodec);
     }
 
     @Override
-    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
-        StructureWorldAccess structureWorldAccess = context.getWorld();
-        BlockPos blockPos = context.getOrigin();
-        Random random = context.getRandom();
-        if (!structureWorldAccess.isAir(blockPos)) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        WorldGenLevel structureWorldAccess = context.level();
+        BlockPos blockPos = context.origin();
+        RandomSource random = context.random();
+        if (!structureWorldAccess.isEmptyBlock(blockPos)) {
             return false;
         } else {
-            BlockState blockState = structureWorldAccess.getBlockState(blockPos.up());
-            if (!blockState.isOf(WoodBlockSets.MIRKWOOD.leaves()) && !blockState.isSolidBlock(context.getWorld(), blockPos.up())) {
+            BlockState blockState = structureWorldAccess.getBlockState(blockPos.above());
+            if (!blockState.is(WoodBlockSets.MIRKWOOD.leaves()) && !blockState.isRedstoneConductor(context.level(), blockPos.above())) {
                 return false;
             } else {
                 this.generateVinesInArea(structureWorldAccess, random, blockPos);
@@ -42,14 +42,14 @@ public class MirkwoodVinesFeature  extends Feature<DefaultFeatureConfig> {
         }
     }
 
-    private void generateVinesInArea(WorldAccess world, Random random, BlockPos pos) {
-        BlockPos.Mutable mutable = new BlockPos.Mutable();
+    private void generateVinesInArea(LevelAccessor world, RandomSource random, BlockPos pos) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
 
         for(int i = 0; i < 32; ++i) {
-            mutable.set(pos, random.nextInt(8) - random.nextInt(8), random.nextInt(2) - random.nextInt(7), random.nextInt(8) - random.nextInt(8));
+            mutable.setWithOffset(pos, random.nextInt(8) - random.nextInt(8), random.nextInt(2) - random.nextInt(7), random.nextInt(8) - random.nextInt(8));
 
-            if (world.isAir(mutable) && validateRoot(world, mutable)) {
-                int length = MathHelper.nextInt(random, 1, 8);
+            if (world.isEmptyBlock(mutable) && validateRoot(world, mutable)) {
+                int length = Mth.nextInt(random, 1, 8);
 
                 if (random.nextInt(6) == 0) { // very long vine
                     length *= 2;
@@ -64,35 +64,35 @@ public class MirkwoodVinesFeature  extends Feature<DefaultFeatureConfig> {
         }
     }
 
-    public static void generateVineColumn(WorldAccess world, Random random, BlockPos.Mutable pos, int length, int minAge, int maxAge) {
+    public static void generateVineColumn(LevelAccessor world, RandomSource random, BlockPos.MutableBlockPos pos, int length, int minAge, int maxAge) {
         for(int i = 0; i <= length; ++i) {
-            if (world.isAir(pos)) {
-                BlockState blockStateAbove = world.getBlockState(pos.up());
+            if (world.isEmptyBlock(pos)) {
+                BlockState blockStateAbove = world.getBlockState(pos.above());
 
-                if(blockStateAbove.isOf(ModNatureBlocks.MIRKWOOD_VINES))
+                if(blockStateAbove.is(ModNatureBlocks.MIRKWOOD_VINES))
                     break;
                 if(blockStateAbove.isAir())
                     break;
 
-                if(blockStateAbove.isOf(WoodBlockSets.MIRKWOOD.leaves())){
-                    world.setBlockState(pos.up(), WoodBlockSets.MIRKWOOD.leaves().getDefaultState().with(LeavesBlock.PERSISTENT, true), 2);
+                if(blockStateAbove.is(WoodBlockSets.MIRKWOOD.leaves())){
+                    world.setBlock(pos.above(), WoodBlockSets.MIRKWOOD.leaves().defaultBlockState().setValue(LeavesBlock.PERSISTENT, true), 2);
                 }
 
-                if (i == length || !world.getBlockState(pos.down()).isAir()) {
-                    world.setBlockState(pos, ModNatureBlocks.MIRKWOOD_VINES.getDefaultState().with(AbstractPlantStemBlock.AGE, MathHelper.nextInt(random, minAge, maxAge)), 2);
+                if (i == length || !world.getBlockState(pos.below()).isAir()) {
+                    world.setBlock(pos, ModNatureBlocks.MIRKWOOD_VINES.defaultBlockState().setValue(GrowingPlantHeadBlock.AGE, Mth.nextInt(random, minAge, maxAge)), 2);
                     break;
                 }
 
-                world.setBlockState(pos, ModNatureBlocks.MIRKWOOD_VINES_PLANT.getDefaultState(), 2);
+                world.setBlock(pos, ModNatureBlocks.MIRKWOOD_VINES_PLANT.defaultBlockState(), 2);
             }
 
             pos.move(Direction.DOWN);
         }
     }
 
-    private static boolean validateRoot(WorldAccess world, BlockPos.Mutable mutable) {
-        BlockState blockState = world.getBlockState(mutable.up());
-        return (blockState.isOf(WoodBlockSets.MIRKWOOD.log()));
+    private static boolean validateRoot(LevelAccessor world, BlockPos.MutableBlockPos mutable) {
+        BlockState blockState = world.getBlockState(mutable.above());
+        return (blockState.is(WoodBlockSets.MIRKWOOD.log()));
         // WoodBlockSets.MIRKWOOD.leaves()) ||
     }
 }

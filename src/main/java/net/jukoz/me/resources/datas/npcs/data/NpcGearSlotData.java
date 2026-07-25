@@ -1,11 +1,9 @@
 package net.jukoz.me.resources.datas.npcs.data;
 
-import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-
+import net.jukoz.me.compat.neoforge.api.util.NbtType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -41,10 +39,10 @@ public class NpcGearSlotData {
         return npcGearItemPool != null && !npcGearItemPool.isEmpty();
     }
 
-    public static NbtCompound createNbt(NpcGearSlotData slotData){
+    public static CompoundTag createNbt(NpcGearSlotData slotData){
         if(slotData.isPool()){
-            NbtCompound nbt = new NbtCompound();
-            NbtList nbtList = new NbtList();
+            CompoundTag nbt = new CompoundTag();
+            ListTag nbtList = new ListTag();
             for(NpcGearItemData gearItemData : slotData.npcGearItemPool){
                 nbtList.add(NpcGearItemData.createNbt(gearItemData));
             }
@@ -56,11 +54,11 @@ public class NpcGearSlotData {
         }
         return NpcGearItemData.createNbt(slotData.npcGearItemData);
     }
-    public static NpcGearSlotData readNbt(NbtCompound nbt){
+    public static NpcGearSlotData readNbt(CompoundTag nbt){
         if(nbt.get("pool") == null){
             return NpcGearSlotData.create(NpcGearItemData.readNbt(nbt));
         }
-        NbtList list = nbt.getList("pool", NbtType.COMPOUND);
+        ListTag list = nbt.getList("pool", NbtType.COMPOUND);
         NpcGearSlotData npcGearSlotData = NpcGearSlotData.create();
         for(int i = 0; i < list.size(); i++){
             npcGearSlotData.add(NpcGearItemData.readNbt(list.getCompound(i)));

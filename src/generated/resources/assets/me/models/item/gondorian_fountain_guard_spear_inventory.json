@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "me:item/gondorian_fountain_guard_spear_inventory"
+  }
+}

@@ -4,13 +4,12 @@ import net.jukoz.me.world.biomes.BiomeColorsDTO;
 import net.jukoz.me.world.biomes.MEBiomeDataConfigs;
 import net.jukoz.me.world.biomes.MEBiomeKeys;
 import net.jukoz.me.world.biomes.caves.CaveType;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.world.biome.Biome;
-
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biome;
 import java.util.HashMap;
 
 public class MapBiomeData {
-    private static HashMap<RegistryKey<Biome>, BiomeData> biomes;
+    private static HashMap<ResourceKey<Biome>, BiomeData> biomes;
 
     public static final int defaultSky = 7907327;
     public static final int defaultFog = 12638463;
@@ -29,9 +28,9 @@ public class MapBiomeData {
         biomes.put(biome.getBiomeRegistryKey(), biome);
     }
 
-    public static BiomeData getBiome(RegistryKey<Biome> biomeRegistryKey){
+    public static BiomeData getBiome(ResourceKey<Biome> biomeRegistryKey){
         if(!biomes.containsKey(biomeRegistryKey))
-            throw new RuntimeException("Cannot find %s in the custom biome data pool".formatted(biomeRegistryKey.getValue()));
+            throw new RuntimeException("Cannot find %s in the custom biome data pool".formatted(biomeRegistryKey.location()));
         return biomes.get(biomeRegistryKey);
     }
 

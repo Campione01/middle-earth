@@ -2,8 +2,8 @@ package net.jukoz.me.client.model.equipment.head.hoods;
 
 import net.jukoz.me.client.model.equipment.head.helmets.HelmetAddonModel;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.entity.model.EntityModelPartNames;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.world.entity.LivingEntity;
 
 public class CloakHoodModel<T extends LivingEntity> extends HelmetAddonModel<T> {
     private final ModelPart hood;
@@ -14,7 +14,7 @@ public class CloakHoodModel<T extends LivingEntity> extends HelmetAddonModel<T> 
     }
 
     @Override
-    public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+    public void setupAnim(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 
     }
 }

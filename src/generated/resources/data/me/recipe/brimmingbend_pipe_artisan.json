@@ -1,0 +1,29 @@
+{
+  "type": "me:artisan_table",
+  "category": "pipe",
+  "disposition": "neutral",
+  "ingredients": [
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "me:bronze_nugget"
+    },
+    {
+      "tag": "minecraft:wooden_slabs"
+    },
+    {
+      "tag": "minecraft:wooden_slabs"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "me:bronze_nugget"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:brimmingbend_pipe"
+  }
+}

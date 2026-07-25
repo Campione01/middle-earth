@@ -3,35 +3,33 @@ package net.jukoz.me.datageneration.custom;
 import net.jukoz.me.item.ModResourceItems;
 import net.jukoz.me.recipe.AlloyingRecipe;
 import net.jukoz.me.recipe.AnvilShapingRecipe;
-import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.AdvancementCriterion;
-import net.minecraft.advancement.AdvancementRequirements;
-import net.minecraft.advancement.AdvancementRewards;
-import net.minecraft.advancement.criterion.RecipeUnlockedCriterion;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class AnvilShapingRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
+public class AnvilShapingRecipeJsonBuilder implements RecipeBuilder {
 
     private final RecipeCategory category;
     private Ingredient input;
     private final Item output;
     private final int amount;
-    private final Map<String, AdvancementCriterion<?>> criteria = new LinkedHashMap<>();
+    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     private String group;
 
     public AnvilShapingRecipeJsonBuilder(RecipeCategory category, Item output, int amount ) {
@@ -41,13 +39,13 @@ public class AnvilShapingRecipeJsonBuilder implements CraftingRecipeJsonBuilder 
     }
 
     @Override
-    public CraftingRecipeJsonBuilder group(@Nullable String group) {
+    public RecipeBuilder group(@Nullable String group) {
         this.group = group;
         return this;
     }
 
     @Override
-    public Item getOutputItem() {
+    public Item getResult() {
         return this.output;
     }
 
@@ -56,16 +54,16 @@ public class AnvilShapingRecipeJsonBuilder implements CraftingRecipeJsonBuilder 
     }
 
     public AnvilShapingRecipeJsonBuilder input(TagKey<Item> tag) {
-        return this.input(Ingredient.fromTag(tag));
+        return this.input(Ingredient.of(tag));
     }
 
-    public AnvilShapingRecipeJsonBuilder input(ItemConvertible itemProvider) {
-        return this.input((ItemConvertible)itemProvider, 1);
+    public AnvilShapingRecipeJsonBuilder input(ItemLike itemProvider) {
+        return this.input((ItemLike)itemProvider, 1);
     }
 
-    public AnvilShapingRecipeJsonBuilder input(ItemConvertible itemProvider, int size) {
+    public AnvilShapingRecipeJsonBuilder input(ItemLike itemProvider, int size) {
         for(int i = 0; i < size; ++i) {
-            this.input(Ingredient.ofItems(new ItemConvertible[]{itemProvider}));
+            this.input(Ingredient.of(new ItemLike[]{itemProvider}));
         }
         return this;
     }
@@ -82,22 +80,22 @@ public class AnvilShapingRecipeJsonBuilder implements CraftingRecipeJsonBuilder 
 
 
     @Override
-    public void offerTo(RecipeExporter exporter, Identifier recipeId) {
+    public void save(RecipeOutput exporter, ResourceLocation recipeId) {
         this.validate(recipeId);
-        Advancement.Builder builder = exporter.getAdvancementBuilder().criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).criteriaMerger(AdvancementRequirements.CriterionMerger.OR);
+        Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(builder);
-        this.criteria.forEach(builder::criterion);
+        this.criteria.forEach(builder::addCriterion);
         AnvilShapingRecipe anvilShapingRecipe = new AnvilShapingRecipe(this.input, new ItemStack(this.output), this.amount);
-        exporter.accept(recipeId, anvilShapingRecipe, builder.build(recipeId.withPrefixedPath("recipes/" + this.category.getName() + "/")));
+        exporter.accept(recipeId, anvilShapingRecipe, builder.build(recipeId.withPrefix("recipes/" + this.category.getFolderName() + "/")));
     }
 
     @Override
-    public AnvilShapingRecipeJsonBuilder criterion(String string, AdvancementCriterion<?> advancementCriterion) {
+    public AnvilShapingRecipeJsonBuilder unlockedBy(String string, Criterion<?> advancementCriterion) {
         this.criteria.put(string, advancementCriterion);
         return this;
     }
 
-    private void validate(Identifier recipeId) {
+    private void validate(ResourceLocation recipeId) {
         if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + String.valueOf(recipeId));
         }

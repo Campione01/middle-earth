@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "D": {
+      "item": "me:white_daub"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "DSD",
+    "SDS",
+    "DSD"
+  ],
+  "result": {
+    "count": 5,
+    "id": "me:wattle_and_white_daub_diamond"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/large_door_right",
+  "textures": {
+    "all": "me:block/varnished_dwarven_door_5",
+    "particle": "me:block/varnished_dwarven_door_5"
+  }
+}

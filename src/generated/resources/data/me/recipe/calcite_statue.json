@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "me:polished_calcite"
+    },
+    "S": {
+      "item": "minecraft:calcite"
+    },
+    "W": {
+      "item": "me:calcite_wall"
+    }
+  },
+  "pattern": [
+    "WSW",
+    "WSW",
+    "WPW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:calcite_statue"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "type": "me:artisan_table",
+  "category": "medium_shield",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "minecraft:blue_dye"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "item": "me:shield_border"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:dalish_barding_oval_shield"
+  }
+}

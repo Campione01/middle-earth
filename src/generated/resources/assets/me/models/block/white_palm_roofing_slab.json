@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "me:block/white_palm_roofing",
+    "side": "me:block/white_palm_roofing",
+    "top": "me:block/white_palm_roofing"
+  }
+}

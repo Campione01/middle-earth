@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "me:polished_galonn"
+    },
+    "S": {
+      "item": "me:galonn"
+    },
+    "W": {
+      "item": "me:galonn_wall"
+    }
+  },
+  "pattern": [
+    "WSW",
+    "WSW",
+    "WPW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:galonn_statue"
+  }
+}

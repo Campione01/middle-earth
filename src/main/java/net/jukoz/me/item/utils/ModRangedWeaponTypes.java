@@ -1,8 +1,8 @@
 package net.jukoz.me.item.utils;
 
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
 
-public enum ModRangedWeaponTypes implements StringIdentifiable {
+public enum ModRangedWeaponTypes implements StringRepresentable {
 
     BOW("bow", false, 512),
     NOBLE_BOW("bow", false, 768),
@@ -24,7 +24,7 @@ public enum ModRangedWeaponTypes implements StringIdentifiable {
     }
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return this.name;
     }
 }

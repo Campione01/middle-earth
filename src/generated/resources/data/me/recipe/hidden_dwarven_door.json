@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "D": {
+      "item": "me:dolomite"
+    },
+    "G": {
+      "item": "me:smooth_dolomite"
+    },
+    "L": {
+      "item": "minecraft:lever"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "SSG",
+    "GDL",
+    "DSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:hidden_dwarven_door"
+  }
+}

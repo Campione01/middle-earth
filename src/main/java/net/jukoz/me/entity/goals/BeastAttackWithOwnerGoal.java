@@ -1,14 +1,13 @@
 package net.jukoz.me.entity.goals;
 
 import net.jukoz.me.entity.beasts.AbstractBeastEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.TargetPredicate;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.TrackTargetGoal;
-
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import java.util.EnumSet;
 
-public class BeastAttackWithOwnerGoal extends TrackTargetGoal {
+public class BeastAttackWithOwnerGoal extends TargetGoal {
     private final AbstractBeastEntity mob;
     private LivingEntity attacking;
     private int lastAttackTime;
@@ -16,12 +15,12 @@ public class BeastAttackWithOwnerGoal extends TrackTargetGoal {
     public BeastAttackWithOwnerGoal(AbstractBeastEntity mob) {
         super(mob, false);
         this.mob = mob;
-        this.setControls(EnumSet.of(Goal.Control.TARGET));
+        this.setFlags(EnumSet.of(Goal.Flag.TARGET));
     }
 
     @Override
-    public boolean canStart() {
-        if (!this.mob.isTame() || this.mob.isSitting()) {
+    public boolean canUse() {
+        if (!this.mob.isTamed() || this.mob.isSitting()) {
             return false;
         }
         if(!this.mob.shouldAttackWhenMounted() && this.mob.hasControllingPassenger()) {
@@ -31,14 +30,14 @@ public class BeastAttackWithOwnerGoal extends TrackTargetGoal {
         if (livingEntity == null) {
             return false;
         }
-        this.attacking = livingEntity.getAttacking();
+        this.attacking = livingEntity.getLastHurtMob();
 
         if(this.attacking instanceof AbstractBeastEntity && ((AbstractBeastEntity) this.attacking).getOwner() == this.mob.getOwner()) {
             return false;
         }
 
-        int i = livingEntity.getLastAttackTime();
-        return i != this.lastAttackTime && this.canTrack(this.attacking, TargetPredicate.DEFAULT);
+        int i = livingEntity.getLastHurtMobTimestamp();
+        return i != this.lastAttackTime && this.canAttack(this.attacking, TargetingConditions.DEFAULT);
     }
 
     @Override
@@ -46,7 +45,7 @@ public class BeastAttackWithOwnerGoal extends TrackTargetGoal {
         this.mob.setTarget(this.attacking);
         LivingEntity livingEntity = this.mob.getOwner();
         if (livingEntity != null) {
-            this.lastAttackTime = livingEntity.getLastAttackTime();
+            this.lastAttackTime = livingEntity.getLastHurtMobTimestamp();
         }
         super.start();
     }

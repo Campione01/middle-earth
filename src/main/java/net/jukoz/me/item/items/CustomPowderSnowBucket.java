@@ -1,16 +1,12 @@
 package net.jukoz.me.item.items;
 
 import net.jukoz.me.item.ModToolItems;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.PowderSnowBucketItem;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.SolidBucketItem;
+import net.minecraft.world.level.block.Block;
 
-public class CustomPowderSnowBucket extends PowderSnowBucketItem {
-    public CustomPowderSnowBucket(Block block, SoundEvent placeSound, Settings settings) {
+public class CustomPowderSnowBucket extends SolidBucketItem {
+    public CustomPowderSnowBucket(Block block, SoundEvent placeSound, Properties settings) {
         super(block, placeSound, settings);
     }
 

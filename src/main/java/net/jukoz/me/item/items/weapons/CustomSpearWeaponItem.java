@@ -4,17 +4,7 @@ import net.jukoz.me.entity.projectile.spear.SpearEntity;
 import net.jukoz.me.item.utils.ModWeaponTypes;
 import net.jukoz.me.utils.ModFactions;
 import net.jukoz.me.utils.ModSubFactions;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
-import net.minecraft.world.World;
+import net.minecraft.world.item.Tier;
 
 public class CustomSpearWeaponItem extends ReachWeaponItem {
     private static final float BASE_STRENGTH = 0.75f;
@@ -26,20 +16,20 @@ public class CustomSpearWeaponItem extends ReachWeaponItem {
     public ModSubFactions subFaction;
     public ModWeaponTypes type;
 
-    public CustomSpearWeaponItem(ToolMaterial toolMaterial) {
+    public CustomSpearWeaponItem(Tier toolMaterial) {
         super(toolMaterial, ModWeaponTypes.SPEAR);
     }
 
-    public CustomSpearWeaponItem(ToolMaterial toolMaterial, ModFactions faction) {
+    public CustomSpearWeaponItem(Tier toolMaterial, ModFactions faction) {
         super(toolMaterial, faction, ModWeaponTypes.SPEAR);
     }
 
-    public CustomSpearWeaponItem(ToolMaterial toolMaterial, ModSubFactions subFaction) {
+    public CustomSpearWeaponItem(Tier toolMaterial, ModSubFactions subFaction) {
         super(toolMaterial, subFaction, ModWeaponTypes.SPEAR);
     }
 
     public float getAttackDamage() {
-        return this.getMaterial().getAttackDamage();
+        return this.getTier().getAttackDamageBonus();
     }
 
     /*public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {

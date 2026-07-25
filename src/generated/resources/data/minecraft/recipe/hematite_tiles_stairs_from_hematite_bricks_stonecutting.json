@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:hematite_bricks"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:hematite_tiles_stairs"
+  }
+}

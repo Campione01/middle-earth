@@ -1,0 +1,87 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:dalish_mail_hauberk"
+            },
+            {
+              "id": "me:dalish_scale_hauberk"
+            },
+            {
+              "id": "me:dalish_scale_hauberk"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:dalish_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:kettle_hat_with_closed_coif"
+            },
+            {
+              "id": "me:dalish_burgonet"
+            },
+            {
+              "id": "me:dalish_helmet_brown_fur"
+            },
+            {
+              "id": "me:dalish_helmet_black_fur"
+            },
+            {
+              "id": "me:dalish_helmet_tan_fur"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:dalish_mail_coat"
+            },
+            {
+              "id": "me:arming_skirt"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:dalish_noble_sword"
+            },
+            {
+              "id": "me:dalish_noble_axe"
+            },
+            {
+              "id": "me:dalish_longsword"
+            },
+            {
+              "id": "me:dalish_noble_longsword"
+            },
+            {
+              "id": "me:dalish_spear"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "minecraft:air"
+            },
+            {
+              "id": "me:dalish_barding_oval_shield"
+            },
+            {
+              "id": "me:dalish_barding_braced_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:dale.knight",
+  "race": "me:human"
+}

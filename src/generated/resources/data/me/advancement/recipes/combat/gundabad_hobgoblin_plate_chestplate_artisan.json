@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gundabad_reinforced_leather_vest": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:gundabad_reinforced_leather_vest"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:gundabad_hobgoblin_plate_chestplate_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gundabad_reinforced_leather_vest"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:gundabad_hobgoblin_plate_chestplate_artisan"
+    ]
+  }
+}

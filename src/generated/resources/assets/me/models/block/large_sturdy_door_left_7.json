@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/large_door_left",
+  "textures": {
+    "all": "me:block/large_sturdy_door_7",
+    "particle": "me:block/large_sturdy_door_7"
+  }
+}

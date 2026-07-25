@@ -1,22 +1,21 @@
 package net.jukoz.me.statusEffects;
 
+import net.jukoz.me.utils.NeoForgeRegistrationBridge;
+
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 
 public class ModStatusEffects {
-    public static final RegistryEntry<StatusEffect> HALLUCINATION = register("hallucination", new HallucinationStatusEffect(StatusEffectCategory.HARMFUL, 0x006666));
+    public static final Holder<MobEffect> HALLUCINATION = register("hallucination", new HallucinationStatusEffect(MobEffectCategory.HARMFUL, 0x006666));
 
-    private static RegistryEntry<StatusEffect> register(String id, StatusEffect statusEffect) {
-        return Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(MiddleEarth.MOD_ID, id), statusEffect);
+    private static Holder<MobEffect> register(String id, MobEffect statusEffect) {
+        return NeoForgeRegistrationBridge.registerForHolder(BuiltInRegistries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, id), statusEffect);
     }
 
     public static void registerStatusEffects() {

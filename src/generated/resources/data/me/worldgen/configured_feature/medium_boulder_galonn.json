@@ -1,0 +1,24 @@
+{
+  "type": "me:big_boulder",
+  "config": {
+    "blockstates": [
+      {
+        "Name": "me:galonn"
+      },
+      {
+        "Name": "me:galonn"
+      },
+      {
+        "Name": "me:cracked_smooth_galonn"
+      },
+      {
+        "Name": "me:mossy_smooth_galonn"
+      }
+    ],
+    "height": 2.8,
+    "length": 4.0,
+    "random_size": 0.95,
+    "randomness": 0.26,
+    "width": 2.6
+  }
+}

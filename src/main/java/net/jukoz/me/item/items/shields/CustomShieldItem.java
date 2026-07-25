@@ -5,12 +5,11 @@ import net.jukoz.me.item.utils.MEEquipmentTooltip;
 import net.jukoz.me.item.utils.ModShieldTypes;
 import net.jukoz.me.utils.ModFactions;
 import net.jukoz.me.utils.ModSubFactions;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShieldItem;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
-
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.TooltipFlag;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +21,7 @@ public class CustomShieldItem extends ShieldItem implements MEEquipmentTooltip {
     public final static HashSet<CustomShieldItem> instances = new HashSet<>();
 
     public CustomShieldItem(ModShieldTypes type, ModFactions faction) {
-        super(new Item.Settings().maxCount(1).maxDamage(type.durability));
+        super(new Item.Properties().stacksTo(1).durability(type.durability));
         this.type = type;
         this.faction = faction;
         this.subFaction = null;
@@ -30,7 +29,7 @@ public class CustomShieldItem extends ShieldItem implements MEEquipmentTooltip {
     }
 
     public CustomShieldItem(ModShieldTypes type, ModSubFactions subFaction) {
-        super(new Item.Settings().maxCount(1).maxDamage(type.durability));
+        super(new Item.Properties().stacksTo(1).durability(type.durability));
         this.type = type;
         this.faction = subFaction.getParent();
         this.subFaction = subFaction;
@@ -38,17 +37,17 @@ public class CustomShieldItem extends ShieldItem implements MEEquipmentTooltip {
     }
 
     @Override
-    public List<Text> getAdditionalShiftLines(ItemStack stack) {
-        List<Text> list = new ArrayList<>(List.of());
+    public List<Component> getAdditionalShiftLines(ItemStack stack) {
+        List<Component> list = new ArrayList<>(List.of());
 
-        list.add(Text.translatable("tooltip." + MiddleEarth.MOD_ID + "." + this.type.name));
+        list.add(Component.translatable("tooltip." + MiddleEarth.MOD_ID + "." + this.type.name));
 
         return list;
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag type) {
         appendBaseTooltip(tooltip, stack, this.faction, this.subFaction);
-        super.appendTooltip(stack, context, tooltip, type);
+        super.appendHoverText(stack, context, tooltip, type);
     }
 }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ravenhill_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:ravenhill_helmet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:ravenhill_gilded_helmet_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ravenhill_helmet"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:ravenhill_gilded_helmet_artisan"
+    ]
+  }
+}

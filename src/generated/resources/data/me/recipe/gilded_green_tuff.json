@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "N": {
+      "item": "minecraft:gold_nugget"
+    },
+    "T": {
+      "item": "me:green_tuff"
+    }
+  },
+  "pattern": [
+    "TNT",
+    "NTN",
+    "TNT"
+  ],
+  "result": {
+    "count": 5,
+    "id": "me:gilded_green_tuff"
+  }
+}

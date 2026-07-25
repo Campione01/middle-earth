@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:mixed_stones_brickwork_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:mixed_stones_brickwork_vertical_slab"
+  }
+}

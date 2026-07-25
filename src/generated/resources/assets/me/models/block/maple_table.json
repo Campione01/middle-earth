@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/wood_table_template",
+  "textures": {
+    "all": "me:block/maple_table",
+    "particle": "me:block/maple_table"
+  }
+}

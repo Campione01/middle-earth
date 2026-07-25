@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ironstone_tiles": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:ironstone_tiles"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:ironstone_tiles_stairs_from_ironstone_tiles_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ironstone_tiles"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:ironstone_tiles_stairs_from_ironstone_tiles_stonecutting"
+    ]
+  }
+}

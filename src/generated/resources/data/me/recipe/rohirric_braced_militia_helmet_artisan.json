@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:rohirric_braced_militia_helmet"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 10993126,
+    "foliage_color": 5282655,
+    "grass_color": 5676922,
+    "sky_color": 8295660,
+    "water_color": 6853265,
+    "water_fog_color": 1919305
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:disk_clay",
+      "minecraft:disk_gravel",
+      "minecraft:disk_sand",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_dirt",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_gravel",
+      "minecraft:ore_tuff"
+    ],
+    [],
+    [],
+    [
+      "me:abundant_mud_ore",
+      "me:coarse_dirt_ore",
+      "me:flower_blue_orchid",
+      "me:medium_boulder_mossy_stone",
+      "me:mire_ore",
+      "me:mirkwood_vines",
+      "me:mud_ore",
+      "me:oak_bush_common_tree",
+      "me:oak_bush_tree",
+      "me:old_podzol_ore",
+      "me:patch_common_tall_grass",
+      "me:patch_dead_rushes",
+      "me:patch_fallen_mirkwood_leaves",
+      "me:patch_false_oatgrass",
+      "me:patch_grass",
+      "me:patch_reeds",
+      "me:patch_short_bulrush",
+      "me:patch_short_cattail",
+      "me:patch_shriveled_shrub",
+      "me:patch_tall_bulrush",
+      "me:patch_tall_cattail",
+      "me:patch_wheat_grass",
+      "me:patch_wild_flax",
+      "me:patch_wild_garlic",
+      "me:patch_wild_grass",
+      "me:patch_wild_onion",
+      "me:small_boulder_mossy_stone",
+      "me:water_delta",
+      "minecraft:brown_mushroom_normal",
+      "minecraft:glow_lichen",
+      "minecraft:patch_berry_rare",
+      "minecraft:patch_grass_taiga",
+      "minecraft:patch_large_fern",
+      "minecraft:patch_tall_grass_2",
+      "minecraft:red_mushroom_normal"
+    ],
+    [
+      "me:mirkwood_vines",
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "minecraft:frog",
+        "maxCount": 4,
+        "minCount": 1,
+        "weight": 8
+      },
+      {
+        "type": "me:snail",
+        "maxCount": 4,
+        "minCount": 1,
+        "weight": 10
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.5
+}

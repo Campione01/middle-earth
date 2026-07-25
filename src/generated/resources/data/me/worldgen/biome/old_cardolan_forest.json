@@ -1,0 +1,163 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 12637429,
+    "foliage_color": 8627801,
+    "grass_color": 8298580,
+    "sky_color": 7907327,
+    "water_color": 4615389,
+    "water_fog_color": 658236
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:disk_clay",
+      "minecraft:disk_gravel",
+      "minecraft:disk_sand",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_dirt",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_gravel",
+      "minecraft:ore_tuff"
+    ],
+    [],
+    [],
+    [
+      "me:big_boulder_granite",
+      "me:big_boulder_mossy_stone",
+      "me:birch_tree",
+      "me:chestnut_tree",
+      "me:common_beech_tree",
+      "me:common_oak_tree",
+      "me:flower_green_jewel",
+      "me:forest_moss_disk",
+      "me:maple_tree",
+      "me:medium_boulder_granite",
+      "me:medium_boulder_mossy_stone",
+      "me:mega_birch_tree",
+      "me:oak_tree",
+      "me:orange_maple_tree",
+      "me:patch_false_oatgrass",
+      "me:patch_forest_moss",
+      "me:patch_forest_moss_carpet",
+      "me:patch_grass",
+      "me:patch_green_shrub",
+      "me:patch_rare_heather",
+      "me:patch_rare_morsel",
+      "me:patch_rare_morsel_tiller",
+      "me:patch_rare_white_mushroom",
+      "me:patch_rare_white_mushroom_tiller",
+      "me:patch_rare_wilder_grass",
+      "me:patch_red_heather",
+      "me:patch_wild_flax",
+      "me:patch_wild_grass",
+      "me:patch_wild_leek",
+      "me:patch_wild_lettuce",
+      "me:patch_wild_onion",
+      "me:podzol_ore",
+      "me:rare_mega_oak_tree",
+      "me:red_maple_tree",
+      "me:silver_maple_tree",
+      "me:silver_orange_maple_tree",
+      "me:silver_red_maple_tree",
+      "me:silver_yellow_maple_tree",
+      "me:small_boulder_granite",
+      "me:small_boulder_mossy_stone",
+      "me:sparse_birch_tree",
+      "me:sparse_pine_tree",
+      "me:spruce_bush_tree",
+      "me:yellow_maple_tree",
+      "minecraft:brown_mushroom_normal",
+      "minecraft:flower_default",
+      "minecraft:glow_lichen",
+      "minecraft:patch_berry_rare",
+      "minecraft:patch_large_fern",
+      "minecraft:patch_pumpkin",
+      "minecraft:patch_sugar_cane",
+      "minecraft:red_mushroom_normal",
+      "minecraft:trees_plains"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "minecraft:sheep",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 12
+      },
+      {
+        "type": "minecraft:pig",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
+      },
+      {
+        "type": "minecraft:chicken",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
+      },
+      {
+        "type": "minecraft:cow",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 8
+      },
+      {
+        "type": "minecraft:horse",
+        "maxCount": 6,
+        "minCount": 2,
+        "weight": 5
+      },
+      {
+        "type": "minecraft:donkey",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 1
+      },
+      {
+        "type": "me:pheasant",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 6
+      },
+      {
+        "type": "minecraft:wolf",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 1
+      },
+      {
+        "type": "me:deer",
+        "maxCount": 4,
+        "minCount": 1,
+        "weight": 10
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.5
+}

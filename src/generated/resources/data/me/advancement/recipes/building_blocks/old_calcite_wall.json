@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_old_calcite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:old_calcite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:old_calcite_wall"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_old_calcite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:old_calcite_wall"
+    ]
+  }
+}

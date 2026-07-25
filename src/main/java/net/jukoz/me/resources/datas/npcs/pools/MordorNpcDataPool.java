@@ -12,12 +12,9 @@ import net.jukoz.me.resources.datas.npcs.NpcData;
 import net.jukoz.me.resources.datas.npcs.data.NpcGearData;
 import net.jukoz.me.resources.datas.npcs.data.NpcGearItemData;
 import net.jukoz.me.resources.datas.npcs.data.NpcGearSlotData;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.Items;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Items;
 import java.util.List;
 
 public class MordorNpcDataPool {
@@ -56,7 +53,7 @@ public class MordorNpcDataPool {
     static {
         allColors = List.of(DARK_RED, DARK_BROWN, DARK);
 
-        MORDOR_BLACK_NUMENOREAN = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "black_numenorean"), MiddleEarthRaces.HUMAN, List.of(
+        MORDOR_BLACK_NUMENOREAN = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "black_numenorean"), MiddleEarthRaces.HUMAN, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create()
                                 .add(NpcGearItemData.create(ModEquipmentItems.MORDOR_BLACK_NUMENOREAN_PLATE_HELMET).withWeight(4))
@@ -77,7 +74,7 @@ public class MordorNpcDataPool {
                         )
         ));
 
-        MORDOR_ORC_SNAGA = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "orc_snaga"), MiddleEarthRaces.ORC, List.of(
+        MORDOR_ORC_SNAGA = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "orc_snaga"), MiddleEarthRaces.ORC, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create()
                                 .add(NpcGearItemData.create(Items.AIR).withWeight(3))
@@ -120,7 +117,7 @@ public class MordorNpcDataPool {
                         )
         ));
 
-        MORDOR_ORC_MILITIA = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "orc_militia"), MiddleEarthRaces.ORC, List.of(
+        MORDOR_ORC_MILITIA = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "orc_militia"), MiddleEarthRaces.ORC, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create()
                                 .add(NpcGearItemData.create(Items.AIR).withWeight(3))
@@ -181,7 +178,7 @@ public class MordorNpcDataPool {
                         )
         ));
 
-        MORDOR_ORC_SCOUT = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "orc_scout"), MiddleEarthRaces.ORC, List.of(
+        MORDOR_ORC_SCOUT = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "orc_scout"), MiddleEarthRaces.ORC, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create()
                                 .add(NpcGearItemData.create(Items.AIR).withWeight(3))
@@ -234,7 +231,7 @@ public class MordorNpcDataPool {
                         )
         ));
 
-        MORDOR_ORC_SOLDIER = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "orc_soldier"), MiddleEarthRaces.ORC, List.of(
+        MORDOR_ORC_SOLDIER = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "orc_soldier"), MiddleEarthRaces.ORC, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create()
                                 .add(NpcGearItemData.create(Items.AIR).withWeight(3))
@@ -320,7 +317,7 @@ public class MordorNpcDataPool {
         ));
 
 
-        MORDOR_BLACK_URUK_SOLDIER = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "black_uruk_soldier"), MiddleEarthRaces.URUK, List.of(
+        MORDOR_BLACK_URUK_SOLDIER = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "black_uruk_soldier"), MiddleEarthRaces.URUK, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create()
                                 .add(NpcGearItemData.create(Items.AIR).withWeight(3))
@@ -390,7 +387,7 @@ public class MordorNpcDataPool {
                         )
         ));
 
-        MORDOR_BLACK_URUK_VETERAN = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "black_uruk_veteran"), MiddleEarthRaces.URUK, List.of(
+        MORDOR_BLACK_URUK_VETERAN = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "black_uruk_veteran"), MiddleEarthRaces.URUK, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.BLACK_URUK_PLATE_HELMET)))
                         .add(EquipmentSlot.CHEST, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.BLACK_URUK_PLATE_CHESTPLATE)))
@@ -410,7 +407,7 @@ public class MordorNpcDataPool {
                         )
         ));
 
-        MORDOR_BLACK_URUK_VETERAN_ARCHER = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "black_uruk_veteran_archer"), MiddleEarthRaces.URUK, List.of(
+        MORDOR_BLACK_URUK_VETERAN_ARCHER = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "black_uruk_veteran_archer"), MiddleEarthRaces.URUK, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.BLACK_URUK_PLATE_HELMET)))
                         .add(EquipmentSlot.CHEST, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.BLACK_URUK_PLATE_CHESTPLATE)))
@@ -424,7 +421,7 @@ public class MordorNpcDataPool {
                         )
         ));
 
-        MORDOR_BLACK_URUK_LEADER = new NpcData(Identifier.of(MiddleEarth.MOD_ID, FACTION_BASE + "black_uruk_leader"), MiddleEarthRaces.URUK, List.of(
+        MORDOR_BLACK_URUK_LEADER = new NpcData(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, FACTION_BASE + "black_uruk_leader"), MiddleEarthRaces.URUK, List.of(
                 NpcGearData.create()
                         .add(EquipmentSlot.HEAD, NpcGearSlotData.create(NpcGearItemData.create(ModEquipmentItems.BLACK_URUK_COMMANDER_HELMET)))
                         .add(EquipmentSlot.CHEST, NpcGearSlotData.create()

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/smooth_tuff_slab"
+    },
+    "type=double": {
+      "model": "me:block/smooth_tuff"
+    },
+    "type=top": {
+      "model": "me:block/smooth_tuff_slab_top"
+    }
+  }
+}

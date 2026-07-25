@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "me:treated_steel_bars"
+    },
+    "C": {
+      "item": "minecraft:campfire"
+    },
+    "S": {
+      "tag": "me:steel_ingots"
+    }
+  },
+  "pattern": [
+    "BCB",
+    "SSS"
+  ],
+  "result": {
+    "count": 2,
+    "id": "me:small_brazier"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:zigilaban_table"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_zigilaban": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:zigilaban"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_zigilaban"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:zigilaban_table"
+    ]
+  }
+}

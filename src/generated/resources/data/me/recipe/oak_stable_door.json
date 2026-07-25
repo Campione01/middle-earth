@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "minecraft:oak_planks"
+    },
+    "S": {
+      "tag": "me:steel_nuggets"
+    }
+  },
+  "pattern": [
+    "SPP",
+    "PPP",
+    "SPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:oak_stable_door"
+  }
+}

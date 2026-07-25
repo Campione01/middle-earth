@@ -1,0 +1,21 @@
+{
+  "type": "me:big_boulder",
+  "config": {
+    "blockstates": [
+      {
+        "Name": "me:hematite"
+      },
+      {
+        "Name": "me:hematite"
+      },
+      {
+        "Name": "me:cobbled_hematite"
+      }
+    ],
+    "height": 4.35,
+    "length": 5.85,
+    "random_size": 1.7,
+    "randomness": 0.34,
+    "width": 4.1
+  }
+}

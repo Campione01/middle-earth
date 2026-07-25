@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_rotten_thatch": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:rotten_thatch"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:rotten_thatch_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_rotten_thatch"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:rotten_thatch_stairs"
+    ]
+  }
+}

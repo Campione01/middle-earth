@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_deepslate_pillar": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:deepslate_pillar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:mossy_deepslate_pillar_moss"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_deepslate_pillar"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:mossy_deepslate_pillar_moss"
+    ]
+  }
+}

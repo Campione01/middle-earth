@@ -1,0 +1,75 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:uruk_hai_leather_hauberk"
+            },
+            {
+              "id": "me:uruk_hai_leather_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:uruk_hai_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "colors": [
+                3156776,
+                6639943
+              ],
+              "id": "me:uruk_hai_leather_scout_cap",
+              "weight": 4
+            },
+            {
+              "id": "me:uruk_hai_reinforced_helmet"
+            },
+            {
+              "id": "me:uruk_hai_soldier_helmet"
+            },
+            {
+              "id": "me:uruk_hai_light_helmet"
+            },
+            {
+              "id": "me:uruk_hai_painted_reinforced_helmet"
+            },
+            {
+              "id": "me:uruk_hai_painted_light_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:uruk_hai_mail_skirt"
+            },
+            {
+              "id": "me:uruk_hai_mail_coat"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:uruk_hai_bow",
+              "weight": 2
+            },
+            {
+              "id": "me:uruk_hai_falchion"
+            },
+            {
+              "id": "me:uruk_hai_spear",
+              "weight": 2
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:isengard.uruk_hai_scout",
+  "race": "me:uruk"
+}

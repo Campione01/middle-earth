@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "F": {
+      "item": "me:fabric"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "FFW",
+    "FFW",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:fancy_bed"
+  }
+}

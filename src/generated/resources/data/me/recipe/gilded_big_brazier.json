@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "me:gilded_bars"
+    },
+    "C": {
+      "item": "minecraft:campfire"
+    },
+    "S": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    "B B",
+    "BCB",
+    "SSS"
+  ],
+  "result": {
+    "count": 2,
+    "id": "me:gilded_big_brazier"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "id": "me:gondorian_plate_chestplate"
+        },
+        "feet": {
+          "id": "me:gondorian_plate_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:gondorian_plate_helmet",
+              "weight": 10
+            },
+            {
+              "id": "me:gondorian_captain_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "id": "me:gondorian_plate_leggings"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_noble_sword"
+            },
+            {
+              "id": "me:gondorian_noble_axe"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_hero_shield"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 2
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:gondor.veteran",
+  "race": "me:human"
+}

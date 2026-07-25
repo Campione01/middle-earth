@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fabric": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:fabric"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:elven_arming_skirt_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fabric"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:elven_arming_skirt_artisan"
+    ]
+  }
+}

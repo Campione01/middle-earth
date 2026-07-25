@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:green_tuff_vertical_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:green_tuff_slab"
+  }
+}

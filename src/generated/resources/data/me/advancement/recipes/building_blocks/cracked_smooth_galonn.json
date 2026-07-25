@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_smooth_galonn": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:smooth_galonn"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:cracked_smooth_galonn"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_smooth_galonn"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:cracked_smooth_galonn"
+    ]
+  }
+}

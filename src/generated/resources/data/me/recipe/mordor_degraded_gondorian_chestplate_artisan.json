@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:gondorian_plate_chestplate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "minecraft:red_dye"
+    },
+    {
+      "item": "me:mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:mordor_degraded_gondorian_chestplate"
+  }
+}

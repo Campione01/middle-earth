@@ -1,0 +1,107 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 8293248,
+    "foliage_color": 4950339,
+    "grass_color": 5408076,
+    "sky_color": 8826622,
+    "water_color": 4492967,
+    "water_fog_color": 471355
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:disk_clay",
+      "minecraft:disk_gravel",
+      "minecraft:disk_sand",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_dirt",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_gravel",
+      "minecraft:ore_tuff"
+    ],
+    [],
+    [],
+    [
+      "me:big_boulder_limestone",
+      "me:coarse_dirt_ore",
+      "me:flower_green_jewel",
+      "me:flower_poppy",
+      "me:flowers_red",
+      "me:gravel_ore",
+      "me:ivy_growth",
+      "me:medium_boulder_limestone",
+      "me:mirkwood_vines",
+      "me:oak_bush_tree",
+      "me:old_podzol_ore",
+      "me:patch_bracken",
+      "me:patch_fallen_mirkwood_leaves",
+      "me:patch_false_oatgrass",
+      "me:patch_forest_moss",
+      "me:patch_grass",
+      "me:patch_green_shrub",
+      "me:patch_rare_morsel",
+      "me:patch_rare_morsel_tiller",
+      "me:patch_red_heather",
+      "me:patch_shriveled_shrub",
+      "me:patch_tuft_grass",
+      "me:patch_wheat_grass",
+      "me:patch_wild_flax",
+      "me:patch_wild_garlic",
+      "me:patch_wild_grass",
+      "me:patch_wild_onion",
+      "me:small_boulder_limestone",
+      "minecraft:brown_mushroom_normal",
+      "minecraft:flower_default",
+      "minecraft:flower_forest_flowers",
+      "minecraft:glow_lichen",
+      "minecraft:patch_berry_rare",
+      "minecraft:patch_grass_taiga",
+      "minecraft:patch_large_fern",
+      "minecraft:patch_tall_grass_2",
+      "minecraft:red_mushroom_normal",
+      "minecraft:trees_plains"
+    ],
+    [
+      "me:mirkwood_vines",
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "minecraft:wolf",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 3
+      },
+      {
+        "type": "me:deer",
+        "maxCount": 4,
+        "minCount": 1,
+        "weight": 10
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.5
+}

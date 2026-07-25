@@ -1,8 +1,8 @@
 package net.jukoz.me.block.special.fireBlocks;
 
 import net.jukoz.me.block.ModBlockEntities;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class GildedSmallBrazierBlockEntity extends ToggleableFireBlockEntity {
 

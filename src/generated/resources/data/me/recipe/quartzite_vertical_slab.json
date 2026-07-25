@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:quartzite_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:quartzite_vertical_slab"
+  }
+}

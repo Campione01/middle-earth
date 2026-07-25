@@ -1,0 +1,102 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 11715307,
+    "foliage_color": 5996644,
+    "grass_color": 6521706,
+    "sky_color": 7509727,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:disk_clay",
+      "minecraft:disk_gravel",
+      "minecraft:disk_sand",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_dirt",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_gravel",
+      "minecraft:ore_tuff"
+    ],
+    [],
+    [],
+    [
+      "me:big_boulder_blue_tuff",
+      "me:blue_tuff_ore",
+      "me:common_black_pine_tree",
+      "me:common_fir_tree",
+      "me:common_oak_tree",
+      "me:flower_cornflower",
+      "me:forest_moss_disk",
+      "me:larch_tree",
+      "me:medium_boulder_blue_tuff",
+      "me:oak_bush_tree",
+      "me:patch_bracken",
+      "me:patch_brown_bolete",
+      "me:patch_brown_bolete_tiller",
+      "me:patch_false_oatgrass",
+      "me:patch_forest_moss",
+      "me:patch_forest_moss_carpet",
+      "me:patch_grass",
+      "me:patch_morsel",
+      "me:patch_morsel_tiller",
+      "me:patch_white_mushroom",
+      "me:patch_white_mushroom_tiller",
+      "me:patch_wild_beetroot",
+      "me:patch_wild_grass",
+      "me:patch_wild_potato",
+      "me:small_boulder_blue_tuff",
+      "me:spruce_bush_tree",
+      "me:spruce_tree",
+      "minecraft:brown_mushroom_normal",
+      "minecraft:flower_default",
+      "minecraft:glow_lichen",
+      "minecraft:patch_berry_rare",
+      "minecraft:patch_grass_taiga",
+      "minecraft:patch_large_fern",
+      "minecraft:red_mushroom_normal"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "minecraft:goat",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 4
+      },
+      {
+        "type": "me:broadhoof_goat",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 4
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.5
+}

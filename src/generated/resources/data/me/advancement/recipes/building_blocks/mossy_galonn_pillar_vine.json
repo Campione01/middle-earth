@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_galonn_pillar": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:galonn_pillar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:mossy_galonn_pillar_vine"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_galonn_pillar"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:mossy_galonn_pillar_vine"
+    ]
+  }
+}

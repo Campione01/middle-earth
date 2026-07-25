@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/large_door_left_open",
+  "textures": {
+    "all": "me:block/red_hobbit_door_0",
+    "particle": "me:block/red_hobbit_door_0"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cloak": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:cloak"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:gray_fur_cloak_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cloak"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:gray_fur_cloak_artisan"
+    ]
+  }
+}

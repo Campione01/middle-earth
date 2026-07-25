@@ -3,7 +3,6 @@ package net.jukoz.me.config;
 import com.mojang.datafixers.util.Pair;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.util.math.Vec3d;
 
 public class ModServerConfigs {
     public static SimpleConfig CONFIG;

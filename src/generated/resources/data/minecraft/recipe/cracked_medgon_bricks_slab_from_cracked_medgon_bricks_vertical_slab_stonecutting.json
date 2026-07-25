@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:cracked_medgon_bricks_vertical_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:cracked_medgon_bricks_slab"
+  }
+}

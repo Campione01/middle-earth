@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_copper_treasure_heap_layer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:copper_treasure_heap_layer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:copper_coin_from_treasure"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_copper_treasure_heap_layer"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:copper_coin_from_treasure"
+    ]
+  }
+}

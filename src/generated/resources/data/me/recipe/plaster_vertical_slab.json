@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:plaster_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:plaster_vertical_slab"
+  }
+}

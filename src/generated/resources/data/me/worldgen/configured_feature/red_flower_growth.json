@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:multiface_growth",
+  "config": {
+    "block": "me:red_flower_growth",
+    "can_be_placed_on": [
+      "minecraft:grass_block",
+      "minecraft:dirt",
+      "minecraft:coarse_dirt",
+      "minecraft:stone",
+      "minecraft:andesite",
+      "minecraft:diorite",
+      "minecraft:granite",
+      "minecraft:mossy_cobblestone",
+      "minecraft:moss_block",
+      "minecraft:clay",
+      "minecraft:cobblestone",
+      "minecraft:deepslate",
+      "minecraft:oak_log",
+      "minecraft:birch_log",
+      "minecraft:dark_oak_log",
+      "minecraft:spruce_log",
+      "me:beech_log",
+      "me:maple_log",
+      "me:silver_maple_log",
+      "me:holly_log"
+    ],
+    "can_place_on_ceiling": true,
+    "can_place_on_floor": true,
+    "can_place_on_wall": true,
+    "chance_of_spreading": 0.5,
+    "search_range": 20
+  }
+}

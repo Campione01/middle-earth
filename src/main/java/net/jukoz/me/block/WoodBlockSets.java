@@ -1,18 +1,37 @@
 package net.jukoz.me.block;
 
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
-import net.fabricmc.fabric.api.registry.FuelRegistry;
-import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
+import net.jukoz.me.utils.NeoForgeRegistrationBridge;
+
+import net.jukoz.me.compat.neoforge.api.registry.FlammableBlockRegistry;
+import net.jukoz.me.compat.neoforge.api.registry.FuelRegistry;
+import net.jukoz.me.compat.neoforge.api.registry.StrippableBlockRegistry;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.block.special.*;
 import net.jukoz.me.block.special.verticalSlabs.VerticalSlabBlock;
 import net.jukoz.me.item.utils.ModItemGroups;
 import net.jukoz.me.particles.ModParticleTypes;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.block.*;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.world.level.block.*;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ButtonBlock;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 public class WoodBlockSets {
     public static final float WOOD_STRENGTH = 2f;
@@ -65,103 +84,103 @@ public class WoodBlockSets {
                                  Block door, Block trapdoor, Block pressurePlate, Block button, Block stool, Block bench, Block table, Block chair, Block ladder, Block sapling) {
     }
 
-    private static SimpleBlockSet registerWoodSet(String name, float strength, boolean hasLeaves, Block sapling, boolean castShadow, boolean range, ParticleEffect particleEffect) {
+    private static SimpleBlockSet registerWoodSet(String name, float strength, boolean hasLeaves, Block sapling, boolean castShadow, boolean range, ParticleOptions particleEffect) {
         Block leaves = null;
         if(hasLeaves) {
             if(range) {
-                leaves = ModNatureBlocks.registerBlock(name + "_leaves", new ModLeavesBlock(AbstractBlock.Settings.create().mapColor(MapColor.DARK_GREEN)
-                        .strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(ModBlocks::canSpawnOnLeaves).suffocates(ModBlocks::never)
-                        .blockVision(ModBlocks::never).burnable().pistonBehavior(PistonBehavior.DESTROY).solidBlock(ModBlocks::never), castShadow, particleEffect), true);
+                leaves = ModNatureBlocks.registerBlock(name + "_leaves", new ModLeavesBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT)
+                        .strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(ModBlocks::canSpawnOnLeaves).isSuffocating(ModBlocks::never)
+                        .isViewBlocking(ModBlocks::never).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor(ModBlocks::never), castShadow, particleEffect), true);
             } else {
-                leaves = ModNatureBlocks.registerBlock(name + "_leaves", new LeavesBlock(AbstractBlock.Settings.create().mapColor(MapColor.DARK_GREEN)
-                        .strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(ModBlocks::canSpawnOnLeaves).suffocates(ModBlocks::never)
-                        .blockVision(ModBlocks::never).burnable().pistonBehavior(PistonBehavior.DESTROY).solidBlock(ModBlocks::never)), true);
+                leaves = ModNatureBlocks.registerBlock(name + "_leaves", new LeavesBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT)
+                        .strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(ModBlocks::canSpawnOnLeaves).isSuffocating(ModBlocks::never)
+                        .isViewBlocking(ModBlocks::never).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor(ModBlocks::never)), true);
             }
         }
 
 
-        Block log = ModBlocks.registerWoodBlock(name + "_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.OAK_LOG).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block log = ModBlocks.registerWoodBlock(name + "_log", new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG).strength(strength).sound(SoundType.WOOD)),false);
 
-        Block wood = ModBlocks.registerWoodBlock(name + "_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.OAK_WOOD).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block wood = ModBlocks.registerWoodBlock(name + "_wood", new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD).strength(strength).sound(SoundType.WOOD)),false);
 
-        Block woodSlab = ModBlocks.registerWoodBlock(name + "_wood_slab", new SlabBlock(AbstractBlock.Settings.copy(wood)
-                .strength(strength, ModBlocks.SLAB_RESISTANCE).sounds(BlockSoundGroup.WOOD)),false);
+        Block woodSlab = ModBlocks.registerWoodBlock(name + "_wood_slab", new SlabBlock(BlockBehaviour.Properties.ofFullCopy(wood)
+                .strength(strength, ModBlocks.SLAB_RESISTANCE).sound(SoundType.WOOD)),false);
 
-        Block woodVerticalSlab = ModBlocks.registerWoodBlock(name + "_wood_vertical_slab", new VerticalSlabBlock(AbstractBlock.Settings.copy(wood).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block woodVerticalSlab = ModBlocks.registerWoodBlock(name + "_wood_vertical_slab", new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(wood).strength(strength).sound(SoundType.WOOD)),false);
 
-        Block woodStairs = ModBlocks.registerWoodBlock(name + "_wood_stairs", new StairsBlock(wood.getDefaultState(),
-                AbstractBlock.Settings.copy(wood).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block woodStairs = ModBlocks.registerWoodBlock(name + "_wood_stairs", new StairBlock(wood.defaultBlockState(),
+                BlockBehaviour.Properties.ofFullCopy(wood).strength(strength).sound(SoundType.WOOD)),false);
         
-        Block woodWall = ModBlocks.registerWoodBlock(name + "_wood_wall", new WallBlock(AbstractBlock.Settings.copy(wood).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block woodWall = ModBlocks.registerWoodBlock(name + "_wood_wall", new WallBlock(BlockBehaviour.Properties.ofFullCopy(wood).strength(strength).sound(SoundType.WOOD)),false);
 
-        Block woodFence = ModBlocks.registerWoodBlock(name + "_wood_fence", new FenceBlock(AbstractBlock.Settings.copy(wood).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block woodFence = ModBlocks.registerWoodBlock(name + "_wood_fence", new FenceBlock(BlockBehaviour.Properties.ofFullCopy(wood).strength(strength).sound(SoundType.WOOD)),false);
 
-        Block strippedLog = ModBlocks.registerWoodBlock("stripped_" + name + "_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.OAK_LOG).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block strippedLog = ModBlocks.registerWoodBlock("stripped_" + name + "_log", new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG).strength(strength).sound(SoundType.WOOD)),false);
 
-        Block strippedWood = ModBlocks.registerWoodBlock("stripped_" + name + "_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.OAK_WOOD).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block strippedWood = ModBlocks.registerWoodBlock("stripped_" + name + "_wood", new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD).strength(strength).sound(SoundType.WOOD)),false);
         
-        Block strippedSlab = ModBlocks.registerWoodBlock("stripped_" + name + "_wood_slab", new SlabBlock(AbstractBlock.Settings.copy(strippedWood)
-                .strength(strength, ModBlocks.SLAB_RESISTANCE).sounds(BlockSoundGroup.WOOD)),false);
+        Block strippedSlab = ModBlocks.registerWoodBlock("stripped_" + name + "_wood_slab", new SlabBlock(BlockBehaviour.Properties.ofFullCopy(strippedWood)
+                .strength(strength, ModBlocks.SLAB_RESISTANCE).sound(SoundType.WOOD)),false);
 
-        Block strippedVerticalSlab = ModBlocks.registerWoodBlock("stripped_" + name + "_wood_vertical_slab", new VerticalSlabBlock(AbstractBlock.Settings.copy(strippedWood).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block strippedVerticalSlab = ModBlocks.registerWoodBlock("stripped_" + name + "_wood_vertical_slab", new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(strippedWood).strength(strength).sound(SoundType.WOOD)),false);
 
-        Block strippedStairs = ModBlocks.registerWoodBlock("stripped_" + name + "_wood_stairs", new StairsBlock(strippedWood.getDefaultState(),
-                AbstractBlock.Settings.copy(strippedWood).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block strippedStairs = ModBlocks.registerWoodBlock("stripped_" + name + "_wood_stairs", new StairBlock(strippedWood.defaultBlockState(),
+                BlockBehaviour.Properties.ofFullCopy(strippedWood).strength(strength).sound(SoundType.WOOD)),false);
         
-        Block strippedWoodWall = ModBlocks.registerWoodBlock("stripped_" + name + "_wood_wall", new WallBlock(AbstractBlock.Settings.copy(wood).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block strippedWoodWall = ModBlocks.registerWoodBlock("stripped_" + name + "_wood_wall", new WallBlock(BlockBehaviour.Properties.ofFullCopy(wood).strength(strength).sound(SoundType.WOOD)),false);
 
-        Block strippedWoodFence = ModBlocks.registerWoodBlock("stripped_" + name + "_wood_fence", new FenceBlock(AbstractBlock.Settings.copy(wood).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block strippedWoodFence = ModBlocks.registerWoodBlock("stripped_" + name + "_wood_fence", new FenceBlock(BlockBehaviour.Properties.ofFullCopy(wood).strength(strength).sound(SoundType.WOOD)),false);
 
-        Block planks = ModBlocks.registerWoodBlock(name + "_planks", new Block(AbstractBlock.Settings.copy(Blocks.OAK_PLANKS).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block planks = ModBlocks.registerWoodBlock(name + "_planks", new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(strength).sound(SoundType.WOOD)),false);
 
-        Block slab = ModBlocks.registerWoodBlock(name + "_slab", new SlabBlock(AbstractBlock.Settings.copy(planks)
-                .strength(strength, ModBlocks.SLAB_RESISTANCE).sounds(BlockSoundGroup.WOOD)),false);
+        Block slab = ModBlocks.registerWoodBlock(name + "_slab", new SlabBlock(BlockBehaviour.Properties.ofFullCopy(planks)
+                .strength(strength, ModBlocks.SLAB_RESISTANCE).sound(SoundType.WOOD)),false);
 
-        Block verticalSlab = ModBlocks.registerWoodBlock(name + "_vertical_slab", new VerticalSlabBlock(AbstractBlock.Settings.copy(planks).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block verticalSlab = ModBlocks.registerWoodBlock(name + "_vertical_slab", new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(planks).strength(strength).sound(SoundType.WOOD)),false);
 
-        Block stairs = ModBlocks.registerWoodBlock(name + "_stairs", new StairsBlock(planks.getDefaultState(),
-                AbstractBlock.Settings.copy(planks).strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block stairs = ModBlocks.registerWoodBlock(name + "_stairs", new StairBlock(planks.defaultBlockState(),
+                BlockBehaviour.Properties.ofFullCopy(planks).strength(strength).sound(SoundType.WOOD)),false);
 
-        Block fence = ModBlocks.registerWoodBlock(name + "_fence", new FenceBlock(AbstractBlock.Settings.copy(planks)
-                .strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block fence = ModBlocks.registerWoodBlock(name + "_fence", new FenceBlock(BlockBehaviour.Properties.ofFullCopy(planks)
+                .strength(strength).sound(SoundType.WOOD)),false);
 
-        Block gate = ModBlocks.registerWoodBlock(name + "_fence_gate",  new FenceGateBlock(WoodType.OAK, AbstractBlock.Settings.copy(planks)
-                .strength(strength).sounds(BlockSoundGroup.WOOD)),false);
+        Block gate = ModBlocks.registerWoodBlock(name + "_fence_gate",  new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(planks)
+                .strength(strength).sound(SoundType.WOOD)),false);
 
-        Block door = ModBlocks.registerWoodBlock(name + "_door", new DoorBlock(BlockSetType.OAK, AbstractBlock.Settings.copy(planks)
-                .strength(strength).sounds(BlockSoundGroup.WOOD).nonOpaque()),false);
+        Block door = ModBlocks.registerWoodBlock(name + "_door", new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(planks)
+                .strength(strength).sound(SoundType.WOOD).noOcclusion()),false);
 
-        Block trapdoor = ModBlocks.registerWoodBlock(name + "_trapdoor", new TrapdoorBlock(BlockSetType.OAK, AbstractBlock.Settings.copy(planks)
-                .strength(strength).sounds(BlockSoundGroup.WOOD).nonOpaque()),false);
+        Block trapdoor = ModBlocks.registerWoodBlock(name + "_trapdoor", new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(planks)
+                .strength(strength).sound(SoundType.WOOD).noOcclusion()),false);
 
         Block pressurePlate = ModBlocks.registerWoodBlock(name + "_pressure_plate",  new PressurePlateBlock(BlockSetType.OAK,
-                AbstractBlock.Settings.copy(planks).strength(PLATE_BUTTON_STRENGTH).sounds(BlockSoundGroup.WOOD).noCollision()),false);
+                BlockBehaviour.Properties.ofFullCopy(planks).strength(PLATE_BUTTON_STRENGTH).sound(SoundType.WOOD).noCollission()),false);
 
-        Block button = ModBlocks.registerWoodBlock(name + "_button",  new ButtonBlock(BlockSetType.OAK, 30, AbstractBlock.Settings.copy(planks).noCollision().strength(0.5F).pistonBehavior(PistonBehavior.DESTROY)
-                .sounds(BlockSoundGroup.WOOD).noCollision()),false);
+        Block button = ModBlocks.registerWoodBlock(name + "_button",  new ButtonBlock(BlockSetType.OAK, 30, BlockBehaviour.Properties.ofFullCopy(planks).noCollission().strength(0.5F).pushReaction(PushReaction.DESTROY)
+                .sound(SoundType.WOOD).noCollission()),false);
 
-        Block stool = ModBlocks.registerBlock(name + "_stool", new WoodStoolBlock(AbstractBlock.Settings.copy(planks)
-                .strength(strength).sounds(BlockSoundGroup.WOOD).nonOpaque()),false);
+        Block stool = ModBlocks.registerBlock(name + "_stool", new WoodStoolBlock(BlockBehaviour.Properties.ofFullCopy(planks)
+                .strength(strength).sound(SoundType.WOOD).noOcclusion()),false);
 
-        Block bench = ModBlocks.registerBlock(name + "_bench", new WoodBenchBlock(AbstractBlock.Settings.copy(planks)
-                .strength(strength).sounds(BlockSoundGroup.WOOD).nonOpaque()),false);
+        Block bench = ModBlocks.registerBlock(name + "_bench", new WoodBenchBlock(BlockBehaviour.Properties.ofFullCopy(planks)
+                .strength(strength).sound(SoundType.WOOD).noOcclusion()),false);
 
-        Block table = ModBlocks.registerBlock(name + "_table", new WoodTableBlock(AbstractBlock.Settings.copy(planks)
-                .strength(strength).sounds(BlockSoundGroup.WOOD).nonOpaque()),false);
+        Block table = ModBlocks.registerBlock(name + "_table", new WoodTableBlock(BlockBehaviour.Properties.ofFullCopy(planks)
+                .strength(strength).sound(SoundType.WOOD).noOcclusion()),false);
 
-        Block chair = ModBlocks.registerBlock(name + "_chair", new WoodChairBlock(AbstractBlock.Settings.copy(planks)
-                .sounds(BlockSoundGroup.WOOD).nonOpaque()),false);
+        Block chair = ModBlocks.registerBlock(name + "_chair", new WoodChairBlock(BlockBehaviour.Properties.ofFullCopy(planks)
+                .sound(SoundType.WOOD).noOcclusion()),false);
 
-        Block ladder = ModBlocks.registerBlock(name + "_ladder", new ThickLadderBlock(AbstractBlock.Settings.copy(planks)
-                .sounds(BlockSoundGroup.LADDER).nonOpaque()),false);
+        Block ladder = ModBlocks.registerBlock(name + "_ladder", new ThickLadderBlock(BlockBehaviour.Properties.ofFullCopy(planks)
+                .sound(SoundType.LADDER).noOcclusion()),false);
 
-        ModItemGroups.NATURE_BLOCKS_CONTENTS.add(log.asItem().getDefaultStack());
+        ModItemGroups.NATURE_BLOCKS_CONTENTS.add(log.asItem().getDefaultInstance());
 
-        ModItemGroups.DECORATIVES_BLOCKS_CONTENT.add(stool.asItem().getDefaultStack());
-        ModItemGroups.DECORATIVES_BLOCKS_CONTENT.add(bench.asItem().getDefaultStack());
-        ModItemGroups.DECORATIVES_BLOCKS_CONTENT.add(table.asItem().getDefaultStack());
-        ModItemGroups.DECORATIVES_BLOCKS_CONTENT.add(chair.asItem().getDefaultStack());
-        ModItemGroups.DECORATIVES_BLOCKS_CONTENT.add(ladder.asItem().getDefaultStack());
+        ModItemGroups.DECORATIVES_BLOCKS_CONTENT.add(stool.asItem().getDefaultInstance());
+        ModItemGroups.DECORATIVES_BLOCKS_CONTENT.add(bench.asItem().getDefaultInstance());
+        ModItemGroups.DECORATIVES_BLOCKS_CONTENT.add(table.asItem().getDefaultInstance());
+        ModItemGroups.DECORATIVES_BLOCKS_CONTENT.add(chair.asItem().getDefaultInstance());
+        ModItemGroups.DECORATIVES_BLOCKS_CONTENT.add(ladder.asItem().getDefaultInstance());
 
         StrippableBlockRegistry.register(log, strippedLog);
         StrippableBlockRegistry.register(wood, strippedWood);

@@ -6,21 +6,21 @@ import net.jukoz.me.network.packets.ClientToServerPacket;
 import net.jukoz.me.world.chunkgen.map.MiddleEarthHeightMap;
 import net.jukoz.me.world.dimension.ModDimensions;
 import net.jukoz.me.world.map.MiddleEarthMapUtils;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Vector2d;
 
 public class PacketTeleportToDynamicCoordinate extends ClientToServerPacket<PacketTeleportToDynamicCoordinate> {
-    public static final CustomPayload.Id<PacketTeleportToDynamicCoordinate> ID = new CustomPayload.Id<>(Identifier.of(MiddleEarth.MOD_ID, "packet_teleport_dynamic_spawn"));
-    public static final PacketCodec<RegistryByteBuf, PacketTeleportToDynamicCoordinate> CODEC = PacketCodec.tuple(
-            PacketCodecs.DOUBLE, p -> p.xCoordinate,
-            PacketCodecs.DOUBLE, p -> p.zCoordinate,
-            PacketCodecs.BOOL, p -> p.welcomeNeeded,
+    public static final CustomPacketPayload.Type<PacketTeleportToDynamicCoordinate> ID = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "packet_teleport_dynamic_spawn"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, PacketTeleportToDynamicCoordinate> CODEC = StreamCodec.composite(
+            ByteBufCodecs.DOUBLE, p -> p.xCoordinate,
+            ByteBufCodecs.DOUBLE, p -> p.zCoordinate,
+            ByteBufCodecs.BOOL, p -> p.welcomeNeeded,
             PacketTeleportToDynamicCoordinate::new
     );
     private final double xCoordinate;
@@ -33,12 +33,12 @@ public class PacketTeleportToDynamicCoordinate extends ClientToServerPacket<Pack
         this.welcomeNeeded = welcomeNeeded;
     }
     @Override
-    public Id<PacketTeleportToDynamicCoordinate> getId() {
+    public Type<PacketTeleportToDynamicCoordinate> type() {
         return ID;
     }
 
     @Override
-    public PacketCodec<RegistryByteBuf, PacketTeleportToDynamicCoordinate> streamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, PacketTeleportToDynamicCoordinate> streamCodec() {
         return CODEC;
     }
 
@@ -47,7 +47,7 @@ public class PacketTeleportToDynamicCoordinate extends ClientToServerPacket<Pack
         context.player().getServer().execute(() -> {
             Vector2d worldCoordinate = MiddleEarthMapUtils.getInstance().getWorldCoordinateFromInitialMap(xCoordinate, zCoordinate);
             MinecraftServer server = context.player().getServer();
-            Vec3d coordinates = new Vec3d(worldCoordinate.x, ModDimensions.getDimensionHeight((int)worldCoordinate.x, (int)worldCoordinate.y).y, worldCoordinate.y);
+            Vec3 coordinates = new Vec3(worldCoordinate.x, ModDimensions.getDimensionHeight((int)worldCoordinate.x, (int)worldCoordinate.y).y, worldCoordinate.y);
             ModDimensions.teleportPlayerToMe(context.player(), coordinates, true, welcomeNeeded);
         });
     }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fur": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:fur"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:orcish_white_fur_boots_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fur"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:orcish_white_fur_boots_artisan"
+    ]
+  }
+}

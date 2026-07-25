@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/pickaxe_head",
+    "layer1": "me:trims/items/pickaxe_head_trim_jade"
+  }
+}

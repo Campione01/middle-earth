@@ -1,16 +1,15 @@
 package net.jukoz.me.network;
 
 import com.mojang.serialization.Codec;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.jukoz.me.compat.neoforge.api.networking.v1.PayloadTypeRegistry;
+import net.jukoz.me.compat.neoforge.api.networking.v1.ServerPlayNetworking;
 import net.jukoz.me.network.connections.IConnectionToClient;
 import net.jukoz.me.network.contexts.ServerPacketContext;
 import net.jukoz.me.network.packets.ClientToServerPacket;
 import net.jukoz.me.network.packets.C2S.*;
 import net.jukoz.me.network.packets.S2C.*;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.server.network.ServerPlayerEntity;
-
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.server.level.ServerPlayer;
 import java.util.function.BiConsumer;
 
 public class ModServerNetworkHandler {
@@ -26,13 +25,13 @@ public class ModServerNetworkHandler {
         PayloadTypeRegistry.playC2S().register(PacketTeleportToCustomCoordinate.ID, PacketTeleportToCustomCoordinate.CODEC);
         PayloadTypeRegistry.playC2S().register(PacketTeleportToDynamicCoordinate.ID, PacketTeleportToDynamicCoordinate.CODEC);
         PayloadTypeRegistry.playC2S().register(PacketTeleportToCurrentSpawn.ID, PacketTeleportToCurrentSpawn.CODEC);
-        PayloadTypeRegistry.playC2S().register(PacketTeleportToCurrentOverworldSpawn.ID, PacketCodecs.codec(Codec.unit(new PacketTeleportToCurrentOverworldSpawn())));
+        PayloadTypeRegistry.playC2S().register(PacketTeleportToCurrentOverworldSpawn.ID, ByteBufCodecs.fromCodec(Codec.unit(new PacketTeleportToCurrentOverworldSpawn())));
         PayloadTypeRegistry.playC2S().register(PacketSetSpawnData.ID, PacketSetSpawnData.CODEC);
-        PayloadTypeRegistry.playC2S().register(PacketOnboardingRequest.ID, PacketCodecs.codec(Codec.unit(new PacketOnboardingRequest())));
+        PayloadTypeRegistry.playC2S().register(PacketOnboardingRequest.ID, ByteBufCodecs.fromCodec(Codec.unit(new PacketOnboardingRequest())));
         PayloadTypeRegistry.playC2S().register(ForgeOutputPacket.ID, ForgeOutputPacket.CODEC);
         PayloadTypeRegistry.playC2S().register(AnvilIndexPacket.ID, AnvilIndexPacket.CODEC);
         PayloadTypeRegistry.playC2S().register(ArtisanTableTabPacket.ID, ArtisanTableTabPacket.CODEC);
-        PayloadTypeRegistry.playC2S().register(HoodStateTogglePacket.ID, PacketCodecs.codec(Codec.unit(new HoodStateTogglePacket())));
+        PayloadTypeRegistry.playC2S().register(HoodStateTogglePacket.ID, ByteBufCodecs.fromCodec(Codec.unit(new HoodStateTogglePacket())));
 
         // Application [SERVER SIDE]
         ServerPlayNetworking.registerGlobalReceiver(PacketSetAffiliation.ID, wrapServerHandler(connection, PacketSetAffiliation::process));
@@ -55,7 +54,7 @@ public class ModServerNetworkHandler {
             BiConsumer<T, ServerPacketContext> consumer
     ) {
         return (t, payloadContext) -> {
-            ServerPlayerEntity player = payloadContext.player();
+            ServerPlayer player = payloadContext.player();
             var serverPacketContext = new ServerPacketContext(player, connection);
             consumer.accept(t, serverPacketContext);
         };

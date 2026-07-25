@@ -7,19 +7,19 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.recipe.AnvilShapingRecipe;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class AnvilShapingEmiRecipe implements EmiRecipe {
-    private final Identifier id;
+    private final ResourceLocation id;
     private final EmiIngredient input;
     private final EmiStack output;
 
     public AnvilShapingEmiRecipe(AnvilShapingRecipe recipe){
-        this.id = Identifier.of(MiddleEarth.MOD_ID, "/shaping_anvil" + "/" + Registries.ITEM.getId(recipe.getOutput().getItem()).getPath());
+        this.id = ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "/shaping_anvil" + "/" + BuiltInRegistries.ITEM.getKey(recipe.getOutput().getItem()).getPath());
         this.input = EmiIngredient.of(recipe.getIngredient());
         this.output = EmiStack.of(recipe.getOutput());
     }
@@ -29,7 +29,7 @@ public class AnvilShapingEmiRecipe implements EmiRecipe {
     }
 
     @Override
-    public @Nullable Identifier getId() {
+    public @Nullable ResourceLocation getId() {
         return id;
     }
 

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:jadeite_bricks"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:jadeite_tiles_stairs"
+  }
+}

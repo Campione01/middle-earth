@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:cracked_stone_tiles"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:cracked_stone_tiles_wall"
+  }
+}

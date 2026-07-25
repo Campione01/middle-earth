@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_khazad_steel_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:khazad_steel_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:dwarven_treated_anvil"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_khazad_steel_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:dwarven_treated_anvil"
+    ]
+  }
+}

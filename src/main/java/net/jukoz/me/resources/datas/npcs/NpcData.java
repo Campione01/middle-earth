@@ -2,18 +2,16 @@ package net.jukoz.me.resources.datas.npcs;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.fabricmc.fabric.api.util.NbtType;
+import net.jukoz.me.compat.neoforge.api.util.NbtType;
 import net.jukoz.me.resources.datas.factions.FactionUtil;
 import net.jukoz.me.resources.datas.npcs.data.NpcGearData;
 import net.jukoz.me.resources.datas.races.Race;
 import net.jukoz.me.resources.datas.races.RaceUtil;
 import net.jukoz.me.utils.IdentifierUtil;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,26 +20,26 @@ public class NpcData {
     public static final Codec<NpcData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("id").forGetter(NpcData::getIdValue),
             Codec.STRING.fieldOf("race").forGetter(NpcData::getRaceIdValue),
-            NbtCompound.CODEC.fieldOf("gears").forGetter(NpcData::getGearDataValues)
+            CompoundTag.CODEC.fieldOf("gears").forGetter(NpcData::getGearDataValues)
     ).apply(instance, NpcData::new));
 
-    private final Identifier id;
-    private final Identifier raceId;
+    private final ResourceLocation id;
+    private final ResourceLocation raceId;
     private final List<NpcGearData> gearDatas;
-    public NpcData(String id, String raceId, NbtCompound gearDatas){
+    public NpcData(String id, String raceId, CompoundTag gearDatas){
         this.id = IdentifierUtil.getIdentifierFromString(id);
         this.raceId = IdentifierUtil.getIdentifierFromString(raceId);
 
-        NbtList npcGears = gearDatas.getList("pool", NbtType.COMPOUND);
+        ListTag npcGears = gearDatas.getList("pool", NbtType.COMPOUND);
         List<NpcGearData> npcGearDatas = new ArrayList<>();
         for(int j = 0; j < npcGears.size(); j++) {
-            NbtCompound compound = npcGears.getCompound(j);
+            CompoundTag compound = npcGears.getCompound(j);
             npcGearDatas.add(NpcGearData.readNbt(compound));
         }
         this.gearDatas = npcGearDatas;
     }
 
-    public NpcData(Identifier id, Race race, List<NpcGearData> gearDatas){
+    public NpcData(ResourceLocation id, Race race, List<NpcGearData> gearDatas){
         this.id = id;
         this.raceId = race.getId();
         this.gearDatas = gearDatas;
@@ -55,9 +53,9 @@ public class NpcData {
         return raceId.toString();
     }
 
-    private NbtCompound getGearDataValues() {
-        NbtCompound nbt = new NbtCompound();
-        NbtList gears = new NbtList();
+    private CompoundTag getGearDataValues() {
+        CompoundTag nbt = new CompoundTag();
+        ListTag gears = new ListTag();
         for(NpcGearData npcGearData : this.gearDatas){
             gears.add(NpcGearData.createNbt(npcGearData));
         }
@@ -69,11 +67,11 @@ public class NpcData {
         return id.getPath();
     }
 
-    public Identifier getId() {
+    public ResourceLocation getId() {
         return id;
     }
 
-    public Identifier getRaceId() {
+    public ResourceLocation getRaceId() {
         return raceId;
     }
 

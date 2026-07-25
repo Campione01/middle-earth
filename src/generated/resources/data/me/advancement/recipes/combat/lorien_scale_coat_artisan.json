@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_scale_mail": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:scale_mail"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:lorien_scale_coat_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_scale_mail"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:lorien_scale_coat_artisan"
+    ]
+  }
+}

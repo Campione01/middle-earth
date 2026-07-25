@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "tag": "me:steel_ingots"
+    },
+    "N": {
+      "tag": "me:steel_nuggets"
+    },
+    "T": {
+      "item": "minecraft:torch"
+    }
+  },
+  "pattern": [
+    "NTN",
+    " I "
+  ],
+  "result": {
+    "count": 4,
+    "id": "me:sconce"
+  }
+}

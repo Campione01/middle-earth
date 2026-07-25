@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_izheraban_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:izheraban_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:izheraban_bricks_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_izheraban_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:izheraban_bricks_slab"
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:rohirric_scale_hauberk"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:green_dye"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:green_dye"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:rohirric_ornamented_scale_hauberk"
+  }
+}

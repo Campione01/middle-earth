@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "minecraft:ice"
+    }
+  },
+  "pattern": [
+    "III",
+    " I "
+  ],
+  "result": {
+    "count": 4,
+    "id": "me:short_icicles"
+  }
+}

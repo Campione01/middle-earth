@@ -1,0 +1,20 @@
+{
+  "type": "me:artisan_table",
+  "category": "sword",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:short_blade"
+    },
+    {
+      "item": "me:sword_hilt"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:erebor_noble_dagger"
+  }
+}

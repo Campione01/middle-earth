@@ -3,7 +3,7 @@
 	"texture_size": [64, 64],
 	"gui_light": "front",
 	"textures": {
-		"1": "me:item/dalish_braced_blue_shield"
+		"1": "me:item/dalish_blue_braced_shield"
 	},
 	"elements": [
 		{

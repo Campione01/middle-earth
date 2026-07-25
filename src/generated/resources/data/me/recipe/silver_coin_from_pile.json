@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:silver_coin_pile"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "me:silver_coin"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mail_hauberk": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:mail_hauberk"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:mordor_black_numenorean_plate_chestplate_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mail_hauberk"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:mordor_black_numenorean_plate_chestplate_artisan"
+    ]
+  }
+}

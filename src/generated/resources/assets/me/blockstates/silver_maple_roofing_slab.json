@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/silver_maple_roofing_slab"
+    },
+    "type=double": {
+      "model": "me:block/silver_maple_roofing"
+    },
+    "type=top": {
+      "model": "me:block/silver_maple_roofing_slab_top"
+    }
+  }
+}

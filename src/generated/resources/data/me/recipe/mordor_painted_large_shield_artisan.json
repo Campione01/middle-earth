@@ -1,0 +1,17 @@
+{
+  "type": "me:artisan_table",
+  "category": "medium_shield",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:mordor_large_shield"
+    },
+    {
+      "item": "me:mordor_banner_pattern"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:mordor_painted_large_shield"
+  }
+}

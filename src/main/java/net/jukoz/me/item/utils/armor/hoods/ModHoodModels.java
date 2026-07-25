@@ -6,17 +6,17 @@ import net.jukoz.me.client.model.equipment.head.hoods.unarmored.UnarmoredFurHood
 import net.jukoz.me.client.model.equipment.head.hoods.unarmored.UnarmoredFurHoodModel;
 import net.jukoz.me.client.model.equipment.head.hoods.unarmored.UnarmoredHoodModel;
 import net.jukoz.me.client.model.equipment.head.hoods.unarmored.UnarmoredTallHoodModel;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 
 public enum ModHoodModels {
-    REGULAR_MODELS(new HoodModel<>(HoodModel.getTexturedModelData().createModel()), new HoodModel<>(HoodModel.getTexturedModelData().createModel()),
-            new UnarmoredHoodModel<>(UnarmoredHoodModel.getTexturedModelData().createModel()), new UnarmoredHoodModel<>(UnarmoredHoodModel.getTexturedModelData().createModel())),
-    TALL_MODELS(new TallHoodModel<>(TallHoodModel.getTexturedModelData().createModel()), new TallHoodModel<>(TallHoodModel.getTexturedModelData().createModel()),
-            new UnarmoredTallHoodModel<>(UnarmoredTallHoodModel.getTexturedModelData().createModel()), new UnarmoredTallHoodModel<>(UnarmoredTallHoodModel.getTexturedModelData().createModel())),
-    FUR_MODELS(new FurHoodModel<>(FurHoodModel.getTexturedModelData().createModel()), new FurHoodDownModel<>(FurHoodDownModel.getTexturedModelData().createModel()),
-            new UnarmoredFurHoodModel<>(UnarmoredFurHoodModel.getTexturedModelData().createModel()), new UnarmoredFurHoodDownModel<>(UnarmoredFurHoodDownModel.getTexturedModelData().createModel())),
-    NAZGUL_MODELS(new NazgulHoodModel<>(NazgulHoodModel.getTexturedModelData().createModel()), new NazgulHoodModel<>(NazgulHoodModel.getTexturedModelData().createModel()),
-            new NazgulHoodModel<>(NazgulHoodModel.getTexturedModelData().createModel()), new NazgulHoodModel<>(NazgulHoodModel.getTexturedModelData().createModel())),
+    REGULAR_MODELS(new HoodModel<>(HoodModel.getTexturedModelData().bakeRoot()), new HoodModel<>(HoodModel.getTexturedModelData().bakeRoot()),
+            new UnarmoredHoodModel<>(UnarmoredHoodModel.getTexturedModelData().bakeRoot()), new UnarmoredHoodModel<>(UnarmoredHoodModel.getTexturedModelData().bakeRoot())),
+    TALL_MODELS(new TallHoodModel<>(TallHoodModel.getTexturedModelData().bakeRoot()), new TallHoodModel<>(TallHoodModel.getTexturedModelData().bakeRoot()),
+            new UnarmoredTallHoodModel<>(UnarmoredTallHoodModel.getTexturedModelData().bakeRoot()), new UnarmoredTallHoodModel<>(UnarmoredTallHoodModel.getTexturedModelData().bakeRoot())),
+    FUR_MODELS(new FurHoodModel<>(FurHoodModel.getTexturedModelData().bakeRoot()), new FurHoodDownModel<>(FurHoodDownModel.getTexturedModelData().bakeRoot()),
+            new UnarmoredFurHoodModel<>(UnarmoredFurHoodModel.getTexturedModelData().bakeRoot()), new UnarmoredFurHoodDownModel<>(UnarmoredFurHoodDownModel.getTexturedModelData().bakeRoot())),
+    NAZGUL_MODELS(new NazgulHoodModel<>(NazgulHoodModel.getTexturedModelData().bakeRoot()), new NazgulHoodModel<>(NazgulHoodModel.getTexturedModelData().bakeRoot()),
+            new NazgulHoodModel<>(NazgulHoodModel.getTexturedModelData().bakeRoot()), new NazgulHoodModel<>(NazgulHoodModel.getTexturedModelData().bakeRoot())),
     ;
 
     private final HelmetAddonModel<LivingEntity> armoredModel;

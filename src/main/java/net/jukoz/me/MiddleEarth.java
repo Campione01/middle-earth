@@ -1,10 +1,10 @@
 package net.jukoz.me;
 
-import net.fabricmc.api.ModInitializer;
 import net.jukoz.me.block.*;
 import net.jukoz.me.commands.ModCommands;
 import net.jukoz.me.config.ModClientConfigs;
 import net.jukoz.me.config.ModServerConfigs;
+import net.jukoz.me.datageneration.NeoForgeDataGeneration;
 import net.jukoz.me.entity.ModEntities;
 import net.jukoz.me.event.ModEvents;
 import net.jukoz.me.gui.ModScreenHandlers;
@@ -16,6 +16,8 @@ import net.jukoz.me.network.ModServerNetworkHandler;
 import net.jukoz.me.particles.ModParticleTypes;
 import net.jukoz.me.recipe.ModRecipeSerializer;
 import net.jukoz.me.registries.ModRegistries;
+import net.jukoz.me.compat.neoforge.api.networking.v1.PayloadTypeRegistry;
+import net.jukoz.me.registries.MiddleEarthDataPackRegistries;
 import net.jukoz.me.resources.MiddleEarthFactions;
 import net.jukoz.me.resources.MiddleEarthNpcs;
 import net.jukoz.me.resources.MiddleEarthRaces;
@@ -24,7 +26,9 @@ import net.jukoz.me.recipe.ModRecipes;
 import net.jukoz.me.sound.ModSounds;
 import net.jukoz.me.utils.LoggerUtil;
 import net.jukoz.me.utils.LootModifiers;
+import net.jukoz.me.utils.NeoForgeRegistrationBridge;
 import net.jukoz.me.utils.resources.FileUtils;
+import net.jukoz.me.compat.neoforge.api.object.builder.v1.entity.NeoForgeDefaultAttributeRegistry;
 import net.jukoz.me.world.biomes.surface.MapBiomeData;
 import net.jukoz.me.world.map.MiddleEarthMapGeneration;
 import net.jukoz.me.world.gen.ModWorldGeneration;
@@ -32,14 +36,32 @@ import net.jukoz.me.world.spawners.ModEntitySpawning;
 import net.jukoz.me.world.biomes.MEBiomeKeys;
 import net.jukoz.me.world.biomes.surface.MapBasedBiomePool;
 import net.jukoz.me.world.dimension.ModDimensions;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLEnvironment;
 
-public class MiddleEarth implements ModInitializer {
+@Mod(MiddleEarth.MOD_ID)
+public class MiddleEarth {
 	public static final String MOD_ID = "me";
 	public static final String MOD_VERSION = "1.5.1-1.21.1-alpha";
-	public static final boolean IS_DEBUG = true;
+	public static final boolean IS_DEBUG = false;
 	public static final boolean ENABLE_INSTANT_BOOTING = true;
 
-	@Override
+	public MiddleEarth(IEventBus modEventBus) {
+		modEventBus.addListener(MiddleEarthDataPackRegistries::register);
+		modEventBus.addListener(NeoForgeDataGeneration::gatherData);
+		modEventBus.addListener(PayloadTypeRegistry::registerPayloads);
+		modEventBus.addListener(ModEntities::registerSpawnPlacements);
+		ModBlockEntityCompatibility.register(modEventBus);
+		NeoForgeRegistrationBridge.register(modEventBus);
+		NeoForgeDefaultAttributeRegistry.register(modEventBus);
+		onInitialize();
+		if (FMLEnvironment.dist == Dist.CLIENT) {
+			MiddleEarthClient.registerClientSetup(modEventBus);
+		}
+	}
+
 	public void onInitialize() {
 		new FileUtils(getClass().getClassLoader());
 
@@ -79,6 +101,7 @@ public class MiddleEarth implements ModInitializer {
 		ModRegistries.registerFuels();
 		ModRegistries.registerFlammableBlocks();
 		ModRegistries.registerTillableBlocks();
+		ModRegistries.registerFlattenableBlocks();
 		ModRegistries.registerAgingCopperBlocks();
 		ModRegistries.registerComposterBlocks();
 		ModRegistries.registerCauldronBehaviour();

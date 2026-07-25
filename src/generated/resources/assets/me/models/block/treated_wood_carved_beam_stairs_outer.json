@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "me:block/treated_wood_carved_beam",
+    "side": "me:block/treated_wood_carved_beam",
+    "top": "me:block/treated_wood_carved_beam"
+  }
+}

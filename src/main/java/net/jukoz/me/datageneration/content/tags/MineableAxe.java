@@ -1,12 +1,10 @@
 package net.jukoz.me.datageneration.content.tags;
 
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.jukoz.me.compat.neoforge.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.jukoz.me.block.ModBlocks;
 import net.jukoz.me.block.ModDecorativeBlocks;
 import net.jukoz.me.block.ModNatureBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.client.render.RenderLayer;
-
+import net.minecraft.world.level.block.Block;
 import java.util.ArrayList;
 import java.util.List;
 

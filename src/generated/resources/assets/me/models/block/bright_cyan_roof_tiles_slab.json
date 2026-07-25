@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "me:block/bright_cyan_roof_tiles",
+    "side": "me:block/bright_cyan_roof_tiles",
+    "top": "me:block/bright_cyan_roof_tiles"
+  }
+}

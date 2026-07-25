@@ -1,30 +1,32 @@
 package net.jukoz.me.recipe;
 
+import net.jukoz.me.utils.NeoForgeRegistrationBridge;
+
 
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.SpecialRecipeSerializer;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 
 public class ModRecipeSerializer<T extends Recipe<?>> {
 
-    public static final SpecialRecipeSerializer<CustomArmorDyeRecipe> CUSTOM_ARMOR_DYE = register("custom_armor_dye", new SpecialRecipeSerializer<>(CustomArmorDyeRecipe::new));;
-    public static final SpecialRecipeSerializer<ArmorCapeRecipe> CUSTOM_ARMOR_CAPE = register("custom_armor_cape", new SpecialRecipeSerializer<>(ArmorCapeRecipe::new));
-    public static final SpecialRecipeSerializer<ArmorCapeRemovalRecipe> CUSTOM_ARMOR_CAPE_REMOVAL = register("custom_armor_cape_removal", new SpecialRecipeSerializer<>(ArmorCapeRemovalRecipe::new));
-    public static final SpecialRecipeSerializer<ArmorHoodRecipe> CUSTOM_ARMOR_HOOD = register("custom_armor_hood", new SpecialRecipeSerializer<>(ArmorHoodRecipe::new));
-    public static final SpecialRecipeSerializer<ArmorHoodRemovalRecipe> CUSTOM_ARMOR_HOOD_REMOVAL = register("custom_armor_hood_removal", new SpecialRecipeSerializer<>(ArmorHoodRemovalRecipe::new));
-    public static final SpecialRecipeSerializer<MountArmorAddonRemovalRecipe> CUSTOM_MOUNT_ARMOR_ADDON_REMOVAL = register("custom_mount_armor_addon_removal", new SpecialRecipeSerializer<>(MountArmorAddonRemovalRecipe::new));
-    public static final SpecialRecipeSerializer<MountArmorSideSkullAddonRecipe> CUSTOM_MOUNT_ARMOR_SIDE_SKULL_ADDON = register("custom_mount_armor_side_skull_addon", new SpecialRecipeSerializer<>(MountArmorSideSkullAddonRecipe::new));
-    public static final SpecialRecipeSerializer<MountArmorTopSkullAddonRecipe> CUSTOM_MOUNT_ARMOR_TOP_SKULL_ADDON = register("custom_mount_armor_top_skull_addon", new SpecialRecipeSerializer<>(MountArmorTopSkullAddonRecipe::new));
+    public static final SimpleCraftingRecipeSerializer<CustomArmorDyeRecipe> CUSTOM_ARMOR_DYE = register("custom_armor_dye", new SimpleCraftingRecipeSerializer<>(CustomArmorDyeRecipe::new));;
+    public static final SimpleCraftingRecipeSerializer<ArmorCapeRecipe> CUSTOM_ARMOR_CAPE = register("custom_armor_cape", new SimpleCraftingRecipeSerializer<>(ArmorCapeRecipe::new));
+    public static final SimpleCraftingRecipeSerializer<ArmorCapeRemovalRecipe> CUSTOM_ARMOR_CAPE_REMOVAL = register("custom_armor_cape_removal", new SimpleCraftingRecipeSerializer<>(ArmorCapeRemovalRecipe::new));
+    public static final SimpleCraftingRecipeSerializer<ArmorHoodRecipe> CUSTOM_ARMOR_HOOD = register("custom_armor_hood", new SimpleCraftingRecipeSerializer<>(ArmorHoodRecipe::new));
+    public static final SimpleCraftingRecipeSerializer<ArmorHoodRemovalRecipe> CUSTOM_ARMOR_HOOD_REMOVAL = register("custom_armor_hood_removal", new SimpleCraftingRecipeSerializer<>(ArmorHoodRemovalRecipe::new));
+    public static final SimpleCraftingRecipeSerializer<MountArmorAddonRemovalRecipe> CUSTOM_MOUNT_ARMOR_ADDON_REMOVAL = register("custom_mount_armor_addon_removal", new SimpleCraftingRecipeSerializer<>(MountArmorAddonRemovalRecipe::new));
+    public static final SimpleCraftingRecipeSerializer<MountArmorSideSkullAddonRecipe> CUSTOM_MOUNT_ARMOR_SIDE_SKULL_ADDON = register("custom_mount_armor_side_skull_addon", new SimpleCraftingRecipeSerializer<>(MountArmorSideSkullAddonRecipe::new));
+    public static final SimpleCraftingRecipeSerializer<MountArmorTopSkullAddonRecipe> CUSTOM_MOUNT_ARMOR_TOP_SKULL_ADDON = register("custom_mount_armor_top_skull_addon", new SimpleCraftingRecipeSerializer<>(MountArmorTopSkullAddonRecipe::new));
 
-    public static final SpecialRecipeSerializer<CustomItemDecorationRecipe> CUSTOM_ITEM_DECORATION = register("custom_item_decoration", new SpecialRecipeSerializer<>(CustomItemDecorationRecipe::new));
+    public static final SimpleCraftingRecipeSerializer<CustomItemDecorationRecipe> CUSTOM_ITEM_DECORATION = register("custom_item_decoration", new SimpleCraftingRecipeSerializer<>(CustomItemDecorationRecipe::new));
 
     static <S extends RecipeSerializer<T>, T extends Recipe<?>> S register(String id, S serializer) {
-        return Registry.register(Registries.RECIPE_SERIALIZER, Identifier.of(MiddleEarth.MOD_ID, id), serializer);
+        return NeoForgeRegistrationBridge.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, id), serializer);
     }
 
     public static void registerRecipeSerializers(){

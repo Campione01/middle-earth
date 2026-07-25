@@ -1,5 +1,6 @@
 package net.jukoz.me.mixin.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.jukoz.me.datageneration.VariantsModelProvider;
 import net.jukoz.me.datageneration.content.models.HotMetalsModel;
 import net.jukoz.me.datageneration.content.models.SimpleBigItemModel;
@@ -8,84 +9,101 @@ import net.jukoz.me.item.items.weapons.artefacts.ArtefactCustomGlowingDaggerWeap
 import net.jukoz.me.item.items.weapons.artefacts.ArtefactCustomGlowingLongswordWeaponItem;
 import net.jukoz.me.item.items.weapons.artefacts.ArtefactCustomLongswordWeaponItem;
 import net.jukoz.me.item.items.weapons.ranged.CustomLongbowWeaponItem;
-import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import net.jukoz.me.item.ModDataComponentTypes;
-import net.minecraft.client.render.item.ItemModels;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.client.util.ModelIdentifier;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Mixin(ItemRenderer.class)
 public abstract class ItemRendererMixin {
+    @Unique
+    private static Set<Item> middleearth$inventoryVariantItems;
 
-    @Debug(export = true)
-    @ModifyVariable(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V",
+    @ModifyVariable(method = "render(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/client/resources/model/BakedModel;)V",
             at = @At("HEAD"), ordinal = 0, argsOnly = true)
-    private BakedModel renderItem(BakedModel model, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if(renderMode == ModelTransformationMode.GUI || renderMode == ModelTransformationMode.GROUND || renderMode == ModelTransformationMode.FIXED) {
-            if(SimpleBigItemModel.artefacts.contains(stack.getItem())
-                    || SimpleBigItemModel.items.contains(stack.getItem())
-                    || SimpleBigItemModel.bigBows.contains(stack.getItem())
-                    || SimpleSpearModel.items.contains(stack.getItem())
-                    || SimpleBigItemModel.genericItems.contains(stack.getItem())) {
-                Identifier identifier = VariantsModelProvider.getInventoryModelIdentifierVariant(stack.getItem());
-                if (SimpleBigItemModel.artefactsBroken.contains(stack.getItem()) && stack.getDamage() == stack.getMaxDamage() - 1){
+    private BakedModel renderItem(BakedModel model, ItemStack stack, ItemDisplayContext renderMode, boolean leftHanded, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay) {
+        if(renderMode == ItemDisplayContext.GUI || renderMode == ItemDisplayContext.GROUND || renderMode == ItemDisplayContext.FIXED) {
+            if(usesInventoryVariant(stack.getItem())) {
+                ResourceLocation identifier = VariantsModelProvider.getInventoryModelIdentifierVariant(stack.getItem());
+                if (SimpleBigItemModel.artefactsBroken.contains(stack.getItem()) && stack.getDamageValue() == stack.getMaxDamage() - 1){
                     identifier = VariantsModelProvider.getInventoryModelBrokenItem(stack.getItem());
-                    return MinecraftClient.getInstance().getBakedModelManager().getModel(identifier);
+                    return getModelOrOriginal(identifier, model);
                 }
 
                 if (SimpleBigItemModel.artefactsGlowing.contains(stack.getItem())) {
                     if (stack.getItem() instanceof  ArtefactCustomGlowingLongswordWeaponItem item && item.glowing){
                         identifier = VariantsModelProvider.getInventoryModelGlowingItem(item);
-                        return MinecraftClient.getInstance().getBakedModelManager().getModel(identifier);
+                        return getModelOrOriginal(identifier, model);
                     } else if (stack.getItem() instanceof  ArtefactCustomGlowingDaggerWeaponItem item && item.glowing){
                         identifier = VariantsModelProvider.getInventoryModelGlowingItem(item);
-                        return MinecraftClient.getInstance().getBakedModelManager().getModel(identifier);
+                        return getModelOrOriginal(identifier, model);
                     }
                 } else if(SimpleBigItemModel.bigBows.contains(stack.getItem())) {
                     if(stack.getItem() instanceof BowItem bowWeaponItem) {
-                        PlayerEntity playerEntity = MinecraftClient.getInstance().player;
-                        if(playerEntity.getActiveItem() == stack) {
-                            float pull = BowItem.getPullProgress(playerEntity.getItemUseTime());
+                        Player playerEntity = Minecraft.getInstance().player;
+                        if(playerEntity.getUseItem() == stack) {
+                            float pull = BowItem.getPowerForTime(playerEntity.getTicksUsingItem());
                             if(stack.getItem() instanceof CustomLongbowWeaponItem) {
-                                pull = CustomLongbowWeaponItem.getPullProgressLongbow((int) (playerEntity.getItemUseTime() * 0.92f));
+                                pull = CustomLongbowWeaponItem.getPullProgressLongbow((int) (playerEntity.getTicksUsingItem() * 0.92f));
                             }
 
                             if(pull > 0) {
                                 identifier = VariantsModelProvider.getPullLongbowModel(bowWeaponItem, pull);
-                                BakedModel bakedModel = MinecraftClient.getInstance().getBakedModelManager().getModel(identifier);
+                                BakedModel bakedModel = getModelOrOriginal(identifier, model);
                                 return bakedModel;
                             }
                         }
                     }
                 }
-                return MinecraftClient.getInstance().getBakedModelManager().getModel(identifier);
+                return getModelOrOriginal(identifier, model);
             }
         }
 
         if(isItemHot(stack)) {
-            Identifier identifier = VariantsModelProvider.getHotModelIdentifierVariant(stack.getItem());
-            return MinecraftClient.getInstance().getBakedModelManager().getModel(identifier);
+            ResourceLocation identifier = VariantsModelProvider.getHotModelIdentifierVariant(stack.getItem());
+            return getModelOrOriginal(identifier, model);
         }
         return model;
     }
 
     @Unique
+    private static BakedModel getModelOrOriginal(ResourceLocation identifier, BakedModel original) {
+        var modelManager = Minecraft.getInstance().getModelManager();
+        BakedModel bakedModel = modelManager.getModel(ModelResourceLocation.standalone(identifier));
+        return bakedModel == modelManager.getMissingModel() ? original : bakedModel;
+    }
+
+    @Unique
+    private static boolean usesInventoryVariant(Item item) {
+        if (middleearth$inventoryVariantItems == null) {
+            Set<Item> items = new HashSet<>();
+            items.addAll(SimpleBigItemModel.artefacts);
+            items.addAll(SimpleBigItemModel.items);
+            items.addAll(SimpleBigItemModel.bigBows);
+            items.addAll(SimpleSpearModel.items);
+            items.addAll(SimpleBigItemModel.genericItems);
+            middleearth$inventoryVariantItems = items;
+        }
+        return middleearth$inventoryVariantItems.contains(item);
+    }
+
+    @Unique
     private static boolean isItemHot(ItemStack stack) {
-        return stack.getComponents().contains(ModDataComponentTypes.TEMPERATURE_DATA) && (
+        return stack.getComponents().has(ModDataComponentTypes.TEMPERATURE_DATA) && (
                 HotMetalsModel.nuggets.contains(stack.getItem()) ||
                 HotMetalsModel.ingots.contains(stack.getItem()) ||
                 HotMetalsModel.items.contains(stack.getItem())

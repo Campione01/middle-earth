@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "me:block/chestnut_roofing",
+    "side": "me:block/chestnut_roofing",
+    "top": "me:block/chestnut_roofing"
+  }
+}

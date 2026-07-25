@@ -1,0 +1,90 @@
+{
+  "banner": {
+    "base_color": "white",
+    "patterns": [
+      {
+        "dye_color": "blue",
+        "id": "me:cloth"
+      },
+      {
+        "dye_color": "blue",
+        "id": "minecraft:gradient"
+      },
+      {
+        "dye_color": "yellow",
+        "id": "me:bell"
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "disposition": "GOOD",
+  "faction_selection_order_index": 2,
+  "faction_type": "FACTION",
+  "id": "me:dale",
+  "joinable": true,
+  "npcs": {
+    "ranks": [
+      {
+        "pool": [
+          "me:dale.militia"
+        ],
+        "rank": "MILITIA"
+      },
+      {
+        "pool": [
+          "me:dale.sergeant"
+        ],
+        "rank": "LEADER"
+      },
+      {
+        "pool": [
+          "me:dale.soldier",
+          "me:dale.soldier_archer"
+        ],
+        "rank": "SOLDIER"
+      },
+      {
+        "pool": [
+          "me:dale.veteran"
+        ],
+        "rank": "VETERAN"
+      },
+      {
+        "pool": [
+          "me:human.civilian"
+        ],
+        "rank": "CIVILIAN"
+      },
+      {
+        "pool": [
+          "me:dale.knight",
+          "me:dale.knight_archer"
+        ],
+        "rank": "KNIGHT"
+      }
+    ]
+  },
+  "spawns": {
+    "data": [
+      {
+        "coordinates": {
+          "x": 2021.0,
+          "y": 0.0,
+          "z": 727.0
+        },
+        "dynamic": 1,
+        "id": "me:dale.capital"
+      },
+      {
+        "coordinates": {
+          "x": 2007.0,
+          "y": 0.0,
+          "z": 757.0
+        },
+        "dynamic": 1,
+        "id": "me:dale.esgaroth"
+      }
+    ]
+  }
+}

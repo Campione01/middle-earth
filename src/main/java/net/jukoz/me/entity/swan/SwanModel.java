@@ -1,19 +1,23 @@
 package net.jukoz.me.entity.swan;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.jukoz.me.compat.neoforge.dist.EnvType;
+import net.jukoz.me.compat.neoforge.dist.Environment;
 import net.jukoz.me.entity.deer.DeerAnimations;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.render.entity.model.SinglePartEntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 import org.joml.Vector3f;
 
 @Environment(value= EnvType.CLIENT)
-public class SwanModel extends SinglePartEntityModel<SwanEntity> {
+public class SwanModel extends HierarchicalModel<SwanEntity> {
     private final ModelPart swan;
     private final ModelPart headAndNeck;
     private final ModelPart head;
@@ -27,84 +31,84 @@ public class SwanModel extends SinglePartEntityModel<SwanEntity> {
         this.rightWing = swan.getChild("body").getChild("rightWing");
         this.leftWing = swan.getChild("body").getChild("leftWing");
     }
-    public static TexturedModelData getTexturedModelData() {
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
-        ModelPartData root = modelPartData.addChild("root", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 23.0F, 0.0F));
+    public static LayerDefinition getTexturedModelData() {
+        MeshDefinition modelData = new MeshDefinition();
+        PartDefinition modelPartData = modelData.getRoot();
+        PartDefinition root = modelPartData.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 23.0F, 0.0F));
 
-        ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(0, 0).cuboid(-3.5F, -3.5F, -5.0F, 7.0F, 7.0F, 10.0F, new Dilation(0.0F)), ModelTransform.pivot(-0.5F, -6.5F, 0.0F));
+        PartDefinition body = root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-3.5F, -3.5F, -5.0F, 7.0F, 7.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.5F, -6.5F, 0.0F));
 
-        ModelPartData leftWing = body.addChild("leftWing", ModelPartBuilder.create(), ModelTransform.pivot(4.0F, -2.75F, -4.5F));
+        PartDefinition leftWing = body.addOrReplaceChild("leftWing", CubeListBuilder.create(), PartPose.offset(4.0F, -2.75F, -4.5F));
 
-        ModelPartData leftInnerWing = leftWing.addChild("leftInnerWing", ModelPartBuilder.create().uv(30, 11).cuboid(-0.5F, -0.75F, -0.5F, 1.0F, 6.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        PartDefinition leftInnerWing = leftWing.addOrReplaceChild("leftInnerWing", CubeListBuilder.create().texOffs(30, 11).addBox(-0.5F, -0.75F, -0.5F, 1.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        ModelPartData leftMiddleWing = leftInnerWing.addChild("leftMiddleWing", ModelPartBuilder.create().uv(48, 3).cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 6.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 2.25F, 5.5F));
+        PartDefinition leftMiddleWing = leftInnerWing.addOrReplaceChild("leftMiddleWing", CubeListBuilder.create().texOffs(48, 3).addBox(-0.5F, -3.0F, 0.0F, 1.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 2.25F, 5.5F));
 
-        ModelPartData leftOuterWing = leftMiddleWing.addChild("leftOuterWing", ModelPartBuilder.create().uv(37, -6).cuboid(0.0F, -2.5F, 0.0F, 0.0F, 5.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(0.5F, -0.5F, 6.0F));
+        PartDefinition leftOuterWing = leftMiddleWing.addOrReplaceChild("leftOuterWing", CubeListBuilder.create().texOffs(37, -6).addBox(0.0F, -2.5F, 0.0F, 0.0F, 5.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.5F, -0.5F, 6.0F));
 
-        ModelPartData rightWing = body.addChild("rightWing", ModelPartBuilder.create(), ModelTransform.pivot(-4.0F, -2.75F, -4.5F));
+        PartDefinition rightWing = body.addOrReplaceChild("rightWing", CubeListBuilder.create(), PartPose.offset(-4.0F, -2.75F, -4.5F));
 
-        ModelPartData rightInnerWing = rightWing.addChild("rightInnerWing", ModelPartBuilder.create().uv(30, 11).mirrored().cuboid(-0.5F, -0.75F, -0.5F, 1.0F, 6.0F, 6.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        PartDefinition rightInnerWing = rightWing.addOrReplaceChild("rightInnerWing", CubeListBuilder.create().texOffs(30, 11).mirror().addBox(-0.5F, -0.75F, -0.5F, 1.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        ModelPartData rightMiddleWing = rightInnerWing.addChild("rightMiddleWing", ModelPartBuilder.create().uv(48, 3).mirrored().cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 6.0F, 6.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(0.0F, 2.25F, 5.5F));
+        PartDefinition rightMiddleWing = rightInnerWing.addOrReplaceChild("rightMiddleWing", CubeListBuilder.create().texOffs(48, 3).mirror().addBox(-0.5F, -3.0F, 0.0F, 1.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(0.0F, 2.25F, 5.5F));
 
-        ModelPartData rightOuterWing = rightMiddleWing.addChild("rightOuterWing", ModelPartBuilder.create().uv(37, -6).mirrored().cuboid(0.0F, -2.5F, 0.0F, 0.0F, 5.0F, 6.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(-0.5F, -0.5F, 6.0F));
+        PartDefinition rightOuterWing = rightMiddleWing.addOrReplaceChild("rightOuterWing", CubeListBuilder.create().texOffs(37, -6).mirror().addBox(0.0F, -2.5F, 0.0F, 0.0F, 5.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-0.5F, -0.5F, 6.0F));
 
-        ModelPartData headAndNeck = body.addChild("headAndNeck", ModelPartBuilder.create(), ModelTransform.pivot(0.5F, -2.5F, -4.0F));
+        PartDefinition headAndNeck = body.addOrReplaceChild("headAndNeck", CubeListBuilder.create(), PartPose.offset(0.5F, -2.5F, -4.0F));
 
-        ModelPartData neck = headAndNeck.addChild("neck", ModelPartBuilder.create().uv(12, 17).cuboid(-1.5F, -1.75F, -4.0F, 3.0F, 5.0F, 3.0F, new Dilation(0.0F))
-                .uv(0, 20).cuboid(-1.5F, -4.75F, -1.0F, 3.0F, 8.0F, 3.0F, new Dilation(0.0F)), ModelTransform.pivot(-0.5F, -1.25F, 1.0F));
+        PartDefinition neck = headAndNeck.addOrReplaceChild("neck", CubeListBuilder.create().texOffs(12, 17).addBox(-1.5F, -1.75F, -4.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 20).addBox(-1.5F, -4.75F, -1.0F, 3.0F, 8.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.5F, -1.25F, 1.0F));
 
-        ModelPartData head = headAndNeck.addChild("head", ModelPartBuilder.create().uv(0, 0).cuboid(-1.0F, -1.0F, -6.5F, 2.0F, 1.0F, 2.0F, new Dilation(0.0F))
-                .uv(0, 55).cuboid(-1.5F, -3.0F, -4.5F, 3.0F, 3.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(-0.5F, -6.0F, 1.5F));
+        PartDefinition head = headAndNeck.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -1.0F, -6.5F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 55).addBox(-1.5F, -3.0F, -4.5F, 3.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.5F, -6.0F, 1.5F));
 
-        ModelPartData tail = body.addChild("tail", ModelPartBuilder.create().uv(32, 23).cuboid(-3.5F, -2.25F, -0.25F, 7.0F, 2.0F, 8.0F, new Dilation(0.0F))
-                .uv(7, 26).cuboid(-3.5F, -0.25F, -0.25F, 7.0F, 3.0F, 5.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -1.25F, 5.25F));
+        PartDefinition tail = body.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(32, 23).addBox(-3.5F, -2.25F, -0.25F, 7.0F, 2.0F, 8.0F, new CubeDeformation(0.0F))
+                .texOffs(7, 26).addBox(-3.5F, -0.25F, -0.25F, 7.0F, 3.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.25F, 5.25F));
 
-        ModelPartData leftLeg = root.addChild("leftLeg", ModelPartBuilder.create().uv(0, 3).cuboid(-1.0F, -2.0F, -0.5F, 2.0F, 3.0F, 1.0F, new Dilation(0.0F))
-                .uv(26, 23).cuboid(-2.0F, 1.0F, -2.5F, 4.0F, 3.0F, 3.0F, new Dilation(0.0F)), ModelTransform.pivot(1.0F, -3.0F, 0.5F));
+        PartDefinition leftLeg = root.addOrReplaceChild("leftLeg", CubeListBuilder.create().texOffs(0, 3).addBox(-1.0F, -2.0F, -0.5F, 2.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(26, 23).addBox(-2.0F, 1.0F, -2.5F, 4.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(1.0F, -3.0F, 0.5F));
 
-        ModelPartData rightLeg = root.addChild("rightLeg", ModelPartBuilder.create().uv(0, 3).mirrored().cuboid(-1.0F, -2.0F, -0.5F, 2.0F, 3.0F, 1.0F, new Dilation(0.0F)).mirrored(false)
-                .uv(26, 23).mirrored().cuboid(-2.0F, 1.0F, -2.5F, 4.0F, 3.0F, 3.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(-2.0F, -3.0F, 0.5F));
-        return TexturedModelData.of(modelData, 64, 64);
+        PartDefinition rightLeg = root.addOrReplaceChild("rightLeg", CubeListBuilder.create().texOffs(0, 3).mirror().addBox(-1.0F, -2.0F, -0.5F, 2.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+                .texOffs(26, 23).mirror().addBox(-2.0F, 1.0F, -2.5F, 4.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-2.0F, -3.0F, 0.5F));
+        return LayerDefinition.create(modelData, 64, 64);
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+    public void renderToBuffer(PoseStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
         swan.render(matrices, vertices, light, overlay, color);
     }
 
     @Override
-    public ModelPart getPart() {
+    public ModelPart root() {
         return swan;
     }
 
     @Override
-    public void setAngles(SwanEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        this.getPart().traverse().forEach(ModelPart::resetTransform);
+    public void setupAnim(SwanEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        this.root().getAllParts().forEach(ModelPart::resetPose);
         this.setHeadAngles(headYaw, headPitch);
 
-        if(!entity.isOnGround() && !entity.isTouchingWater()) {
-            float angle = MathHelper.cos(MathHelper.cos(animationProgress * 0.5f));
-            this.rightWing.roll = 4 + (4 * angle);
-            this.leftWing.roll = -4 - (4 * angle);
+        if(!entity.onGround() && !entity.isInWater()) {
+            float angle = Mth.cos(Mth.cos(animationProgress * 0.5f));
+            this.rightWing.zRot = 4 + (4 * angle);
+            this.leftWing.zRot = -4 - (4 * angle);
         }
 
         if(entity.isBaby()) {
-            this.head.scale(new Vector3f(0.8f,0.8f,0.8f));
+            this.head.offsetScale(new Vector3f(0.8f,0.8f,0.8f));
         }
 
-        this.animateMovement(SwanAnimations.WALK, limbAngle, limbDistance, 4f, 4f);
-        this.updateAnimation(entity.swimAnimationState, SwanAnimations.SWIM, animationProgress, 1f);
-        this.updateAnimation(entity.idleAnimationState, SwanAnimations.WINGCLEAN, animationProgress, 1f);
-        this.updateAnimation(entity.attackAnimationState, SwanAnimations.ATTACK, animationProgress, 1.7f);
+        this.animateWalk(SwanAnimations.WALK, limbAngle, limbDistance, 4f, 4f);
+        this.animate(entity.swimAnimationState, SwanAnimations.SWIM, animationProgress, 1f);
+        this.animate(entity.idleAnimationState, SwanAnimations.WINGCLEAN, animationProgress, 1f);
+        this.animate(entity.attackAnimationState, SwanAnimations.ATTACK, animationProgress, 1.7f);
     }
 
     private void setHeadAngles(float headYaw, float headPitch) {
-        headYaw = MathHelper.clamp(headYaw, -30.0F, 30.0F);
-        headPitch = MathHelper.clamp(headPitch, -25.0F, 40.0F);
+        headYaw = Mth.clamp(headYaw, -30.0F, 30.0F);
+        headPitch = Mth.clamp(headPitch, -25.0F, 40.0F);
 
-        this.headAndNeck.yaw = headYaw * 0.017453292F;
-        this.headAndNeck.pitch = headPitch * 0.017453292F;
+        this.headAndNeck.yRot = headYaw * 0.017453292F;
+        this.headAndNeck.xRot = headPitch * 0.017453292F;
     }
 }

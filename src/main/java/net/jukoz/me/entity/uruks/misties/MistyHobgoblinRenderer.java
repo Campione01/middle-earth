@@ -1,31 +1,30 @@
 package net.jukoz.me.entity.uruks.misties;
 
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.entity.model.ModEntityModelLayers;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.BipedEntityRenderer;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-
+import net.minecraft.Util;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
+import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.resources.ResourceLocation;
 import java.util.Map;
 
-public class MistyHobgoblinRenderer extends BipedEntityRenderer<MistyHobgoblinEntity, MistyHobgoblinModel<MistyHobgoblinEntity>> {
+public class MistyHobgoblinRenderer extends HumanoidMobRenderer<MistyHobgoblinEntity, MistyHobgoblinModel<MistyHobgoblinEntity>> {
     private static final String PATH = "textures/entities/uruks/misties/";
 
-    public MistyHobgoblinRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new MistyHobgoblinModel<>(ctx.getPart(ModEntityModelLayers.URUK)), 0.5f);
-        this.addFeature(new ArmorFeatureRenderer<>(this, new MistyHobgoblinModel(ctx.getPart(EntityModelLayers.PLAYER_INNER_ARMOR)),
-                new MistyHobgoblinModel(ctx.getPart(EntityModelLayers.PLAYER_OUTER_ARMOR)), ctx.getModelManager()));
+    public MistyHobgoblinRenderer(EntityRendererProvider.Context ctx) {
+        super(ctx, new MistyHobgoblinModel<>(ctx.bakeLayer(ModEntityModelLayers.URUK)), 0.5f);
+        this.addLayer(new HumanoidArmorLayer<>(this, new MistyHobgoblinModel(ctx.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
+                new MistyHobgoblinModel(ctx.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)), ctx.getModelManager()));
     }
 
     @Override
-    public Identifier getTexture(MistyHobgoblinEntity entity) {
-        return Identifier.of(MiddleEarth.MOD_ID, LOCATION_BY_VARIANT.get(entity.getVariant()));
+    public ResourceLocation getTextureLocation(MistyHobgoblinEntity entity) {
+        return ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, LOCATION_BY_VARIANT.get(entity.getVariant()));
     }
 
     public static final Map<MistyHobgoblinVariant, String> LOCATION_BY_VARIANT =
@@ -39,8 +38,8 @@ public class MistyHobgoblinRenderer extends BipedEntityRenderer<MistyHobgoblinEn
             });
 
     @Override
-    public void render(MistyHobgoblinEntity entity, float entityYaw, float partialTick, MatrixStack poseStack,
-                       VertexConsumerProvider bufferSource, int packedLight) {
+    public void render(MistyHobgoblinEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
+                       MultiBufferSource bufferSource, int packedLight) {
 
         poseStack.scale(0.95f, 0.95f, 0.95f);
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);

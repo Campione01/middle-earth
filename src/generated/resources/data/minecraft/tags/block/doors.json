@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "me:treated_steel_door",
+    "me:beech_door",
+    "me:larch_door",
+    "me:black_lebethron_door",
+    "me:white_lebethron_door",
+    "me:chestnut_door",
+    "me:holly_door",
+    "me:fir_door",
+    "me:mallorn_door",
+    "me:maple_door",
+    "me:silver_maple_door",
+    "me:mirkwood_door",
+    "me:palm_door",
+    "me:white_palm_door",
+    "me:pine_door",
+    "me:black_pine_door",
+    "me:willow_door",
+    "me:scorched_door",
+    "me:dark_mushroom_door",
+    "me:gray_mushroom_door",
+    "me:mushroom_door"
+  ]
+}

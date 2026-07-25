@@ -3,39 +3,32 @@ package net.jukoz.me.recipe;
 import com.google.common.collect.Lists;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.item.dataComponents.CustomDyeableDataComponent;
-import net.minecraft.component.type.DyedColorComponent;
-import net.minecraft.inventory.RecipeInputInventory;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.SpecialCraftingRecipe;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.recipe.input.CraftingRecipeInput;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomArmorDyeRecipe extends SpecialCraftingRecipe {
-    public CustomArmorDyeRecipe(CraftingRecipeCategory craftingRecipeCategory) {
+public class CustomArmorDyeRecipe extends CustomRecipe {
+    public CustomArmorDyeRecipe(CraftingBookCategory craftingRecipeCategory) {
         super(craftingRecipeCategory);
     }
 
     @Override
-    public boolean matches(CraftingRecipeInput craftingRecipeInput, World world) {
+    public boolean matches(CraftingInput craftingRecipeInput, Level world) {
         ItemStack itemStack = ItemStack.EMPTY;
         ArrayList<ItemStack> list = Lists.newArrayList();
 
-        for (int i = 0; i < craftingRecipeInput.getSize(); ++i) {
-            ItemStack itemStack2 = craftingRecipeInput.getStackInSlot(i);
+        for (int i = 0; i < craftingRecipeInput.size(); ++i) {
+            ItemStack itemStack2 = craftingRecipeInput.getItem(i);
             if (itemStack2.isEmpty()) continue;
-            if (itemStack2.isIn(ModTags.DYEABLE)) {
+            if (itemStack2.is(ModTags.DYEABLE)) {
                 if (!itemStack.isEmpty()) {
                     return false;
                 }
@@ -52,14 +45,14 @@ public class CustomArmorDyeRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(CraftingRecipeInput craftingRecipeInput, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack assemble(CraftingInput craftingRecipeInput, HolderLookup.Provider lookup) {
         ArrayList<DyeItem> list = Lists.newArrayList();
         ItemStack itemStack = ItemStack.EMPTY;
 
-        for (int i = 0; i < craftingRecipeInput.getSize(); ++i) {
-            ItemStack itemStack2 = craftingRecipeInput.getStackInSlot(i);
+        for (int i = 0; i < craftingRecipeInput.size(); ++i) {
+            ItemStack itemStack2 = craftingRecipeInput.getItem(i);
             if (itemStack2.isEmpty()) continue;
-            if (itemStack2.isIn(ModTags.DYEABLE)) {
+            if (itemStack2.is(ModTags.DYEABLE)) {
                 if (!itemStack.isEmpty()) {
                     return ItemStack.EMPTY;
                 }
@@ -79,7 +72,7 @@ public class CustomArmorDyeRecipe extends SpecialCraftingRecipe {
         return CustomDyeableDataComponent.setColor(itemStack, list);
     }
 
-    public boolean fits(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return width * height >= 2;
     }
 

@@ -1,0 +1,225 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_leather_scale_coat"
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_leather_scale_coat"
+            },
+            {
+              "cape": "orcish_shoulders",
+              "cape_colors": [
+                3944757,
+                4865076
+              ],
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_leather_scale_coat"
+            },
+            {
+              "id": "me:gundabad_mail_hauberk"
+            },
+            {
+              "cape": "orcish_cape",
+              "id": "me:gundabad_mail_hauberk"
+            },
+            {
+              "cape": "orcish_shoulders",
+              "cape_colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_mail_hauberk"
+            },
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_bone_pauldron"
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_bone_pauldron"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_bone_pauldron"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                3944757,
+                4865076
+              ],
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_bone_pauldron"
+            },
+            {
+              "cape": "orcish_shoulders",
+              "cape_colors": [
+                3944757,
+                4865076
+              ],
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_bone_pauldron"
+            }
+          ]
+        },
+        "feet": {
+          "pool": [
+            {
+              "id": "me:orcish_sandals"
+            },
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_laced_boots"
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            },
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_skullcap_helmet",
+              "weight": 4
+            },
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_seeker_helmet",
+              "weight": 3
+            },
+            {
+              "id": "me:rusted_orcish_mail_coif"
+            },
+            {
+              "id": "me:gundabad_mail_coif"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:gundabad_leather_leggings"
+            },
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_strip_leather_skirt"
+            },
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_leather_skirt"
+            },
+            {
+              "colors": [
+                3944757,
+                4865076
+              ],
+              "id": "me:orcish_leg_bracer"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:gundabad_spear",
+              "weight": 4
+            },
+            {
+              "id": "me:gundabad_falchion",
+              "weight": 3
+            },
+            {
+              "id": "me:gundabad_shank",
+              "weight": 2
+            },
+            {
+              "id": "me:orc_knife",
+              "weight": 2
+            },
+            {
+              "id": "me:crude_falchion"
+            },
+            {
+              "id": "me:crude_axe"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:gundabad_wooden_shield"
+            },
+            {
+              "id": "me:gundabad_painted_wooden_shield"
+            },
+            {
+              "id": "me:gundabad_peaks_painted_wooden_shield"
+            },
+            {
+              "id": "me:gundabad_great_eye_painted_wooden_shield"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 2
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:misty_mountains_goblins.goblin_warrior",
+  "race": "me:orc"
+}

@@ -1,6 +1,6 @@
 package net.jukoz.me.datageneration;
 
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.jukoz.me.compat.neoforge.api.datagen.v1.provider.NeoForgeRecipeProvider;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.block.*;
 import net.jukoz.me.datageneration.content.models.*;
@@ -8,35 +8,43 @@ import net.jukoz.me.datageneration.custom.AlloyRecipeJsonBuilder;
 import net.jukoz.me.datageneration.custom.AnvilShapingRecipeJsonBuilder;
 import net.jukoz.me.item.*;
 import net.jukoz.me.recipe.*;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.data.DataOutput;
-import net.minecraft.data.server.recipe.*;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.recipes.SpecialRecipeBuilder;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CampfireCookingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.SmokingRecipe;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import java.util.concurrent.CompletableFuture;
 
-public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvider {
+public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
 
-    private final CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup;
+    private final CompletableFuture<HolderLookup.Provider> registryLookup;
     private static final int INGOT_LIQUID_VALUE = 144;
 
-    public RecipeProvider(DataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookupFuture) {
+    public RecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registryLookupFuture) {
         super(output, registryLookupFuture);
 
         this.registryLookup = registryLookupFuture;
     }
 
     @Override
-    public void generate(RecipeExporter exporter) {
+    public void buildRecipes(RecipeOutput exporter) {
 
         //region STONE RECIPES
         for (StoneBlockSets.SimpleBlockSetMain record : StoneBlockSets.setsMain) {
@@ -45,38 +53,38 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
             } else if (record.toString().contains("cracked_")) {
                 createSmeltingRecipe(exporter, record.source().asItem(), record.base().asItem());
             } else if (record.toString().contains("cobbled_")) {
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
             } else if (record.source() != null) {
                 createBrickRecipe(exporter, record.source().asItem(), record.base(), 4);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.source(), 2);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.source(), 2);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.stairs(), record.source());
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.wall(), record.source());
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.source(), 2);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.source(), 2);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.stairs(), record.source());
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.wall(), record.source());
             }
 
             createButtonRecipe(exporter, record.base().asItem(), record.button());
             createPressurePlateRecipe(exporter, record.base().asItem(), record.pressurePlate());
 
             createSlabsRecipe(exporter, record.base(), record.slab());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.base(), 2);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.base(), 2);
 
             createVerticalSlabsRecipe(exporter, record.slab(), record.verticalSlab());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.base(), 2);
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.slab(), 1);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.base(), 2);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.slab(), 1);
             createSlabsFromVerticalRecipe(exporter, record.verticalSlab(), record.slab());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.verticalSlab(), 1);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.verticalSlab(), 1);
 
             createStairsRecipe(exporter, record.base(), record.stairs());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.stairs(), record.base(), 1);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.stairs(), record.base(), 1);
 
             createWallsRecipe(exporter, record.base(), record.wall());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.wall(), record.base(), 1);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.wall(), record.base(), 1);
 
             createFilledRecipe(exporter, record.base().asItem(), record.trapdoor(), 3);
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.trapdoor(), record.base());
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.trapdoor(), record.base());
 
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.rocks(), record.base(), 4);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.rocks(), record.base(), 4);
 
             createStoneStoolRecipe(exporter, record.base().asItem(), record.stool());
             createStoneTableRecipe(exporter, record.base().asItem(), record.table());
@@ -89,30 +97,30 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
             } else if (record.toString().contains("cracked_") || record.toString().contains("smooth_")) {
                 createSmeltingRecipe(exporter, record.source().asItem(), record.base().asItem());
             } else if (record.toString().contains("cobbled_") || record.toString().contains("cobblestone")) {
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
                 createSmeltingRecipeIdentifier(exporter, record.base().asItem(), record.source().asItem());
             } else if (record.toString().contains("old_") && !record.toString().contains("old_bricks")) {
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
             } else if (record.source() != null) {
                 createBrickRecipe(exporter, record.source().asItem(), record.base(), 4);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.source(), 2);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.source(), 2);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.stairs(), record.source());
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.wall(), record.source());
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.source(), 2);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.source(), 2);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.stairs(), record.source());
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.wall(), record.source());
             }
 
             createSlabsRecipe(exporter, record.base(), record.slab());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.base(), 2);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.base(), 2);
             createVerticalSlabsRecipe(exporter, record.slab(), record.verticalSlab());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.base(), 2);
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.slab(), 1);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.base(), 2);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.slab(), 1);
             createSlabsFromVerticalRecipe(exporter, record.verticalSlab(), record.slab());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.verticalSlab(), 1);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.verticalSlab(), 1);
             createStairsRecipe(exporter, record.base(), record.stairs());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.stairs(), record.base(), 1);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.stairs(), record.base(), 1);
             createWallsRecipe(exporter, record.base(), record.wall());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.wall(), record.base(), 1);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.wall(), record.base(), 1);
         }
 
         for (StoneBlockSets.SimplePillarBlockSet record : StoneBlockSets.pillarSets) {
@@ -121,30 +129,30 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
             } else if (record.toString().contains("cracked_") || record.toString().contains("smooth_")) {
                 createSmeltingRecipe(exporter, record.source().asItem(), record.base().asItem());
             } else if (record.toString().contains("cobbled_") || record.toString().contains("cobblestone")) {
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
                 createSmeltingRecipeIdentifier(exporter, record.base().asItem(), record.source().asItem());
             } else if (record.toString().contains("old_") && !record.toString().contains("old_bricks")) {
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
             } else if (record.source() != null) {
                 createBrickRecipe(exporter, record.source().asItem(), record.base(), 4);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.source(), 2);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.source(), 2);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.stairs(), record.source());
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.wall(), record.source());
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.base(), record.source(), 1);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.source(), 2);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.source(), 2);
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.stairs(), record.source());
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.wall(), record.source());
             }
 
             createSlabsRecipe(exporter, record.base(), record.slab());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.base(), 2);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.base(), 2);
             createVerticalSlabsRecipe(exporter, record.slab(), record.verticalSlab());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.base(), 2);
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.slab(), 1);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.base(), 2);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.verticalSlab(), record.slab(), 1);
             createSlabsFromVerticalRecipe(exporter, record.verticalSlab(), record.slab());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.verticalSlab(), 1);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.slab(), record.verticalSlab(), 1);
             createStairsRecipe(exporter, record.base(), record.stairs());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.stairs(), record.base(), 1);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.stairs(), record.base(), 1);
             createWallsRecipe(exporter, record.base(), record.wall());
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, record.wall(), record.base(), 1);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, record.wall(), record.base(), 1);
         }
         //endregion
 
@@ -185,40 +193,40 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
 
             createWoodLadderRecipe(exporter, record.planks().asItem(), record.ladder());
 
-            ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, record.planks(), 4)
-                    .input(record.log())
-                    .criterion(FabricRecipeProvider.hasItem(record.log()),
-                            FabricRecipeProvider.conditionsFromItem(record.planks()))
-                    .offerTo(exporter);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, record.planks(), 4)
+                    .requires(record.log())
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(record.log()),
+                            NeoForgeRecipeProvider.has(record.planks()))
+                    .save(exporter);
 
-            ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, record.planks(), 4)
-                    .input(record.wood())
-                    .criterion(FabricRecipeProvider.hasItem(record.wood()),
-                            FabricRecipeProvider.conditionsFromItem(record.planks()))
-                    .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.BLOCK.getId(record.planks()).getPath() + "_from_wood"));
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, record.planks(), 4)
+                    .requires(record.wood())
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(record.wood()),
+                            NeoForgeRecipeProvider.has(record.planks()))
+                    .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.BLOCK.getKey(record.planks()).getPath() + "_from_wood"));
 
-            ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, record.planks(), 4)
-                    .input(record.strippedLog())
-                    .criterion(FabricRecipeProvider.hasItem(record.strippedLog()),
-                            FabricRecipeProvider.conditionsFromItem(record.planks()))
-                    .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.BLOCK.getId(record.planks()).getPath() + "_from_stripped_log"));
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, record.planks(), 4)
+                    .requires(record.strippedLog())
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(record.strippedLog()),
+                            NeoForgeRecipeProvider.has(record.planks()))
+                    .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.BLOCK.getKey(record.planks()).getPath() + "_from_stripped_log"));
 
-            ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, record.planks(), 4)
-                    .input(record.strippedWood())
-                    .criterion(FabricRecipeProvider.hasItem(record.strippedWood()),
-                            FabricRecipeProvider.conditionsFromItem(record.planks()))
-                    .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.BLOCK.getId(record.planks()).getPath() + "_from_stripped_wood"));
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, record.planks(), 4)
+                    .requires(record.strippedWood())
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(record.strippedWood()),
+                            NeoForgeRecipeProvider.has(record.planks()))
+                    .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.BLOCK.getKey(record.planks()).getPath() + "_from_stripped_wood"));
 
-            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, record.planksGate(), 1)
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, record.planksGate(), 1)
                     .pattern("sls")
                     .pattern("sls")
-                    .input('l', record.planks())
-                    .input('s', Items.STICK)
-                    .criterion(FabricRecipeProvider.hasItem(record.planks()),
-                            FabricRecipeProvider.conditionsFromItem(record.planks()))
-                    .criterion(FabricRecipeProvider.hasItem(Items.STICK),
-                            FabricRecipeProvider.conditionsFromItem(Items.STICK))
-                    .offerTo(exporter);
+                    .define('l', record.planks())
+                    .define('s', Items.STICK)
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(record.planks()),
+                            NeoForgeRecipeProvider.has(record.planks()))
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.STICK),
+                            NeoForgeRecipeProvider.has(Items.STICK))
+                    .save(exporter);
 
             createButtonRecipe(exporter, record.planks().asItem(), record.button());
             createPressurePlateRecipe(exporter, record.planks().asItem(), record.pressurePlate());
@@ -231,11 +239,11 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
             if (record.stem() != null) {
                 createWallsRecipe(exporter, record.stem(), record.stemWall());
 
-                ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, record.planks(), 4)
-                        .input(record.stem())
-                        .criterion(FabricRecipeProvider.hasItem(record.stem()),
-                                FabricRecipeProvider.conditionsFromItem(record.planks()))
-                        .offerTo(exporter);
+                ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, record.planks(), 4)
+                        .requires(record.stem())
+                        .unlockedBy(NeoForgeRecipeProvider.getHasName(record.stem()),
+                                NeoForgeRecipeProvider.has(record.planks()))
+                        .save(exporter);
             }
 
             createSlabsRecipe(exporter, record.planks(), record.planksSlab());
@@ -254,16 +262,16 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
             createFenceRecipe(exporter, record.planks().asItem(), record.planksFence());
             createFenceRecipe(exporter, record.stem().asItem(), record.stemFence());
 
-            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, record.planksGate(), 1)
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, record.planksGate(), 1)
                     .pattern("sls")
                     .pattern("sls")
-                    .input('l', record.planks())
-                    .input('s', Items.STICK)
-                    .criterion(FabricRecipeProvider.hasItem(record.planks()),
-                            FabricRecipeProvider.conditionsFromItem(record.planks()))
-                    .criterion(FabricRecipeProvider.hasItem(Items.STICK),
-                            FabricRecipeProvider.conditionsFromItem(Items.STICK))
-                    .offerTo(exporter);
+                    .define('l', record.planks())
+                    .define('s', Items.STICK)
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(record.planks()),
+                            NeoForgeRecipeProvider.has(record.planks()))
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.STICK),
+                            NeoForgeRecipeProvider.has(Items.STICK))
+                    .save(exporter);
 
             createButtonRecipe(exporter, record.planks().asItem(), record.button());
             createPressurePlateRecipe(exporter, record.planks().asItem(), record.pressurePlate());
@@ -274,14 +282,14 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         for (OtherBlockSets.RoofBlockSet record : OtherBlockSets.sets) {
 
             if (record.origin() != null) {
-                ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, record.block(), 7)
+                ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, record.block(), 7)
                         .pattern(" l ")
                         .pattern("lll")
                         .pattern("lll")
-                        .input('l', record.origin())
-                        .criterion(FabricRecipeProvider.hasItem(record.origin()),
-                                FabricRecipeProvider.conditionsFromItem(record.origin()))
-                        .offerTo(exporter);
+                        .define('l', record.origin())
+                        .unlockedBy(NeoForgeRecipeProvider.getHasName(record.origin()),
+                                NeoForgeRecipeProvider.has(record.origin()))
+                        .save(exporter);
             }
             createSlabsRecipe(exporter, record.block(), record.slab());
             createVerticalSlabsRecipe(exporter, record.slab(), record.verticalSlab());
@@ -293,14 +301,14 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         for (OtherBlockSets.MiscBlockSet record : OtherBlockSets.specialWoodSets) {
 
             if (record.origin() != null) {
-                ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, record.block(), 7)
+                ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, record.block(), 7)
                         .pattern(" l ")
                         .pattern("lll")
                         .pattern("lll")
-                        .input('l', record.origin())
-                        .criterion(FabricRecipeProvider.hasItem(record.origin()),
-                                FabricRecipeProvider.conditionsFromItem(record.origin()))
-                        .offerTo(exporter);
+                        .define('l', record.origin())
+                        .unlockedBy(NeoForgeRecipeProvider.getHasName(record.origin()),
+                                NeoForgeRecipeProvider.has(record.origin()))
+                        .save(exporter);
             }
             createSlabsRecipe(exporter, record.block(), record.slab());
             createVerticalSlabsRecipe(exporter, record.slab(), record.verticalSlab());
@@ -333,7 +341,7 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
                 createSmeltingRecipe(exporter, pillar.origin().asItem(), pillar.base().asItem());
             } else {
                 createPillarRecipe(exporter, pillar.origin(), pillar.base(), 3);
-                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, pillar.base().asItem(), pillar.origin());
+                stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, pillar.base().asItem(), pillar.origin());
             }
         }
 
@@ -409,7 +417,7 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
 
         for (SimpleTrapDoorModel.Trapdoor trapdoor : SimpleTrapDoorModel.vanillaStoneTrapdoors) {
             createFilledRecipe(exporter, trapdoor.block().asItem(), trapdoor.trapdoor(),3);
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, trapdoor.trapdoor(), trapdoor.block());
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, trapdoor.trapdoor(), trapdoor.block());
         }
 
         for (SimpleWoodStoolModel.VanillaStool stool : SimpleWoodStoolModel.vanillaStools) {
@@ -445,7 +453,7 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         }
 
         for (SimpleRocksModel.Rocks rock : SimpleRocksModel.vanillaRocks) {
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, rock.rocks(), rock.block(), 4);
+            stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, rock.rocks(), rock.block(), 4);
         }
 
         //endregion
@@ -475,19 +483,19 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         createLayerRecipe(exporter, ModBlocks.ASHEN_SAND.asItem(), ModBlocks.ASHEN_SAND_LAYER);
         createLayerRecipe(exporter, ModBlocks.ASHEN_GRAVEL.asItem(), ModBlocks.ASHEN_GRAVEL_LAYER);
 
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_LEAD, ModBlocks.LEAD_BLOCK, 4);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_LEAD_SLAB, ModBlocks.LEAD_BLOCK, 8);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_LEAD_VERTICAL_SLAB, ModBlocks.LEAD_BLOCK, 8);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_LEAD_STAIRS, ModBlocks.LEAD_BLOCK, 4);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_LEAD_SLAB, ModBlocks.CUT_LEAD, 2);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_LEAD_STAIRS, ModBlocks.CUT_LEAD);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_LEAD, ModBlocks.LEAD_BLOCK, 4);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_LEAD_SLAB, ModBlocks.LEAD_BLOCK, 8);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_LEAD_VERTICAL_SLAB, ModBlocks.LEAD_BLOCK, 8);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_LEAD_STAIRS, ModBlocks.LEAD_BLOCK, 4);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_LEAD_SLAB, ModBlocks.CUT_LEAD, 2);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_LEAD_STAIRS, ModBlocks.CUT_LEAD);
 
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_SILVER, ModBlocks.SILVER_BLOCK, 4);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_SILVER_SLAB, ModBlocks.SILVER_BLOCK, 8);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_SILVER_VERTICAL_SLAB, ModBlocks.SILVER_BLOCK, 8);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_SILVER_STAIRS, ModBlocks.SILVER_BLOCK, 4);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_SILVER_SLAB, ModBlocks.CUT_SILVER, 2);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_SILVER_STAIRS, ModBlocks.CUT_SILVER);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_SILVER, ModBlocks.SILVER_BLOCK, 4);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_SILVER_SLAB, ModBlocks.SILVER_BLOCK, 8);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_SILVER_VERTICAL_SLAB, ModBlocks.SILVER_BLOCK, 8);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_SILVER_STAIRS, ModBlocks.SILVER_BLOCK, 4);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_SILVER_SLAB, ModBlocks.CUT_SILVER, 2);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_SILVER_STAIRS, ModBlocks.CUT_SILVER);
 
         createStairsRecipe(exporter, ModBlocks.REED_BLOCK, ModBlocks.REED_STAIRS);
         createSlabsRecipe(exporter, ModBlocks.REED_BLOCK, ModBlocks.REED_SLAB);
@@ -532,135 +540,135 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
 
         createPaneRecipe(exporter, Blocks.WHITE_WOOL.asItem(), ModBlocks.NET, 16);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.COPPER_BARS, 16)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.COPPER_BARS, 16)
                 .pattern("IBI")
                 .pattern("IBI")
-                .input('I', Items.COPPER_INGOT)
-                .input('B', Items.CUT_COPPER)
-                .criterion(FabricRecipeProvider.hasItem(Items.CUT_COPPER),
-                        FabricRecipeProvider.conditionsFromItem(Items.CUT_COPPER))
-                .offerTo(exporter);
+                .define('I', Items.COPPER_INGOT)
+                .define('B', Items.CUT_COPPER)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.CUT_COPPER),
+                        NeoForgeRecipeProvider.has(Items.CUT_COPPER))
+                .save(exporter);
 
         createBrickRecipe(exporter, ModResourceItems.CITRINE_SHARD, ModBlocks.CITRINE_BLOCK, 1);
         createFilledRecipe(exporter, Items.GLOWSTONE, ModBlocks.GLOWSTONE_BLOCK, 1);
         createBrickRecipe(exporter, ModResourceItems.QUARTZ_SHARD, ModBlocks.QUARTZ_BLOCK, 1);
         createBrickRecipe(exporter, ModResourceItems.RED_AGATE_SHARD, ModBlocks.RED_AGATE_BLOCK, 1);
 
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.BRICKS, StoneBlockSets.OLD_BRICKS.base());
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.BRICKS, StoneBlockSets.OLD_BRICKS.base());
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.WHITE_DAUB_HOBBIT_WINDOW, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.WHITE_DAUB_HOBBIT_WINDOW, 4)
                 .pattern("WBW")
                 .pattern("BGB")
                 .pattern("WBW")
-                .input('W', StoneBlockSets.WHITE_DAUB.base())
-                .input('G', Items.GLASS)
-                .input('B', Items.BRICK)
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.WHITE_DAUB.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.WHITE_DAUB.base()))
-                .offerTo(exporter);
+                .define('W', StoneBlockSets.WHITE_DAUB.base())
+                .define('G', Items.GLASS)
+                .define('B', Items.BRICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.WHITE_DAUB.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.WHITE_DAUB.base()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.YELLOW_DAUB_HOBBIT_WINDOW, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.YELLOW_DAUB_HOBBIT_WINDOW, 4)
                 .pattern("WBW")
                 .pattern("BGB")
                 .pattern("WBW")
-                .input('W', StoneBlockSets.YELLOW_DAUB.base())
-                .input('G', Items.GLASS)
-                .input('B', Items.BRICK)
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.YELLOW_DAUB.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.YELLOW_DAUB.base()))
-                .offerTo(exporter);
+                .define('W', StoneBlockSets.YELLOW_DAUB.base())
+                .define('G', Items.GLASS)
+                .define('B', Items.BRICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.YELLOW_DAUB.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.YELLOW_DAUB.base()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.PLASTER_HOBBIT_WINDOW, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.PLASTER_HOBBIT_WINDOW, 4)
                 .pattern("WBW")
                 .pattern("BGB")
                 .pattern("WBW")
-                .input('W', StoneBlockSets.PLASTER.base())
-                .input('G', Items.GLASS)
-                .input('B', Items.BRICK)
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.PLASTER.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.PLASTER.base()))
-                .offerTo(exporter);
+                .define('W', StoneBlockSets.PLASTER.base())
+                .define('G', Items.GLASS)
+                .define('B', Items.BRICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.PLASTER.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.PLASTER.base()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.MEDGON_CARVED_WINDOW, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.MEDGON_CARVED_WINDOW, 2)
                 .pattern("EEE")
                 .pattern("EGE")
                 .pattern("EEE")
-                .input('E', StoneBlockSets.MEDGON.base())
-                .input('G', Items.GLASS)
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.MEDGON.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.MEDGON.base()))
-                .offerTo(exporter);
+                .define('E', StoneBlockSets.MEDGON.base())
+                .define('G', Items.GLASS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.MEDGON.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.MEDGON.base()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GONLUIN_CARVED_WINDOW, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GONLUIN_CARVED_WINDOW, 2)
                 .pattern("EEE")
                 .pattern("EGE")
                 .pattern("EEE")
-                .input('E', StoneBlockSets.GONLUIN.base())
-                .input('G', Items.GLASS)
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.GONLUIN.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.GONLUIN.base()))
-                .offerTo(exporter);
+                .define('E', StoneBlockSets.GONLUIN.base())
+                .define('G', Items.GLASS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.GONLUIN.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.GONLUIN.base()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.TUFF_CARVED_WINDOW, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.TUFF_CARVED_WINDOW, 2)
                 .pattern("EEE")
                 .pattern("EGE")
                 .pattern("EEE")
-                .input('E', Blocks.TUFF)
-                .input('G', Items.GLASS)
-                .criterion(FabricRecipeProvider.hasItem(Blocks.TUFF),
-                        FabricRecipeProvider.conditionsFromItem(Blocks.TUFF))
-                .offerTo(exporter);
+                .define('E', Blocks.TUFF)
+                .define('G', Items.GLASS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Blocks.TUFF),
+                        NeoForgeRecipeProvider.has(Blocks.TUFF))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BLACKSTONE_CARVED_WINDOW, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BLACKSTONE_CARVED_WINDOW, 2)
                 .pattern("EEE")
                 .pattern("EGE")
                 .pattern("EEE")
-                .input('E', Blocks.BLACKSTONE)
-                .input('G', Items.GLASS)
-                .criterion(FabricRecipeProvider.hasItem(Blocks.BLACKSTONE),
-                        FabricRecipeProvider.conditionsFromItem(Blocks.BLACKSTONE))
-                .offerTo(exporter);
+                .define('E', Blocks.BLACKSTONE)
+                .define('G', Items.GLASS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Blocks.BLACKSTONE),
+                        NeoForgeRecipeProvider.has(Blocks.BLACKSTONE))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.IZHERABAN_CARVED_WINDOW, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.IZHERABAN_CARVED_WINDOW, 2)
                 .pattern("EEE")
                 .pattern("EGE")
                 .pattern("EEE")
-                .input('E', StoneBlockSets.IZHERABAN.base())
-                .input('G', Items.GLASS)
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.IZHERABAN.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.IZHERABAN.base()))
-                .offerTo(exporter);
+                .define('E', StoneBlockSets.IZHERABAN.base())
+                .define('G', Items.GLASS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.IZHERABAN.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.IZHERABAN.base()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.LEAD_GLASS, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.LEAD_GLASS, 4)
                 .pattern("LGL")
                 .pattern("GLG")
                 .pattern("LGL")
-                .input('L', ModResourceItems.LEAD_NUGGET)
-                .input('G', Items.GLASS)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.ROD),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.ROD))
-                .offerTo(exporter);
+                .define('L', ModResourceItems.LEAD_NUGGET)
+                .define('G', Items.GLASS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.ROD),
+                        NeoForgeRecipeProvider.has(ModResourceItems.ROD))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.ROPE, 3)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.ROPE, 3)
                 .pattern("SS")
                 .pattern("SS")
                 .pattern("SS")
-                .input('S', Items.STRING)
-                .criterion(FabricRecipeProvider.hasItem(Items.STRING),
-                        FabricRecipeProvider.conditionsFromItem(Items.STRING))
-                .offerTo(exporter);
+                .define('S', Items.STRING)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.STRING),
+                        NeoForgeRecipeProvider.has(Items.STRING))
+                .save(exporter);
 
         createBrickRecipe(exporter, ModResourceItems.ASH, ModBlocks.ASH_BLOCK, 1);
         createBrickRecipe(exporter, ModBlocks.ASH_BLOCK.asItem(), Blocks.TUFF, 1);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, StoneBlockSets.ASHEN_STONE.base(), 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, StoneBlockSets.ASHEN_STONE.base(), 4)
                 .pattern("AS")
                 .pattern("SA")
-                .input('A', ModBlocks.ASH_BLOCK)
-                .input('S', Blocks.STONE)
-                .criterion(FabricRecipeProvider.hasItem(ModBlocks.ASH_BLOCK),
-                        FabricRecipeProvider.conditionsFromItem(ModBlocks.ASH_BLOCK))
-                .offerTo(exporter);
+                .define('A', ModBlocks.ASH_BLOCK)
+                .define('S', Blocks.STONE)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModBlocks.ASH_BLOCK),
+                        NeoForgeRecipeProvider.has(ModBlocks.ASH_BLOCK))
+                .save(exporter);
 
         createGildedBlockRecipe(exporter, ModBlocks.CHISELED_GREEN_TUFF, ModBlocks.GILDED_CHISELED_GREEN_TUFF);
         createGildedBlockRecipe(exporter, ModBlocks.CHISELED_GREEN_TUFF_BRICKS, ModBlocks.GILDED_CHISELED_GREEN_TUFF_BRICKS);
@@ -668,24 +676,24 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         createGildedBlockRecipe(exporter, ModBlocks.CHISELED_GREEN_TUFF_TILES, ModBlocks.GILDED_CHISELED_GREEN_TUFF_TILES);
         createGildedBlockRecipe(exporter, ModBlocks.CHISELED_SMOOTH_GREEN_TUFF, ModBlocks.GILDED_CHISELED_SMOOTH_GREEN_TUFF);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, StoneBlockSets.GILDED_GREEN_TUFF.base(), 5)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, StoneBlockSets.GILDED_GREEN_TUFF.base(), 5)
                 .pattern("TNT")
                 .pattern("NTN")
                 .pattern("TNT")
-                .input('T', StoneBlockSets.GREEN_TUFF.base())
-                .input('N', Items.GOLD_NUGGET)
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.GREEN_TUFF.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.GREEN_TUFF.base()))
-                .offerTo(exporter);
+                .define('T', StoneBlockSets.GREEN_TUFF.base())
+                .define('N', Items.GOLD_NUGGET)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.GREEN_TUFF.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.GREEN_TUFF.base()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WATTLE_TRAPDOOR, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.WATTLE_TRAPDOOR, 2)
                 .pattern("PLP")
                 .pattern("PLP")
-                .input('P', TagKey.of(RegistryKeys.ITEM, Identifier.of("planks")))
-                .input('L', ModResourceItems.LEAD_NUGGET)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.LEAD_NUGGET),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.LEAD_NUGGET))
-                .offerTo(exporter);
+                .define('P', TagKey.create(Registries.ITEM, ResourceLocation.parse("planks")))
+                .define('L', ModResourceItems.LEAD_NUGGET)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.LEAD_NUGGET),
+                        NeoForgeRecipeProvider.has(ModResourceItems.LEAD_NUGGET))
+                .save(exporter);
 
         createDyeableItemRecipe(exporter, ModBlocks.WATTLE_TRAPDOOR, Items.RED_DYE, ModBlocks.RED_WATTLE_TRAPDOOR);
         createDyeableItemRecipe(exporter, ModBlocks.WATTLE_TRAPDOOR, Items.GREEN_DYE, ModBlocks.GREEN_WATTLE_TRAPDOOR);
@@ -753,37 +761,37 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         createCenterSurroundRecipe(exporter, OtherBlockSets.YELLOW_ROOF_TILES.block().asItem(), Items.GRAY_DYE, OtherBlockSets.OFF_YELLOW_ROOF_TILES.block().asItem(), 8);
         createCenterSurroundRecipe(exporter, OtherBlockSets.YELLOW_ROOF_TILES.block().asItem(), Items.BLACK_DYE, OtherBlockSets.DARK_YELLOW_ROOF_TILES.block().asItem(), 8);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, StoneBlockSets.TAN_CLAY_BRICKS.base(), 5)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, StoneBlockSets.TAN_CLAY_BRICKS.base(), 5)
                 .pattern(" B ")
                 .pattern("BPB")
                 .pattern(" B ")
-                .input('P', StoneBlockSets.PLASTER.base())
-                .input('B', Items.BRICKS)
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.PLASTER.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.PLASTER.base()))
-                .offerTo(exporter);
+                .define('P', StoneBlockSets.PLASTER.base())
+                .define('B', Items.BRICKS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.PLASTER.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.PLASTER.base()))
+                .save(exporter);
         //endregion
 
         //region SMITHING
-        createDaggerRecipeTag(exporter, Items.STICK, TagKey.of(RegistryKeys.ITEM, Identifier.of("planks")), ModWeaponItems.WOODEN_DAGGER);
-        createDaggerRecipeTag(exporter, Items.STICK, TagKey.of(RegistryKeys.ITEM, Identifier.of("stone_tool_materials")), ModWeaponItems.STONE_DAGGER);
+        createDaggerRecipeTag(exporter, Items.STICK, TagKey.create(Registries.ITEM, ResourceLocation.parse("planks")), ModWeaponItems.WOODEN_DAGGER);
+        createDaggerRecipeTag(exporter, Items.STICK, TagKey.create(Registries.ITEM, ResourceLocation.parse("stone_tool_materials")), ModWeaponItems.STONE_DAGGER);
         createDaggerRecipe(exporter, Items.STICK, Items.DIAMOND, ModWeaponItems.DIAMOND_DAGGER);
 
-        createSpearRecipeTag(exporter, Items.STICK, TagKey.of(RegistryKeys.ITEM, Identifier.of("planks")), ModWeaponItems.WOODEN_SPEAR);
-        createSpearRecipeTag(exporter, Items.STICK, TagKey.of(RegistryKeys.ITEM, Identifier.of("stone_tool_materials")), ModWeaponItems.STONE_SPEAR);
+        createSpearRecipeTag(exporter, Items.STICK, TagKey.create(Registries.ITEM, ResourceLocation.parse("planks")), ModWeaponItems.WOODEN_SPEAR);
+        createSpearRecipeTag(exporter, Items.STICK, TagKey.create(Registries.ITEM, ResourceLocation.parse("stone_tool_materials")), ModWeaponItems.STONE_SPEAR);
         createSpearRecipe(exporter, Items.STICK, Items.DIAMOND, ModWeaponItems.DIAMOND_SPEAR);
 
         createToolSetRecipes(exporter, Items.STICK, ModResourceItems.BRONZE_INGOT, ModToolItems.BRONZE_PICKAXE, ModToolItems.BRONZE_AXE, ModToolItems.BRONZE_SHOVEL, ModToolItems.BRONZE_HOE);
 
         createToolSetRecipes(exporter, Items.STICK, ModResourceItems.CRUDE_INGOT, ModToolItems.CRUDE_PICKAXE, ModToolItems.CRUDE_AXE, ModToolItems.CRUDE_SHOVEL, ModToolItems.CRUDE_HOE);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModResourceItems.FABRIC, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModResourceItems.FABRIC, 2)
                 .pattern("sss")
                 .pattern("sss")
-                .input('s', Items.STRING)
-                .criterion(FabricRecipeProvider.hasItem(Items.STRING),
-                        FabricRecipeProvider.conditionsFromItem(Items.STRING))
-                .offerTo(exporter);
+                .define('s', Items.STRING)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.STRING),
+                        NeoForgeRecipeProvider.has(Items.STRING))
+                .save(exporter);
 
         createBucketRecipe(exporter, Items.IRON_INGOT, Items.BUCKET);
 
@@ -819,69 +827,69 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         //endregion
 
 
-        ComplexRecipeJsonBuilder.create(CustomArmorDyeRecipe::new).offerTo(exporter, "custom_armor_dye");
-        ComplexRecipeJsonBuilder.create(ArmorHoodRecipe::new).offerTo(exporter, "custom_armor_hood");
-        ComplexRecipeJsonBuilder.create(ArmorHoodRemovalRecipe::new).offerTo(exporter, "custom_armor_hood_removal");
-        ComplexRecipeJsonBuilder.create(ArmorCapeRecipe::new).offerTo(exporter, "custom_armor_cape");
-        ComplexRecipeJsonBuilder.create(ArmorCapeRemovalRecipe::new).offerTo(exporter, "custom_armor_cape_removal");
-        ComplexRecipeJsonBuilder.create(MountArmorAddonRemovalRecipe::new).offerTo(exporter, "custom_mount_armor_addon_removal");
-        ComplexRecipeJsonBuilder.create(MountArmorSideSkullAddonRecipe::new).offerTo(exporter, "custom_mount_armor_side_skull_addon");
-        ComplexRecipeJsonBuilder.create(MountArmorTopSkullAddonRecipe::new).offerTo(exporter, "custom_mount_armor_top_skull_addon");
+        SpecialRecipeBuilder.special(CustomArmorDyeRecipe::new).save(exporter, "custom_armor_dye");
+        SpecialRecipeBuilder.special(ArmorHoodRecipe::new).save(exporter, "custom_armor_hood");
+        SpecialRecipeBuilder.special(ArmorHoodRemovalRecipe::new).save(exporter, "custom_armor_hood_removal");
+        SpecialRecipeBuilder.special(ArmorCapeRecipe::new).save(exporter, "custom_armor_cape");
+        SpecialRecipeBuilder.special(ArmorCapeRemovalRecipe::new).save(exporter, "custom_armor_cape_removal");
+        SpecialRecipeBuilder.special(MountArmorAddonRemovalRecipe::new).save(exporter, "custom_mount_armor_addon_removal");
+        SpecialRecipeBuilder.special(MountArmorSideSkullAddonRecipe::new).save(exporter, "custom_mount_armor_side_skull_addon");
+        SpecialRecipeBuilder.special(MountArmorTopSkullAddonRecipe::new).save(exporter, "custom_mount_armor_top_skull_addon");
 
         //region Alloying
         AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, "bronze", INGOT_LIQUID_VALUE * 4)
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "copper")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "copper")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "copper")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "tin")))
-                .criterion(FabricRecipeProvider.hasItem(Items.COPPER_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(Items.COPPER_INGOT))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "bronze" + "_from_alloying"));
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "copper")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "copper")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "copper")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "tin")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.COPPER_INGOT),
+                        NeoForgeRecipeProvider.has(Items.COPPER_INGOT))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "bronze" + "_from_alloying"));
 
         AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, "crude", INGOT_LIQUID_VALUE * 3)
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "copper")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "copper")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "tin")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "copper")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "copper")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "tin")))
                 .input(ModResourceItems.ASH)
-                .criterion(FabricRecipeProvider.hasItem(Items.COPPER_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(Items.COPPER_INGOT))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "crude" + "_from_alloying"));
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.COPPER_INGOT),
+                        NeoForgeRecipeProvider.has(Items.COPPER_INGOT))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "crude" + "_from_alloying"));
 
         AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, "steel", INGOT_LIQUID_VALUE * 3)
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "iron")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "iron")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "iron")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "iron")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "iron")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "iron")))
                 .input(Items.COAL)
-                .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "steel" + "_from_alloying_tags"));
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.IRON_INGOT),
+                        NeoForgeRecipeProvider.has(Items.IRON_INGOT))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel" + "_from_alloying_tags"));
 
         AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, "khazad_steel", INGOT_LIQUID_VALUE * 3)
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "iron")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "iron")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "lead")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "iron")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "iron")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "lead")))
                 .input(Items.COAL)
-                .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "khazad_steel" + "_from_alloying_tags"));
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.IRON_INGOT),
+                        NeoForgeRecipeProvider.has(Items.IRON_INGOT))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "khazad_steel" + "_from_alloying_tags"));
 
         AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, "edhel_steel", INGOT_LIQUID_VALUE * 3)
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "iron")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "iron")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "iron")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "iron")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "iron")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "iron")))
                 .input(ModResourceItems.SILVER_NUGGET)
-                .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "edhel_steel" + "_from_alloying_tags"));
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.IRON_INGOT),
+                        NeoForgeRecipeProvider.has(Items.IRON_INGOT))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "edhel_steel" + "_from_alloying_tags"));
 
         AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, "burzum_steel", INGOT_LIQUID_VALUE * 3)
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "iron")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "iron")))
-                .input(TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "lead")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "iron")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "iron")))
+                .input(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "lead")))
                 .input(ModResourceItems.ASH)
-                .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "burzum_steel" + "_from_alloying_tags"));
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.IRON_INGOT),
+                        NeoForgeRecipeProvider.has(Items.IRON_INGOT))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "burzum_steel" + "_from_alloying_tags"));
 
         HotMetalsModel.nuggets.forEach(nugget -> {
             //createMeltRecipe(exporter, nugget, Registries.ITEM.getId(nugget).getPath().replace("_nugget", ""), INGOT_LIQUID_VALUE / 9);
@@ -893,23 +901,23 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
             createAnvilShapingRecipeItem(exporter, shape.item(), shape.output(), shape.amount());
         });
 
-        createMeltBulkRecipeTag(exporter, TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "copper")), "copper");
-        createMeltBulkRecipeTag(exporter, TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "tin")), "tin");
+        createMeltBulkRecipeTag(exporter, TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "copper")), "copper");
+        createMeltBulkRecipeTag(exporter, TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "tin")), "tin");
 
         createMeltBulkRecipe(exporter, ModResourceItems.BRONZE_INGOT, "bronze");
         createMeltBulkRecipe(exporter, ModResourceItems.CRUDE_INGOT, "crude");
 
-        createMeltBulkRecipeTag(exporter, TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "lead")), "lead");
-        createMeltBulkRecipeTag(exporter, TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "silver")), "silver");
-        createMeltBulkRecipeTag(exporter, TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "iron")), "iron");
-        createMeltBulkRecipeTag(exporter, TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "gold")), "gold");
+        createMeltBulkRecipeTag(exporter, TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "lead")), "lead");
+        createMeltBulkRecipeTag(exporter, TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "silver")), "silver");
+        createMeltBulkRecipeTag(exporter, TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "iron")), "iron");
+        createMeltBulkRecipeTag(exporter, TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "gold")), "gold");
 
         createMeltBulkRecipe(exporter, ModResourceItems.STEEL_INGOT, "steel");
         createMeltBulkRecipe(exporter, ModResourceItems.KHAZAD_STEEL_INGOT, "khazad_steel");
         createMeltBulkRecipe(exporter, ModResourceItems.EDHEL_STEEL_INGOT, "edhel_steel");
         createMeltBulkRecipe(exporter, ModResourceItems.BURZUM_STEEL_INGOT, "burzum_steel");
 
-        createMeltBulkRecipeTag(exporter, TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "mithril")), "mithril");
+        createMeltBulkRecipeTag(exporter, TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "mithril")), "mithril");
 
         createMeltBulkRecipe(exporter, Items.NETHERITE_INGOT, "netherite");
 
@@ -918,17 +926,17 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         createAnvilRecipe(exporter, ModBlocks.EDHEL_STEEL_BLOCK.asItem(), ModResourceItems.EDHEL_STEEL_INGOT, ModDecorativeItems.ELVEN_TREATED_ANVIL);
         createAnvilRecipe(exporter, ModBlocks.BURZUM_STEEL_BLOCK.asItem(), ModResourceItems.BURZUM_STEEL_INGOT, ModDecorativeItems.ORCISH_TREATED_ANVIL);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeItems.BELLOWS, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeItems.BELLOWS, 1)
                 .pattern(" PS")
                 .pattern("PFF")
                 .pattern("TPS")
-                .input('P', TagKey.of(RegistryKeys.ITEM, Identifier.of("planks")))
-                .input('S', Items.STICK)
-                .input('F', Items.LEATHER)
-                .input('T', ModResourceItems.TIN_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.TIN_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.TIN_INGOT))
-                .offerTo(exporter);
+                .define('P', TagKey.create(Registries.ITEM, ResourceLocation.parse("planks")))
+                .define('S', Items.STICK)
+                .define('F', Items.LEATHER)
+                .define('T', ModResourceItems.TIN_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.TIN_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.TIN_INGOT))
+                .save(exporter);
 
         createWattleRecipes(exporter, Items.BRICKS,
                 ModBlocks.WATTLE_AND_BRICK, ModBlocks.WATTLE_AND_BRICK_CROSS, ModBlocks.WATTLE_AND_BRICK_RIGHT,
@@ -967,31 +975,31 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         createCenterSurroundRecipe(exporter, ModBlocks.WATTLE_AND_WHITE_DAUB_PILLAR.asItem(), Items.RED_DYE, ModBlocks.RED_WATTLE_AND_WHITE_DAUB_PILLAR.asItem(), 8);
         createCenterSurroundRecipe(exporter, ModBlocks.WATTLE_AND_WHITE_DAUB_DIAMOND.asItem(), Items.RED_DYE, ModBlocks.RED_WATTLE_AND_WHITE_DAUB_DIAMOND.asItem(), 8);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TREATED_STEEL_BARS, 16)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TREATED_STEEL_BARS, 16)
                 .pattern("SSS")
                 .pattern("SSS")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.STEEL_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.STEEL_INGOT))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.STEEL_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.STEEL_INGOT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TREATED_STEEL_TRAPDOOR, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TREATED_STEEL_TRAPDOOR, 2)
                 .pattern("NSN")
                 .pattern("NSN")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .input('N', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_nuggets")))
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.STEEL_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.STEEL_INGOT))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .define('N', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_nuggets")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.STEEL_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.STEEL_INGOT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TREATED_STEEL_DOOR, 3)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TREATED_STEEL_DOOR, 3)
                 .pattern("SS")
                 .pattern("SS")
                 .pattern("SS")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.STEEL_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.STEEL_INGOT))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.STEEL_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.STEEL_INGOT))
+                .save(exporter);
 
         createPaneRecipe(exporter, ModResourceItems.SILVER_INGOT, ModBlocks.SILVER_BARS, 16);
         createPaneRecipe(exporter, Items.GOLD_INGOT, ModBlocks.GILDED_BARS, 16);
@@ -999,79 +1007,79 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         createCenterSurroundRecipe(exporter, StoneBlockSets.WHITE_DAUB.base().asItem(), Items.BLACK_DYE, StoneBlockSets.DARK_DAUB.base().asItem(), 8);
         createCenterSurroundRecipe(exporter, StoneBlockSets.WHITE_DAUB.base().asItem(), Items.YELLOW_DYE, StoneBlockSets.YELLOW_DAUB.base().asItem(), 8);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, OtherBlockSets.TREATED_WOOD.block(), 6)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, OtherBlockSets.TREATED_WOOD.block(), 6)
                 .pattern("PPP")
                 .pattern("PHP")
                 .pattern("PPP")
-                .input('P', TagKey.of(RegistryKeys.ITEM, Identifier.of("logs")))
-                .input('H', Items.HONEYCOMB)
-                .criterion(FabricRecipeProvider.hasItem(Items.HONEYCOMB),
-                        FabricRecipeProvider.conditionsFromItem(Items.HONEYCOMB))
-                .offerTo(exporter);
+                .define('P', TagKey.create(Registries.ITEM, ResourceLocation.parse("logs")))
+                .define('H', Items.HONEYCOMB)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.HONEYCOMB),
+                        NeoForgeRecipeProvider.has(Items.HONEYCOMB))
+                .save(exporter);
 
         createBrickRecipe(exporter, OtherBlockSets.TREATED_WOOD.block().asItem(), OtherBlockSets.TREATED_WOOD_BEAM.block(), 3);
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, OtherBlockSets.TREATED_WOOD_PLANKS.block(), 4)
-                .input(OtherBlockSets.TREATED_WOOD.block())
-                .criterion(FabricRecipeProvider.hasItem(OtherBlockSets.TREATED_WOOD.block()),
-                        FabricRecipeProvider.conditionsFromItem(OtherBlockSets.TREATED_WOOD.block()))
-                .offerTo(exporter);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, OtherBlockSets.TREATED_WOOD_PLANKS.block(), 4)
+                .requires(OtherBlockSets.TREATED_WOOD.block())
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(OtherBlockSets.TREATED_WOOD.block()),
+                        NeoForgeRecipeProvider.has(OtherBlockSets.TREATED_WOOD.block()))
+                .save(exporter);
 
         createBrickRecipe(exporter, OtherBlockSets.TREATED_WOOD_PLANKS.block().asItem(), OtherBlockSets.TREATED_WOOD_PANELS.block(), 4);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, OtherBlockSets.TREATED_WOOD_CARVED_BEAM.block(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, OtherBlockSets.TREATED_WOOD_CARVED_BEAM.block(), 1)
                 .pattern("S")
                 .pattern("S")
-                .input('S', OtherBlockSets.TREATED_WOOD_BEAM.slab())
-                .criterion(FabricRecipeProvider.hasItem(OtherBlockSets.TREATED_WOOD_BEAM.slab()),
-                        FabricRecipeProvider.conditionsFromItem(OtherBlockSets.TREATED_WOOD_BEAM.slab()))
-                .offerTo(exporter);
+                .define('S', OtherBlockSets.TREATED_WOOD_BEAM.slab())
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(OtherBlockSets.TREATED_WOOD_BEAM.slab()),
+                        NeoForgeRecipeProvider.has(OtherBlockSets.TREATED_WOOD_BEAM.slab()))
+                .save(exporter);
 
         createBrickRecipe(exporter, OtherBlockSets.TREATED_WOOD_PANELS.block().asItem(), OtherBlockSets.TREATED_WOOD_TILING.block(), 4);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.CANDLE_HEAP, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.CANDLE_HEAP, 1)
                 .pattern("CCC")
                 .pattern("CCC")
-                .input('C', TagKey.of(RegistryKeys.ITEM, Identifier.of("candles")))
-                .criterion(FabricRecipeProvider.hasItem(Items.CANDLE),
-                        FabricRecipeProvider.conditionsFromItem(Items.CANDLE))
-                .offerTo(exporter);
+                .define('C', TagKey.create(Registries.ITEM, ResourceLocation.parse("candles")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.CANDLE),
+                        NeoForgeRecipeProvider.has(Items.CANDLE))
+                .save(exporter);
 
         createStatueRecipe(exporter, StoneBlockSets.POLISHED_CALCITE.base(), Blocks.CALCITE, ModBlocks.CALCITE_WALL, ModDecorativeBlocks.CALCITE_STATUE);
         createStatueRecipe(exporter, StoneBlockSets.POLISHED_GALONN.base(), StoneBlockSets.GALONN.base(), StoneBlockSets.GALONN.wall(), ModDecorativeBlocks.GALONN_STATUE);
         createStatueRecipe(exporter, StoneBlockSets.POLISHED_GONLUIN.base(), StoneBlockSets.GONLUIN.base(), StoneBlockSets.GONLUIN.wall(), ModDecorativeBlocks.GONLUIN_STATUE);
         createStatueRecipe(exporter, Blocks.POLISHED_TUFF, Blocks.TUFF, Blocks.TUFF_WALL, ModDecorativeBlocks.TUFF_STATUE);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.MEDGON_SPIKE, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.MEDGON_SPIKE, 1)
                 .pattern("M  ")
                 .pattern("MM ")
                 .pattern("PMP")
-                .input('M', StoneBlockSets.MEDGON.base())
-                .input('P', StoneBlockSets.POLISHED_MEDGON.base())
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.MEDGON.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.MEDGON.base()))
-                .offerTo(exporter);
+                .define('M', StoneBlockSets.MEDGON.base())
+                .define('P', StoneBlockSets.POLISHED_MEDGON.base())
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.MEDGON.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.MEDGON.base()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.WATTLE_AND_BRICK_WINDOW, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.WATTLE_AND_BRICK_WINDOW, 4)
                 .pattern("BSB")
                 .pattern("SGS")
                 .pattern("BSB")
-                .input('B', Items.BRICKS)
-                .input('G', Items.GLASS)
-                .input('S', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(Items.BRICKS),
-                        FabricRecipeProvider.conditionsFromItem(Items.BRICKS))
-                .offerTo(exporter);
+                .define('B', Items.BRICKS)
+                .define('G', Items.GLASS)
+                .define('S', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.BRICKS),
+                        NeoForgeRecipeProvider.has(Items.BRICKS))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.WATTLE_FRAMED_WINDOW, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.WATTLE_FRAMED_WINDOW, 2)
                 .pattern("SSS")
                 .pattern("SGS")
                 .pattern("SSS")
-                .input('G', Items.GLASS)
-                .input('S', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(Items.STICK),
-                        FabricRecipeProvider.conditionsFromItem(Items.STICK))
-                .offerTo(exporter);
+                .define('G', Items.GLASS)
+                .define('S', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.STICK),
+                        NeoForgeRecipeProvider.has(Items.STICK))
+                .save(exporter);
 
         createCenterSurroundRecipe(exporter, ModDecorativeBlocks.WATTLE_FRAMED_WINDOW.asItem(), Items.GRAY_DYE, ModDecorativeBlocks.DARK_WATTLE_FRAMED_WINDOW.asItem(), 8);
         createCenterSurroundRecipe(exporter, ModDecorativeBlocks.WATTLE_FRAMED_WINDOW.asItem(), Items.BLACK_DYE, ModDecorativeBlocks.BLACK_WATTLE_FRAMED_WINDOW.asItem(), 8);
@@ -1079,49 +1087,49 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         createCenterSurroundRecipe(exporter, ModDecorativeBlocks.WATTLE_FRAMED_WINDOW.asItem(), Items.RED_DYE, ModDecorativeBlocks.RED_WATTLE_FRAMED_WINDOW.asItem(), 8);
         createCenterSurroundRecipe(exporter, ModDecorativeBlocks.WATTLE_FRAMED_WINDOW.asItem(), Items.WHITE_DYE, ModDecorativeBlocks.WHITE_WATTLE_FRAMED_WINDOW.asItem(), 8);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.MUD_BRICK_ROUND_WINDOW, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.MUD_BRICK_ROUND_WINDOW, 4)
                 .pattern("MBM")
                 .pattern("BGB")
                 .pattern("MBM")
-                .input('M', Items.MUD_BRICKS)
-                .input('G', Items.GLASS)
-                .input('B', Items.BRICK)
-                .criterion(FabricRecipeProvider.hasItem(Items.BRICKS),
-                        FabricRecipeProvider.conditionsFromItem(Items.BRICKS))
-                .offerTo(exporter);
+                .define('M', Items.MUD_BRICKS)
+                .define('G', Items.GLASS)
+                .define('B', Items.BRICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.BRICKS),
+                        NeoForgeRecipeProvider.has(Items.BRICKS))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.WHITE_DAUB_ROUND_WINDOW, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.WHITE_DAUB_ROUND_WINDOW, 4)
                 .pattern("WSW")
                 .pattern("SGS")
                 .pattern("WSW")
-                .input('W', StoneBlockSets.WHITE_DAUB.base())
-                .input('G', Items.GLASS)
-                .input('S', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.WHITE_DAUB.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.WHITE_DAUB.base()))
-                .offerTo(exporter);
+                .define('W', StoneBlockSets.WHITE_DAUB.base())
+                .define('G', Items.GLASS)
+                .define('S', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.WHITE_DAUB.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.WHITE_DAUB.base()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.YELLOW_DAUB_ROUND_WINDOW, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.YELLOW_DAUB_ROUND_WINDOW, 4)
                 .pattern("WSW")
                 .pattern("SGS")
                 .pattern("WSW")
-                .input('W', StoneBlockSets.YELLOW_DAUB.base())
-                .input('G', Items.GLASS)
-                .input('S', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.YELLOW_DAUB.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.YELLOW_DAUB.base()))
-                .offerTo(exporter);
+                .define('W', StoneBlockSets.YELLOW_DAUB.base())
+                .define('G', Items.GLASS)
+                .define('S', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.YELLOW_DAUB.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.YELLOW_DAUB.base()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.PLASTER_ROUND_WINDOW, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.PLASTER_ROUND_WINDOW, 4)
                 .pattern("WSW")
                 .pattern("SGS")
                 .pattern("WSW")
-                .input('W', StoneBlockSets.PLASTER.base())
-                .input('G', Items.GLASS)
-                .input('S', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.PLASTER.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.PLASTER.base()))
-                .offerTo(exporter);
+                .define('W', StoneBlockSets.PLASTER.base())
+                .define('G', Items.GLASS)
+                .define('S', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.PLASTER.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.PLASTER.base()))
+                .save(exporter);
 
         createCushionRecipe(exporter, Blocks.BLUE_WOOL, ModDecorativeBlocks.BLUE_CUSHION);
         createDyeableItemRecipe(exporter, ModDecorativeBlocks.BLUE_CUSHION, Items.GRAY_DYE, ModDecorativeBlocks.DARK_BLUE_CUSHION);
@@ -1132,90 +1140,90 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         createCushionRecipe(exporter, Blocks.RED_WOOL, ModDecorativeBlocks.RED_CUSHION);
         createDyeableItemRecipe(exporter, ModDecorativeBlocks.RED_CUSHION, Items.GRAY_DYE, ModDecorativeBlocks.DARK_RED_CUSHION);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.ROPE_LADDER, 3)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.ROPE_LADDER, 3)
                 .pattern("R R")
                 .pattern("RSR")
                 .pattern("R R")
-                .input('R', ModDecorativeBlocks.ROPE)
-                .input('S', Items.STRING)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.ROPE),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.ROPE))
-                .offerTo(exporter);
+                .define('R', ModDecorativeBlocks.ROPE)
+                .define('S', Items.STRING)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.ROPE),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.ROPE))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.FANCY_BED, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.FANCY_BED, 1)
                 .pattern("FFW")
                 .pattern("FFW")
                 .pattern("PPP")
-                .input('W', TagKey.of(RegistryKeys.ITEM, Identifier.of("wool")))
-                .input('F', ModResourceItems.FABRIC)
-                .input('P', TagKey.of(RegistryKeys.ITEM, Identifier.of("planks")))
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.FABRIC),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.FABRIC))
-                .offerTo(exporter);
+                .define('W', TagKey.create(Registries.ITEM, ResourceLocation.parse("wool")))
+                .define('F', ModResourceItems.FABRIC)
+                .define('P', TagKey.create(Registries.ITEM, ResourceLocation.parse("planks")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.FABRIC),
+                        NeoForgeRecipeProvider.has(ModResourceItems.FABRIC))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.STRAW_BED, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.STRAW_BED, 1)
                 .pattern("SSS")
                 .pattern("PPP")
-                .input('S', ModResourceItems.STRAW)
-                .input('P', TagKey.of(RegistryKeys.ITEM, Identifier.of("planks")))
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.STRAW),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.STRAW))
-                .offerTo(exporter);
+                .define('S', ModResourceItems.STRAW)
+                .define('P', TagKey.create(Registries.ITEM, ResourceLocation.parse("planks")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.STRAW),
+                        NeoForgeRecipeProvider.has(ModResourceItems.STRAW))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.FUR_BED, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.FUR_BED, 1)
                 .pattern("FFF")
                 .pattern("PPP")
-                .input('F', ModResourceItems.FUR)
-                .input('P', TagKey.of(RegistryKeys.ITEM, Identifier.of("planks")))
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.FUR),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.FUR))
-                .offerTo(exporter);
+                .define('F', ModResourceItems.FUR)
+                .define('P', TagKey.create(Registries.ITEM, ResourceLocation.parse("planks")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.FUR),
+                        NeoForgeRecipeProvider.has(ModResourceItems.FUR))
+                .save(exporter);
 
         createCenterSurroundRecipe(exporter, ModResourceItems.SILVER_NUGGET, Items.TORCH, ModDecorativeItems.SILVER_LANTERN, 1);
         createCenterSurroundRecipe(exporter, ModResourceItems.KHAZAD_STEEL_NUGGET, Items.TORCH, ModDecorativeItems.DWARVEN_LANTERN, 1);
         createCenterSurroundRecipe(exporter, ModResourceItems.EDHEL_STEEL_NUGGET, Items.TORCH, ModDecorativeItems.ELVEN_LANTERN, 1);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeItems.CRYSTAL_LAMP, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeItems.CRYSTAL_LAMP, 1)
                 .pattern("NGN")
                 .pattern("GLG")
                 .pattern("NIN")
-                .input('N', ModResourceItems.BRONZE_NUGGET)
-                .input('I', ModResourceItems.BRONZE_INGOT)
-                .input('L', TagKey.of(RegistryKeys.ITEM, Identifier.of("candles")))
-                .input('G', ModResourceItems.QUARTZ_SHARD)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.QUARTZ_SHARD),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.QUARTZ_SHARD))
-                .offerTo(exporter);
+                .define('N', ModResourceItems.BRONZE_NUGGET)
+                .define('I', ModResourceItems.BRONZE_INGOT)
+                .define('L', TagKey.create(Registries.ITEM, ResourceLocation.parse("candles")))
+                .define('G', ModResourceItems.QUARTZ_SHARD)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.QUARTZ_SHARD),
+                        NeoForgeRecipeProvider.has(ModResourceItems.QUARTZ_SHARD))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeItems.SCONCE, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeItems.SCONCE, 4)
                 .pattern("NTN")
                 .pattern(" I ")
-                .input('N', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_nuggets")))
-                .input('I', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .input('T', Items.TORCH)
-                .criterion(FabricRecipeProvider.hasItem(Items.TORCH),
-                        FabricRecipeProvider.conditionsFromItem(Items.TORCH))
-                .offerTo(exporter);
+                .define('N', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_nuggets")))
+                .define('I', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .define('T', Items.TORCH)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.TORCH),
+                        NeoForgeRecipeProvider.has(Items.TORCH))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeItems.GILDED_SCONCE, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeItems.GILDED_SCONCE, 4)
                 .pattern("NTN")
                 .pattern(" I ")
-                .input('N', Items.GOLD_NUGGET)
-                .input('I', Items.GOLD_INGOT)
-                .input('T', Items.TORCH)
-                .criterion(FabricRecipeProvider.hasItem(Items.TORCH),
-                        FabricRecipeProvider.conditionsFromItem(Items.TORCH))
-                .offerTo(exporter);
+                .define('N', Items.GOLD_NUGGET)
+                .define('I', Items.GOLD_INGOT)
+                .define('T', Items.TORCH)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.TORCH),
+                        NeoForgeRecipeProvider.has(Items.TORCH))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeItems.ORCISH_SCONCE, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeItems.ORCISH_SCONCE, 2)
                 .pattern("NTN")
                 .pattern(" S ")
-                .input('N', ModResourceItems.CRUDE_NUGGET)
-                .input('S', Items.STICK)
-                .input('T', Items.TORCH)
-                .criterion(FabricRecipeProvider.hasItem(Items.TORCH),
-                        FabricRecipeProvider.conditionsFromItem(Items.TORCH))
-                .offerTo(exporter);
+                .define('N', ModResourceItems.CRUDE_NUGGET)
+                .define('S', Items.STICK)
+                .define('T', Items.TORCH)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.TORCH),
+                        NeoForgeRecipeProvider.has(Items.TORCH))
+                .save(exporter);
 
         createWoodStoolRecipe(exporter, OtherBlockSets.TREATED_WOOD_PLANKS.block().asItem(), ModDecorativeBlocks.TREATED_WOOD_STOOL);
         createWoodBenchRecipe(exporter, OtherBlockSets.TREATED_WOOD_PLANKS.block().asItem(), ModDecorativeBlocks.TREATED_WOOD_BENCH);
@@ -1223,491 +1231,491 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         createWoodChairRecipe(exporter, OtherBlockSets.TREATED_WOOD_PLANKS.block().asItem(), ModDecorativeBlocks.TREATED_WOOD_CHAIR);
         createWoodLadderRecipe(exporter, OtherBlockSets.TREATED_WOOD_PLANKS.block().asItem(), ModDecorativeBlocks.TREATED_WOOD_LADDER);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.LARCH_HOBBIT_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.LARCH_HOBBIT_DOOR, 1)
                 .pattern("LLL")
                 .pattern("LSL")
                 .pattern("LLL")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .input('L', WoodBlockSets.LARCH.planks())
-                .criterion(FabricRecipeProvider.hasItem(WoodBlockSets.LARCH.planks()),
-                        FabricRecipeProvider.conditionsFromItem(WoodBlockSets.LARCH.planks()))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .define('L', WoodBlockSets.LARCH.planks())
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(WoodBlockSets.LARCH.planks()),
+                        NeoForgeRecipeProvider.has(WoodBlockSets.LARCH.planks()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SPRUCE_HOBBIT_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SPRUCE_HOBBIT_DOOR, 1)
                 .pattern("LSL")
                 .pattern("SLL")
                 .pattern("LSL")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .input('L', Items.SPRUCE_PLANKS)
-                .criterion(FabricRecipeProvider.hasItem(Items.SPRUCE_PLANKS),
-                        FabricRecipeProvider.conditionsFromItem(Items.SPRUCE_PLANKS))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .define('L', Items.SPRUCE_PLANKS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.SPRUCE_PLANKS),
+                        NeoForgeRecipeProvider.has(Items.SPRUCE_PLANKS))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BLUE_HOBBIT_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BLUE_HOBBIT_DOOR, 1)
                 .pattern(" BG")
                 .pattern("BDG")
                 .pattern(" BG")
-                .input('D', ModDecorativeBlocks.LARCH_HOBBIT_DOOR)
-                .input('B', Items.BLUE_DYE)
-                .input('G', Items.GOLD_NUGGET)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.LARCH_HOBBIT_DOOR),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.LARCH_HOBBIT_DOOR))
-                .offerTo(exporter);
+                .define('D', ModDecorativeBlocks.LARCH_HOBBIT_DOOR)
+                .define('B', Items.BLUE_DYE)
+                .define('G', Items.GOLD_NUGGET)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.LARCH_HOBBIT_DOOR),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.LARCH_HOBBIT_DOOR))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GREEN_HOBBIT_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GREEN_HOBBIT_DOOR, 1)
                 .pattern(" BG")
                 .pattern("BDG")
                 .pattern(" BG")
-                .input('D', ModDecorativeBlocks.LARCH_HOBBIT_DOOR)
-                .input('B', Items.GREEN_DYE)
-                .input('G', Items.GOLD_NUGGET)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.LARCH_HOBBIT_DOOR),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.LARCH_HOBBIT_DOOR))
-                .offerTo(exporter);
+                .define('D', ModDecorativeBlocks.LARCH_HOBBIT_DOOR)
+                .define('B', Items.GREEN_DYE)
+                .define('G', Items.GOLD_NUGGET)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.LARCH_HOBBIT_DOOR),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.LARCH_HOBBIT_DOOR))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.LIGHT_BLUE_HOBBIT_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.LIGHT_BLUE_HOBBIT_DOOR, 1)
                 .pattern(" B ")
                 .pattern("BDB")
                 .pattern(" B ")
-                .input('D', ModDecorativeBlocks.LARCH_HOBBIT_DOOR)
-                .input('B', Items.LIGHT_BLUE_DYE)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.LARCH_HOBBIT_DOOR),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.LARCH_HOBBIT_DOOR))
-                .offerTo(exporter);
+                .define('D', ModDecorativeBlocks.LARCH_HOBBIT_DOOR)
+                .define('B', Items.LIGHT_BLUE_DYE)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.LARCH_HOBBIT_DOOR),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.LARCH_HOBBIT_DOOR))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.RED_HOBBIT_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.RED_HOBBIT_DOOR, 1)
                 .pattern(" BG")
                 .pattern("BDG")
                 .pattern(" BG")
-                .input('D', ModDecorativeBlocks.LARCH_HOBBIT_DOOR)
-                .input('B', Items.RED_DYE)
-                .input('G', Items.GOLD_NUGGET)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.LARCH_HOBBIT_DOOR),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.LARCH_HOBBIT_DOOR))
-                .offerTo(exporter);
+                .define('D', ModDecorativeBlocks.LARCH_HOBBIT_DOOR)
+                .define('B', Items.RED_DYE)
+                .define('G', Items.GOLD_NUGGET)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.LARCH_HOBBIT_DOOR),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.LARCH_HOBBIT_DOOR))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.YELLOW_HOBBIT_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.YELLOW_HOBBIT_DOOR, 1)
                 .pattern(" BG")
                 .pattern("BDG")
                 .pattern(" BG")
-                .input('D', ModDecorativeBlocks.LARCH_HOBBIT_DOOR)
-                .input('B', Items.YELLOW_DYE)
-                .input('G', Items.GOLD_NUGGET)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.LARCH_HOBBIT_DOOR),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.LARCH_HOBBIT_DOOR))
-                .offerTo(exporter);
+                .define('D', ModDecorativeBlocks.LARCH_HOBBIT_DOOR)
+                .define('B', Items.YELLOW_DYE)
+                .define('G', Items.GOLD_NUGGET)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.LARCH_HOBBIT_DOOR),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.LARCH_HOBBIT_DOOR))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.TALL_BLACK_PINE_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.TALL_BLACK_PINE_DOOR, 1)
                 .pattern("SP")
                 .pattern("PP")
                 .pattern("SP")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_nuggets")))
-                .input('P', WoodBlockSets.BLACK_PINE.planks())
-                .criterion(FabricRecipeProvider.hasItem(WoodBlockSets.BLACK_PINE.planks()),
-                        FabricRecipeProvider.conditionsFromItem(WoodBlockSets.BLACK_PINE.planks()))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_nuggets")))
+                .define('P', WoodBlockSets.BLACK_PINE.planks())
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(WoodBlockSets.BLACK_PINE.planks()),
+                        NeoForgeRecipeProvider.has(WoodBlockSets.BLACK_PINE.planks()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.OAK_STABLE_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.OAK_STABLE_DOOR, 1)
                 .pattern("SPP")
                 .pattern("PPP")
                 .pattern("SPP")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_nuggets")))
-                .input('P', Items.OAK_PLANKS)
-                .criterion(FabricRecipeProvider.hasItem(Items.OAK_PLANKS),
-                        FabricRecipeProvider.conditionsFromItem(Items.OAK_PLANKS))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_nuggets")))
+                .define('P', Items.OAK_PLANKS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.OAK_PLANKS),
+                        NeoForgeRecipeProvider.has(Items.OAK_PLANKS))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.REINFORCED_BLACK_PINE_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.REINFORCED_BLACK_PINE_DOOR, 1)
                 .pattern("SPP")
                 .pattern("SPS")
                 .pattern("SPP")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .input('P', WoodBlockSets.BLACK_PINE.planks())
-                .criterion(FabricRecipeProvider.hasItem(WoodBlockSets.BLACK_PINE.planks()),
-                        FabricRecipeProvider.conditionsFromItem(WoodBlockSets.BLACK_PINE.planks()))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .define('P', WoodBlockSets.BLACK_PINE.planks())
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(WoodBlockSets.BLACK_PINE.planks()),
+                        NeoForgeRecipeProvider.has(WoodBlockSets.BLACK_PINE.planks()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.REINFORCED_SPRUCE_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.REINFORCED_SPRUCE_DOOR, 1)
                 .pattern("SPP")
                 .pattern("SPS")
                 .pattern("SPP")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .input('P', Items.SPRUCE_PLANKS)
-                .criterion(FabricRecipeProvider.hasItem(Items.SPRUCE_PLANKS),
-                        FabricRecipeProvider.conditionsFromItem(Items.SPRUCE_PLANKS))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .define('P', Items.SPRUCE_PLANKS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.SPRUCE_PLANKS),
+                        NeoForgeRecipeProvider.has(Items.SPRUCE_PLANKS))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SIMPLE_LARCH_GATE, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SIMPLE_LARCH_GATE, 1)
                 .pattern("SPP")
                 .pattern("PPP")
                 .pattern("SPP")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_nuggets")))
-                .input('P', WoodBlockSets.LARCH.planks())
-                .criterion(FabricRecipeProvider.hasItem(WoodBlockSets.LARCH.planks()),
-                        FabricRecipeProvider.conditionsFromItem(WoodBlockSets.LARCH.planks()))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_nuggets")))
+                .define('P', WoodBlockSets.LARCH.planks())
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(WoodBlockSets.LARCH.planks()),
+                        NeoForgeRecipeProvider.has(WoodBlockSets.LARCH.planks()))
+                .save(exporter);
 
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.RICKETY_SIMPLE_LARCH_DOOR, ModDecorativeBlocks.SIMPLE_LARCH_GATE);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.RICKETY_SIMPLE_LARCH_DOOR, ModDecorativeBlocks.SIMPLE_LARCH_GATE);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SPRUCE_STABLE_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SPRUCE_STABLE_DOOR, 1)
                 .pattern("SPP")
                 .pattern("PPP")
                 .pattern("SPP")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_nuggets")))
-                .input('P', Items.SPRUCE_PLANKS)
-                .criterion(FabricRecipeProvider.hasItem(Items.SPRUCE_PLANKS),
-                        FabricRecipeProvider.conditionsFromItem(Items.SPRUCE_PLANKS))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_nuggets")))
+                .define('P', Items.SPRUCE_PLANKS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.SPRUCE_PLANKS),
+                        NeoForgeRecipeProvider.has(Items.SPRUCE_PLANKS))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.LARGE_STURDY_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.LARGE_STURDY_DOOR, 1)
                 .pattern("SPP")
                 .pattern("PPP")
                 .pattern("SPP")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .input('P', TagKey.of(RegistryKeys.ITEM, Identifier.of("planks")))
-                .criterion(FabricRecipeProvider.hasItem(Items.OAK_PLANKS),
-                        FabricRecipeProvider.conditionsFromItem(Items.OAK_PLANKS))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .define('P', TagKey.create(Registries.ITEM, ResourceLocation.parse("planks")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.OAK_PLANKS),
+                        NeoForgeRecipeProvider.has(Items.OAK_PLANKS))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GREAT_GONDORIAN_GATE, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GREAT_GONDORIAN_GATE, 1)
                 .pattern("LCL")
                 .pattern("CCS")
                 .pattern("LCL")
-                .input('L', WoodBlockSets.BLACK_LEBETHRON.planks())
-                .input('C', Items.OXIDIZED_COPPER)
-                .input('S', ModResourceItems.STEEL_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(Items.OXIDIZED_COPPER),
-                        FabricRecipeProvider.conditionsFromItem(Items.OXIDIZED_COPPER))
-                .offerTo(exporter);
+                .define('L', WoodBlockSets.BLACK_LEBETHRON.planks())
+                .define('C', Items.OXIDIZED_COPPER)
+                .define('S', ModResourceItems.STEEL_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.OXIDIZED_COPPER),
+                        NeoForgeRecipeProvider.has(Items.OXIDIZED_COPPER))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GREAT_DWARVEN_GATE, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GREAT_DWARVEN_GATE, 1)
                 .pattern("BTB")
                 .pattern("BTS")
                 .pattern("BTB")
-                .input('B', ModResourceItems.BRONZE_INGOT)
-                .input('T', OtherBlockSets.TREATED_WOOD.block())
-                .input('S', ModResourceItems.KHAZAD_STEEL_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.BRONZE_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.BRONZE_INGOT))
-                .offerTo(exporter);
+                .define('B', ModResourceItems.BRONZE_INGOT)
+                .define('T', OtherBlockSets.TREATED_WOOD.block())
+                .define('S', ModResourceItems.KHAZAD_STEEL_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.BRONZE_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.BRONZE_INGOT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.VARNISHED_DWARVEN_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.VARNISHED_DWARVEN_DOOR, 1)
                 .pattern("TNT")
                 .pattern("TTS")
                 .pattern("TNT")
-                .input('N', ModResourceItems.STEEL_NUGGET)
-                .input('T', OtherBlockSets.TREATED_WOOD.block())
-                .input('S', ModResourceItems.KHAZAD_STEEL_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.BRONZE_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.BRONZE_INGOT))
-                .offerTo(exporter);
+                .define('N', ModResourceItems.STEEL_NUGGET)
+                .define('T', OtherBlockSets.TREATED_WOOD.block())
+                .define('S', ModResourceItems.KHAZAD_STEEL_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.BRONZE_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.BRONZE_INGOT))
+                .save(exporter);
 
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.RUINED_DWARVEN_DOOR, ModDecorativeBlocks.VARNISHED_DWARVEN_DOOR);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.RUINED_DWARVEN_DOOR, ModDecorativeBlocks.VARNISHED_DWARVEN_DOOR);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.HIDDEN_DWARVEN_DOOR, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.HIDDEN_DWARVEN_DOOR, 1)
                 .pattern("SSG")
                 .pattern("GDL")
                 .pattern("DSS")
-                .input('L', Items.LEVER)
-                .input('G', StoneBlockSets.SMOOTH_DOLOMITE.base())
-                .input('D', StoneBlockSets.DOLOMITE.base())
-                .input('S', Items.STONE)
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.SMOOTH_DOLOMITE.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.SMOOTH_DOLOMITE.base()))
-                .offerTo(exporter);
+                .define('L', Items.LEVER)
+                .define('G', StoneBlockSets.SMOOTH_DOLOMITE.base())
+                .define('D', StoneBlockSets.DOLOMITE.base())
+                .define('S', Items.STONE)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.SMOOTH_DOLOMITE.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.SMOOTH_DOLOMITE.base()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GREAT_ELVEN_GATE, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GREAT_ELVEN_GATE, 1)
                 .pattern("BTB")
                 .pattern("BTS")
                 .pattern("BTB")
-                .input('B', Items.CYAN_DYE)
-                .input('T', OtherBlockSets.TREATED_WOOD.block())
-                .input('S', ModResourceItems.EDHEL_STEEL_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(OtherBlockSets.TREATED_WOOD.block()),
-                        FabricRecipeProvider.conditionsFromItem(OtherBlockSets.TREATED_WOOD.block()))
-                .offerTo(exporter);
+                .define('B', Items.CYAN_DYE)
+                .define('T', OtherBlockSets.TREATED_WOOD.block())
+                .define('S', ModResourceItems.EDHEL_STEEL_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(OtherBlockSets.TREATED_WOOD.block()),
+                        NeoForgeRecipeProvider.has(OtherBlockSets.TREATED_WOOD.block()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GREAT_ORCISH_GATE, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GREAT_ORCISH_GATE, 1)
                 .pattern("SSS")
                 .pattern("SNS")
                 .pattern("NNN")
-                .input('N', ModBlocks.BURZUM_STEEL_BLOCK)
-                .input('S', ModResourceItems.BURZUM_STEEL_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.BURZUM_STEEL_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.BURZUM_STEEL_INGOT))
-                .offerTo(exporter);
+                .define('N', ModBlocks.BURZUM_STEEL_BLOCK)
+                .define('S', ModResourceItems.BURZUM_STEEL_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.BURZUM_STEEL_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.BURZUM_STEEL_INGOT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TURF, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TURF, 4)
                 .pattern("MM")
                 .pattern("MD")
-                .input('M', Items.MOSS_BLOCK)
-                .input('D', Items.DIRT)
-                .criterion(FabricRecipeProvider.hasItem(Items.MOSS_BLOCK),
-                        FabricRecipeProvider.conditionsFromItem(Items.MOSS_BLOCK))
-                .offerTo(exporter);
+                .define('M', Items.MOSS_BLOCK)
+                .define('D', Items.DIRT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.MOSS_BLOCK),
+                        NeoForgeRecipeProvider.has(Items.MOSS_BLOCK))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.GRASSY_DIRT, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.GRASSY_DIRT, 4)
                 .pattern("DM")
                 .pattern("MD")
-                .input('M', Items.MOSS_BLOCK)
-                .input('D', Items.DIRT)
-                .criterion(FabricRecipeProvider.hasItem(Items.MOSS_BLOCK),
-                        FabricRecipeProvider.conditionsFromItem(Items.MOSS_BLOCK))
-                .offerTo(exporter);
+                .define('M', Items.MOSS_BLOCK)
+                .define('D', Items.DIRT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.MOSS_BLOCK),
+                        NeoForgeRecipeProvider.has(Items.MOSS_BLOCK))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.PEBBLED_GRASS, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.PEBBLED_GRASS, 4)
                 .pattern("DM")
                 .pattern("MD")
-                .input('M', Items.MOSS_BLOCK)
-                .input('D', TagKey.of(RegistryKeys.ITEM, Identifier.of("stone_crafting_materials")))
-                .criterion(FabricRecipeProvider.hasItem(Items.MOSS_BLOCK),
-                        FabricRecipeProvider.conditionsFromItem(Items.MOSS_BLOCK))
-                .offerTo(exporter);
+                .define('M', Items.MOSS_BLOCK)
+                .define('D', TagKey.create(Registries.ITEM, ResourceLocation.parse("stone_crafting_materials")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.MOSS_BLOCK),
+                        NeoForgeRecipeProvider.has(Items.MOSS_BLOCK))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.SNOWY_DIRT, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.SNOWY_DIRT, 4)
                 .pattern("DS")
                 .pattern("SD")
-                .input('D', Items.DIRT)
-                .input('S', Items.SNOW_BLOCK)
-                .criterion(FabricRecipeProvider.hasItem(Items.DIRT),
-                        FabricRecipeProvider.conditionsFromItem(Items.DIRT))
-                .offerTo(exporter);
+                .define('D', Items.DIRT)
+                .define('S', Items.SNOW_BLOCK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.DIRT),
+                        NeoForgeRecipeProvider.has(Items.DIRT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.COBBLY_DIRT, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.COBBLY_DIRT, 4)
                 .pattern("DC")
                 .pattern("CD")
-                .input('D', Items.DIRT)
-                .input('C', TagKey.of(RegistryKeys.ITEM, Identifier.of("stone_crafting_materials")))
-                .criterion(FabricRecipeProvider.hasItem(Items.DIRT),
-                        FabricRecipeProvider.conditionsFromItem(Items.DIRT))
-                .offerTo(exporter);
+                .define('D', Items.DIRT)
+                .define('C', TagKey.create(Registries.ITEM, ResourceLocation.parse("stone_crafting_materials")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.DIRT),
+                        NeoForgeRecipeProvider.has(Items.DIRT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.COBBLY_ASHEN_DIRT, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.COBBLY_ASHEN_DIRT, 4)
                 .pattern("DC")
                 .pattern("CD")
-                .input('D', ModBlocks.ASHEN_DIRT)
-                .input('C', StoneBlockSets.ASHEN_COBBLESTONE.base())
-                .criterion(FabricRecipeProvider.hasItem(Items.DIRT),
-                        FabricRecipeProvider.conditionsFromItem(Items.DIRT))
-                .offerTo(exporter);
+                .define('D', ModBlocks.ASHEN_DIRT)
+                .define('C', StoneBlockSets.ASHEN_COBBLESTONE.base())
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.DIRT),
+                        NeoForgeRecipeProvider.has(Items.DIRT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.DIRTY_ROOTS, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.DIRTY_ROOTS, 2)
                 .pattern(" R ")
                 .pattern("RDR")
                 .pattern(" R ")
-                .input('D', Items.ROOTED_DIRT)
-                .input('R', Items.HANGING_ROOTS)
-                .criterion(FabricRecipeProvider.hasItem(Items.ROOTED_DIRT),
-                        FabricRecipeProvider.conditionsFromItem(Items.ROOTED_DIRT))
-                .offerTo(exporter);
+                .define('D', Items.ROOTED_DIRT)
+                .define('R', Items.HANGING_ROOTS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.ROOTED_DIRT),
+                        NeoForgeRecipeProvider.has(Items.ROOTED_DIRT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.WATERING_CAN, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.WATERING_CAN, 1)
                 .pattern(" N ")
                 .pattern("NII")
                 .pattern(" II")
-                .input('N', ModResourceItems.TIN_NUGGET)
-                .input('I', ModResourceItems.TIN_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.TIN_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.TIN_INGOT))
-                .offerTo(exporter);
+                .define('N', ModResourceItems.TIN_NUGGET)
+                .define('I', ModResourceItems.TIN_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.TIN_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.TIN_INGOT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.WOODEN_BUCKET, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.WOODEN_BUCKET, 1)
                 .pattern(" R ")
                 .pattern("P P")
                 .pattern(" P ")
-                .input('R', ModDecorativeBlocks.ROPE)
-                .input('P', TagKey.of(RegistryKeys.ITEM, Identifier.of("planks")))
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.ROPE),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.ROPE))
-                .offerTo(exporter);
+                .define('R', ModDecorativeBlocks.ROPE)
+                .define('P', TagKey.create(Registries.ITEM, ResourceLocation.parse("planks")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.ROPE),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.ROPE))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.TREATED_STEEL_ROD, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.TREATED_STEEL_ROD, 1)
                 .pattern("S")
                 .pattern("S")
                 .pattern("S")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.STEEL_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.STEEL_INGOT))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.STEEL_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.STEEL_INGOT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Items.CHAIN, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.CHAIN, 4)
                 .pattern("N")
                 .pattern("I")
                 .pattern("N")
-                .input('N', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .input('I', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_nuggets")))
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.STEEL_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.STEEL_INGOT))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.ITEM.getId(Items.CHAIN).getPath() + "_alt"));
+                .define('N', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .define('I', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_nuggets")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.STEEL_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.STEEL_INGOT))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.ITEM.getKey(Items.CHAIN).getPath() + "_alt"));
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BRONZE_CHAIN, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BRONZE_CHAIN, 4)
                 .pattern("N")
                 .pattern("I")
                 .pattern("N")
-                .input('N', ModResourceItems.BRONZE_NUGGET)
-                .input('I', ModResourceItems.BRONZE_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.BRONZE_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.STEEL_INGOT))
-                .offerTo(exporter);
+                .define('N', ModResourceItems.BRONZE_NUGGET)
+                .define('I', ModResourceItems.BRONZE_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.BRONZE_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.STEEL_INGOT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BRONZE_BROAD_CHAIN, 8)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BRONZE_BROAD_CHAIN, 8)
                 .pattern("NN")
                 .pattern("II")
                 .pattern("NN")
-                .input('N', ModResourceItems.BRONZE_NUGGET)
-                .input('I', ModResourceItems.BRONZE_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.BRONZE_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.STEEL_INGOT))
-                .offerTo(exporter);
+                .define('N', ModResourceItems.BRONZE_NUGGET)
+                .define('I', ModResourceItems.BRONZE_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.BRONZE_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.STEEL_INGOT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SPIKY_CHAIN, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SPIKY_CHAIN, 4)
                 .pattern(" N ")
                 .pattern("NIN")
                 .pattern(" N ")
-                .input('I', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .input('N', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_nuggets")))
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.STEEL_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.STEEL_INGOT))
-                .offerTo(exporter);
+                .define('I', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .define('N', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_nuggets")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.STEEL_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.STEEL_INGOT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.DWARVEN_KEY, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.DWARVEN_KEY, 1)
                 .pattern("IN")
-                .input('N', ModResourceItems.KHAZAD_STEEL_NUGGET)
-                .input('I', ModResourceItems.KHAZAD_STEEL_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.KHAZAD_STEEL_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.KHAZAD_STEEL_INGOT))
-                .offerTo(exporter);
+                .define('N', ModResourceItems.KHAZAD_STEEL_NUGGET)
+                .define('I', ModResourceItems.KHAZAD_STEEL_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.KHAZAD_STEEL_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.KHAZAD_STEEL_INGOT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.CHIMNEY, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.CHIMNEY, 2)
                 .pattern(" B ")
                 .pattern(" B ")
                 .pattern("PPP")
-                .input('B', Items.BRICKS)
-                .input('P', StoneBlockSets.POLISHED_DOLOMITE.base())
-                .criterion(FabricRecipeProvider.hasItem(Items.BRICKS),
-                        FabricRecipeProvider.conditionsFromItem(Items.BRICKS))
-                .offerTo(exporter);
+                .define('B', Items.BRICKS)
+                .define('P', StoneBlockSets.POLISHED_DOLOMITE.base())
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.BRICKS),
+                        NeoForgeRecipeProvider.has(Items.BRICKS))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BIG_BRAZIER, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BIG_BRAZIER, 2)
                 .pattern("B B")
                 .pattern("BCB")
                 .pattern("SSS")
-                .input('B', ModBlocks.TREATED_STEEL_BARS)
-                .input('C', Items.CAMPFIRE)
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .criterion(FabricRecipeProvider.hasItem(Items.CAMPFIRE),
-                        FabricRecipeProvider.conditionsFromItem(Items.CAMPFIRE))
-                .offerTo(exporter);
+                .define('B', ModBlocks.TREATED_STEEL_BARS)
+                .define('C', Items.CAMPFIRE)
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.CAMPFIRE),
+                        NeoForgeRecipeProvider.has(Items.CAMPFIRE))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GILDED_BIG_BRAZIER, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GILDED_BIG_BRAZIER, 2)
                 .pattern("B B")
                 .pattern("BCB")
                 .pattern("SSS")
-                .input('B', ModBlocks.GILDED_BARS)
-                .input('C', Items.CAMPFIRE)
-                .input('S', Items.GOLD_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(Items.CAMPFIRE),
-                        FabricRecipeProvider.conditionsFromItem(Items.CAMPFIRE))
-                .offerTo(exporter);
+                .define('B', ModBlocks.GILDED_BARS)
+                .define('C', Items.CAMPFIRE)
+                .define('S', Items.GOLD_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.CAMPFIRE),
+                        NeoForgeRecipeProvider.has(Items.CAMPFIRE))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SMALL_BRAZIER, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SMALL_BRAZIER, 2)
                 .pattern("BCB")
                 .pattern("SSS")
-                .input('B', ModBlocks.TREATED_STEEL_BARS)
-                .input('C', Items.CAMPFIRE)
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .criterion(FabricRecipeProvider.hasItem(Items.CAMPFIRE),
-                        FabricRecipeProvider.conditionsFromItem(Items.CAMPFIRE))
-                .offerTo(exporter);
+                .define('B', ModBlocks.TREATED_STEEL_BARS)
+                .define('C', Items.CAMPFIRE)
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.CAMPFIRE),
+                        NeoForgeRecipeProvider.has(Items.CAMPFIRE))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GILDED_SMALL_BRAZIER, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GILDED_SMALL_BRAZIER, 2)
                 .pattern("BCB")
                 .pattern("SSS")
-                .input('B', ModBlocks.GILDED_BARS)
-                .input('C', Items.CAMPFIRE)
-                .input('S', Items.GOLD_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(Items.CAMPFIRE),
-                        FabricRecipeProvider.conditionsFromItem(Items.CAMPFIRE))
-                .offerTo(exporter);
+                .define('B', ModBlocks.GILDED_BARS)
+                .define('C', Items.CAMPFIRE)
+                .define('S', Items.GOLD_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.CAMPFIRE),
+                        NeoForgeRecipeProvider.has(Items.CAMPFIRE))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.FIRE_BOWL, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.FIRE_BOWL, 2)
                 .pattern("SCS")
                 .pattern("SSS")
-                .input('C', Items.CAMPFIRE)
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "steel_ingots")))
-                .criterion(FabricRecipeProvider.hasItem(Items.CAMPFIRE),
-                        FabricRecipeProvider.conditionsFromItem(Items.CAMPFIRE))
-                .offerTo(exporter);
+                .define('C', Items.CAMPFIRE)
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "steel_ingots")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.CAMPFIRE),
+                        NeoForgeRecipeProvider.has(Items.CAMPFIRE))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BONFIRE, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BONFIRE, 1)
                 .pattern(" L ")
                 .pattern("LCL")
-                .input('C', Items.CAMPFIRE)
-                .input('L', TagKey.of(RegistryKeys.ITEM, Identifier.of("logs")))
-                .criterion(FabricRecipeProvider.hasItem(Items.CAMPFIRE),
-                        FabricRecipeProvider.conditionsFromItem(Items.CAMPFIRE))
-                .offerTo(exporter);
+                .define('C', Items.CAMPFIRE)
+                .define('L', TagKey.create(Registries.ITEM, ResourceLocation.parse("logs")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.CAMPFIRE),
+                        NeoForgeRecipeProvider.has(Items.CAMPFIRE))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GROUND_BOOK, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GROUND_BOOK, 1)
                 .pattern("BSR")
-                .input('B', Items.BOOK)
-                .input('S', Items.STRING)
-                .input('R', Items.RED_DYE)
-                .criterion(FabricRecipeProvider.hasItem(Items.BOOK),
-                        FabricRecipeProvider.conditionsFromItem(Items.BOOK))
-                .offerTo(exporter);
+                .define('B', Items.BOOK)
+                .define('S', Items.STRING)
+                .define('R', Items.RED_DYE)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.BOOK),
+                        NeoForgeRecipeProvider.has(Items.BOOK))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.DWARVEN_GROUND_BOOK, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.DWARVEN_GROUND_BOOK, 1)
                 .pattern("BG")
-                .input('B', Items.BOOK)
-                .input('G', Items.GOLD_NUGGET)
-                .criterion(FabricRecipeProvider.hasItem(Items.BOOK),
-                        FabricRecipeProvider.conditionsFromItem(Items.BOOK))
-                .offerTo(exporter);
+                .define('B', Items.BOOK)
+                .define('G', Items.GOLD_NUGGET)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.BOOK),
+                        NeoForgeRecipeProvider.has(Items.BOOK))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SMALL_CRATE, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SMALL_CRATE, 1)
                 .pattern("SSS")
                 .pattern("PPP")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of("wooden_slabs")))
-                .input('P', TagKey.of(RegistryKeys.ITEM, Identifier.of("planks")))
-                .criterion(FabricRecipeProvider.hasItem(Items.OAK_PLANKS),
-                        FabricRecipeProvider.conditionsFromItem(Items.OAK_PLANKS))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.parse("wooden_slabs")))
+                .define('P', TagKey.create(Registries.ITEM, ResourceLocation.parse("planks")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.OAK_PLANKS),
+                        NeoForgeRecipeProvider.has(Items.OAK_PLANKS))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.THIN_BARREL, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.THIN_BARREL, 1)
                 .pattern("VSV")
                 .pattern("V V")
                 .pattern("VSV")
-                .input('S', TagKey.of(RegistryKeys.ITEM, Identifier.of("wooden_slabs")))
-                .input('V', TagKey.of(RegistryKeys.ITEM, Identifier.of(MiddleEarth.MOD_ID, "wooden_vertical_slabs")))
-                .criterion(FabricRecipeProvider.hasItem(Items.OAK_SLAB),
-                        FabricRecipeProvider.conditionsFromItem(Items.OAK_SLAB))
-                .offerTo(exporter);
+                .define('S', TagKey.create(Registries.ITEM, ResourceLocation.parse("wooden_slabs")))
+                .define('V', TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "wooden_vertical_slabs")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.OAK_SLAB),
+                        NeoForgeRecipeProvider.has(Items.OAK_SLAB))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Items.BELL, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.BELL, 1)
                 .pattern("VSV")
                 .pattern("VGV")
-                .input('S', Items.STICK)
-                .input('V', ModBlocks.STONE_VERTICAL_SLAB)
-                .input('G', Items.GOLD_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(Items.GOLD_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(Items.GOLD_INGOT))
-                .offerTo(exporter);
+                .define('S', Items.STICK)
+                .define('V', ModBlocks.STONE_VERTICAL_SLAB)
+                .define('G', Items.GOLD_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.GOLD_INGOT),
+                        NeoForgeRecipeProvider.has(Items.GOLD_INGOT))
+                .save(exporter);
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.STICKY_SNOW, 8)
-                .input(Items.SNOWBALL, 8)
-                .input(Items.WATER_BUCKET, 1)
-                .criterion(FabricRecipeProvider.hasItem(Items.SNOWBALL),
-                        FabricRecipeProvider.conditionsFromItem(Items.SNOWBALL))
-                .offerTo(exporter);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.STICKY_SNOW, 8)
+                .requires(Items.SNOWBALL, 8)
+                .requires(Items.WATER_BUCKET, 1)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.SNOWBALL),
+                        NeoForgeRecipeProvider.has(Items.SNOWBALL))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.STICKY_ICE, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.STICKY_ICE, 4)
                 .pattern("II")
                 .pattern("II")
-                .input('I', Items.ICE)
-                .criterion(FabricRecipeProvider.hasItem(Items.ICE),
-                        FabricRecipeProvider.conditionsFromItem(Items.ICE))
-                .offerTo(exporter);
+                .define('I', Items.ICE)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.ICE),
+                        NeoForgeRecipeProvider.has(Items.ICE))
+                .save(exporter);
 
         createBannerPatternRecipe(exporter, ModResourceItems.PIPEWEED, ModResourceItems.PIPEWEED_BANNER_PATTERN);
         createBannerPatternRecipe(exporter, ModNatureBlocks.LEBETHRON_SAPLING.asItem(), ModResourceItems.GONDOR_BANNER_PATTERN);
@@ -1726,299 +1734,299 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         createBrickRecipe(exporter, ModBlocks.POINTED_IZHERABAN.asItem(), StoneBlockSets.IZHERABAN.base(), 1);
         createBrickRecipe(exporter, ModBlocks.POINTED_LIMESTONE.asItem(), StoneBlockSets.LIMESTONE.base(), 1);
 
-        CookingRecipeJsonBuilder.createSmoking(Ingredient.fromTag(TagKey.of(RegistryKeys.ITEM, Identifier.of("planks"))), RecipeCategory.BUILDING_BLOCKS, WoodBlockSets.SCORCHED.planks(), 0.35f, 100)
-                .criterion(FabricRecipeProvider.hasItem(Items.OAK_PLANKS),
-                        FabricRecipeProvider.conditionsFromItem(Items.OAK_PLANKS)).offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.BLOCK.getId(WoodBlockSets.SCORCHED.planks()).getPath() + "_from_smoking"));
-        CookingRecipeJsonBuilder.createSmoking(Ingredient.fromTag(TagKey.of(RegistryKeys.ITEM, Identifier.of("logs"))), RecipeCategory.BUILDING_BLOCKS, WoodBlockSets.SCORCHED.log(), 0.35f, 100)
-                .criterion(FabricRecipeProvider.hasItem(Items.OAK_LOG),
-                        FabricRecipeProvider.conditionsFromItem(Items.OAK_LOG)).offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.BLOCK.getId(WoodBlockSets.SCORCHED.log()).getPath() + "_from_smoking"));
+        SimpleCookingRecipeBuilder.smoking(Ingredient.of(TagKey.create(Registries.ITEM, ResourceLocation.parse("planks"))), RecipeCategory.BUILDING_BLOCKS, WoodBlockSets.SCORCHED.planks(), 0.35f, 100)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.OAK_PLANKS),
+                        NeoForgeRecipeProvider.has(Items.OAK_PLANKS)).save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.BLOCK.getKey(WoodBlockSets.SCORCHED.planks()).getPath() + "_from_smoking"));
+        SimpleCookingRecipeBuilder.smoking(Ingredient.of(TagKey.create(Registries.ITEM, ResourceLocation.parse("logs"))), RecipeCategory.BUILDING_BLOCKS, WoodBlockSets.SCORCHED.log(), 0.35f, 100)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.OAK_LOG),
+                        NeoForgeRecipeProvider.has(Items.OAK_LOG)).save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.BLOCK.getKey(WoodBlockSets.SCORCHED.log()).getPath() + "_from_smoking"));
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.SHORT_ICICLES, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.SHORT_ICICLES, 4)
                 .pattern("III")
                 .pattern(" I ")
-                .input('I', Items.ICE)
-                .criterion(FabricRecipeProvider.hasItem(Items.ICE),
-                        FabricRecipeProvider.conditionsFromItem(Items.ICE))
-                .offerTo(exporter);
+                .define('I', Items.ICE)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.ICE),
+                        NeoForgeRecipeProvider.has(Items.ICE))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.DROOPING_ICICLES, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.DROOPING_ICICLES, 4)
                 .pattern("III")
                 .pattern("III")
                 .pattern(" I ")
-                .input('I', Items.ICE)
-                .criterion(FabricRecipeProvider.hasItem(Items.ICE),
-                        FabricRecipeProvider.conditionsFromItem(Items.ICE))
-                .offerTo(exporter);
+                .define('I', Items.ICE)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.ICE),
+                        NeoForgeRecipeProvider.has(Items.ICE))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Items.BUCKET, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.BUCKET, 1)
                 .pattern("T T")
                 .pattern("T T")
                 .pattern(" T ")
-                .input('T', ModResourceItems.TIN_INGOT)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.TIN_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.TIN_INGOT))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.ITEM.getId(Items.BUCKET).getPath() + "_alt"));
+                .define('T', ModResourceItems.TIN_INGOT)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.TIN_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.TIN_INGOT))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.ITEM.getKey(Items.BUCKET).getPath() + "_alt"));
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Items.CAULDRON, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.CAULDRON, 1)
                 .pattern("T T")
                 .pattern("T T")
                 .pattern("TBT")
-                .input('T', ModResourceItems.TIN_INGOT)
-                .input('B', ModBlocks.TIN_BLOCK)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.TIN_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.TIN_INGOT))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.ITEM.getId(Items.CAULDRON).getPath() + "_alt"));
+                .define('T', ModResourceItems.TIN_INGOT)
+                .define('B', ModBlocks.TIN_BLOCK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.TIN_INGOT),
+                        NeoForgeRecipeProvider.has(ModResourceItems.TIN_INGOT))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.ITEM.getKey(Items.CAULDRON).getPath() + "_alt"));
 
         createCenterSurroundRecipe(exporter, Blocks.TUFF.asItem(), Items.COPPER_INGOT, StoneBlockSets.GREEN_TUFF.base().asItem(), 8);
 
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BROWN_JUG, Items.CLAY);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.LARGE_JUG, Items.CLAY);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GRAY_POT, Items.CLAY);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BROWN_JUG, Items.CLAY);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.LARGE_JUG, Items.CLAY);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GRAY_POT, Items.CLAY);
 
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BROWN_JAR, Items.CLAY);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.CLAY_JAR, Items.CLAY);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GRAY_JAR, Items.CLAY);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BROWN_JAR, Items.CLAY);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.CLAY_JAR, Items.CLAY);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GRAY_JAR, Items.CLAY);
 
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.AMPHORA, Items.CLAY);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BROWN_AMPHORA, Items.CLAY);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GRAY_VASE, Items.CLAY);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.AMPHORA, Items.CLAY);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BROWN_AMPHORA, Items.CLAY);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GRAY_VASE, Items.CLAY);
 
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BROWN_FAT_POT, Items.CLAY);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.FAT_POT, Items.CLAY);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GRAY_FAT_POT, Items.CLAY);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.BROWN_FAT_POT, Items.CLAY);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.FAT_POT, Items.CLAY);
+        stonecutterResultFromBase(exporter, RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GRAY_FAT_POT, Items.CLAY);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.POT_OF_GOLD, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.POT_OF_GOLD, 1)
                 .pattern(" G ")
                 .pattern("GGG")
                 .pattern(" P ")
-                .input('P', ModDecorativeBlocks.FAT_POT)
-                .input('G', ModResourceItems.GOLD_COIN)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.GOLD_COIN),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.GOLD_COIN))
-                .offerTo(exporter);
+                .define('P', ModDecorativeBlocks.FAT_POT)
+                .define('G', ModResourceItems.GOLD_COIN)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.GOLD_COIN),
+                        NeoForgeRecipeProvider.has(ModResourceItems.GOLD_COIN))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.AZALEA_FLOWER_GROWTH.asItem(), 8)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.AZALEA_FLOWER_GROWTH.asItem(), 8)
                 .pattern("lll")
                 .pattern("lll")
-                .input('l', Items.FLOWERING_AZALEA_LEAVES)
-                .criterion(FabricRecipeProvider.hasItem(Items.FLOWERING_AZALEA_LEAVES),
-                        FabricRecipeProvider.conditionsFromItem(Items.FLOWERING_AZALEA_LEAVES))
-                .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.DRY_GROWTH.asItem(), 4)
+                .define('l', Items.FLOWERING_AZALEA_LEAVES)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.FLOWERING_AZALEA_LEAVES),
+                        NeoForgeRecipeProvider.has(Items.FLOWERING_AZALEA_LEAVES))
+                .save(exporter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.DRY_GROWTH.asItem(), 4)
                 .pattern("sss")
                 .pattern("sss")
-                .input('s', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(Items.STICK),
-                        FabricRecipeProvider.conditionsFromItem(Items.STICK))
-                .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.GREEN_GROWTH.asItem(), 8)
+                .define('s', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.STICK),
+                        NeoForgeRecipeProvider.has(Items.STICK))
+                .save(exporter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.GREEN_GROWTH.asItem(), 8)
                 .pattern("lll")
                 .pattern("lll")
-                .input('l', TagKey.of(RegistryKeys.ITEM, Identifier.of("leaves")))
-                .criterion(FabricRecipeProvider.hasItem(Items.OAK_LEAVES),
-                        FabricRecipeProvider.conditionsFromItem(Items.OAK_LEAVES))
-                .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.IVY_GROWTH.asItem(), 6)
+                .define('l', TagKey.create(Registries.ITEM, ResourceLocation.parse("leaves")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.OAK_LEAVES),
+                        NeoForgeRecipeProvider.has(Items.OAK_LEAVES))
+                .save(exporter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.IVY_GROWTH.asItem(), 6)
                 .pattern("sls")
                 .pattern("sls")
-                .input('s', Items.STICK)
-                .input('l', TagKey.of(RegistryKeys.ITEM, Identifier.of("leaves")))
-                .criterion(FabricRecipeProvider.hasItem(Items.OAK_LEAVES),
-                        FabricRecipeProvider.conditionsFromItem(Items.OAK_LEAVES))
-                .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.LILAC_FLOWER_GROWTH.asItem(), 8)
+                .define('s', Items.STICK)
+                .define('l', TagKey.create(Registries.ITEM, ResourceLocation.parse("leaves")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.OAK_LEAVES),
+                        NeoForgeRecipeProvider.has(Items.OAK_LEAVES))
+                .save(exporter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.LILAC_FLOWER_GROWTH.asItem(), 8)
                 .pattern("lfl")
                 .pattern("lfl")
-                .input('f', Items.LILAC)
-                .input('l', TagKey.of(RegistryKeys.ITEM, Identifier.of("leaves")))
-                .criterion(FabricRecipeProvider.hasItem(Items.OAK_LEAVES),
-                        FabricRecipeProvider.conditionsFromItem(Items.OAK_LEAVES))
-                .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.PINK_FLOWER_GROWTH.asItem(), 8)
+                .define('f', Items.LILAC)
+                .define('l', TagKey.create(Registries.ITEM, ResourceLocation.parse("leaves")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.OAK_LEAVES),
+                        NeoForgeRecipeProvider.has(Items.OAK_LEAVES))
+                .save(exporter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.PINK_FLOWER_GROWTH.asItem(), 8)
                 .pattern("lfl")
                 .pattern("lfl")
-                .input('f', ModNatureBlocks.PINK_FLOWERS)
-                .input('l', TagKey.of(RegistryKeys.ITEM, Identifier.of("leaves")))
-                .criterion(FabricRecipeProvider.hasItem(ModNatureBlocks.PINK_FLOWERS),
-                        FabricRecipeProvider.conditionsFromItem(ModNatureBlocks.PINK_FLOWERS))
-                .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.RED_FLOWER_GROWTH.asItem(), 8)
+                .define('f', ModNatureBlocks.PINK_FLOWERS)
+                .define('l', TagKey.create(Registries.ITEM, ResourceLocation.parse("leaves")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModNatureBlocks.PINK_FLOWERS),
+                        NeoForgeRecipeProvider.has(ModNatureBlocks.PINK_FLOWERS))
+                .save(exporter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.RED_FLOWER_GROWTH.asItem(), 8)
                 .pattern("lfl")
                 .pattern("lfl")
-                .input('f', ModNatureBlocks.RED_FLOWERS)
-                .input('l', TagKey.of(RegistryKeys.ITEM, Identifier.of("leaves")))
-                .criterion(FabricRecipeProvider.hasItem(ModNatureBlocks.RED_FLOWERS),
-                        FabricRecipeProvider.conditionsFromItem(ModNatureBlocks.RED_FLOWERS))
-                .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.WHITE_FLOWER_GROWTH.asItem(), 8)
+                .define('f', ModNatureBlocks.RED_FLOWERS)
+                .define('l', TagKey.create(Registries.ITEM, ResourceLocation.parse("leaves")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModNatureBlocks.RED_FLOWERS),
+                        NeoForgeRecipeProvider.has(ModNatureBlocks.RED_FLOWERS))
+                .save(exporter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.WHITE_FLOWER_GROWTH.asItem(), 8)
                 .pattern("lfl")
                 .pattern("lfl")
-                .input('f', ModNatureBlocks.WHITE_FLOWERS)
-                .input('l', TagKey.of(RegistryKeys.ITEM, Identifier.of("leaves")))
-                .criterion(FabricRecipeProvider.hasItem(ModNatureBlocks.WHITE_FLOWERS),
-                        FabricRecipeProvider.conditionsFromItem(ModNatureBlocks.WHITE_FLOWERS))
-                .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.YELLOW_FLOWER_GROWTH.asItem(), 8)
+                .define('f', ModNatureBlocks.WHITE_FLOWERS)
+                .define('l', TagKey.create(Registries.ITEM, ResourceLocation.parse("leaves")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModNatureBlocks.WHITE_FLOWERS),
+                        NeoForgeRecipeProvider.has(ModNatureBlocks.WHITE_FLOWERS))
+                .save(exporter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.YELLOW_FLOWER_GROWTH.asItem(), 8)
                 .pattern("lfl")
                 .pattern("lfl")
-                .input('f', ModNatureBlocks.YELLOW_FLOWERS)
-                .input('l', TagKey.of(RegistryKeys.ITEM, Identifier.of("leaves")))
-                .criterion(FabricRecipeProvider.hasItem(ModNatureBlocks.YELLOW_FLOWERS),
-                        FabricRecipeProvider.conditionsFromItem(ModNatureBlocks.YELLOW_FLOWERS))
-                .offerTo(exporter);
+                .define('f', ModNatureBlocks.YELLOW_FLOWERS)
+                .define('l', TagKey.create(Registries.ITEM, ResourceLocation.parse("leaves")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModNatureBlocks.YELLOW_FLOWERS),
+                        NeoForgeRecipeProvider.has(ModNatureBlocks.YELLOW_FLOWERS))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.FROZEN_GROWTH.asItem(), 8)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.FROZEN_GROWTH.asItem(), 8)
                 .pattern("sis")
                 .pattern("sis")
-                .input('i', ModNatureBlocks.STICKY_SNOW)
-                .input('s', ModNatureBlocks.DRY_GROWTH)
-                .criterion(FabricRecipeProvider.hasItem(ModNatureBlocks.DRY_GROWTH),
-                        FabricRecipeProvider.conditionsFromItem(ModNatureBlocks.DRY_GROWTH))
-                .offerTo(exporter);
+                .define('i', ModNatureBlocks.STICKY_SNOW)
+                .define('s', ModNatureBlocks.DRY_GROWTH)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModNatureBlocks.DRY_GROWTH),
+                        NeoForgeRecipeProvider.has(ModNatureBlocks.DRY_GROWTH))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GOLDEN_CHALICE, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GOLDEN_CHALICE, 1)
                 .pattern("I")
                 .pattern("N")
                 .pattern("N")
-                .input('I', Items.GOLD_INGOT)
-                .input('N', Items.GOLD_NUGGET)
-                .criterion(FabricRecipeProvider.hasItem(Items.GOLD_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(Items.GOLD_INGOT))
-                .offerTo(exporter);
+                .define('I', Items.GOLD_INGOT)
+                .define('N', Items.GOLD_NUGGET)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.GOLD_INGOT),
+                        NeoForgeRecipeProvider.has(Items.GOLD_INGOT))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.COPPER_TREASURE_HEAP_LAYER, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.COPPER_TREASURE_HEAP_LAYER, 1)
                 .pattern("NNN")
-                .input('N', ModResourceItems.COPPER_COIN)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.COPPER_COIN),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.COPPER_COIN))
-                .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SILVER_TREASURE_HEAP_LAYER, 1)
+                .define('N', ModResourceItems.COPPER_COIN)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.COPPER_COIN),
+                        NeoForgeRecipeProvider.has(ModResourceItems.COPPER_COIN))
+                .save(exporter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SILVER_TREASURE_HEAP_LAYER, 1)
                 .pattern("NNN")
-                .input('N', ModResourceItems.SILVER_COIN)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.SILVER_COIN),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.SILVER_COIN))
-                .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GOLD_TREASURE_HEAP_LAYER, 1)
+                .define('N', ModResourceItems.SILVER_COIN)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.SILVER_COIN),
+                        NeoForgeRecipeProvider.has(ModResourceItems.SILVER_COIN))
+                .save(exporter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GOLD_TREASURE_HEAP_LAYER, 1)
                 .pattern("NNN")
-                .input('N', ModResourceItems.GOLD_COIN)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.GOLD_COIN),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.GOLD_COIN))
-                .offerTo(exporter);
+                .define('N', ModResourceItems.GOLD_COIN)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.GOLD_COIN),
+                        NeoForgeRecipeProvider.has(ModResourceItems.GOLD_COIN))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.COPPER_COIN_PILE, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.COPPER_COIN_PILE, 1)
                 .pattern("NN")
                 .pattern("NN")
-                .input('N', ModResourceItems.COPPER_COIN)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.COPPER_COIN),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.COPPER_COIN))
-                .offerTo(exporter);
+                .define('N', ModResourceItems.COPPER_COIN)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.COPPER_COIN),
+                        NeoForgeRecipeProvider.has(ModResourceItems.COPPER_COIN))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SILVER_COIN_PILE, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.SILVER_COIN_PILE, 1)
                 .pattern("NN")
                 .pattern("NN")
-                .input('N', ModResourceItems.SILVER_COIN)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.SILVER_COIN),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.SILVER_COIN))
-                .offerTo(exporter);
+                .define('N', ModResourceItems.SILVER_COIN)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.SILVER_COIN),
+                        NeoForgeRecipeProvider.has(ModResourceItems.SILVER_COIN))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GOLD_COIN_PILE, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModDecorativeBlocks.GOLD_COIN_PILE, 1)
                 .pattern("NN")
                 .pattern("NN")
-                .input('N', ModResourceItems.GOLD_COIN)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.GOLD_COIN),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.GOLD_COIN))
-                .offerTo(exporter);
+                .define('N', ModResourceItems.GOLD_COIN)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.GOLD_COIN),
+                        NeoForgeRecipeProvider.has(ModResourceItems.GOLD_COIN))
+                .save(exporter);
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.COPPER_COIN, 3)
-                .input(ModDecorativeBlocks.COPPER_TREASURE_HEAP_LAYER)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.COPPER_TREASURE_HEAP_LAYER),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.COPPER_TREASURE_HEAP_LAYER))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "copper_coin_from_treasure"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.COPPER_COIN, 3)
+                .requires(ModDecorativeBlocks.COPPER_TREASURE_HEAP_LAYER)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.COPPER_TREASURE_HEAP_LAYER),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.COPPER_TREASURE_HEAP_LAYER))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "copper_coin_from_treasure"));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.SILVER_COIN, 3)
-                .input(ModDecorativeBlocks.SILVER_TREASURE_HEAP_LAYER)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.SILVER_TREASURE_HEAP_LAYER),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.SILVER_TREASURE_HEAP_LAYER))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "silver_coin_from_treasure"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.SILVER_COIN, 3)
+                .requires(ModDecorativeBlocks.SILVER_TREASURE_HEAP_LAYER)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.SILVER_TREASURE_HEAP_LAYER),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.SILVER_TREASURE_HEAP_LAYER))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "silver_coin_from_treasure"));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.GOLD_COIN, 3)
-                .input(ModDecorativeBlocks.GOLD_TREASURE_HEAP_LAYER)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.GOLD_TREASURE_HEAP_LAYER),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.GOLD_TREASURE_HEAP_LAYER))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "gold_nugget_from_treasure"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.GOLD_COIN, 3)
+                .requires(ModDecorativeBlocks.GOLD_TREASURE_HEAP_LAYER)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.GOLD_TREASURE_HEAP_LAYER),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.GOLD_TREASURE_HEAP_LAYER))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "gold_nugget_from_treasure"));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.COPPER_COIN, 4)
-                .input(ModDecorativeBlocks.COPPER_COIN_PILE)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.COPPER_COIN_PILE),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.COPPER_COIN_PILE))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "copper_coin_from_pile"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.COPPER_COIN, 4)
+                .requires(ModDecorativeBlocks.COPPER_COIN_PILE)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.COPPER_COIN_PILE),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.COPPER_COIN_PILE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "copper_coin_from_pile"));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.SILVER_COIN, 4)
-                .input(ModDecorativeBlocks.SILVER_COIN_PILE)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.SILVER_COIN_PILE),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.SILVER_COIN_PILE))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "silver_coin_from_pile"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.SILVER_COIN, 4)
+                .requires(ModDecorativeBlocks.SILVER_COIN_PILE)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.SILVER_COIN_PILE),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.SILVER_COIN_PILE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "silver_coin_from_pile"));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.GOLD_COIN, 4)
-                .input(ModDecorativeBlocks.GOLD_COIN_PILE)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.GOLD_COIN_PILE),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.GOLD_COIN_PILE))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "gold_nugget_from_pile"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.GOLD_COIN, 4)
+                .requires(ModDecorativeBlocks.GOLD_COIN_PILE)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.GOLD_COIN_PILE),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.GOLD_COIN_PILE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "gold_nugget_from_pile"));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.SHORT_BULRUSH, 2)
-                .input(ModNatureBlocks.TALL_BULRUSH)
-                .criterion(FabricRecipeProvider.hasItem(ModNatureBlocks.TALL_BULRUSH),
-                        FabricRecipeProvider.conditionsFromItem(ModNatureBlocks.TALL_BULRUSH))
-                .offerTo(exporter);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.SHORT_BULRUSH, 2)
+                .requires(ModNatureBlocks.TALL_BULRUSH)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModNatureBlocks.TALL_BULRUSH),
+                        NeoForgeRecipeProvider.has(ModNatureBlocks.TALL_BULRUSH))
+                .save(exporter);
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.SHORT_CATTAILS, 2)
-                .input(ModNatureBlocks.TALL_CATTAILS)
-                .criterion(FabricRecipeProvider.hasItem(ModNatureBlocks.TALL_CATTAILS),
-                        FabricRecipeProvider.conditionsFromItem(ModNatureBlocks.TALL_CATTAILS))
-                .offerTo(exporter);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModNatureBlocks.SHORT_CATTAILS, 2)
+                .requires(ModNatureBlocks.TALL_CATTAILS)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModNatureBlocks.TALL_CATTAILS),
+                        NeoForgeRecipeProvider.has(ModNatureBlocks.TALL_CATTAILS))
+                .save(exporter);
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.GOLD_COIN, 4)
-                .input(ModDecorativeBlocks.POT_OF_GOLD)
-                .criterion(FabricRecipeProvider.hasItem(ModDecorativeBlocks.POT_OF_GOLD),
-                        FabricRecipeProvider.conditionsFromItem(ModDecorativeBlocks.POT_OF_GOLD))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, "gold_from_pot_of_gold"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModResourceItems.GOLD_COIN, 4)
+                .requires(ModDecorativeBlocks.POT_OF_GOLD)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeBlocks.POT_OF_GOLD),
+                        NeoForgeRecipeProvider.has(ModDecorativeBlocks.POT_OF_GOLD))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "gold_from_pot_of_gold"));
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModWeaponItems.HELD_BANNER, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModWeaponItems.HELD_BANNER, 1)
                 .pattern("WWW")
                 .pattern("WWW")
                 .pattern("WSW")
-                .input('W', TagKey.of(RegistryKeys.ITEM, Identifier.of("wool")))
-                .input('S', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(ModResourceItems.GOLD_COIN),
-                        FabricRecipeProvider.conditionsFromItem(ModResourceItems.GOLD_COIN))
-                .offerTo(exporter);
+                .define('W', TagKey.create(Registries.ITEM, ResourceLocation.parse("wool")))
+                .define('S', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ModResourceItems.GOLD_COIN),
+                        NeoForgeRecipeProvider.has(ModResourceItems.GOLD_COIN))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, StoneBlockSets.SLATE.base(), 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, StoneBlockSets.SLATE.base(), 4)
                 .pattern("DS")
                 .pattern("SD")
-                .input('D', Items.DEEPSLATE)
-                .input('S', Items.STONE)
-                .criterion(FabricRecipeProvider.hasItem(Items.DEEPSLATE),
-                        FabricRecipeProvider.conditionsFromItem(Items.DEEPSLATE))
-                .offerTo(exporter);
+                .define('D', Items.DEEPSLATE)
+                .define('S', Items.STONE)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.DEEPSLATE),
+                        NeoForgeRecipeProvider.has(Items.DEEPSLATE))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, StoneBlockSets.BLUE_TUFF.base(), 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, StoneBlockSets.BLUE_TUFF.base(), 4)
                 .pattern("TG")
                 .pattern("GT")
-                .input('T', Items.TUFF)
-                .input('G', StoneBlockSets.GONLUIN.base())
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.GONLUIN.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.GONLUIN.base()))
-                .offerTo(exporter);
+                .define('T', Items.TUFF)
+                .define('G', StoneBlockSets.GONLUIN.base())
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.GONLUIN.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.GONLUIN.base()))
+                .save(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, StoneBlockSets.HEMATITE.base(), 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, StoneBlockSets.HEMATITE.base(), 4)
                 .pattern("SI")
                 .pattern("IS")
-                .input('S', Items.STONE)
-                .input('I', StoneBlockSets.IRONSTONE.base())
-                .criterion(FabricRecipeProvider.hasItem(StoneBlockSets.IRONSTONE.base()),
-                        FabricRecipeProvider.conditionsFromItem(StoneBlockSets.IRONSTONE.base()))
-                .offerTo(exporter);
+                .define('S', Items.STONE)
+                .define('I', StoneBlockSets.IRONSTONE.base())
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(StoneBlockSets.IRONSTONE.base()),
+                        NeoForgeRecipeProvider.has(StoneBlockSets.IRONSTONE.base()))
+                .save(exporter);
 
         createSmokingRecipe(exporter, Items.SHORT_GRASS, ModNatureBlocks.SCORCHED_GRASS.asItem());
         createSmokingRecipe(exporter, ModNatureBlocks.GRASS_TUFT.asItem(), ModNatureBlocks.SCORCHED_TUFT.asItem());
@@ -2029,438 +2037,438 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         createSmokingRecipe(exporter, ModResourceItems.PIPEWEED, ModResourceItems.DRIED_PIPEWEED);
         //endregion
 
-        ComplexRecipeJsonBuilder.create(CustomItemDecorationRecipe::new).offerTo(exporter, "custom_shield_decoration");
+        SpecialRecipeBuilder.special(CustomItemDecorationRecipe::new).save(exporter, "custom_shield_decoration");
     }
 
     //region BLOCK RECIPE METHODS
 
-    private void createBrickRecipe(RecipeExporter exporter, Item input, Block output, int count) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, count)
+    private void createBrickRecipe(RecipeOutput exporter, Item input, Block output, int count) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
                 .pattern("ll")
                 .pattern("ll")
-                .input('l', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('l', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createPillarRecipe(RecipeExporter exporter, Block input, Block output, int count) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, count)
+    private void createPillarRecipe(RecipeOutput exporter, Block input, Block output, int count) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
                 .pattern("l")
                 .pattern("l")
                 .pattern("l")
-                .input('l', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('l', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createChiseledRecipe(RecipeExporter exporter, Block input, Block output, int count) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, count)
+    private void createChiseledRecipe(RecipeOutput exporter, Block input, Block output, int count) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
                 .pattern("l")
                 .pattern("l")
-                .input('l', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('l', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createCutPolishedRecipe(RecipeExporter exporter, Block input, Block output, int count) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, count)
+    private void createCutPolishedRecipe(RecipeOutput exporter, Block input, Block output, int count) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
                 .pattern("l")
                 .pattern("l")
-                .input('l', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('l', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createMossyRecipe(RecipeExporter exporter, Block input, Block output) {
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
-                .input(input)
-                .input(Items.VINE)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.BLOCK.getId(output).getPath() + "_vine"));
+    private void createMossyRecipe(RecipeOutput exporter, Block input, Block output) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, 1)
+                .requires(input)
+                .requires(Items.VINE)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.BLOCK.getKey(output).getPath() + "_vine"));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
-                .input(input)
-                .input(Blocks.MOSS_BLOCK)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.BLOCK.getId(output).getPath() + "_moss"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, 1)
+                .requires(input)
+                .requires(Blocks.MOSS_BLOCK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.BLOCK.getKey(output).getPath() + "_moss"));
     }
 
-    private void createSmeltingRecipe(RecipeExporter exporter, Item input, Item output) {
-        CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(input), RecipeCategory.BUILDING_BLOCKS, output, 0.1f, 200)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+    private void createSmeltingRecipe(RecipeOutput exporter, Item input, Item output) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(input), RecipeCategory.BUILDING_BLOCKS, output, 0.1f, 200)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createSmeltingRecipeIdentifier(RecipeExporter exporter, Item input, Item output) {
-        CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(input), RecipeCategory.BUILDING_BLOCKS, output, 0.1f, 200)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.ITEM.getId(output).getPath() + "_from_smelting"));
+    private void createSmeltingRecipeIdentifier(RecipeOutput exporter, Item input, Item output) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(input), RecipeCategory.BUILDING_BLOCKS, output, 0.1f, 200)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.ITEM.getKey(output).getPath() + "_from_smelting"));
     }
 
-    private void createMeltBulkRecipe(RecipeExporter exporter, Item input, String output) {
+    private void createMeltBulkRecipe(RecipeOutput exporter, Item input, String output) {
         createMeltRecipe(exporter, input, output, 1, INGOT_LIQUID_VALUE);
         createMeltRecipe(exporter, input, output, 2, INGOT_LIQUID_VALUE);
         createMeltRecipe(exporter, input, output, 3, INGOT_LIQUID_VALUE);
         createMeltRecipe(exporter, input, output, 4, INGOT_LIQUID_VALUE);
     }
 
-    private void createMeltRecipe(RecipeExporter exporter, Item input, String output, int ingots, int amount) {
+    private void createMeltRecipe(RecipeOutput exporter, Item input, String output, int ingots, int amount) {
         switch (ingots){
             case 1 -> AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, output, amount)
                     .input(input)
-                    .criterion(FabricRecipeProvider.hasItem(input),
-                            FabricRecipeProvider.conditionsFromItem(input))
-                    .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, output + "_from_melting_1_" + Registries.ITEM.getId(input).getPath()));
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                            NeoForgeRecipeProvider.has(input))
+                    .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, output + "_from_melting_1_" + BuiltInRegistries.ITEM.getKey(input).getPath()));
             case 2 -> AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, output, amount * 2)
                     .input(input)
                     .input(input)
-                    .criterion(FabricRecipeProvider.hasItem(input),
-                            FabricRecipeProvider.conditionsFromItem(input))
-                    .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, output + "_from_melting_2_" + Registries.ITEM.getId(input).getPath()));
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                            NeoForgeRecipeProvider.has(input))
+                    .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, output + "_from_melting_2_" + BuiltInRegistries.ITEM.getKey(input).getPath()));
             case 3 -> AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, output, amount* 3)
                     .input(input)
                     .input(input)
                     .input(input)
-                    .criterion(FabricRecipeProvider.hasItem(input),
-                            FabricRecipeProvider.conditionsFromItem(input))
-                    .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, output + "_from_melting_3_" + Registries.ITEM.getId(input).getPath()));
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                            NeoForgeRecipeProvider.has(input))
+                    .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, output + "_from_melting_3_" + BuiltInRegistries.ITEM.getKey(input).getPath()));
             case 4 -> AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, output, amount * 4)
                     .input(input)
                     .input(input)
                     .input(input)
                     .input(input)
-                    .criterion(FabricRecipeProvider.hasItem(input),
-                            FabricRecipeProvider.conditionsFromItem(input))
-                    .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, output + "_from_melting_4_" + Registries.ITEM.getId(input).getPath()));
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                            NeoForgeRecipeProvider.has(input))
+                    .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, output + "_from_melting_4_" + BuiltInRegistries.ITEM.getKey(input).getPath()));
         }
 
     }
 
-    private void createMeltBulkRecipeTag(RecipeExporter exporter, TagKey input, String output) {
+    private void createMeltBulkRecipeTag(RecipeOutput exporter, TagKey input, String output) {
         createMeltRecipeTag(exporter, input, output, 1, INGOT_LIQUID_VALUE);
         createMeltRecipeTag(exporter, input, output, 2, INGOT_LIQUID_VALUE);
         createMeltRecipeTag(exporter, input, output, 3, INGOT_LIQUID_VALUE);
         createMeltRecipeTag(exporter, input, output, 4, INGOT_LIQUID_VALUE);
     }
 
-    private void createMeltRecipeTag(RecipeExporter exporter, TagKey input, String output, int ingots, int amount) {
+    private void createMeltRecipeTag(RecipeOutput exporter, TagKey input, String output, int ingots, int amount) {
         switch (ingots){
             case 1 -> AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, output, amount)
                     .input(input)
-                    .criterion(FabricRecipeProvider.hasItem(ModDecorativeItems.FORGE),
-                            FabricRecipeProvider.conditionsFromItem(ModDecorativeItems.FORGE))
-                    .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, output + "_from_melting_1_" + input.id().getPath()));
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeItems.FORGE),
+                            NeoForgeRecipeProvider.has(ModDecorativeItems.FORGE))
+                    .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, output + "_from_melting_1_" + input.location().getPath()));
             case 2 -> AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, output, amount * 2)
                     .input(input)
                     .input(input)
-                    .criterion(FabricRecipeProvider.hasItem(ModDecorativeItems.FORGE),
-                            FabricRecipeProvider.conditionsFromItem(ModDecorativeItems.FORGE))
-                    .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, output + "_from_melting_2_" + input.id().getPath()));
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeItems.FORGE),
+                            NeoForgeRecipeProvider.has(ModDecorativeItems.FORGE))
+                    .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, output + "_from_melting_2_" + input.location().getPath()));
             case 3 -> AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, output, amount* 3)
                     .input(input)
                     .input(input)
                     .input(input)
-                    .criterion(FabricRecipeProvider.hasItem(ModDecorativeItems.FORGE),
-                            FabricRecipeProvider.conditionsFromItem(ModDecorativeItems.FORGE))
-                    .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, output + "_from_melting_3_" + input.id().getPath()));
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeItems.FORGE),
+                            NeoForgeRecipeProvider.has(ModDecorativeItems.FORGE))
+                    .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, output + "_from_melting_3_" + input.location().getPath()));
             case 4 -> AlloyRecipeJsonBuilder.createAlloyRecipe(RecipeCategory.MISC, output, amount * 4)
                     .input(input)
                     .input(input)
                     .input(input)
                     .input(input)
-                    .criterion(FabricRecipeProvider.hasItem(ModDecorativeItems.FORGE),
-                            FabricRecipeProvider.conditionsFromItem(ModDecorativeItems.FORGE))
-                    .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, output + "_from_melting_4_" + input.id().getPath()));
+                    .unlockedBy(NeoForgeRecipeProvider.getHasName(ModDecorativeItems.FORGE),
+                            NeoForgeRecipeProvider.has(ModDecorativeItems.FORGE))
+                    .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, output + "_from_melting_4_" + input.location().getPath()));
         }
     }
 
-    private void createAnvilShapingRecipeTag(RecipeExporter exporter, TagKey input, Item output, int amount) {
+    private void createAnvilShapingRecipeTag(RecipeOutput exporter, TagKey input, Item output, int amount) {
         AnvilShapingRecipeJsonBuilder.createAnvilShapingRecipe(RecipeCategory.MISC, output, amount)
                 .input(input)
-                .criterion(FabricRecipeProvider.hasItem(Items.COPPER_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(Items.COPPER_INGOT))
-                .offerTo(exporter);
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.COPPER_INGOT),
+                        NeoForgeRecipeProvider.has(Items.COPPER_INGOT))
+                .save(exporter);
     }
 
-    private void createAnvilShapingRecipeItem(RecipeExporter exporter, Item input, Item output, int amount) {
+    private void createAnvilShapingRecipeItem(RecipeOutput exporter, Item input, Item output, int amount) {
         AnvilShapingRecipeJsonBuilder.createAnvilShapingRecipe(RecipeCategory.MISC, output, amount)
                 .input(input)
-                .criterion(FabricRecipeProvider.hasItem(Items.COPPER_INGOT),
-                        FabricRecipeProvider.conditionsFromItem(Items.COPPER_INGOT))
-                .offerTo(exporter);
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.COPPER_INGOT),
+                        NeoForgeRecipeProvider.has(Items.COPPER_INGOT))
+                .save(exporter);
     }
 
-    private void createAnvilRecipe(RecipeExporter exporter, Item inputBlock, Item inputIngot, Item output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
+    private void createAnvilRecipe(RecipeOutput exporter, Item inputBlock, Item inputIngot, Item output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 1)
                 .pattern("IBI")
                 .pattern(" I ")
                 .pattern("LLL")
-                .input('I', inputIngot)
-                .input('B', inputBlock)
-                .input('L', TagKey.of(RegistryKeys.ITEM, Identifier.of("logs")))
-                .criterion(FabricRecipeProvider.hasItem(inputIngot),
-                        FabricRecipeProvider.conditionsFromItem(inputIngot))
-                .offerTo(exporter);
+                .define('I', inputIngot)
+                .define('B', inputBlock)
+                .define('L', TagKey.create(Registries.ITEM, ResourceLocation.parse("logs")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputIngot),
+                        NeoForgeRecipeProvider.has(inputIngot))
+                .save(exporter);
     }
 
-    private void createStairsRecipe(RecipeExporter exporter, Block input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 4)
+    private void createStairsRecipe(RecipeOutput exporter, Block input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 4)
                 .pattern("l  ")
                 .pattern("ll ")
                 .pattern("lll")
-                .input('l', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('l', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createSlabsRecipe(RecipeExporter exporter, Block input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
+    private void createSlabsRecipe(RecipeOutput exporter, Block input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
                 .pattern("lll")
-                .input('l', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('l', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createSlabsFromVerticalRecipe(RecipeExporter exporter, Block input, Block output) {
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
-                .input(input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.BLOCK.getId(input).getPath() + "_from_vertical"));
+    private void createSlabsFromVerticalRecipe(RecipeOutput exporter, Block input, Block output) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, 1)
+                .requires(input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.BLOCK.getKey(input).getPath() + "_from_vertical"));
     }
 
-    private void createVerticalSlabsRecipe(RecipeExporter exporter, Block input, Block output) {
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
-                .input(input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+    private void createVerticalSlabsRecipe(RecipeOutput exporter, Block input, Block output) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, 1)
+                .requires(input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createDoorRecipe(RecipeExporter exporter, Block input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 3)
+    private void createDoorRecipe(RecipeOutput exporter, Block input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 3)
                 .pattern("ll")
                 .pattern("ll")
                 .pattern("ll")
-                .input('l', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('l', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createTrapdoorRecipe(RecipeExporter exporter, Block input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
+    private void createTrapdoorRecipe(RecipeOutput exporter, Block input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 2)
                 .pattern("lll")
                 .pattern("lll")
-                .input('l', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('l', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createWallsRecipe(RecipeExporter exporter, Block input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
+    private void createWallsRecipe(RecipeOutput exporter, Block input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
                 .pattern("lll")
                 .pattern("lll")
-                .input('l', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('l', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createCenterSurroundRecipe(RecipeExporter exporter, Item surroundInput, Item centerItem, Item output, int count) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, count)
+    private void createCenterSurroundRecipe(RecipeOutput exporter, Item surroundInput, Item centerItem, Item output, int count) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
                 .pattern("BBB")
                 .pattern("BDB")
                 .pattern("BBB")
-                .input('B', surroundInput)
-                .input('D', centerItem)
-                .criterion(FabricRecipeProvider.hasItem(surroundInput),
-                        FabricRecipeProvider.conditionsFromItem(surroundInput))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.ITEM.getId(output).getPath() + "_alt"));
+                .define('B', surroundInput)
+                .define('D', centerItem)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(surroundInput),
+                        NeoForgeRecipeProvider.has(surroundInput))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.ITEM.getKey(output).getPath() + "_alt"));
     }
 
-    private void createDyeableItemRecipe(RecipeExporter exporter, Block blockInput, Item dyeItem, Block output) {
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
-                .input(blockInput)
-                .input(dyeItem)
-                .criterion(FabricRecipeProvider.hasItem(blockInput),
-                        FabricRecipeProvider.conditionsFromItem(blockInput))
-                .offerTo(exporter);
+    private void createDyeableItemRecipe(RecipeOutput exporter, Block blockInput, Item dyeItem, Block output) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, 1)
+                .requires(blockInput)
+                .requires(dyeItem)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(blockInput),
+                        NeoForgeRecipeProvider.has(blockInput))
+                .save(exporter);
     }
 
-    private void createPaneRecipe(RecipeExporter exporter, Item blockInput, Block output, int count) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, count)
+    private void createPaneRecipe(RecipeOutput exporter, Item blockInput, Block output, int count) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
                 .pattern("BBB")
                 .pattern("BBB")
-                .input('B', blockInput)
-                .criterion(FabricRecipeProvider.hasItem(blockInput),
-                        FabricRecipeProvider.conditionsFromItem(blockInput))
-                .offerTo(exporter);
+                .define('B', blockInput)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(blockInput),
+                        NeoForgeRecipeProvider.has(blockInput))
+                .save(exporter);
     }
 
-    private void createWoodStoolRecipe(RecipeExporter exporter, Item inputPlanks, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 3)
+    private void createWoodStoolRecipe(RecipeOutput exporter, Item inputPlanks, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 3)
                 .pattern("PP")
                 .pattern("SS")
-                .input('P', inputPlanks)
-                .input('S', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(inputPlanks),
-                        FabricRecipeProvider.conditionsFromItem(inputPlanks))
-                .offerTo(exporter);
+                .define('P', inputPlanks)
+                .define('S', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputPlanks),
+                        NeoForgeRecipeProvider.has(inputPlanks))
+                .save(exporter);
     }
 
-    private void createWoodBenchRecipe(RecipeExporter exporter, Item inputPlanks, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 3)
+    private void createWoodBenchRecipe(RecipeOutput exporter, Item inputPlanks, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 3)
                 .pattern("PPP")
                 .pattern("S S")
-                .input('P', inputPlanks)
-                .input('S', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(inputPlanks),
-                        FabricRecipeProvider.conditionsFromItem(inputPlanks))
-                .offerTo(exporter);
+                .define('P', inputPlanks)
+                .define('S', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputPlanks),
+                        NeoForgeRecipeProvider.has(inputPlanks))
+                .save(exporter);
     }
 
-    private void createWoodTableRecipe(RecipeExporter exporter, Item inputPlanks, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 3)
+    private void createWoodTableRecipe(RecipeOutput exporter, Item inputPlanks, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 3)
                 .pattern("PPP")
                 .pattern("S S")
                 .pattern("S S")
-                .input('P', inputPlanks)
-                .input('S', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(inputPlanks),
-                        FabricRecipeProvider.conditionsFromItem(inputPlanks))
-                .offerTo(exporter);
+                .define('P', inputPlanks)
+                .define('S', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputPlanks),
+                        NeoForgeRecipeProvider.has(inputPlanks))
+                .save(exporter);
     }
 
-    private void createWoodChairRecipe(RecipeExporter exporter, Item inputPlanks, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 3)
+    private void createWoodChairRecipe(RecipeOutput exporter, Item inputPlanks, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 3)
                 .pattern("P  ")
                 .pattern("PPP")
                 .pattern("S S")
-                .input('P', inputPlanks)
-                .input('S', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(inputPlanks),
-                        FabricRecipeProvider.conditionsFromItem(inputPlanks))
-                .offerTo(exporter);
+                .define('P', inputPlanks)
+                .define('S', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputPlanks),
+                        NeoForgeRecipeProvider.has(inputPlanks))
+                .save(exporter);
     }
 
-    private void createWoodLadderRecipe(RecipeExporter exporter, Item inputPlanks, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 3)
+    private void createWoodLadderRecipe(RecipeOutput exporter, Item inputPlanks, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 3)
                 .pattern("P P")
                 .pattern("PSP")
                 .pattern("P P")
-                .input('P', inputPlanks)
-                .input('S', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(inputPlanks),
-                        FabricRecipeProvider.conditionsFromItem(inputPlanks))
-                .offerTo(exporter);
+                .define('P', inputPlanks)
+                .define('S', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputPlanks),
+                        NeoForgeRecipeProvider.has(inputPlanks))
+                .save(exporter);
     }
 
-    private void createStoneStoolRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
+    private void createStoneStoolRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 1)
                 .pattern("SSS")
                 .pattern("S S")
-                .input('S', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('S', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createStoneTableRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
+    private void createStoneTableRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 1)
                 .pattern("SSS")
                 .pattern(" S ")
                 .pattern(" S ")
-                .input('S', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('S', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createStoneChairRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
+    private void createStoneChairRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 1)
                 .pattern("S  ")
                 .pattern("SSS")
                 .pattern("SSS")
-                .input('S', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('S', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createLayerRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
+    private void createLayerRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
                 .pattern("BBB")
-                .input('B', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('B', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createButtonRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
-                .input(input, 1)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+    private void createButtonRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, 1)
+                .requires(input, 1)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createPressurePlateRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
+    private void createPressurePlateRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 1)
                 .pattern("BB")
-                .input('B', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('B', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createFenceRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 3)
+    private void createFenceRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 3)
                 .pattern("lsl")
                 .pattern("lsl")
-                .input('l', input)
-                .input('s', Items.STICK)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .criterion(FabricRecipeProvider.hasItem(Items.STICK),
-                        FabricRecipeProvider.conditionsFromItem(Items.STICK))
-                .offerTo(exporter);
+                .define('l', input)
+                .define('s', Items.STICK)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.STICK),
+                        NeoForgeRecipeProvider.has(Items.STICK))
+                .save(exporter);
     }
 
-    private void createGildedBlockRecipe(RecipeExporter exporter, Block input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
+    private void createGildedBlockRecipe(RecipeOutput exporter, Block input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 1)
                 .pattern(" N ")
                 .pattern("NBN")
                 .pattern(" N ")
-                .input('B', input)
-                .input('N', Items.GOLD_NUGGET)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('B', input)
+                .define('N', Items.GOLD_NUGGET)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createBrickworkBlockRecipe(RecipeExporter exporter, Block input, Block inputBinder, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
+    private void createBrickworkBlockRecipe(RecipeOutput exporter, Block input, Block inputBinder, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 2)
                 .pattern("SB")
-                .input('S', inputBinder)
-                .input('B', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('S', inputBinder)
+                .define('B', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createWattleRecipes(RecipeExporter exporter, Item input, Block outputBase,
+    private void createWattleRecipes(RecipeOutput exporter, Item input, Block outputBase,
                                      Block outputCross, Block outputRight, Block outputLeft, Block outputPillar, Block outputDiamond) {
         createBaseWattleRecipe(exporter, input, outputBase);
         createCrossWattleRecipe(exporter, input, outputCross);
@@ -2470,290 +2478,290 @@ public class RecipeProvider extends net.minecraft.data.server.recipe.RecipeProvi
         createDiamondWattleRecipe(exporter, input, outputDiamond);
     }
 
-    private void createBaseWattleRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
+    private void createBaseWattleRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 1)
                 .pattern(" S ")
                 .pattern("SDS")
                 .pattern(" S ")
-                .input('S', Items.STICK)
-                .input('D', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('S', Items.STICK)
+                .define('D', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createCrossWattleRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 4)
+    private void createCrossWattleRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 4)
                 .pattern("SDS")
                 .pattern("DSD")
                 .pattern("SDS")
-                .input('S', Items.STICK)
-                .input('D', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('S', Items.STICK)
+                .define('D', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createRightWattleRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
+    private void createRightWattleRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
                 .pattern("DDS")
                 .pattern("DSD")
                 .pattern("SDD")
-                .input('S', Items.STICK)
-                .input('D', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('S', Items.STICK)
+                .define('D', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createLeftWattleRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
+    private void createLeftWattleRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
                 .pattern("SDD")
                 .pattern("DSD")
                 .pattern("DDS")
-                .input('S', Items.STICK)
-                .input('D', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('S', Items.STICK)
+                .define('D', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createPillarWattleRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
+    private void createPillarWattleRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
                 .pattern("DSD")
                 .pattern("DSD")
                 .pattern("DSD")
-                .input('S', Items.STICK)
-                .input('D', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('S', Items.STICK)
+                .define('D', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createDiamondWattleRecipe(RecipeExporter exporter, Item input, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 5)
+    private void createDiamondWattleRecipe(RecipeOutput exporter, Item input, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 5)
                 .pattern("DSD")
                 .pattern("SDS")
                 .pattern("DSD")
-                .input('S', Items.STICK)
-                .input('D', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('S', Items.STICK)
+                .define('D', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createStatueRecipe(RecipeExporter exporter, Block polishedInput, Block stoneInput, Block wallInput, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
+    private void createStatueRecipe(RecipeOutput exporter, Block polishedInput, Block stoneInput, Block wallInput, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 1)
                 .pattern("WSW")
                 .pattern("WSW")
                 .pattern("WPW")
-                .input('W', wallInput)
-                .input('S', stoneInput)
-                .input('P', polishedInput)
-                .criterion(FabricRecipeProvider.hasItem(polishedInput),
-                        FabricRecipeProvider.conditionsFromItem(polishedInput))
-                .offerTo(exporter);
+                .define('W', wallInput)
+                .define('S', stoneInput)
+                .define('P', polishedInput)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(polishedInput),
+                        NeoForgeRecipeProvider.has(polishedInput))
+                .save(exporter);
     }
 
-    private void createCushionRecipe(RecipeExporter exporter, Block woolBlock, Block output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
+    private void createCushionRecipe(RecipeOutput exporter, Block woolBlock, Block output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 1)
                 .pattern("WW")
                 .pattern("PP")
-                .input('W', woolBlock)
-                .input('P', TagKey.of(RegistryKeys.ITEM, Identifier.of("planks")))
-                .criterion(FabricRecipeProvider.hasItem(woolBlock),
-                        FabricRecipeProvider.conditionsFromItem(woolBlock))
-                .offerTo(exporter);
+                .define('W', woolBlock)
+                .define('P', TagKey.create(Registries.ITEM, ResourceLocation.parse("planks")))
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(woolBlock),
+                        NeoForgeRecipeProvider.has(woolBlock))
+                .save(exporter);
     }
 
-    private void createBannerPatternRecipe(RecipeExporter exporter, Item input, Item output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, output, 1)
+    private void createBannerPatternRecipe(RecipeOutput exporter, Item input, Item output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, output, 1)
                 .pattern("PF")
                 .pattern("BI")
-                .input('I', input)
-                .input('B', Items.BLACK_DYE)
-                .input('F', Items.FEATHER)
-                .input('P', Items.PAPER)
-                .criterion(FabricRecipeProvider.hasItem(Items.PAPER),
-                        FabricRecipeProvider.conditionsFromItem(Items.PAPER))
-                .offerTo(exporter);
+                .define('I', input)
+                .define('B', Items.BLACK_DYE)
+                .define('F', Items.FEATHER)
+                .define('P', Items.PAPER)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.PAPER),
+                        NeoForgeRecipeProvider.has(Items.PAPER))
+                .save(exporter);
     }
     //endregion
 
     //region ITEM RECIPE METHODS
-    private void createSeedsRecipe(RecipeExporter exporter, Item input, Item output) {
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, output, 1)
-                .input(input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+    private void createSeedsRecipe(RecipeOutput exporter, Item input, Item output) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, output, 1)
+                .requires(input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
-    private void createPickaxeRecipe(RecipeExporter exporter, Item inputRod, Item inputMaterial, Item output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, output, 1)
+    private void createPickaxeRecipe(RecipeOutput exporter, Item inputRod, Item inputMaterial, Item output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output, 1)
                 .pattern("MMM")
                 .pattern(" R ")
                 .pattern(" R ")
-                .input('M', inputMaterial)
-                .input('R', inputRod)
-                .criterion(FabricRecipeProvider.hasItem(inputMaterial),
-                        FabricRecipeProvider.conditionsFromItem(inputMaterial))
-                .offerTo(exporter);
+                .define('M', inputMaterial)
+                .define('R', inputRod)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputMaterial),
+                        NeoForgeRecipeProvider.has(inputMaterial))
+                .save(exporter);
     }
 
-    private void createAxeRecipe(RecipeExporter exporter, Item inputRod, Item inputMaterial, Item output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, output, 1)
+    private void createAxeRecipe(RecipeOutput exporter, Item inputRod, Item inputMaterial, Item output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output, 1)
                 .pattern("MM ")
                 .pattern("MR ")
                 .pattern(" R ")
-                .input('M', inputMaterial)
-                .input('R', inputRod)
-                .criterion(FabricRecipeProvider.hasItem(inputMaterial),
-                        FabricRecipeProvider.conditionsFromItem(inputMaterial))
-                .offerTo(exporter);
+                .define('M', inputMaterial)
+                .define('R', inputRod)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputMaterial),
+                        NeoForgeRecipeProvider.has(inputMaterial))
+                .save(exporter);
     }
 
-    private void createShovelRecipe(RecipeExporter exporter, Item inputRod, Item inputMaterial, Item output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, output, 1)
+    private void createShovelRecipe(RecipeOutput exporter, Item inputRod, Item inputMaterial, Item output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output, 1)
                 .pattern(" M ")
                 .pattern(" R ")
                 .pattern(" R ")
-                .input('M', inputMaterial)
-                .input('R', inputRod)
-                .criterion(FabricRecipeProvider.hasItem(inputMaterial),
-                        FabricRecipeProvider.conditionsFromItem(inputMaterial))
-                .offerTo(exporter);
+                .define('M', inputMaterial)
+                .define('R', inputRod)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputMaterial),
+                        NeoForgeRecipeProvider.has(inputMaterial))
+                .save(exporter);
     }
 
-    private void createHoeRecipe(RecipeExporter exporter, Item inputRod, Item inputMaterial, Item output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, output, 1)
+    private void createHoeRecipe(RecipeOutput exporter, Item inputRod, Item inputMaterial, Item output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output, 1)
                 .pattern("MM ")
                 .pattern(" R ")
                 .pattern(" R ")
-                .input('M', inputMaterial)
-                .input('R', inputRod)
-                .criterion(FabricRecipeProvider.hasItem(inputMaterial),
-                        FabricRecipeProvider.conditionsFromItem(inputMaterial))
-                .offerTo(exporter);
+                .define('M', inputMaterial)
+                .define('R', inputRod)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputMaterial),
+                        NeoForgeRecipeProvider.has(inputMaterial))
+                .save(exporter);
     }
 
-    private void createSwordRecipe(RecipeExporter exporter, Item inputRod, Item inputMaterial, Item output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, output, 1)
+    private void createSwordRecipe(RecipeOutput exporter, Item inputRod, Item inputMaterial, Item output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, output, 1)
                 .pattern(" M ")
                 .pattern(" M ")
                 .pattern(" R ")
-                .input('M', inputMaterial)
-                .input('R', inputRod)
-                .criterion(FabricRecipeProvider.hasItem(inputMaterial),
-                        FabricRecipeProvider.conditionsFromItem(inputMaterial))
-                .offerTo(exporter);
+                .define('M', inputMaterial)
+                .define('R', inputRod)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputMaterial),
+                        NeoForgeRecipeProvider.has(inputMaterial))
+                .save(exporter);
     }
 
-    private void createDaggerRecipe(RecipeExporter exporter, Item inputRod, Item inputMaterial, Item output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, output, 1)
+    private void createDaggerRecipe(RecipeOutput exporter, Item inputRod, Item inputMaterial, Item output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, output, 1)
                 .pattern(" M ")
                 .pattern(" R ")
-                .input('M', inputMaterial)
-                .input('R', inputRod)
-                .criterion(FabricRecipeProvider.hasItem(inputMaterial),
-                        FabricRecipeProvider.conditionsFromItem(inputMaterial))
-                .offerTo(exporter);
+                .define('M', inputMaterial)
+                .define('R', inputRod)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputMaterial),
+                        NeoForgeRecipeProvider.has(inputMaterial))
+                .save(exporter);
     }
 
-    private void createDaggerRecipeTag(RecipeExporter exporter, Item inputRod, TagKey inputMaterial, Item output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, output, 1)
+    private void createDaggerRecipeTag(RecipeOutput exporter, Item inputRod, TagKey inputMaterial, Item output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, output, 1)
                 .pattern(" M ")
                 .pattern(" R ")
-                .input('M', inputMaterial)
-                .input('R', inputRod)
-                .criterion(FabricRecipeProvider.hasItem(Items.OAK_PLANKS),
-                        FabricRecipeProvider.conditionsFromItem(Items.OAK_PLANKS))
-                .offerTo(exporter);
+                .define('M', inputMaterial)
+                .define('R', inputRod)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.OAK_PLANKS),
+                        NeoForgeRecipeProvider.has(Items.OAK_PLANKS))
+                .save(exporter);
     }
 
-    private void createSpearRecipe(RecipeExporter exporter, Item inputRod, Item inputMaterial, Item output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, output, 1)
+    private void createSpearRecipe(RecipeOutput exporter, Item inputRod, Item inputMaterial, Item output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, output, 1)
                 .pattern("  M")
                 .pattern(" R ")
                 .pattern("R  ")
-                .input('M', inputMaterial)
-                .input('R', inputRod)
-                .criterion(FabricRecipeProvider.hasItem(inputMaterial),
-                        FabricRecipeProvider.conditionsFromItem(inputMaterial))
-                .offerTo(exporter);
+                .define('M', inputMaterial)
+                .define('R', inputRod)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputMaterial),
+                        NeoForgeRecipeProvider.has(inputMaterial))
+                .save(exporter);
     }
 
-    private void createSpearRecipeTag(RecipeExporter exporter, Item inputRod, TagKey inputMaterial, Item output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, output, 1)
+    private void createSpearRecipeTag(RecipeOutput exporter, Item inputRod, TagKey inputMaterial, Item output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, output, 1)
                 .pattern("  M")
                 .pattern(" R ")
                 .pattern("R  ")
-                .input('M', inputMaterial)
-                .input('R', inputRod)
-                .criterion(FabricRecipeProvider.hasItem(Items.OAK_PLANKS),
-                        FabricRecipeProvider.conditionsFromItem(Items.OAK_PLANKS))
-                .offerTo(exporter);
+                .define('M', inputMaterial)
+                .define('R', inputRod)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(Items.OAK_PLANKS),
+                        NeoForgeRecipeProvider.has(Items.OAK_PLANKS))
+                .save(exporter);
     }
 
-    private void createBucketRecipe(RecipeExporter exporter, Item inputMaterial, Item output) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
+    private void createBucketRecipe(RecipeOutput exporter, Item inputMaterial, Item output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 1)
                 .pattern("M M")
                 .pattern(" M ")
-                .input('M', inputMaterial)
-                .criterion(FabricRecipeProvider.hasItem(inputMaterial),
-                        FabricRecipeProvider.conditionsFromItem(inputMaterial))
-                .offerTo(exporter);
+                .define('M', inputMaterial)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(inputMaterial),
+                        NeoForgeRecipeProvider.has(inputMaterial))
+                .save(exporter);
     }
 
-    private void createToolSetRecipes(RecipeExporter exporter, Item inputRod, Item inputMaterial, Item outputPickaxe, Item outputAxe, Item outputShovel, Item outputHoe) {
+    private void createToolSetRecipes(RecipeOutput exporter, Item inputRod, Item inputMaterial, Item outputPickaxe, Item outputAxe, Item outputShovel, Item outputHoe) {
         createPickaxeRecipe(exporter, inputRod, inputMaterial, outputPickaxe);
         createAxeRecipe(exporter, inputRod, inputMaterial, outputAxe);
         createShovelRecipe(exporter, inputRod, inputMaterial, outputShovel);
         createHoeRecipe(exporter, inputRod, inputMaterial, outputHoe);
     }
 
-    private void createCookedFoodRecipes(RecipeExporter exporter, Item rawFood, Item cookedFood) {
-        offerFoodCookingRecipe(exporter, "smelting", RecipeSerializer.SMELTING, SmeltingRecipe::new, 200, rawFood, cookedFood, 0.35f);
-        offerFoodCookingRecipe(exporter, "smoking", RecipeSerializer.SMOKING, SmokingRecipe::new, 100, rawFood, cookedFood, 0.35f);
-        offerFoodCookingRecipe(exporter, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING, CampfireCookingRecipe::new, 600, rawFood, cookedFood, 0.35f);
+    private void createCookedFoodRecipes(RecipeOutput exporter, Item rawFood, Item cookedFood) {
+        simpleCookingRecipe(exporter, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 200, rawFood, cookedFood, 0.35f);
+        simpleCookingRecipe(exporter, "smoking", RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, 100, rawFood, cookedFood, 0.35f);
+        simpleCookingRecipe(exporter, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING_RECIPE, CampfireCookingRecipe::new, 600, rawFood, cookedFood, 0.35f);
     }
 
-    private void createSmokingRecipe(RecipeExporter exporter, Item rawFood, Item cookedFood) {
-        offerFoodCookingRecipe(exporter, "smoking", RecipeSerializer.SMOKING, SmokingRecipe::new, 100, rawFood, cookedFood, 0.35f);
+    private void createSmokingRecipe(RecipeOutput exporter, Item rawFood, Item cookedFood) {
+        simpleCookingRecipe(exporter, "smoking", RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, 100, rawFood, cookedFood, 0.35f);
     }
 
-    private void createMetalsRecipe(RecipeExporter exporter, Item nugget, Item ingot, Block block) {
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ingot, 1)
-                .input(nugget, 9)
-                .criterion(FabricRecipeProvider.hasItem(nugget),
-                        FabricRecipeProvider.conditionsFromItem(nugget))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.ITEM.getId(ingot).getPath() + "_from_nuggets"));
+    private void createMetalsRecipe(RecipeOutput exporter, Item nugget, Item ingot, Block block) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingot, 1)
+                .requires(nugget, 9)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(nugget),
+                        NeoForgeRecipeProvider.has(nugget))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.ITEM.getKey(ingot).getPath() + "_from_nuggets"));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, nugget, 9)
-                .input(ingot)
-                .criterion(FabricRecipeProvider.hasItem(ingot),
-                        FabricRecipeProvider.conditionsFromItem(ingot))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.ITEM.getId(nugget).getPath() + "_from_ingot"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, nugget, 9)
+                .requires(ingot)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(ingot),
+                        NeoForgeRecipeProvider.has(ingot))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.ITEM.getKey(nugget).getPath() + "_from_ingot"));
 
         createFilledRecipe(exporter, ingot, block, 1);
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ingot, 9)
-                .input(block)
-                .criterion(FabricRecipeProvider.hasItem(block),
-                        FabricRecipeProvider.conditionsFromItem(block))
-                .offerTo(exporter, Identifier.of(MiddleEarth.MOD_ID, Registries.ITEM.getId(ingot).getPath() + "_from_block"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingot, 9)
+                .requires(block)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(block),
+                        NeoForgeRecipeProvider.has(block))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, BuiltInRegistries.ITEM.getKey(ingot).getPath() + "_from_block"));
     }
     //endregion
 
-    private void createFilledRecipe(RecipeExporter exporter, Item input, Block output, int count) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, count)
+    private void createFilledRecipe(RecipeOutput exporter, Item input, Block output, int count) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
                 .pattern("lll")
                 .pattern("lll")
                 .pattern("lll")
-                .input('l', input)
-                .criterion(FabricRecipeProvider.hasItem(input),
-                        FabricRecipeProvider.conditionsFromItem(input))
-                .offerTo(exporter);
+                .define('l', input)
+                .unlockedBy(NeoForgeRecipeProvider.getHasName(input),
+                        NeoForgeRecipeProvider.has(input))
+                .save(exporter);
     }
 
 }

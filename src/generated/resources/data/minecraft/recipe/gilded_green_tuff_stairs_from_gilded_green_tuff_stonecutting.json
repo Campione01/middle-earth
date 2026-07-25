@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:gilded_green_tuff"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:gilded_green_tuff_stairs"
+  }
+}

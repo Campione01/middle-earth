@@ -1,0 +1,60 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:black_uruk_commander_chestplate"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:black_uruk_commander_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:black_uruk_plate_boots"
+        },
+        "head": {
+          "id": "me:black_uruk_commander_helmet"
+        },
+        "legs": {
+          "id": "me:black_uruk_plate_leggings"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:mordor_elite_cleaver"
+            },
+            {
+              "id": "me:mordor_elite_warblade"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:mordor_painted_heavy_shield",
+              "weight": 3
+            },
+            {
+              "id": "me:mordor_heavy_shield",
+              "weight": 2
+            },
+            {
+              "id": "me:mordor_black_round_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:mordor.black_uruk_leader",
+  "race": "me:uruk"
+}

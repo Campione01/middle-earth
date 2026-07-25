@@ -1,0 +1,20 @@
+{
+  "type": "me:artisan_table",
+  "category": "axe",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:axe_head"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:edhel_steel_axe"
+  }
+}

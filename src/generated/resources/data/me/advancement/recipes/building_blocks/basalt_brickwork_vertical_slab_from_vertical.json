@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_basalt_brickwork_vertical_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:basalt_brickwork_vertical_slab"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:basalt_brickwork_vertical_slab_from_vertical"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_basalt_brickwork_vertical_slab"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:basalt_brickwork_vertical_slab_from_vertical"
+    ]
+  }
+}

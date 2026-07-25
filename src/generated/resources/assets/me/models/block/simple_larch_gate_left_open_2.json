@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/large_door_left_open",
+  "textures": {
+    "all": "me:block/simple_larch_gate_2",
+    "particle": "me:block/simple_larch_gate_2"
+  }
+}

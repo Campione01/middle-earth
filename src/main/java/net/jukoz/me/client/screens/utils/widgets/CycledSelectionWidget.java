@@ -2,21 +2,20 @@ package net.jukoz.me.client.screens.utils.widgets;
 
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.client.screens.utils.CycledSelectionButtonType;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CycledSelectionWidget extends ModWidget{
-    private static final Identifier TEXTURE = Identifier.of(MiddleEarth.MOD_ID,"textures/gui/widget/cycled_selection_widget.png");
-    private final ButtonWidget buttonLeft;
-    private final ButtonWidget buttonRight;
-    private final ButtonWidget selectionButton;
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID,"textures/gui/widget/cycled_selection_widget.png");
+    private final Button buttonLeft;
+    private final Button buttonRight;
+    private final Button selectionButton;
     private final CycledSelectionButtonType buttonType;
     private boolean shouldDisplay = true;
     static final int ARROW_SIZE_X = 7;
@@ -26,21 +25,21 @@ public class CycledSelectionWidget extends ModWidget{
     public static final int TOTAL_WIDTH = ((MARGIN + ARROW_SIZE_X) * 2) + PANEL_SIZE_X;
     public static final int TOTAL_HEIGHT = Math.max(PANEL_SIZE_Y, ARROW_SIZE_Y);
 
-    public CycledSelectionWidget(ButtonWidget.PressAction leftAction, ButtonWidget.PressAction rightAction, ButtonWidget.PressAction selectionAction, CycledSelectionButtonType buttonType){
+    public CycledSelectionWidget(Button.OnPress leftAction, Button.OnPress rightAction, Button.OnPress selectionAction, CycledSelectionButtonType buttonType){
         this.buttonType = buttonType;
-        buttonLeft = ButtonWidget.builder(Text.of("Cycled Selection Left"), leftAction).build();
-        buttonLeft.setDimensions(ARROW_SIZE_X, ARROW_SIZE_Y);
-        buttonRight = ButtonWidget.builder(Text.of("Cycled Selection Right"), rightAction).build();
-        buttonRight.setDimensions(ARROW_SIZE_X, ARROW_SIZE_Y);
+        buttonLeft = Button.builder(Component.nullToEmpty("Cycled Selection Left"), leftAction).build();
+        buttonLeft.setSize(ARROW_SIZE_X, ARROW_SIZE_Y);
+        buttonRight = Button.builder(Component.nullToEmpty("Cycled Selection Right"), rightAction).build();
+        buttonRight.setSize(ARROW_SIZE_X, ARROW_SIZE_Y);
 
-        selectionButton = ButtonWidget.builder(Text.of("Cycled Selection"), selectionAction).build();
-        selectionButton.setDimensions(PANEL_SIZE_X, PANEL_SIZE_Y);
+        selectionButton = Button.builder(Component.nullToEmpty("Cycled Selection"), selectionAction).build();
+        selectionButton.setSize(PANEL_SIZE_X, PANEL_SIZE_Y);
         if(selectionAction == null)
             selectionButton.active = false;
     }
 
-    public List<ButtonWidget> getButtons(){
-        ArrayList<ButtonWidget> listOfButtons = new ArrayList<>();
+    public List<Button> getButtons(){
+        ArrayList<Button> listOfButtons = new ArrayList<>();
         listOfButtons.add(buttonLeft);
         listOfButtons.add(selectionButton);
         listOfButtons.add(buttonRight);
@@ -60,19 +59,19 @@ public class CycledSelectionWidget extends ModWidget{
         selectionButton.active = activate;
     }
 
-    public int drawAnchored(DrawContext context, int anchorX, int startY, boolean isLeftAnchor, MutableText text, TextRenderer textRenderer){
+    public int drawAnchored(GuiGraphics context, int anchorX, int startY, boolean isLeftAnchor, MutableComponent text, Font textRenderer){
         int startX = anchorX;
         if(!isLeftAnchor)
             startX -= TOTAL_WIDTH;
         return draw(context, startX, startY, text, textRenderer);
     }
 
-    public int drawCentered(DrawContext context, int centerX, int startY, MutableText text, TextRenderer textRenderer){
+    public int drawCentered(GuiGraphics context, int centerX, int startY, MutableComponent text, Font textRenderer){
         int startX = centerX - (TOTAL_WIDTH / 2);
         return draw(context, startX, startY, text, textRenderer);
     }
 
-    protected int draw(DrawContext context, int startX, int startY, MutableText text, TextRenderer textRenderer){
+    protected int draw(GuiGraphics context, int startX, int startY, MutableComponent text, Font textRenderer){
         if(!shouldDisplay){
             return 0;
         }
@@ -89,24 +88,24 @@ public class CycledSelectionWidget extends ModWidget{
         if(buttonLeft.active){
             buttonLeft.setPosition(x, y + arrowStartOffsetY);
             buttonIsHovered = buttonLeft.isFocused() || isMouseOver(ARROW_SIZE_X, ARROW_SIZE_Y, x, y + arrowStartOffsetY);
-            context.drawTexture(TEXTURE, x, y + arrowStartOffsetY, 206, buttonIsHovered ? 11 : 0, ARROW_SIZE_X, ARROW_SIZE_Y);
+            context.blit(TEXTURE, x, y + arrowStartOffsetY, 206, buttonIsHovered ? 11 : 0, ARROW_SIZE_X, ARROW_SIZE_Y);
             if(buttonLeft.isFocused() && ModWidget.getFocusEnabled())
-                context.drawTexture(TEXTURE, x, y + arrowStartOffsetY, 206, 33, ARROW_SIZE_X, ARROW_SIZE_Y);
+                context.blit(TEXTURE, x, y + arrowStartOffsetY, 206, 33, ARROW_SIZE_X, ARROW_SIZE_Y);
         }
 
         // Center Button
         x += ARROW_SIZE_X + MARGIN;
         selectionButton.setPosition(x, y + buttonStartOffsetY);
         buttonIsHovered = selectionButton.active && (selectionButton.isFocused() || isMouseOver(PANEL_SIZE_X, PANEL_SIZE_Y, x, y + buttonStartOffsetY));
-        context.drawTexture(TEXTURE, x, y + buttonStartOffsetY, buttonIsHovered ? buttonType.hoveredUvX : buttonType.uvX, buttonIsHovered ? buttonType.hoveredUvY : buttonType.uvY, PANEL_SIZE_X, PANEL_SIZE_Y);
+        context.blit(TEXTURE, x, y + buttonStartOffsetY, buttonIsHovered ? buttonType.hoveredUvX : buttonType.uvX, buttonIsHovered ? buttonType.hoveredUvY : buttonType.uvY, PANEL_SIZE_X, PANEL_SIZE_Y);
         if(selectionButton.isFocused() && ModWidget.getFocusEnabled())
-            context.drawTexture(TEXTURE, x, y + buttonStartOffsetY, CycledSelectionButtonType.FOCUS_UV_X, CycledSelectionButtonType.FOCUS_UV_Y, PANEL_SIZE_X, PANEL_SIZE_Y);
+            context.blit(TEXTURE, x, y + buttonStartOffsetY, CycledSelectionButtonType.FOCUS_UV_X, CycledSelectionButtonType.FOCUS_UV_Y, PANEL_SIZE_X, PANEL_SIZE_Y);
 
         if(text == null)
-            text = Text.translatable("me.ui.selection.none");
-        context.drawText(textRenderer, text,
-                x + (int)((PANEL_SIZE_X - textRenderer.getWidth(text)) / 2f),
-                startY + (int) ((PANEL_SIZE_Y / 2f) - (textRenderer.fontHeight / 2f)) + 1,
+            text = Component.translatable("me.ui.selection.none");
+        context.drawString(textRenderer, text,
+                x + (int)((PANEL_SIZE_X - textRenderer.width(text)) / 2f),
+                startY + (int) ((PANEL_SIZE_Y / 2f) - (textRenderer.lineHeight / 2f)) + 1,
                 0, false);
 
         x += PANEL_SIZE_X + MARGIN;
@@ -114,9 +113,9 @@ public class CycledSelectionWidget extends ModWidget{
         if(buttonRight.active){
             buttonRight.setPosition(x, y + arrowStartOffsetY);
             buttonIsHovered = buttonRight.isFocused() || isMouseOver(ARROW_SIZE_X, ARROW_SIZE_Y, x, y + arrowStartOffsetY);
-            context.drawTexture(TEXTURE, x, y + arrowStartOffsetY, 215, buttonIsHovered ? 11 : 0, ARROW_SIZE_X, ARROW_SIZE_Y);
+            context.blit(TEXTURE, x, y + arrowStartOffsetY, 215, buttonIsHovered ? 11 : 0, ARROW_SIZE_X, ARROW_SIZE_Y);
             if(buttonRight.isFocused() && ModWidget.getFocusEnabled())
-                context.drawTexture(TEXTURE, x, y + arrowStartOffsetY, 215, 33, ARROW_SIZE_X, ARROW_SIZE_Y);
+                context.blit(TEXTURE, x, y + arrowStartOffsetY, 215, 33, ARROW_SIZE_X, ARROW_SIZE_Y);
         }
 
         return PANEL_SIZE_Y;

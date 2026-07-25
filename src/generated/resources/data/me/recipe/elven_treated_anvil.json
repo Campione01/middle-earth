@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "me:edhel_steel_block"
+    },
+    "I": {
+      "item": "me:edhel_steel_ingot"
+    },
+    "L": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "pattern": [
+    "IBI",
+    " I ",
+    "LLL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:elven_treated_anvil"
+  }
+}

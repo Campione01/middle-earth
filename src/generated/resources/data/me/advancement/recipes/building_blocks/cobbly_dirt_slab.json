@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cobbly_dirt": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:cobbly_dirt"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:cobbly_dirt_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cobbly_dirt"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:cobbly_dirt_slab"
+    ]
+  }
+}

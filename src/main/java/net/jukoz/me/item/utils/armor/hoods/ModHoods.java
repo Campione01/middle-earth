@@ -2,14 +2,13 @@ package net.jukoz.me.item.utils.armor.hoods;
 
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.util.StringIdentifiable;
-import net.minecraft.util.function.ValueLists;
-
 import java.util.function.IntFunction;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ByIdMap;
+import net.minecraft.util.StringRepresentable;
 
-public enum ModHoods implements StringIdentifiable {
+public enum ModHoods implements StringRepresentable {
 
     HOOD(0,"hood"),
     TALL_HOOD(1,"tall_hood"),
@@ -28,14 +27,14 @@ public enum ModHoods implements StringIdentifiable {
     NAZGUL_HOOD(10,"nazgul_hood", ModHoodStates.UP),
     ;
 
-    private static final IntFunction<ModHoods> BY_ID = ValueLists.createIdToValueFunction(ModHoods::getId, ModHoods.values(), ValueLists.OutOfBoundsHandling.ZERO);;
+    private static final IntFunction<ModHoods> BY_ID = ByIdMap.continuous(ModHoods::getId, ModHoods.values(), ByIdMap.OutOfBoundsStrategy.ZERO);;
 
     private final String name;
     private final int id;
     private final ModHoodStates constantState;
 
-    public static final Codec<ModHoods> CODEC = StringIdentifiable.createBasicCodec(ModHoods::values);
-    public static final PacketCodec<ByteBuf, ModHoods> PACKET_CODEC = PacketCodecs.indexed(BY_ID, ModHoods::getId);;
+    public static final Codec<ModHoods> CODEC = StringRepresentable.fromValues(ModHoods::values);
+    public static final StreamCodec<ByteBuf, ModHoods> PACKET_CODEC = ByteBufCodecs.idMapper(BY_ID, ModHoods::getId);;
 
     ModHoods(int id, String name){
         this.id = id;
@@ -62,7 +61,7 @@ public enum ModHoods implements StringIdentifiable {
     }
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return this.name;
     }
 }

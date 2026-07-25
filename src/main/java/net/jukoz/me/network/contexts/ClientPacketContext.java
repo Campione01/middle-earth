@@ -1,8 +1,8 @@
 package net.jukoz.me.network.contexts;
 
 import net.jukoz.me.network.connections.IConnectionToServer;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
-public record ClientPacketContext(PlayerEntity player, IConnectionToServer connection) {
+public record ClientPacketContext(Player player, IConnectionToServer connection) {
 
 }

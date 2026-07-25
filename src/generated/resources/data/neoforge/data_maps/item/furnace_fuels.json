@@ -1,0 +1,2242 @@
+{
+  "values": {
+    "me:acacia_bench": {
+      "burn_time": 300
+    },
+    "me:acacia_chair": {
+      "burn_time": 300
+    },
+    "me:acacia_shingles": {
+      "burn_time": 300
+    },
+    "me:acacia_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:acacia_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:acacia_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:acacia_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:acacia_stool": {
+      "burn_time": 300
+    },
+    "me:acacia_table": {
+      "burn_time": 300
+    },
+    "me:bamboo_bench": {
+      "burn_time": 300
+    },
+    "me:bamboo_chair": {
+      "burn_time": 300
+    },
+    "me:bamboo_shingles": {
+      "burn_time": 300
+    },
+    "me:bamboo_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:bamboo_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:bamboo_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:bamboo_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:bamboo_stool": {
+      "burn_time": 300
+    },
+    "me:bamboo_table": {
+      "burn_time": 300
+    },
+    "me:beech_bench": {
+      "burn_time": 300
+    },
+    "me:beech_button": {
+      "burn_time": 100
+    },
+    "me:beech_chair": {
+      "burn_time": 300
+    },
+    "me:beech_door": {
+      "burn_time": 200
+    },
+    "me:beech_fence": {
+      "burn_time": 300
+    },
+    "me:beech_fence_gate": {
+      "burn_time": 300
+    },
+    "me:beech_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:beech_roofing": {
+      "burn_time": 300
+    },
+    "me:beech_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:beech_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:beech_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:beech_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:beech_shingles": {
+      "burn_time": 300
+    },
+    "me:beech_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:beech_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:beech_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:beech_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:beech_slab": {
+      "burn_time": 150
+    },
+    "me:beech_stairs": {
+      "burn_time": 300
+    },
+    "me:beech_stool": {
+      "burn_time": 300
+    },
+    "me:beech_table": {
+      "burn_time": 300
+    },
+    "me:beech_trapdoor": {
+      "burn_time": 200
+    },
+    "me:beech_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:beech_wood_fence": {
+      "burn_time": 300
+    },
+    "me:beech_wood_slab": {
+      "burn_time": 150
+    },
+    "me:beech_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:beech_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:beech_wood_wall": {
+      "burn_time": 300
+    },
+    "me:birch_bench": {
+      "burn_time": 300
+    },
+    "me:birch_chair": {
+      "burn_time": 300
+    },
+    "me:birch_shingles": {
+      "burn_time": 300
+    },
+    "me:birch_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:birch_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:birch_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:birch_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:birch_stool": {
+      "burn_time": 300
+    },
+    "me:birch_table": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_bench": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_button": {
+      "burn_time": 100
+    },
+    "me:black_lebethron_chair": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_door": {
+      "burn_time": 200
+    },
+    "me:black_lebethron_fence": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_fence_gate": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_roofing": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:black_lebethron_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:black_lebethron_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_shingles": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:black_lebethron_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:black_lebethron_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_slab": {
+      "burn_time": 150
+    },
+    "me:black_lebethron_stairs": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_stool": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_table": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_trapdoor": {
+      "burn_time": 200
+    },
+    "me:black_lebethron_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:black_lebethron_wood_fence": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_wood_slab": {
+      "burn_time": 150
+    },
+    "me:black_lebethron_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:black_lebethron_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:black_lebethron_wood_wall": {
+      "burn_time": 300
+    },
+    "me:black_pine_bench": {
+      "burn_time": 300
+    },
+    "me:black_pine_button": {
+      "burn_time": 100
+    },
+    "me:black_pine_chair": {
+      "burn_time": 300
+    },
+    "me:black_pine_door": {
+      "burn_time": 200
+    },
+    "me:black_pine_fence": {
+      "burn_time": 300
+    },
+    "me:black_pine_fence_gate": {
+      "burn_time": 300
+    },
+    "me:black_pine_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:black_pine_roofing": {
+      "burn_time": 300
+    },
+    "me:black_pine_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:black_pine_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:black_pine_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:black_pine_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:black_pine_shingles": {
+      "burn_time": 300
+    },
+    "me:black_pine_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:black_pine_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:black_pine_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:black_pine_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:black_pine_slab": {
+      "burn_time": 150
+    },
+    "me:black_pine_stairs": {
+      "burn_time": 300
+    },
+    "me:black_pine_stool": {
+      "burn_time": 300
+    },
+    "me:black_pine_table": {
+      "burn_time": 300
+    },
+    "me:black_pine_trapdoor": {
+      "burn_time": 200
+    },
+    "me:black_pine_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:black_pine_wood_fence": {
+      "burn_time": 300
+    },
+    "me:black_pine_wood_slab": {
+      "burn_time": 150
+    },
+    "me:black_pine_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:black_pine_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:black_pine_wood_wall": {
+      "burn_time": 300
+    },
+    "me:black_wool_slab": {
+      "burn_time": 50
+    },
+    "me:black_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:black_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:blue_wool_slab": {
+      "burn_time": 50
+    },
+    "me:blue_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:blue_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:brown_wool_slab": {
+      "burn_time": 50
+    },
+    "me:brown_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:brown_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:cherry_bench": {
+      "burn_time": 300
+    },
+    "me:cherry_chair": {
+      "burn_time": 300
+    },
+    "me:cherry_shingles": {
+      "burn_time": 300
+    },
+    "me:cherry_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:cherry_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:cherry_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:cherry_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:cherry_stool": {
+      "burn_time": 300
+    },
+    "me:cherry_table": {
+      "burn_time": 300
+    },
+    "me:chestnut_bench": {
+      "burn_time": 300
+    },
+    "me:chestnut_button": {
+      "burn_time": 100
+    },
+    "me:chestnut_chair": {
+      "burn_time": 300
+    },
+    "me:chestnut_door": {
+      "burn_time": 200
+    },
+    "me:chestnut_fence": {
+      "burn_time": 300
+    },
+    "me:chestnut_fence_gate": {
+      "burn_time": 300
+    },
+    "me:chestnut_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:chestnut_roofing": {
+      "burn_time": 300
+    },
+    "me:chestnut_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:chestnut_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:chestnut_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:chestnut_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:chestnut_shingles": {
+      "burn_time": 300
+    },
+    "me:chestnut_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:chestnut_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:chestnut_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:chestnut_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:chestnut_slab": {
+      "burn_time": 150
+    },
+    "me:chestnut_stairs": {
+      "burn_time": 300
+    },
+    "me:chestnut_stool": {
+      "burn_time": 300
+    },
+    "me:chestnut_table": {
+      "burn_time": 300
+    },
+    "me:chestnut_trapdoor": {
+      "burn_time": 200
+    },
+    "me:chestnut_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:chestnut_wood_fence": {
+      "burn_time": 300
+    },
+    "me:chestnut_wood_slab": {
+      "burn_time": 150
+    },
+    "me:chestnut_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:chestnut_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:chestnut_wood_wall": {
+      "burn_time": 300
+    },
+    "me:crimson_shingles": {
+      "burn_time": 300
+    },
+    "me:crimson_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:crimson_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:crimson_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:crimson_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:cyan_wool_slab": {
+      "burn_time": 50
+    },
+    "me:cyan_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:cyan_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:dark_mushroom_shingles": {
+      "burn_time": 300
+    },
+    "me:dark_mushroom_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:dark_mushroom_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:dark_mushroom_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:dark_mushroom_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:dark_oak_bench": {
+      "burn_time": 300
+    },
+    "me:dark_oak_chair": {
+      "burn_time": 300
+    },
+    "me:dark_oak_shingles": {
+      "burn_time": 300
+    },
+    "me:dark_oak_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:dark_oak_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:dark_oak_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:dark_oak_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:dark_oak_stool": {
+      "burn_time": 300
+    },
+    "me:dark_oak_table": {
+      "burn_time": 300
+    },
+    "me:erebor_bow": {
+      "burn_time": 300
+    },
+    "me:erebor_crossbow": {
+      "burn_time": 400
+    },
+    "me:erebor_noble_bow": {
+      "burn_time": 300
+    },
+    "me:erebor_noble_crossbow": {
+      "burn_time": 400
+    },
+    "me:fir_bench": {
+      "burn_time": 300
+    },
+    "me:fir_button": {
+      "burn_time": 100
+    },
+    "me:fir_chair": {
+      "burn_time": 300
+    },
+    "me:fir_door": {
+      "burn_time": 200
+    },
+    "me:fir_fence": {
+      "burn_time": 300
+    },
+    "me:fir_fence_gate": {
+      "burn_time": 300
+    },
+    "me:fir_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:fir_roofing": {
+      "burn_time": 300
+    },
+    "me:fir_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:fir_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:fir_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:fir_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:fir_shingles": {
+      "burn_time": 300
+    },
+    "me:fir_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:fir_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:fir_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:fir_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:fir_slab": {
+      "burn_time": 150
+    },
+    "me:fir_stairs": {
+      "burn_time": 300
+    },
+    "me:fir_stool": {
+      "burn_time": 300
+    },
+    "me:fir_table": {
+      "burn_time": 300
+    },
+    "me:fir_trapdoor": {
+      "burn_time": 200
+    },
+    "me:fir_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:fir_wood_fence": {
+      "burn_time": 300
+    },
+    "me:fir_wood_slab": {
+      "burn_time": 150
+    },
+    "me:fir_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:fir_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:fir_wood_wall": {
+      "burn_time": 300
+    },
+    "me:gondorian_bow": {
+      "burn_time": 300
+    },
+    "me:gondorian_longbow": {
+      "burn_time": 400
+    },
+    "me:gondorian_noble_longbow": {
+      "burn_time": 400
+    },
+    "me:gray_mushroom_shingles": {
+      "burn_time": 300
+    },
+    "me:gray_mushroom_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:gray_mushroom_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:gray_mushroom_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:gray_mushroom_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:gray_wool_slab": {
+      "burn_time": 50
+    },
+    "me:gray_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:gray_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:green_shrub": {
+      "burn_time": 100
+    },
+    "me:green_wool_slab": {
+      "burn_time": 50
+    },
+    "me:green_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:green_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:gundabad_bow": {
+      "burn_time": 300
+    },
+    "me:gundabad_crossbow": {
+      "burn_time": 400
+    },
+    "me:holly_bench": {
+      "burn_time": 300
+    },
+    "me:holly_button": {
+      "burn_time": 100
+    },
+    "me:holly_chair": {
+      "burn_time": 300
+    },
+    "me:holly_door": {
+      "burn_time": 200
+    },
+    "me:holly_fence": {
+      "burn_time": 300
+    },
+    "me:holly_fence_gate": {
+      "burn_time": 300
+    },
+    "me:holly_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:holly_roofing": {
+      "burn_time": 300
+    },
+    "me:holly_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:holly_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:holly_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:holly_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:holly_shingles": {
+      "burn_time": 300
+    },
+    "me:holly_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:holly_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:holly_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:holly_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:holly_slab": {
+      "burn_time": 150
+    },
+    "me:holly_stairs": {
+      "burn_time": 300
+    },
+    "me:holly_stool": {
+      "burn_time": 300
+    },
+    "me:holly_table": {
+      "burn_time": 300
+    },
+    "me:holly_trapdoor": {
+      "burn_time": 200
+    },
+    "me:holly_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:holly_wood_fence": {
+      "burn_time": 300
+    },
+    "me:holly_wood_slab": {
+      "burn_time": 150
+    },
+    "me:holly_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:holly_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:holly_wood_wall": {
+      "burn_time": 300
+    },
+    "me:jungle_bench": {
+      "burn_time": 300
+    },
+    "me:jungle_chair": {
+      "burn_time": 300
+    },
+    "me:jungle_shingles": {
+      "burn_time": 300
+    },
+    "me:jungle_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:jungle_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:jungle_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:jungle_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:jungle_stool": {
+      "burn_time": 300
+    },
+    "me:jungle_table": {
+      "burn_time": 300
+    },
+    "me:larch_bench": {
+      "burn_time": 300
+    },
+    "me:larch_button": {
+      "burn_time": 100
+    },
+    "me:larch_chair": {
+      "burn_time": 300
+    },
+    "me:larch_door": {
+      "burn_time": 200
+    },
+    "me:larch_fence": {
+      "burn_time": 300
+    },
+    "me:larch_fence_gate": {
+      "burn_time": 300
+    },
+    "me:larch_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:larch_roofing": {
+      "burn_time": 300
+    },
+    "me:larch_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:larch_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:larch_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:larch_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:larch_shingles": {
+      "burn_time": 300
+    },
+    "me:larch_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:larch_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:larch_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:larch_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:larch_slab": {
+      "burn_time": 150
+    },
+    "me:larch_stairs": {
+      "burn_time": 300
+    },
+    "me:larch_stool": {
+      "burn_time": 300
+    },
+    "me:larch_table": {
+      "burn_time": 300
+    },
+    "me:larch_trapdoor": {
+      "burn_time": 200
+    },
+    "me:larch_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:larch_wood_fence": {
+      "burn_time": 300
+    },
+    "me:larch_wood_slab": {
+      "burn_time": 150
+    },
+    "me:larch_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:larch_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:larch_wood_wall": {
+      "burn_time": 300
+    },
+    "me:light_blue_wool_slab": {
+      "burn_time": 50
+    },
+    "me:light_blue_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:light_blue_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:light_gray_wool_slab": {
+      "burn_time": 50
+    },
+    "me:light_gray_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:light_gray_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:lime_wool_slab": {
+      "burn_time": 50
+    },
+    "me:lime_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:lime_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:lorien_bow": {
+      "burn_time": 300
+    },
+    "me:lorien_longbow": {
+      "burn_time": 400
+    },
+    "me:lorien_noble_longbow": {
+      "burn_time": 400
+    },
+    "me:magenta_wool_slab": {
+      "burn_time": 50
+    },
+    "me:magenta_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:magenta_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:mallorn_bench": {
+      "burn_time": 300
+    },
+    "me:mallorn_button": {
+      "burn_time": 100
+    },
+    "me:mallorn_chair": {
+      "burn_time": 300
+    },
+    "me:mallorn_door": {
+      "burn_time": 200
+    },
+    "me:mallorn_fence": {
+      "burn_time": 300
+    },
+    "me:mallorn_fence_gate": {
+      "burn_time": 300
+    },
+    "me:mallorn_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:mallorn_roofing": {
+      "burn_time": 300
+    },
+    "me:mallorn_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:mallorn_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:mallorn_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:mallorn_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:mallorn_shingles": {
+      "burn_time": 300
+    },
+    "me:mallorn_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:mallorn_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:mallorn_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:mallorn_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:mallorn_slab": {
+      "burn_time": 150
+    },
+    "me:mallorn_stairs": {
+      "burn_time": 300
+    },
+    "me:mallorn_stool": {
+      "burn_time": 300
+    },
+    "me:mallorn_table": {
+      "burn_time": 300
+    },
+    "me:mallorn_trapdoor": {
+      "burn_time": 200
+    },
+    "me:mallorn_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:mallorn_wood_fence": {
+      "burn_time": 300
+    },
+    "me:mallorn_wood_slab": {
+      "burn_time": 150
+    },
+    "me:mallorn_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:mallorn_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:mallorn_wood_wall": {
+      "burn_time": 300
+    },
+    "me:mangrove_bench": {
+      "burn_time": 300
+    },
+    "me:mangrove_chair": {
+      "burn_time": 300
+    },
+    "me:mangrove_shingles": {
+      "burn_time": 300
+    },
+    "me:mangrove_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:mangrove_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:mangrove_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:mangrove_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:mangrove_stool": {
+      "burn_time": 300
+    },
+    "me:mangrove_table": {
+      "burn_time": 300
+    },
+    "me:maple_bench": {
+      "burn_time": 300
+    },
+    "me:maple_button": {
+      "burn_time": 100
+    },
+    "me:maple_chair": {
+      "burn_time": 300
+    },
+    "me:maple_door": {
+      "burn_time": 200
+    },
+    "me:maple_fence": {
+      "burn_time": 300
+    },
+    "me:maple_fence_gate": {
+      "burn_time": 300
+    },
+    "me:maple_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:maple_roofing": {
+      "burn_time": 300
+    },
+    "me:maple_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:maple_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:maple_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:maple_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:maple_shingles": {
+      "burn_time": 300
+    },
+    "me:maple_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:maple_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:maple_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:maple_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:maple_slab": {
+      "burn_time": 150
+    },
+    "me:maple_stairs": {
+      "burn_time": 300
+    },
+    "me:maple_stool": {
+      "burn_time": 300
+    },
+    "me:maple_table": {
+      "burn_time": 300
+    },
+    "me:maple_trapdoor": {
+      "burn_time": 200
+    },
+    "me:maple_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:maple_wood_fence": {
+      "burn_time": 300
+    },
+    "me:maple_wood_slab": {
+      "burn_time": 150
+    },
+    "me:maple_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:maple_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:maple_wood_wall": {
+      "burn_time": 300
+    },
+    "me:mirkwood_bench": {
+      "burn_time": 300
+    },
+    "me:mirkwood_button": {
+      "burn_time": 100
+    },
+    "me:mirkwood_chair": {
+      "burn_time": 300
+    },
+    "me:mirkwood_door": {
+      "burn_time": 200
+    },
+    "me:mirkwood_fence": {
+      "burn_time": 300
+    },
+    "me:mirkwood_fence_gate": {
+      "burn_time": 300
+    },
+    "me:mirkwood_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:mirkwood_roofing": {
+      "burn_time": 300
+    },
+    "me:mirkwood_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:mirkwood_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:mirkwood_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:mirkwood_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:mirkwood_roots": {
+      "burn_time": 300
+    },
+    "me:mirkwood_shingles": {
+      "burn_time": 300
+    },
+    "me:mirkwood_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:mirkwood_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:mirkwood_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:mirkwood_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:mirkwood_slab": {
+      "burn_time": 150
+    },
+    "me:mirkwood_stairs": {
+      "burn_time": 300
+    },
+    "me:mirkwood_stool": {
+      "burn_time": 300
+    },
+    "me:mirkwood_table": {
+      "burn_time": 300
+    },
+    "me:mirkwood_trapdoor": {
+      "burn_time": 200
+    },
+    "me:mirkwood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:mirkwood_wood_fence": {
+      "burn_time": 300
+    },
+    "me:mirkwood_wood_slab": {
+      "burn_time": 150
+    },
+    "me:mirkwood_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:mirkwood_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:mirkwood_wood_wall": {
+      "burn_time": 300
+    },
+    "me:mordor_bow": {
+      "burn_time": 300
+    },
+    "me:mordor_elite_longbow": {
+      "burn_time": 400
+    },
+    "me:mushroom_shingles": {
+      "burn_time": 300
+    },
+    "me:mushroom_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:mushroom_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:mushroom_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:mushroom_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:oak_bench": {
+      "burn_time": 300
+    },
+    "me:oak_chair": {
+      "burn_time": 300
+    },
+    "me:oak_shingles": {
+      "burn_time": 300
+    },
+    "me:oak_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:oak_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:oak_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:oak_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:oak_stool": {
+      "burn_time": 300
+    },
+    "me:oak_table": {
+      "burn_time": 300
+    },
+    "me:orange_wool_slab": {
+      "burn_time": 50
+    },
+    "me:orange_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:orange_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:orcish_bow": {
+      "burn_time": 300
+    },
+    "me:palm_bench": {
+      "burn_time": 300
+    },
+    "me:palm_button": {
+      "burn_time": 100
+    },
+    "me:palm_chair": {
+      "burn_time": 300
+    },
+    "me:palm_door": {
+      "burn_time": 200
+    },
+    "me:palm_fence": {
+      "burn_time": 300
+    },
+    "me:palm_fence_gate": {
+      "burn_time": 300
+    },
+    "me:palm_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:palm_roofing": {
+      "burn_time": 300
+    },
+    "me:palm_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:palm_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:palm_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:palm_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:palm_shingles": {
+      "burn_time": 300
+    },
+    "me:palm_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:palm_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:palm_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:palm_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:palm_slab": {
+      "burn_time": 150
+    },
+    "me:palm_stairs": {
+      "burn_time": 300
+    },
+    "me:palm_stool": {
+      "burn_time": 300
+    },
+    "me:palm_table": {
+      "burn_time": 300
+    },
+    "me:palm_trapdoor": {
+      "burn_time": 200
+    },
+    "me:palm_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:palm_wood_fence": {
+      "burn_time": 300
+    },
+    "me:palm_wood_slab": {
+      "burn_time": 150
+    },
+    "me:palm_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:palm_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:palm_wood_wall": {
+      "burn_time": 300
+    },
+    "me:pine_bench": {
+      "burn_time": 300
+    },
+    "me:pine_button": {
+      "burn_time": 100
+    },
+    "me:pine_chair": {
+      "burn_time": 300
+    },
+    "me:pine_door": {
+      "burn_time": 200
+    },
+    "me:pine_fence": {
+      "burn_time": 300
+    },
+    "me:pine_fence_gate": {
+      "burn_time": 300
+    },
+    "me:pine_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:pine_roofing": {
+      "burn_time": 300
+    },
+    "me:pine_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:pine_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:pine_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:pine_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:pine_shingles": {
+      "burn_time": 300
+    },
+    "me:pine_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:pine_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:pine_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:pine_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:pine_slab": {
+      "burn_time": 150
+    },
+    "me:pine_stairs": {
+      "burn_time": 300
+    },
+    "me:pine_stool": {
+      "burn_time": 300
+    },
+    "me:pine_table": {
+      "burn_time": 300
+    },
+    "me:pine_trapdoor": {
+      "burn_time": 200
+    },
+    "me:pine_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:pine_wood_fence": {
+      "burn_time": 300
+    },
+    "me:pine_wood_slab": {
+      "burn_time": 150
+    },
+    "me:pine_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:pine_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:pine_wood_wall": {
+      "burn_time": 300
+    },
+    "me:pink_wool_slab": {
+      "burn_time": 50
+    },
+    "me:pink_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:pink_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:purple_wool_slab": {
+      "burn_time": 50
+    },
+    "me:purple_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:purple_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:red_wool_slab": {
+      "burn_time": 50
+    },
+    "me:red_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:red_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:rohirric_bow": {
+      "burn_time": 300
+    },
+    "me:rohirric_longbow": {
+      "burn_time": 400
+    },
+    "me:rohirric_noble_bow": {
+      "burn_time": 300
+    },
+    "me:rope": {
+      "burn_time": 150
+    },
+    "me:scorched_bench": {
+      "burn_time": 300
+    },
+    "me:scorched_button": {
+      "burn_time": 100
+    },
+    "me:scorched_chair": {
+      "burn_time": 300
+    },
+    "me:scorched_door": {
+      "burn_time": 200
+    },
+    "me:scorched_fence": {
+      "burn_time": 300
+    },
+    "me:scorched_fence_gate": {
+      "burn_time": 300
+    },
+    "me:scorched_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:scorched_roofing": {
+      "burn_time": 300
+    },
+    "me:scorched_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:scorched_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:scorched_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:scorched_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:scorched_shingles": {
+      "burn_time": 300
+    },
+    "me:scorched_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:scorched_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:scorched_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:scorched_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:scorched_slab": {
+      "burn_time": 150
+    },
+    "me:scorched_stairs": {
+      "burn_time": 300
+    },
+    "me:scorched_stool": {
+      "burn_time": 300
+    },
+    "me:scorched_table": {
+      "burn_time": 300
+    },
+    "me:scorched_trapdoor": {
+      "burn_time": 200
+    },
+    "me:scorched_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:scorched_wood_fence": {
+      "burn_time": 300
+    },
+    "me:scorched_wood_slab": {
+      "burn_time": 150
+    },
+    "me:scorched_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:scorched_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:scorched_wood_wall": {
+      "burn_time": 300
+    },
+    "me:silver_maple_bench": {
+      "burn_time": 300
+    },
+    "me:silver_maple_button": {
+      "burn_time": 100
+    },
+    "me:silver_maple_chair": {
+      "burn_time": 300
+    },
+    "me:silver_maple_door": {
+      "burn_time": 200
+    },
+    "me:silver_maple_fence": {
+      "burn_time": 300
+    },
+    "me:silver_maple_fence_gate": {
+      "burn_time": 300
+    },
+    "me:silver_maple_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:silver_maple_roofing": {
+      "burn_time": 300
+    },
+    "me:silver_maple_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:silver_maple_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:silver_maple_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:silver_maple_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:silver_maple_shingles": {
+      "burn_time": 300
+    },
+    "me:silver_maple_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:silver_maple_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:silver_maple_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:silver_maple_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:silver_maple_slab": {
+      "burn_time": 150
+    },
+    "me:silver_maple_stairs": {
+      "burn_time": 300
+    },
+    "me:silver_maple_stool": {
+      "burn_time": 300
+    },
+    "me:silver_maple_table": {
+      "burn_time": 300
+    },
+    "me:silver_maple_trapdoor": {
+      "burn_time": 200
+    },
+    "me:silver_maple_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:silver_maple_wood_fence": {
+      "burn_time": 300
+    },
+    "me:silver_maple_wood_slab": {
+      "burn_time": 150
+    },
+    "me:silver_maple_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:silver_maple_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:silver_maple_wood_wall": {
+      "burn_time": 300
+    },
+    "me:small_dry_shrub": {
+      "burn_time": 100
+    },
+    "me:spruce_bench": {
+      "burn_time": 300
+    },
+    "me:spruce_chair": {
+      "burn_time": 300
+    },
+    "me:spruce_shingles": {
+      "burn_time": 300
+    },
+    "me:spruce_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:spruce_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:spruce_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:spruce_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:spruce_stool": {
+      "burn_time": 300
+    },
+    "me:spruce_table": {
+      "burn_time": 300
+    },
+    "me:stripped_beech_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_beech_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_beech_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_beech_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_beech_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_black_lebethron_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_black_lebethron_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_black_lebethron_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_black_lebethron_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_black_lebethron_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_black_pine_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_black_pine_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_black_pine_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_black_pine_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_black_pine_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_chestnut_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_chestnut_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_chestnut_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_chestnut_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_chestnut_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_fir_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_fir_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_fir_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_fir_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_fir_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_holly_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_holly_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_holly_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_holly_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_holly_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_larch_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_larch_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_larch_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_larch_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_larch_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_mallorn_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_mallorn_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_mallorn_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_mallorn_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_mallorn_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_maple_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_maple_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_maple_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_maple_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_maple_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_mirkwood_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_mirkwood_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_mirkwood_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_mirkwood_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_mirkwood_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_palm_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_palm_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_palm_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_palm_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_palm_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_pine_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_pine_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_pine_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_pine_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_pine_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_scorched_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_scorched_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_scorched_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_scorched_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_scorched_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_silver_maple_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_silver_maple_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_silver_maple_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_silver_maple_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_silver_maple_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_white_lebethron_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_white_lebethron_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_white_lebethron_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_white_lebethron_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_white_lebethron_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_white_palm_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_white_palm_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_white_palm_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_white_palm_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_white_palm_wood_wall": {
+      "burn_time": 300
+    },
+    "me:stripped_willow_wood_fence": {
+      "burn_time": 300
+    },
+    "me:stripped_willow_wood_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_willow_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:stripped_willow_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:stripped_willow_wood_wall": {
+      "burn_time": 300
+    },
+    "me:tan_shrub": {
+      "burn_time": 100
+    },
+    "me:uruk_hai_bow": {
+      "burn_time": 300
+    },
+    "me:uruk_hai_crossbow": {
+      "burn_time": 400
+    },
+    "me:warped_shingles": {
+      "burn_time": 300
+    },
+    "me:warped_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:warped_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:warped_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:warped_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:weathered_shingles": {
+      "burn_time": 300
+    },
+    "me:weathered_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:weathered_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:weathered_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:weathered_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_bench": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_button": {
+      "burn_time": 100
+    },
+    "me:white_lebethron_chair": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_door": {
+      "burn_time": 200
+    },
+    "me:white_lebethron_fence": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_fence_gate": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_roofing": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:white_lebethron_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:white_lebethron_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_shingles": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:white_lebethron_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:white_lebethron_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_slab": {
+      "burn_time": 150
+    },
+    "me:white_lebethron_stairs": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_stool": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_table": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_trapdoor": {
+      "burn_time": 200
+    },
+    "me:white_lebethron_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:white_lebethron_wood_fence": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_wood_slab": {
+      "burn_time": 150
+    },
+    "me:white_lebethron_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:white_lebethron_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:white_lebethron_wood_wall": {
+      "burn_time": 300
+    },
+    "me:white_palm_bench": {
+      "burn_time": 300
+    },
+    "me:white_palm_button": {
+      "burn_time": 100
+    },
+    "me:white_palm_chair": {
+      "burn_time": 300
+    },
+    "me:white_palm_door": {
+      "burn_time": 200
+    },
+    "me:white_palm_fence": {
+      "burn_time": 300
+    },
+    "me:white_palm_fence_gate": {
+      "burn_time": 300
+    },
+    "me:white_palm_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:white_palm_roofing": {
+      "burn_time": 300
+    },
+    "me:white_palm_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:white_palm_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:white_palm_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:white_palm_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:white_palm_shingles": {
+      "burn_time": 300
+    },
+    "me:white_palm_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:white_palm_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:white_palm_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:white_palm_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:white_palm_slab": {
+      "burn_time": 150
+    },
+    "me:white_palm_stairs": {
+      "burn_time": 300
+    },
+    "me:white_palm_stool": {
+      "burn_time": 300
+    },
+    "me:white_palm_table": {
+      "burn_time": 300
+    },
+    "me:white_palm_trapdoor": {
+      "burn_time": 200
+    },
+    "me:white_palm_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:white_palm_wood_fence": {
+      "burn_time": 300
+    },
+    "me:white_palm_wood_slab": {
+      "burn_time": 150
+    },
+    "me:white_palm_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:white_palm_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:white_palm_wood_wall": {
+      "burn_time": 300
+    },
+    "me:white_wool_slab": {
+      "burn_time": 50
+    },
+    "me:white_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:white_wool_vertical_slab": {
+      "burn_time": 50
+    },
+    "me:willow_bench": {
+      "burn_time": 300
+    },
+    "me:willow_button": {
+      "burn_time": 100
+    },
+    "me:willow_chair": {
+      "burn_time": 300
+    },
+    "me:willow_door": {
+      "burn_time": 200
+    },
+    "me:willow_fence": {
+      "burn_time": 300
+    },
+    "me:willow_fence_gate": {
+      "burn_time": 300
+    },
+    "me:willow_pressure_plate": {
+      "burn_time": 300
+    },
+    "me:willow_roofing": {
+      "burn_time": 300
+    },
+    "me:willow_roofing_slab": {
+      "burn_time": 150
+    },
+    "me:willow_roofing_stairs": {
+      "burn_time": 300
+    },
+    "me:willow_roofing_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:willow_roofing_wall": {
+      "burn_time": 300
+    },
+    "me:willow_shingles": {
+      "burn_time": 300
+    },
+    "me:willow_shingles_slab": {
+      "burn_time": 150
+    },
+    "me:willow_shingles_stairs": {
+      "burn_time": 300
+    },
+    "me:willow_shingles_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:willow_shingles_wall": {
+      "burn_time": 300
+    },
+    "me:willow_slab": {
+      "burn_time": 150
+    },
+    "me:willow_stairs": {
+      "burn_time": 300
+    },
+    "me:willow_stool": {
+      "burn_time": 300
+    },
+    "me:willow_table": {
+      "burn_time": 300
+    },
+    "me:willow_trapdoor": {
+      "burn_time": 200
+    },
+    "me:willow_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:willow_wood_fence": {
+      "burn_time": 300
+    },
+    "me:willow_wood_slab": {
+      "burn_time": 150
+    },
+    "me:willow_wood_stairs": {
+      "burn_time": 300
+    },
+    "me:willow_wood_vertical_slab": {
+      "burn_time": 150
+    },
+    "me:willow_wood_wall": {
+      "burn_time": 300
+    },
+    "me:wooden_dagger": {
+      "burn_time": 150
+    },
+    "me:yellow_wool_slab": {
+      "burn_time": 50
+    },
+    "me:yellow_wool_stairs": {
+      "burn_time": 100
+    },
+    "me:yellow_wool_vertical_slab": {
+      "burn_time": 50
+    }
+  }
+}

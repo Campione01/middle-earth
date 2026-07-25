@@ -1,0 +1,29 @@
+{
+  "type": "me:artisan_table",
+  "category": "bow",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "me:rod"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:rohirric_noble_bow"
+  }
+}

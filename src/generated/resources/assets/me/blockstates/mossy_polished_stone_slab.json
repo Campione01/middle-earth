@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/mossy_polished_stone_slab"
+    },
+    "type=double": {
+      "model": "me:block/mossy_polished_stone"
+    },
+    "type=top": {
+      "model": "me:block/mossy_polished_stone_slab_top"
+    }
+  }
+}

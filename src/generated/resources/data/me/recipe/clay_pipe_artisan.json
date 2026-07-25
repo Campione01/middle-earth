@@ -1,0 +1,29 @@
+{
+  "type": "me:artisan_table",
+  "category": "pipe",
+  "disposition": "neutral",
+  "ingredients": [
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:terracotta"
+    },
+    {
+      "tag": "minecraft:wooden_slabs"
+    },
+    {
+      "tag": "minecraft:wooden_slabs"
+    },
+    {
+      "item": "minecraft:terracotta"
+    },
+    {
+      "item": "minecraft:terracotta"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:clay_pipe"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "banner": {
+    "base_color": "white",
+    "patterns": [
+      {
+        "dye_color": "blue",
+        "id": "me:cloth"
+      },
+      {
+        "dye_color": "gray",
+        "id": "minecraft:gradient_up"
+      },
+      {
+        "dye_color": "white",
+        "id": "me:dwarf_crown"
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "disposition": "GOOD",
+  "faction_selection_order_index": 4,
+  "faction_type": "SUBFACTION",
+  "id": "me:longbeards.erebor",
+  "joinable": true,
+  "npcs": {
+    "ranks": [
+      {
+        "pool": [
+          "me:longbeards.erebor.miner",
+          "me:longbeards.erebor.militia"
+        ],
+        "rank": "MILITIA"
+      },
+      {
+        "pool": [
+          "me:longbeards.erebor.leader"
+        ],
+        "rank": "LEADER"
+      },
+      {
+        "pool": [
+          "me:longbeards.erebor.soldier",
+          "me:longbeards.erebor.archer"
+        ],
+        "rank": "SOLDIER"
+      },
+      {
+        "pool": [
+          "me:longbeards.erebor.veteran",
+          "me:longbeards.erebor.gatewarden"
+        ],
+        "rank": "VETERAN"
+      },
+      {
+        "pool": [
+          "me:longbeards.erebor.miner"
+        ],
+        "rank": "CIVILIAN"
+      },
+      {
+        "pool": [
+          "me:longbeards.erebor.elite"
+        ],
+        "rank": "KNIGHT"
+      }
+    ]
+  },
+  "parent_faction": "me:longbeards",
+  "spawns": {
+    "data": [
+      {
+        "coordinates": {
+          "x": 2017.0,
+          "y": 0.0,
+          "z": 722.0
+        },
+        "dynamic": 1,
+        "id": "me:longbeards.erebor.ravenhill"
+      },
+      {
+        "coordinates": {
+          "x": 2262.0,
+          "y": 0.0,
+          "z": 782.0
+        },
+        "dynamic": 1,
+        "id": "me:longbeards.erebor.iron_hills_spring"
+      },
+      {
+        "coordinates": {
+          "x": 2355.0,
+          "y": 0.0,
+          "z": 725.0
+        },
+        "dynamic": 1,
+        "id": "me:longbeards.erebor.iron_hills"
+      }
+    ]
+  }
+}

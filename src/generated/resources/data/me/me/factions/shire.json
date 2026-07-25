@@ -1,0 +1,92 @@
+{
+  "banner": {
+    "base_color": "white",
+    "patterns": [
+      {
+        "dye_color": "lime",
+        "id": "me:cloth"
+      },
+      {
+        "dye_color": "lime",
+        "id": "minecraft:gradient"
+      },
+      {
+        "dye_color": "yellow",
+        "id": "minecraft:circle"
+      },
+      {
+        "dye_color": "brown",
+        "id": "me:pipe"
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "disposition": "GOOD",
+  "faction_selection_order_index": 6,
+  "faction_type": "FACTION",
+  "id": "me:shire",
+  "joinable": true,
+  "npcs": {
+    "ranks": [
+      {
+        "pool": [
+          "me:shire.militia"
+        ],
+        "rank": "MILITIA"
+      },
+      {
+        "pool": [
+          "me:shire.shirriff"
+        ],
+        "rank": "LEADER"
+      },
+      {
+        "pool": [
+          "me:shire.shirriff"
+        ],
+        "rank": "SOLDIER"
+      },
+      {
+        "pool": [
+          "me:shire.shirriff"
+        ],
+        "rank": "VETERAN"
+      },
+      {
+        "pool": [
+          "me:hobbit.civilian"
+        ],
+        "rank": "CIVILIAN"
+      },
+      {
+        "pool": [
+          "me:shire.shirriff"
+        ],
+        "rank": "KNIGHT"
+      }
+    ]
+  },
+  "spawns": {
+    "data": [
+      {
+        "coordinates": {
+          "x": 981.0,
+          "y": 0.0,
+          "z": 970.0
+        },
+        "dynamic": 1,
+        "id": "me:shire.willowbottom"
+      },
+      {
+        "coordinates": {
+          "x": 933.0,
+          "y": 0.0,
+          "z": 900.0
+        },
+        "dynamic": 1,
+        "id": "me:shire.hobbiton"
+      }
+    ]
+  }
+}

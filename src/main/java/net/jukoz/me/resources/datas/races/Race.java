@@ -15,43 +15,38 @@ import net.jukoz.me.resources.datas.RaceType;
 import net.jukoz.me.resources.datas.races.data.AttributeData;
 import net.jukoz.me.utils.IdentifierUtil;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.AttributeContainer;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import java.util.*;
 
 public class Race {
     public static final Codec<Race> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("id").forGetter(Race::getIdValue),
             Codec.STRING.fieldOf("type").forGetter(Race::getRaceTypeValue),
-            NbtCompound.CODEC.fieldOf("attributes").forGetter(Race::getAttributeDatas),
+            CompoundTag.CODEC.fieldOf("attributes").forGetter(Race::getAttributeDatas),
             Codec.list(Codec.STRING, 0, 5).optionalFieldOf("command_join").forGetter(Race::getJoinCommands),
             Codec.list(Codec.STRING, 0, 5).optionalFieldOf("command_leave").forGetter(Race::getLeaveCommands)
     ).apply(instance, Race::new));
 
-    private final Identifier id;
+    private final ResourceLocation id;
     private final RaceType raceType;
     private final String translatableKey;
     private final AttributeData attributeData;
     private List<String> joinCommands;
     private List<String> leaveCommands;
 
-    public Race(String id, String raceTypeValue, NbtCompound attributes, Optional<List<String>> joinCommands, Optional<List<String>> leaveCommands){
+    public Race(String id, String raceTypeValue, CompoundTag attributes, Optional<List<String>> joinCommands, Optional<List<String>> leaveCommands){
         // Create id
         this.id = IdentifierUtil.getIdentifierFromString(id);
-        this.translatableKey = "race.".concat(this.id.toTranslationKey());
+        this.translatableKey = "race.".concat(this.id.toLanguageKey());
         // Create model
         this.raceType = RaceType.valueOf(raceTypeValue.toUpperCase());
         // Attribute Datas
@@ -64,16 +59,16 @@ public class Race {
         leaveCommands.ifPresent(nbtCompound -> this.leaveCommands.addAll(nbtCompound));
     }
 
-    public Race(Identifier id, RaceType raceType, AttributeData attributeData, List<String> joinCommands, List<String> leaveCommands) {
+    public Race(ResourceLocation id, RaceType raceType, AttributeData attributeData, List<String> joinCommands, List<String> leaveCommands) {
         this.id = id;
         this.raceType = raceType;
-        this.translatableKey = "race.".concat(this.id.toTranslationKey());
+        this.translatableKey = "race.".concat(this.id.toLanguageKey());
         this.attributeData = attributeData;
         this.joinCommands = joinCommands;
         this.leaveCommands = leaveCommands;
     }
 
-    public Identifier getId() {
+    public ResourceLocation getId() {
         return id;
     }
     private String getIdValue() {
@@ -82,7 +77,7 @@ public class Race {
     private String getRaceTypeValue() {
         return raceType.toString().toUpperCase();
     }
-    private NbtCompound getAttributeDatas() {
+    private CompoundTag getAttributeDatas() {
         if(attributeData == null)
             return null;
         return attributeData.getNbt();
@@ -98,11 +93,11 @@ public class Race {
         return Optional.of(this.leaveCommands);
     }
 
-    public Text getFullName() {
-        return Text.translatable(translatableKey);
+    public Component getFullName() {
+        return Component.translatable(translatableKey);
     }
 
-    public LivingEntity getModel(World world) {
+    public LivingEntity getModel(Level world) {
         NpcEntity entity;
         switch (raceType){
             case RaceType.HUMAN:
@@ -127,15 +122,15 @@ public class Race {
                 entity = new BanditHumanEntity(ModEntities.BANDIT_SOLDIER, world);
                 break;
         }
-        entity.setAiDisabled(true);
+        entity.setNoAi(true);
         return entity;
     }
 
-    public void applyAttributes(PlayerEntity playerEntity){
+    public void applyAttributes(Player playerEntity){
         attributeData.ApplyAll(playerEntity);
     }
 
-    public void reverseAttributes(PlayerEntity playerEntity){
+    public void reverseAttributes(Player playerEntity){
         AttributeData.reset(playerEntity);
     }
 
@@ -147,12 +142,12 @@ public class Race {
         return raceType;
     }
 
-    public void drawTooltip(LivingEntity entity, DrawContext context, TextRenderer renderer, int x, int y){
-        List<Text> texts = new ArrayList<>();
+    public void drawTooltip(LivingEntity entity, GuiGraphics context, Font renderer, int x, int y){
+        List<Component> texts = new ArrayList<>();
         texts.add(getFullName());
-        texts.add(Text.translatable("race_tooltip.me.attribute_header").formatted(Formatting.UNDERLINE));
-        Map<Identifier, Double> datas = attributeData.getDatas();
-        for(Identifier id : datas.keySet()){
+        texts.add(Component.translatable("race_tooltip.me.attribute_header").withStyle(ChatFormatting.UNDERLINE));
+        Map<ResourceLocation, Double> datas = attributeData.getDatas();
+        for(ResourceLocation id : datas.keySet()){
             double value = datas.get(id);
             double difference = datas.get(id) - attributeData.getCurrentValue(entity, id);
             // Round them
@@ -160,15 +155,15 @@ public class Race {
             difference = Math.round(difference * 1000) / 1000.0;
 
             String differenceChar = (difference > 0) ? "+" : "";
-            Formatting white = Formatting.WHITE;
-            Formatting differenceColor = (difference < 0) ? Formatting.RED : (difference > 0) ? Formatting.GREEN : white;
+            ChatFormatting white = ChatFormatting.WHITE;
+            ChatFormatting differenceColor = (difference < 0) ? ChatFormatting.RED : (difference > 0) ? ChatFormatting.GREEN : white;
             if(attributeData.isBuffReversed(id)){
-                differenceColor = (difference < 0) ? Formatting.GREEN : (difference > 0) ? Formatting.RED : white;
+                differenceColor = (difference < 0) ? ChatFormatting.GREEN : (difference > 0) ? ChatFormatting.RED : white;
             }
-            MutableText rawValue = Text.literal(String.valueOf(value)).formatted(white);
-            MutableText valueText = rawValue.append(Text.literal(" (").formatted(white).append(Text.literal(differenceChar + difference).formatted(differenceColor).append(Text.literal(") ").formatted(white))));
-            texts.add(valueText.append(Text.translatable("attribute.name."+id.getPath()).formatted(Formatting.WHITE)));
+            MutableComponent rawValue = Component.literal(String.valueOf(value)).withStyle(white);
+            MutableComponent valueText = rawValue.append(Component.literal(" (").withStyle(white).append(Component.literal(differenceChar + difference).withStyle(differenceColor).append(Component.literal(") ").withStyle(white))));
+            texts.add(valueText.append(Component.translatable("attribute.name."+id.getPath()).withStyle(ChatFormatting.WHITE)));
         }
-        context.drawTooltip(renderer, texts, x, y);
+        context.renderComponentTooltip(renderer, texts, x, y);
     }
 }

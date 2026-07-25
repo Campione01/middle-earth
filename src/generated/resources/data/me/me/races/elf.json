@@ -1,0 +1,34 @@
+{
+  "type": "ELF",
+  "attributes": {
+    "datas": [
+      {
+        "id": "minecraft:generic.fall_damage_multiplier",
+        "value": 0.75
+      },
+      {
+        "id": "minecraft:generic.attack_damage",
+        "value": 1.0
+      },
+      {
+        "id": "minecraft:generic.max_health",
+        "value": 20.0
+      },
+      {
+        "id": "minecraft:player.entity_interaction_range",
+        "value": 3.25
+      },
+      {
+        "id": "minecraft:generic.scale",
+        "value": 1.06
+      },
+      {
+        "id": "minecraft:generic.movement_speed",
+        "value": 0.1
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "id": "me:elf"
+}

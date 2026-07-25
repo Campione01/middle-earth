@@ -1,6 +1,6 @@
 package net.jukoz.me.network.packets.C2S;
 
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.jukoz.me.compat.neoforge.api.networking.v1.ServerPlayNetworking;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.client.screens.OnboardingSelectionScreen;
 import net.jukoz.me.config.ModServerConfigs;
@@ -8,29 +8,29 @@ import net.jukoz.me.network.contexts.ServerPacketContext;
 import net.jukoz.me.network.packets.ClientToServerPacket;
 import net.jukoz.me.network.packets.S2C.PacketOnboardingResult;
 import net.jukoz.me.resources.StateSaverAndLoader;
+import net.jukoz.me.resources.persistent_datas.PlayerData;
 import net.jukoz.me.utils.LoggerUtil;
 import net.jukoz.me.world.dimension.ModDimensions;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.server.level.ServerPlayer;
 
 public class PacketOnboardingRequest extends ClientToServerPacket<PacketOnboardingRequest>
 {
-    public static final CustomPayload.Id<PacketOnboardingRequest> ID = new CustomPayload.Id<>(Identifier.of(MiddleEarth.MOD_ID, "packet_onboarding_request"));
+    public static final CustomPacketPayload.Type<PacketOnboardingRequest> ID = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "packet_onboarding_request"));
     public static final PacketOnboardingRequest INSTANCE = new PacketOnboardingRequest();
-    public static final PacketCodec<RegistryByteBuf, PacketOnboardingRequest> CODEC = PacketCodec.unit(INSTANCE);
+    public static final StreamCodec<RegistryFriendlyByteBuf, PacketOnboardingRequest> CODEC = StreamCodec.unit(INSTANCE);
 
     @Override
-    public Id<PacketOnboardingRequest> getId() {
+    public Type<PacketOnboardingRequest> type() {
         return ID;
     }
 
     @Override
-    public PacketCodec<RegistryByteBuf, PacketOnboardingRequest> streamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, PacketOnboardingRequest> streamCodec() {
         return CODEC;
     }
 
@@ -38,10 +38,11 @@ public class PacketOnboardingRequest extends ClientToServerPacket<PacketOnboardi
     public void process(ServerPacketContext context) {
         try{
             context.player().getServer().execute(() -> {
-                ServerPlayerEntity player = context.player();
+                ServerPlayer player = context.player();
+                PlayerData playerData = StateSaverAndLoader.getPlayerStateReadOnly(player);
 
                 PacketOnboardingResult newPacket = new PacketOnboardingResult(
-                        StateSaverAndLoader.getPlayerState(context.player()).hasAffilition(),
+                        playerData != null && playerData.hasAffilition(),
                         ModServerConfigs.ENABLE_FACTION_RESET,
                         ModServerConfigs.ENABLE_RETURN_TO_OVERWORLD,
                         ModServerConfigs.DELAY_ON_TELEPORT_CONFIRMATION

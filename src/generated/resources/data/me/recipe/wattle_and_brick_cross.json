@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "D": {
+      "item": "minecraft:bricks"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "SDS",
+    "DSD",
+    "SDS"
+  ],
+  "result": {
+    "count": 4,
+    "id": "me:wattle_and_brick_cross"
+  }
+}

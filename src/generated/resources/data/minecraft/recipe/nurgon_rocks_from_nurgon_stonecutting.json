@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:nurgon"
+  },
+  "result": {
+    "count": 4,
+    "id": "me:nurgon_rocks"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/dalish_arming_coat_brown_fur",
+    "layer1": "me:item/dalish_arming_coat_brown_fur_overlay"
+  }
+}

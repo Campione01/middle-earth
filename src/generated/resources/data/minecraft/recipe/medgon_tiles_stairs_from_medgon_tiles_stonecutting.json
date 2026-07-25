@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:medgon_tiles"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:medgon_tiles_stairs"
+  }
+}

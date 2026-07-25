@@ -2,17 +2,17 @@ package net.jukoz.me.client.screens.utils.widgets.backgrounds.types;
 
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.client.screens.utils.widgets.UiDirections;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.joml.Vector2i;
 
 public enum BackgroundContainerTypes {
-    FULLSCREEN_MAP(Identifier.of(MiddleEarth.MOD_ID,"textures/gui/map_background.png"), 5, 1, 209);
-    public final Identifier textureId;
+    FULLSCREEN_MAP(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID,"textures/gui/map_background.png"), 5, 1, 209);
+    public final ResourceLocation textureId;
 
     public final int size;
     private final int uvStartX;
     private final int uvStartY;
-    BackgroundContainerTypes(Identifier texture, int size, int uvStartX, int uvStartY){
+    BackgroundContainerTypes(ResourceLocation texture, int size, int uvStartX, int uvStartY){
         this.textureId = texture;
         this.size = size;
         this.uvStartX = uvStartX;

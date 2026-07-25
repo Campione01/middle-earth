@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mossy_polished_medgon": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:mossy_polished_medgon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:mossy_polished_medgon_wall"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mossy_polished_medgon"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:mossy_polished_medgon_wall"
+    ]
+  }
+}

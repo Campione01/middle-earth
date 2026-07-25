@@ -1,0 +1,29 @@
+{
+  "type": "me:artisan_table",
+  "category": "cape",
+  "disposition": "neutral",
+  "ingredients": [
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "me:brown_fur"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "me:cloak"
+    },
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:brown_fur_cloak"
+  }
+}

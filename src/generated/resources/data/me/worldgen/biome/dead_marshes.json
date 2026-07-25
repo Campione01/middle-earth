@@ -1,0 +1,75 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 7108218,
+    "foliage_color": 5794902,
+    "grass_color": 6115374,
+    "sky_color": 11908531,
+    "water_color": 3289373,
+    "water_fog_color": 198924
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:disk_clay",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_dirt",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_gravel",
+      "minecraft:ore_tuff"
+    ],
+    [],
+    [],
+    [
+      "me:abundant_water_delta",
+      "me:ashen_dirt_ore",
+      "me:basalt_ore",
+      "me:black_sand_ore",
+      "me:gravel_ore",
+      "me:mire_ore",
+      "me:mud_ore",
+      "me:oak_bush_tree",
+      "me:patch_brown_bolete",
+      "me:patch_brown_bolete_tiller",
+      "me:patch_common_tough_berry_bush",
+      "me:patch_dead_rushes",
+      "me:patch_grass",
+      "me:patch_morsel",
+      "me:patch_morsel_tiller",
+      "me:patch_shriveled_shrub",
+      "me:patch_tall_grass",
+      "me:patch_wheat_grass",
+      "me:patch_wild_grass",
+      "me:rare_small_swamp_oak_tree",
+      "minecraft:glow_lichen",
+      "minecraft:patch_tall_grass"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.5
+}

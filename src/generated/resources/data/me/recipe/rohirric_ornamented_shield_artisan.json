@@ -1,0 +1,38 @@
+{
+  "type": "me:artisan_table",
+  "category": "heavy_shield",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:steel_nugget"
+    },
+    {
+      "item": "me:rohan_banner_pattern"
+    },
+    {
+      "item": "me:steel_nugget"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "me:shield_plate"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:rohirric_ornamented_shield"
+  }
+}

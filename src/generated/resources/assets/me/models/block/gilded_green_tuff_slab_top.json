@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "me:block/gilded_green_tuff",
+    "side": "me:block/gilded_green_tuff",
+    "top": "me:block/gilded_green_tuff"
+  }
+}

@@ -2,9 +2,7 @@ package net.jukoz.me.datageneration.content.tags;
 
 import net.jukoz.me.block.ModBlocks;
 import net.jukoz.me.datageneration.content.models.SimpleVerticalSlabModel;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-
+import net.minecraft.world.level.block.Block;
 import java.util.ArrayList;
 import java.util.List;
 

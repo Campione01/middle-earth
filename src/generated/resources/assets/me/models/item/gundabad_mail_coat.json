@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/gundabad_mail_coat",
+    "layer1": "me:item/gundabad_mail_coat_overlay"
+  }
+}

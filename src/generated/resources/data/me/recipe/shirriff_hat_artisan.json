@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "hat",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:shirriff_hat"
+  }
+}

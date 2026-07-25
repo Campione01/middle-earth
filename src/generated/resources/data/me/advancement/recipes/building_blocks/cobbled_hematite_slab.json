@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cobbled_hematite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:cobbled_hematite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:cobbled_hematite_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cobbled_hematite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:cobbled_hematite_slab"
+    ]
+  }
+}

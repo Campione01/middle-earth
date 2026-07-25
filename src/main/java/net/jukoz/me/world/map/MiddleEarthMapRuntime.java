@@ -1,26 +1,19 @@
 package net.jukoz.me.world.map;
 
-import net.jukoz.me.utils.LoggerUtil;
 import net.jukoz.me.utils.resources.FileUtils;
 import net.jukoz.me.world.biomes.surface.MapBasedCustomBiome;
 import net.jukoz.me.world.biomes.surface.MapBasedBiomePool;
-import net.minecraft.server.network.ServerPlayerEntity;
 import org.joml.Vector2i;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.*;
-import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class MiddleEarthMapRuntime {
     private static MiddleEarthMapRuntime single_instance = null;
-    HashMap<Vector2i, MiddleEarthMapRegion> regions;
-    HashMap<UUID, Vector2i> regionByUuids;
+    private final ConcurrentMap<Long, MiddleEarthMapRegion> regions;
     private BufferedImage edgeImage;
-    private LoggerUtil loggerUtil;
-    private MiddleEarthMapUtils middleEarthMapUtils;
-
-    private int latestValidationTick = 0;
-    private int currentValidationBlockCount = 0;
+    private final MiddleEarthMapUtils middleEarthMapUtils;
 
     public static synchronized MiddleEarthMapRuntime getInstance()
     {
@@ -31,8 +24,7 @@ public class MiddleEarthMapRuntime {
     }
 
     public MiddleEarthMapRuntime() {
-        regions = new HashMap<>();
-        regionByUuids = new HashMap<>();
+        regions = new ConcurrentHashMap<>();
         edgeImage = MiddleEarthMapGeneration.getEdgeHeightImage();
         if(edgeImage == null) {
             String path = MiddleEarthMapConfigs.BASE_HEIGHT_PATH + MiddleEarthMapConfigs.BASE_EDGE_IMAGE_NAME;
@@ -67,13 +59,13 @@ public class MiddleEarthMapRuntime {
     }
 
     public float getEdge(int posX, int posZ) {
-        posX /= middleEarthMapUtils.ratioX;
-        posZ /= middleEarthMapUtils.ratioZ;
         if(!middleEarthMapUtils.isWorldCoordinateInBorder(posX, posZ)) return -0.67f;
 
         if(edgeImage == null) return 1.001f;
 
-        Color edgeColor = new Color(edgeImage.getRGB(posX, posZ));
+        int imageX = clamp((int)((float)posX / middleEarthMapUtils.ratioX), 0, edgeImage.getWidth() - 1);
+        int imageZ = clamp((int)((float)posZ / middleEarthMapUtils.ratioZ), 0, edgeImage.getHeight() - 1);
+        Color edgeColor = new Color(edgeImage.getRGB(imageX, imageZ));
 
         float average = (float)(edgeColor.getRed() + edgeColor.getGreen() +  edgeColor.getBlue()) / 3;
 
@@ -86,59 +78,21 @@ public class MiddleEarthMapRuntime {
 
     private Vector2i getImageCoordinates(int posX, int posZ){
         return new Vector2i(
-            (int)((float)posX / MiddleEarthMapConfigs.PIXEL_WEIGHT % MiddleEarthMapConfigs.REGION_SIZE),
-            (int)((float)posZ / MiddleEarthMapConfigs.PIXEL_WEIGHT % MiddleEarthMapConfigs.REGION_SIZE)
+            Math.floorMod(Math.floorDiv(posX, MiddleEarthMapConfigs.PIXEL_WEIGHT), MiddleEarthMapConfigs.REGION_SIZE),
+            Math.floorMod(Math.floorDiv(posZ, MiddleEarthMapConfigs.PIXEL_WEIGHT), MiddleEarthMapConfigs.REGION_SIZE)
         );
     }
 
     private MiddleEarthMapRegion getRegionToUse(Vector2i regionCoordinate){
-        purgeRegions();
-
-        if(regions.get(regionCoordinate) != null) {
-            return regions.get(regionCoordinate);
-        }
-        return regions.put(regionCoordinate, new MiddleEarthMapRegion(regionCoordinate));
+        long key = regionKey(regionCoordinate);
+        return regions.computeIfAbsent(key, ignored -> new MiddleEarthMapRegion(new Vector2i(regionCoordinate)));
     }
 
-    private void purgeRegions() {
-        // Block delay
-        currentValidationBlockCount ++;
-        if(currentValidationBlockCount < MiddleEarthMapConfigs.BIOME_VALIDATION_BLOCK_DELAY) return;
-        currentValidationBlockCount = 0;
+    private static long regionKey(Vector2i regionCoordinate) {
+        return ((long) regionCoordinate.x << 32) ^ (regionCoordinate.y & 0xffffffffL);
+    }
 
-        // Tick delay
-        int serverTick = middleEarthMapUtils.getTick();
-        if(serverTick - latestValidationTick < MiddleEarthMapConfigs.BIOME_VALIDATION_TICK_DELAY) return;
-        latestValidationTick = serverTick;
-
-        // Create purge array
-        List<Vector2i> toPurge = new ArrayList<>();
-        List<Vector2i> playerCoordinates = new ArrayList<>();
-        for(ServerPlayerEntity player : middleEarthMapUtils.getPlayers()){
-            playerCoordinates.add(new Vector2i(player.getBlockX(), player.getBlockZ()));
-        }
-
-        try{
-            middleEarthMapUtils.getPlayers();
-            regions.forEach((key, value) -> {
-                boolean hasPlayerInRange = false;
-                for(Vector2i coordinate : playerCoordinates){
-                    if(value.isInRange(coordinate)){
-                        hasPlayerInRange = true;
-                        break;
-                    }
-                }
-                if(!hasPlayerInRange)
-                    toPurge.add(key);
-            });
-
-            // Purging
-            //loggerUtil.logDebugMsg("Purging [%s] regions (tick : %s)".formatted(toPurge.size(), serverTick));
-            for (Vector2i region : toPurge){
-                regions.remove(region);
-            }
-        } catch(Exception exception){
-            loggerUtil.logError("%s : %s".formatted(toString(), exception.getMessage()));
-        }
+    private static int clamp(int value, int min, int max) {
+        return Math.max(min, Math.min(max, value));
     }
 }

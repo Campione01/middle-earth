@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/old_deepslate_slab"
+    },
+    "type=double": {
+      "model": "me:block/old_deepslate"
+    },
+    "type=top": {
+      "model": "me:block/old_deepslate_slab_top"
+    }
+  }
+}

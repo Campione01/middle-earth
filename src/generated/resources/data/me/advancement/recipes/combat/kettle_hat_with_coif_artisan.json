@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mail_coif": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:mail_coif"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:kettle_hat_with_coif_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mail_coif"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:kettle_hat_with_coif_artisan"
+    ]
+  }
+}

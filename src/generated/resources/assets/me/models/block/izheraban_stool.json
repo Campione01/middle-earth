@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/stone_stool_template",
+  "textures": {
+    "all": "me:block/izheraban",
+    "particle": "me:block/izheraban"
+  }
+}

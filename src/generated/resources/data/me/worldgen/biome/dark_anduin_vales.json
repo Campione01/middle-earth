@@ -1,0 +1,127 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 8951443,
+    "foliage_color": 7901046,
+    "grass_color": 8032632,
+    "sky_color": 7246271,
+    "water_color": 4354703,
+    "water_fog_color": 1128527
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:disk_clay",
+      "minecraft:disk_gravel",
+      "minecraft:disk_sand",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_dirt",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_gravel",
+      "minecraft:ore_tuff"
+    ],
+    [],
+    [],
+    [
+      "me:bees_oak_tree",
+      "me:big_boulder_dolomite",
+      "me:big_boulder_stone",
+      "me:coarse_dirt_ore",
+      "me:flower_green_jewel",
+      "me:gravel_ore",
+      "me:medium_boulder_dolomite",
+      "me:medium_boulder_stone",
+      "me:oak_bush_tree",
+      "me:patch_grass",
+      "me:patch_rare_wilder_grass",
+      "me:patch_very_rare_lavender",
+      "me:patch_wild_beetroot",
+      "me:patch_wild_cucumber",
+      "me:patch_wild_flax",
+      "me:patch_wild_garlic",
+      "me:patch_wild_grass",
+      "me:scarce_maple_tree",
+      "me:scarce_orange_maple_tree",
+      "me:scarce_red_maple_tree",
+      "me:scarce_silver_maple_tree",
+      "me:scarce_silver_orange_maple_tree",
+      "me:scarce_silver_red_maple_tree",
+      "me:scarce_silver_yellow_maple_tree",
+      "me:scarce_yellow_maple_tree",
+      "me:small_boulder_dolomite",
+      "me:small_boulder_stone",
+      "me:super_rare_birch_tree",
+      "minecraft:brown_mushroom_normal",
+      "minecraft:flower_default",
+      "minecraft:glow_lichen",
+      "minecraft:patch_pumpkin",
+      "minecraft:patch_sugar_cane",
+      "minecraft:patch_tall_grass_2",
+      "minecraft:red_mushroom_normal"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "me:warg",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 3
+      },
+      {
+        "type": "minecraft:rabbit",
+        "maxCount": 5,
+        "minCount": 1,
+        "weight": 3
+      },
+      {
+        "type": "minecraft:sheep",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 12
+      },
+      {
+        "type": "minecraft:pig",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
+      },
+      {
+        "type": "minecraft:chicken",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
+      },
+      {
+        "type": "minecraft:cow",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 8
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.5
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pink_flowers": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:pink_flowers"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:pink_flower_growth"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pink_flowers"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:pink_flower_growth"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "E": {
+      "item": "minecraft:tuff"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    }
+  },
+  "pattern": [
+    "EEE",
+    "EGE",
+    "EEE"
+  ],
+  "result": {
+    "count": 2,
+    "id": "me:tuff_carved_window"
+  }
+}

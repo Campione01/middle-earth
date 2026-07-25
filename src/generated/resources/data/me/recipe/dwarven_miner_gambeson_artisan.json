@@ -1,0 +1,17 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:dwarven_mail_hauberk"
+    },
+    {
+      "item": "me:dwarven_gambeson"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:dwarven_miner_gambeson"
+  }
+}

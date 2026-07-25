@@ -1,0 +1,56 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "cape": "gondorian_hero_cape",
+              "id": "me:gondorian_plate_chestplate",
+              "weight": 3
+            },
+            {
+              "cape": "gondorian_hero_cape",
+              "id": "me:gondorian_kings_guard_chestplate"
+            },
+            {
+              "cape": "gondorian_hero_cape",
+              "id": "me:gondorian_citadel_guard_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:gondorian_kings_guard_boots"
+        },
+        "head": {
+          "id": "me:gondorian_captain_helmet"
+        },
+        "legs": {
+          "id": "me:gondorian_citadel_guard_chestplate"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_noble_sword"
+            },
+            {
+              "id": "me:gondorian_noble_axe"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_hero_shield"
+            },
+            {
+              "id": "me:gondorian_ornamented_knight_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:gondor.leader",
+  "race": "me:human"
+}

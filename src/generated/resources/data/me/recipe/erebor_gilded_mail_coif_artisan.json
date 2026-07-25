@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:bronze_nugget"
+    },
+    {
+      "item": "me:erebor_mail_coif"
+    },
+    {
+      "item": "me:bronze_nugget"
+    },
+    {
+      "item": "me:bronze_nugget"
+    },
+    {
+      "item": "me:bronze_nugget"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:erebor_gilded_mail_coif"
+  }
+}

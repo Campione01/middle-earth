@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_silver_coin_pile": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:silver_coin_pile"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:silver_coin_from_pile"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_silver_coin_pile"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:silver_coin_from_pile"
+    ]
+  }
+}

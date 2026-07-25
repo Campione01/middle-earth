@@ -1,48 +1,47 @@
 package net.jukoz.me.mixin.client;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.statusEffects.ModStatusEffects;
 import net.jukoz.me.utils.HallucinationData;
 import net.jukoz.me.utils.IEntityDataSaver;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Environment(EnvType.CLIENT)
-@Mixin(InGameHud.class)
+@Mixin(Gui.class)
 public abstract class InGameHudMixin {
     @Unique
-    private static final Identifier HALLUCINATION_OUTLINE = Identifier.of(MiddleEarth.MOD_ID, "textures/misc/hallucination_outline.png");
+    private static final ResourceLocation HALLUCINATION_OUTLINE = ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "textures/misc/hallucination_outline.png");
 
-    @Shadow @Final private MinecraftClient client;
-
-
-    @Shadow protected abstract void renderOverlay(DrawContext context, Identifier texture, float opacity);
-
-    @Inject(method = "renderMiscOverlays", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/RenderTickCounter;getLastFrameDuration()F", shift = At.Shift.AFTER))
-    public void injected(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        PlayerEntity player = MinecraftClient.getInstance().player;
-        assert player != null;
-
-        if(player.hasStatusEffect(ModStatusEffects.HALLUCINATION)) {
+    @Inject(method = "renderCameraOverlays", at = @At("TAIL"))
+    private void renderHallucinationOverlay(GuiGraphics context, DeltaTracker tickCounter, CallbackInfo ci) {
+        Player player = Minecraft.getInstance().player;
+        if(player != null && player.hasEffect(ModStatusEffects.HALLUCINATION)) {
             float intensity = (float) HallucinationData.readHallucination((IEntityDataSaver) player) / 100f;
-            this.renderOverlay(context, HALLUCINATION_OUTLINE, intensity);
-
+            renderOverlayTexture(context, HALLUCINATION_OUTLINE, intensity);
         }
     }
+
+    @Unique
+    private static void renderOverlayTexture(GuiGraphics context, ResourceLocation texture, float opacity) {
+        RenderSystem.disableDepthTest();
+        RenderSystem.depthMask(false);
+        RenderSystem.enableBlend();
+        context.setColor(1.0F, 1.0F, 1.0F, opacity);
+        context.blit(texture, 0, 0, -90, 0.0F, 0.0F, context.guiWidth(), context.guiHeight(), context.guiWidth(), context.guiHeight());
+        RenderSystem.disableBlend();
+        RenderSystem.depthMask(true);
+        RenderSystem.enableDepthTest();
+        context.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+    }
 }
-
-
 

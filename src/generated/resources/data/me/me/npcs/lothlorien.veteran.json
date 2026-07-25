@@ -1,0 +1,84 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:galadhrim_chestplate",
+              "weight": 4
+            },
+            {
+              "cape": "galadhrim_cape",
+              "id": "me:galadhrim_chestplate",
+              "weight": 2
+            },
+            {
+              "id": "me:lorien_soldier_scale_hauberk",
+              "weight": 2
+            },
+            {
+              "cape": "galadhrim_cape",
+              "id": "me:lorien_soldier_scale_hauberk"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:galadhrim_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:galadhrim_helmet",
+              "weight": 3
+            },
+            {
+              "id": "me:lorien_soldier_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "id": "me:galadhrim_leggings"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:lorien_noble_axe",
+              "weight": 3
+            },
+            {
+              "id": "me:lorien_noble_sword",
+              "weight": 3
+            },
+            {
+              "id": "me:lorien_noble_spear",
+              "weight": 3
+            },
+            {
+              "id": "me:lorien_noble_glaive"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:galadhrim_shield",
+              "weight": 3
+            },
+            {
+              "id": "me:lorien_shield"
+            },
+            {
+              "id": "me:lorien_laurels_shield"
+            },
+            {
+              "id": "me:lorien_mallorn_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:lothlorien.veteran",
+  "race": "me:elf"
+}

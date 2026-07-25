@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "me:block/gneiss_tiles",
+    "side": "me:block/gneiss_tiles",
+    "top": "me:block/gneiss_tiles"
+  }
+}

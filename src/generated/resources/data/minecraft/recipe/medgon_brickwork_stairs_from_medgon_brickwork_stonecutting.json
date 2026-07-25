@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:medgon_brickwork"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:medgon_brickwork_stairs"
+  }
+}

@@ -1,21 +1,19 @@
 package net.jukoz.me.client.renderer;
 
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.jukoz.me.compat.neoforge.api.client.rendering.v1.ArmorRenderer;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.MiddleEarthClient;
 import net.jukoz.me.client.model.equipment.CustomLeggingsModel;
 import net.jukoz.me.recipe.ModTags;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 
 public class LeggingsArmorRenderer implements ArmorRenderer {
 
@@ -25,23 +23,23 @@ public class LeggingsArmorRenderer implements ArmorRenderer {
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, BipedEntityModel<LivingEntity> contextModel) {
-        this.customLeggingsModel = new CustomLeggingsModel<>(MinecraftClient.getInstance().getEntityModelLoader().getModelPart(MiddleEarthClient.CUSTOM_ARMOR_LEGGINGS));
+    public void render(PoseStack matrices, MultiBufferSource vertexConsumers, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, HumanoidModel<LivingEntity> contextModel) {
+        this.customLeggingsModel = new CustomLeggingsModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(MiddleEarthClient.CUSTOM_ARMOR_LEGGINGS));
         boolean dyeable = false;
 
         if (slot == EquipmentSlot.LEGS) {
-            contextModel.copyBipedStateTo(customLeggingsModel);
-            customLeggingsModel.setVisible(false);
+            contextModel.copyPropertiesTo(customLeggingsModel);
+            customLeggingsModel.setAllVisible(false);
             customLeggingsModel.body.visible = true;
             customLeggingsModel.rightLeg.visible = true;
             customLeggingsModel.leftLeg.visible = true;
 
-            if (stack.isIn(ModTags.DYEABLE)) {
+            if (stack.is(ModTags.DYEABLE)) {
                 dyeable = true;
             }
 
-            String texture = "textures/models/armor/" + Registries.ITEM.getId(stack.getItem()).getPath() + ".png";
-            ModArmorRenderer.renderArmor(matrices, vertexConsumers, light, stack, customLeggingsModel, Identifier.of(MiddleEarth.MOD_ID, texture), dyeable);
+            String texture = "textures/models/armor/" + BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath() + ".png";
+            ModArmorRenderer.renderArmor(matrices, vertexConsumers, light, stack, customLeggingsModel, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, texture), dyeable);
         }
     }
 }

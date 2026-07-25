@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:blue_tuff"
+  },
+  "result": {
+    "count": 4,
+    "id": "me:blue_tuff_rocks"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_scorched_log": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:scorched_log"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:scorched_wood"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_scorched_log"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:scorched_wood"
+    ]
+  }
+}

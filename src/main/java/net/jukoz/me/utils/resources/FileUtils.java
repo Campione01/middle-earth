@@ -5,9 +5,9 @@ import net.jukoz.me.utils.LoggerUtil;
 import net.jukoz.me.world.biomes.surface.MapBasedBiomePool;
 import net.jukoz.me.world.chunkgen.map.ImageUtils;
 import net.jukoz.me.world.map.MiddleEarthMapConfigs;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
 import org.joml.Vector2i;
 
 import javax.imageio.ImageIO;
@@ -96,9 +96,9 @@ public class FileUtils {
     }
 
     public static boolean isLanguageFileExist(String languageCode) {
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
         ResourceManager resourceManager = client.getResourceManager();
-        Identifier path = Identifier.of(MiddleEarth.MOD_ID, String.format("lang/%s.json", languageCode));
+        ResourceLocation path = ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, String.format("lang/%s.json", languageCode));
         return resourceManager.getResource(path).isPresent();
     }
 

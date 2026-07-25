@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "": {
+      "model": "me:block/medgon_table",
+      "uvlock": false
+    }
+  }
+}

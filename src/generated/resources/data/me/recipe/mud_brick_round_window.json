@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "minecraft:brick"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "M": {
+      "item": "minecraft:mud_bricks"
+    }
+  },
+  "pattern": [
+    "MBM",
+    "BGB",
+    "MBM"
+  ],
+  "result": {
+    "count": 4,
+    "id": "me:mud_brick_round_window"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "me:item/longbow",
+  "textures": {
+    "layer0": "me:item/gundabad_bow_pulling_0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "me:tin_ingot"
+    },
+    "N": {
+      "item": "me:tin_nugget"
+    }
+  },
+  "pattern": [
+    " N ",
+    "NII",
+    " II"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:watering_can"
+  }
+}

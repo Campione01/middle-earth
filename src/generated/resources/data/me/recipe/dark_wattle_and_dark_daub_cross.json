@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "D": {
+      "item": "me:dark_daub"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "SDS",
+    "DSD",
+    "SDS"
+  ],
+  "result": {
+    "count": 4,
+    "id": "me:dark_wattle_and_dark_daub_cross"
+  }
+}

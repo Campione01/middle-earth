@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:yellow_flower_growth"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_yellow_flowers": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:yellow_flowers"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_yellow_flowers"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:yellow_flower_growth"
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "id": "me:black_uruk_plate_chestplate"
+        },
+        "feet": {
+          "id": "me:black_uruk_plate_boots"
+        },
+        "head": {
+          "id": "me:black_uruk_plate_helmet"
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:black_uruk_plate_leggings",
+              "weight": 3
+            },
+            {
+              "id": "me:orcish_reinforced_leather_skirt"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:mordor_elite_longbow"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:mordor.black_uruk_veteran_archer",
+  "race": "me:uruk"
+}

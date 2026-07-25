@@ -1,0 +1,91 @@
+{
+  "values": {
+    "me:aged_thatch": {
+      "next_oxidation_stage": "me:old_thatch"
+    },
+    "me:aged_thatch_slab": {
+      "next_oxidation_stage": "me:old_thatch_slab"
+    },
+    "me:aged_thatch_stairs": {
+      "next_oxidation_stage": "me:old_thatch_stairs"
+    },
+    "me:aged_thatch_vertical_slab": {
+      "next_oxidation_stage": "me:old_thatch_vertical_slab"
+    },
+    "me:aged_thatch_wall": {
+      "next_oxidation_stage": "me:old_thatch_wall"
+    },
+    "me:copper_bars": {
+      "next_oxidation_stage": "me:exposed_copper_bars"
+    },
+    "me:cut_copper_vertical_slab": {
+      "next_oxidation_stage": "me:exposed_cut_copper_vertical_slab"
+    },
+    "me:cut_copper_wall": {
+      "next_oxidation_stage": "me:exposed_cut_copper_wall"
+    },
+    "me:exposed_copper_bars": {
+      "next_oxidation_stage": "me:weathered_copper_bars"
+    },
+    "me:exposed_cut_copper_vertical_slab": {
+      "next_oxidation_stage": "me:weathered_cut_copper_vertical_slab"
+    },
+    "me:exposed_cut_copper_wall": {
+      "next_oxidation_stage": "me:weathered_cut_copper_wall"
+    },
+    "me:old_thatch": {
+      "next_oxidation_stage": "me:rotten_thatch"
+    },
+    "me:old_thatch_slab": {
+      "next_oxidation_stage": "me:rotten_thatch_slab"
+    },
+    "me:old_thatch_stairs": {
+      "next_oxidation_stage": "me:rotten_thatch_stairs"
+    },
+    "me:old_thatch_vertical_slab": {
+      "next_oxidation_stage": "me:rotten_thatch_vertical_slab"
+    },
+    "me:old_thatch_wall": {
+      "next_oxidation_stage": "me:rotten_thatch_wall"
+    },
+    "me:thatch": {
+      "next_oxidation_stage": "me:weathered_thatch"
+    },
+    "me:thatch_slab": {
+      "next_oxidation_stage": "me:weathered_thatch_slab"
+    },
+    "me:thatch_stairs": {
+      "next_oxidation_stage": "me:weathered_thatch_stairs"
+    },
+    "me:thatch_vertical_slab": {
+      "next_oxidation_stage": "me:weathered_thatch_vertical_slab"
+    },
+    "me:thatch_wall": {
+      "next_oxidation_stage": "me:weathered_thatch_wall"
+    },
+    "me:weathered_copper_bars": {
+      "next_oxidation_stage": "me:oxidized_copper_bars"
+    },
+    "me:weathered_cut_copper_vertical_slab": {
+      "next_oxidation_stage": "me:oxidized_cut_copper_vertical_slab"
+    },
+    "me:weathered_cut_copper_wall": {
+      "next_oxidation_stage": "me:oxidized_cut_copper_wall"
+    },
+    "me:weathered_thatch": {
+      "next_oxidation_stage": "me:aged_thatch"
+    },
+    "me:weathered_thatch_slab": {
+      "next_oxidation_stage": "me:aged_thatch_slab"
+    },
+    "me:weathered_thatch_stairs": {
+      "next_oxidation_stage": "me:aged_thatch_stairs"
+    },
+    "me:weathered_thatch_vertical_slab": {
+      "next_oxidation_stage": "me:aged_thatch_vertical_slab"
+    },
+    "me:weathered_thatch_wall": {
+      "next_oxidation_stage": "me:aged_thatch_wall"
+    }
+  }
+}

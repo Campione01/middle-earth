@@ -1,0 +1,20 @@
+{
+  "type": "me:artisan_table",
+  "category": "shovel",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:shovel_head"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:khazad_steel_shovel"
+  }
+}

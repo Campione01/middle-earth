@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:nurgon_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:nurgon_vertical_slab"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "me:gonluin_copper_ore",
+    "me:gonluin_coal_ore",
+    "me:gonluin_tin_ore",
+    "me:ashen_copper_ore",
+    "me:ashen_coal_ore",
+    "me:ashen_tin_ore",
+    "me:limestone_copper_ore",
+    "me:limestone_coal_ore",
+    "me:limestone_tin_ore",
+    "me:calcite_copper_ore",
+    "me:calcite_coal_ore",
+    "me:calcite_tin_ore",
+    "me:slate_copper_ore",
+    "me:slate_coal_ore",
+    "me:slate_tin_ore",
+    "me:ironstone_copper_ore",
+    "me:ironstone_coal_ore",
+    "me:ironstone_tin_ore",
+    "me:tin_ore",
+    "me:deepslate_tin_ore",
+    "me:deepslate_lead_ore",
+    "me:watering_can",
+    "me:bronze_block",
+    "me:crude_block"
+  ]
+}

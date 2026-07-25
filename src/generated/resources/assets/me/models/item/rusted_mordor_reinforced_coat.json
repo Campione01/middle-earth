@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/rusted_mordor_reinforced_coat",
+    "layer1": "me:item/rusted_mordor_reinforced_coat_overlay"
+  }
+}

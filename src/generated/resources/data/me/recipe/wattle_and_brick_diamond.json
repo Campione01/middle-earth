@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "D": {
+      "item": "minecraft:bricks"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "DSD",
+    "SDS",
+    "DSD"
+  ],
+  "result": {
+    "count": 5,
+    "id": "me:wattle_and_brick_diamond"
+  }
+}

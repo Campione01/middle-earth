@@ -1,108 +1,452 @@
 plugins {
-	id 'fabric-loom' version '1.7-SNAPSHOT'
-	id 'maven-publish'
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '1.0.17'
 }
 
-sourceCompatibility = JavaVersion.VERSION_21
-targetCompatibility = JavaVersion.VERSION_21
+version = mod_version
+group = mod_group_id
 
-archivesBaseName = project.archives_base_name
-version = project.mod_version
-group = project.maven_group
+base {
+    archivesName = archives_base_name
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+
+neoForge {
+    version = project.neo_version
+    accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        server {
+            server()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            programArgument '--nogui'
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', project.mod_id, '--all',
+                    '--output', file('src/generated/resources/').absolutePath,
+                    '--existing', file('src/main/resources/').absolutePath
+        }
+
+        configureEach {
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
 
 repositories {
-	maven { url "https://maven.shedaniel.me" }
-	maven {
-		name = "TerraformersMC"
-		url = "https://maven.terraformersmc.com/"
-	}
+    maven { url = uri("${rootDir}/.gradle-local-maven") }
+    mavenLocal {
+        metadataSources {
+            gradleMetadata()
+            mavenPom()
+            artifact()
+        }
+    }
+    mavenCentral()
+    maven {
+        name = 'Minecraft Libraries'
+        url = 'https://libraries.minecraft.net'
+    }
+    maven {
+        url = 'https://maven.neoforged.net/releases'
+        content {
+            includeGroupByRegex 'net\\.neoforged.*'
+        }
+    }
+    maven {
+        name = 'TerraformersMC'
+        url = 'https://maven.terraformersmc.com/'
+    }
+    maven {
+        name = 'Shedaniel'
+        url = 'https://maven.shedaniel.me'
+    }
+    maven {
+        name = 'ModMaven'
+        url = 'https://modmaven.dev'
+    }
+    maven { url = 'https://api.modrinth.com/maven' }
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    components {
+        withModule('net.neoforged:neoform') {
+            allVariants {
+                withDependencies {
+                    removeAll { it.group == 'net.neoforged' && it.name == 'minecraft-dependencies' }
+                }
+            }
+        }
+    }
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation "net.neoforged:neoforge:${neo_version}"
 
-	// Uncomment the following line to enable the deprecated Fabric API modules.
-	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
+    implementation "com.mojang:brigadier:1.3.10"
+    implementation "com.mojang:authlib:6.0.54"
+    implementation "com.mojang:datafixerupper:8.0.16"
+    implementation "com.google.code.gson:gson:2.10.1"
+    implementation "com.google.guava:guava:32.1.2-jre"
+    implementation "com.google.guava:failureaccess:1.0.1"
+    implementation "com.ibm.icu:icu4j:73.2"
+    implementation "com.mojang:blocklist:1.0.10"
+    implementation "com.mojang:logging:1.2.7"
+    implementation "com.mojang:text2speech:1.17.9"
+    implementation "commons-codec:commons-codec:1.16.0"
+    implementation "com.github.oshi:oshi-core:6.4.10"
+    implementation "commons-io:commons-io:2.15.1"
+    implementation "commons-logging:commons-logging:1.2"
+    implementation "it.unimi.dsi:fastutil:8.5.12"
+    implementation "net.java.dev.jna:jna:5.14.0"
+    implementation "net.java.dev.jna:jna-platform:5.14.0"
+    implementation "org.joml:joml:1.10.5"
+    implementation "io.netty:netty-buffer:4.1.97.Final"
+    implementation "io.netty:netty-common:4.1.97.Final"
+    implementation "io.netty:netty-transport:4.1.97.Final"
+    implementation "io.netty:netty-transport-classes-epoll:4.1.97.Final"
+    implementation "io.netty:netty-codec:4.1.97.Final"
+    implementation "io.netty:netty-handler:4.1.97.Final"
+    implementation "io.netty:netty-resolver:4.1.97.Final"
+    implementation "org.apache.commons:commons-lang3:3.14.0"
+    implementation "org.apache.httpcomponents:httpclient:4.5.13"
+    implementation "org.apache.httpcomponents:httpcore:4.4.16"
+    implementation "org.apache.logging.log4j:log4j-api:2.22.1"
+    implementation "org.apache.logging.log4j:log4j-core:2.22.1"
+    implementation "org.apache.logging.log4j:log4j-slf4j2-impl:2.22.1"
+    implementation "org.lwjgl:lwjgl:3.3.3"
+    implementation "org.lwjgl:lwjgl-freetype:3.3.3"
+    implementation "org.lwjgl:lwjgl-glfw:3.3.3"
+    implementation "org.lwjgl:lwjgl-jemalloc:3.3.3"
+    implementation "org.lwjgl:lwjgl-openal:3.3.3"
+    implementation "org.lwjgl:lwjgl-opengl:3.3.3"
+    implementation "org.lwjgl:lwjgl-stb:3.3.3"
+    implementation "org.lwjgl:lwjgl-tinyfd:3.3.3"
+    implementation "org.lz4:lz4-java:1.8.0"
+    implementation "org.slf4j:slf4j-api:2.0.9"
+    runtimeOnly "org.lwjgl:lwjgl:3.3.3:natives-windows"
+    runtimeOnly "org.lwjgl:lwjgl-freetype:3.3.3:natives-windows"
+    runtimeOnly "org.lwjgl:lwjgl-glfw:3.3.3:natives-windows"
+    runtimeOnly "org.lwjgl:lwjgl-jemalloc:3.3.3:natives-windows"
+    runtimeOnly "org.lwjgl:lwjgl-openal:3.3.3:natives-windows"
+    runtimeOnly "org.lwjgl:lwjgl-opengl:3.3.3:natives-windows"
+    runtimeOnly "org.lwjgl:lwjgl-stb:3.3.3:natives-windows"
+    runtimeOnly "org.lwjgl:lwjgl-tinyfd:3.3.3:natives-windows"
 
-	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
-
-	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
-	modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
+    compileOnly "maven.modrinth:emi:${emi_version}+neoforge"
+    runtimeOnly "maven.modrinth:emi:${emi_version}+neoforge"
 }
 
-processResources {
-	inputs.property "version", project.version
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+            minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
+            neo_version: neo_version, neo_version_range: neo_version_range,
+            loader_version_range: loader_version_range,
+            mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+            mod_authors: mod_authors, mod_description: mod_description,
+    ]
+    inputs.properties replaceProperties
 
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
+
+    from('src/generated/resources') {
+        exclude 'data/me/trim_material/**'
+        exclude 'data/me/trim_pattern/**'
+    }
 }
 
-loom {
-	runs {
-		//
-		// This adds a new gradle task that runs the datagen API: "gradlew runDatagenClient"
-		//
-		datagenClient {
-			inherit client
-			name "Data Generation"
-			vmArg "-Dfabric-api.datagen"
-			vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
-			vmArg "-Dfabric-api.datagen.modid=${modid}"
-
-			runDir "build/datagen"
-		}
-	}
-	accessWidenerPath = file("src/main/resources/me.accesswidener")
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : mod_authors,
+                'Specification-Version'   : '1',
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : mod_authors,
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+    from('LICENSE') {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
 }
 
-sourceSets {
-	main {
-		resources {
-			srcDirs += [
-					'src/main/generated'
-			]
-		}
-	}
+tasks.register('patchNeoFormArtifactManifest') {
+    dependsOn tasks.named('createArtifactManifest')
+
+    doLast {
+        def manifestFile = file("${layout.buildDirectory.get().asFile}/moddev/nfrt_artifact_manifest.properties")
+        if (!manifestFile.exists()) {
+            return
+        }
+
+        def findCachedJar = { String group, String artifact, String version, String classifier = null ->
+            def moduleRoot = file("${gradle.gradleUserHomeDir}/caches/modules-2/files-2.1/${group}/${artifact}/${version}")
+            if (!moduleRoot.exists()) {
+                return null
+            }
+            def jarName = classifier == null ? "${artifact}-${version}.jar" : "${artifact}-${version}-${classifier}.jar"
+            def matches = fileTree(moduleRoot) {
+                include "**/${jarName}"
+            }.files
+            return matches.isEmpty() ? null : matches.first().absolutePath
+        }
+
+        def escapePropertiesValue = { String value ->
+            value.replace('\\', '\\\\').replace(':', '\\:')
+        }
+
+        def additions = [
+                'org.apache.logging.log4j\\:log4j-slf4j2-impl\\:2.22.1':
+                        findCachedJar('org.apache.logging.log4j', 'log4j-slf4j2-impl', '2.22.1'),
+                'com.mojang\\:brigadier\\:1.3.10':
+                        findCachedJar('com.mojang', 'brigadier', '1.3.10'),
+                'com.mojang\\:authlib\\:6.0.54':
+                        findCachedJar('com.mojang', 'authlib', '6.0.54'),
+                'com.mojang\\:datafixerupper\\:8.0.16':
+                        findCachedJar('com.mojang', 'datafixerupper', '8.0.16'),
+                'com.google.code.gson\\:gson\\:2.10.1':
+                        findCachedJar('com.google.code.gson', 'gson', '2.10.1'),
+                'com.google.guava\\:failureaccess\\:1.0.1':
+                        findCachedJar('com.google.guava', 'failureaccess', '1.0.1'),
+                'com.mojang\\:blocklist\\:1.0.10':
+                        findCachedJar('com.mojang', 'blocklist', '1.0.10'),
+                'com.mojang\\:logging\\:1.2.7':
+                        findCachedJar('com.mojang', 'logging', '1.2.7'),
+                'com.mojang\\:text2speech\\:1.17.9':
+                        findCachedJar('com.mojang', 'text2speech', '1.17.9'),
+                'commons-codec\\:commons-codec\\:1.16.0':
+                        findCachedJar('commons-codec', 'commons-codec', '1.16.0'),
+                'commons-io\\:commons-io\\:2.15.1':
+                        findCachedJar('commons-io', 'commons-io', '2.15.1'),
+                'com.ibm.icu\\:icu4j\\:73.2':
+                        findCachedJar('com.ibm.icu', 'icu4j', '73.2'),
+                'com.github.oshi\\:oshi-core\\:6.4.10':
+                        findCachedJar('com.github.oshi', 'oshi-core', '6.4.10'),
+                'commons-logging\\:commons-logging\\:1.2':
+                        findCachedJar('commons-logging', 'commons-logging', '1.2'),
+                'it.unimi.dsi\\:fastutil\\:8.5.12':
+                        findCachedJar('it.unimi.dsi', 'fastutil', '8.5.12'),
+                'net.java.dev.jna\\:jna\\:5.14.0':
+                        findCachedJar('net.java.dev.jna', 'jna', '5.14.0'),
+                'net.java.dev.jna\\:jna-platform\\:5.14.0':
+                        findCachedJar('net.java.dev.jna', 'jna-platform', '5.14.0'),
+                'org.joml\\:joml\\:1.10.5':
+                        findCachedJar('org.joml', 'joml', '1.10.5'),
+                'io.netty\\:netty-buffer\\:4.1.97.Final':
+                        findCachedJar('io.netty', 'netty-buffer', '4.1.97.Final'),
+                'io.netty\\:netty-common\\:4.1.97.Final':
+                        findCachedJar('io.netty', 'netty-common', '4.1.97.Final'),
+                'io.netty\\:netty-transport\\:4.1.97.Final':
+                        findCachedJar('io.netty', 'netty-transport', '4.1.97.Final'),
+                'io.netty\\:netty-transport-classes-epoll\\:4.1.97.Final':
+                        findCachedJar('io.netty', 'netty-transport-classes-epoll', '4.1.97.Final'),
+                'io.netty\\:netty-codec\\:4.1.97.Final':
+                        findCachedJar('io.netty', 'netty-codec', '4.1.97.Final'),
+                'io.netty\\:netty-handler\\:4.1.97.Final':
+                        findCachedJar('io.netty', 'netty-handler', '4.1.97.Final'),
+                'io.netty\\:netty-resolver\\:4.1.97.Final':
+                        findCachedJar('io.netty', 'netty-resolver', '4.1.97.Final'),
+                'org.apache.commons\\:commons-lang3\\:3.14.0':
+                        findCachedJar('org.apache.commons', 'commons-lang3', '3.14.0'),
+                'org.apache.httpcomponents\\:httpclient\\:4.5.13':
+                        findCachedJar('org.apache.httpcomponents', 'httpclient', '4.5.13'),
+                'org.apache.httpcomponents\\:httpcore\\:4.4.16':
+                        findCachedJar('org.apache.httpcomponents', 'httpcore', '4.4.16'),
+                'org.apache.logging.log4j\\:log4j-api\\:2.22.1':
+                        findCachedJar('org.apache.logging.log4j', 'log4j-api', '2.22.1'),
+                'org.apache.logging.log4j\\:log4j-core\\:2.22.1':
+                        findCachedJar('org.apache.logging.log4j', 'log4j-core', '2.22.1'),
+                'org.lwjgl\\:lwjgl\\:3.3.3':
+                        findCachedJar('org.lwjgl', 'lwjgl', '3.3.3'),
+                'org.lwjgl\\:lwjgl-freetype\\:3.3.3':
+                        findCachedJar('org.lwjgl', 'lwjgl-freetype', '3.3.3'),
+                'org.lwjgl\\:lwjgl-glfw\\:3.3.3':
+                        findCachedJar('org.lwjgl', 'lwjgl-glfw', '3.3.3'),
+                'org.lwjgl\\:lwjgl-jemalloc\\:3.3.3':
+                        findCachedJar('org.lwjgl', 'lwjgl-jemalloc', '3.3.3'),
+                'org.lwjgl\\:lwjgl-openal\\:3.3.3':
+                        findCachedJar('org.lwjgl', 'lwjgl-openal', '3.3.3'),
+                'org.lwjgl\\:lwjgl-opengl\\:3.3.3':
+                        findCachedJar('org.lwjgl', 'lwjgl-opengl', '3.3.3'),
+                'org.lwjgl\\:lwjgl-stb\\:3.3.3':
+                        findCachedJar('org.lwjgl', 'lwjgl-stb', '3.3.3'),
+                'org.lwjgl\\:lwjgl-tinyfd\\:3.3.3':
+                        findCachedJar('org.lwjgl', 'lwjgl-tinyfd', '3.3.3'),
+                'org.lz4\\:lz4-java\\:1.8.0':
+                        findCachedJar('org.lz4', 'lz4-java', '1.8.0'),
+                'org.slf4j\\:slf4j-api\\:2.0.9':
+                        findCachedJar('org.slf4j', 'slf4j-api', '2.0.9'),
+                'org.lwjgl\\:lwjgl\\:3.3.3\\:natives-windows':
+                        findCachedJar('org.lwjgl', 'lwjgl', '3.3.3', 'natives-windows'),
+                'org.lwjgl\\:lwjgl-freetype\\:3.3.3\\:natives-windows':
+                        findCachedJar('org.lwjgl', 'lwjgl-freetype', '3.3.3', 'natives-windows'),
+                'org.lwjgl\\:lwjgl-glfw\\:3.3.3\\:natives-windows':
+                        findCachedJar('org.lwjgl', 'lwjgl-glfw', '3.3.3', 'natives-windows'),
+                'org.lwjgl\\:lwjgl-jemalloc\\:3.3.3\\:natives-windows':
+                        findCachedJar('org.lwjgl', 'lwjgl-jemalloc', '3.3.3', 'natives-windows'),
+                'org.lwjgl\\:lwjgl-openal\\:3.3.3\\:natives-windows':
+                        findCachedJar('org.lwjgl', 'lwjgl-openal', '3.3.3', 'natives-windows'),
+                'org.lwjgl\\:lwjgl-opengl\\:3.3.3\\:natives-windows':
+                        findCachedJar('org.lwjgl', 'lwjgl-opengl', '3.3.3', 'natives-windows'),
+                'org.lwjgl\\:lwjgl-stb\\:3.3.3\\:natives-windows':
+                        findCachedJar('org.lwjgl', 'lwjgl-stb', '3.3.3', 'natives-windows'),
+                'org.lwjgl\\:lwjgl-tinyfd\\:3.3.3\\:natives-windows':
+                        findCachedJar('org.lwjgl', 'lwjgl-tinyfd', '3.3.3', 'natives-windows')
+        ].findAll { it.value != null }
+
+        def current = manifestFile.getText('UTF-8')
+        def builder = new StringBuilder(current)
+        additions.each { key, value ->
+            if (!current.contains("${key}=")) {
+                if (!current.endsWith(System.lineSeparator())) {
+                    builder.append(System.lineSeparator())
+                }
+                builder.append(key).append('=').append(escapePropertiesValue(value)).append(System.lineSeparator())
+            }
+        }
+        manifestFile.setText(builder.toString(), 'UTF-8')
+    }
+}
+
+tasks.named('createMinecraftArtifacts').configure {
+    dependsOn tasks.named('patchNeoFormArtifactManifest')
+}
+
+def findCachedRuntimeJar = { String group, String artifact, String version, String classifier = null ->
+    def moduleRoot = file("${gradle.gradleUserHomeDir}/caches/modules-2/files-2.1/${group}/${artifact}/${version}")
+    if (!moduleRoot.exists()) {
+        return null
+    }
+    def jarName = classifier == null ? "${artifact}-${version}.jar" : "${artifact}-${version}-${classifier}.jar"
+    def matches = fileTree(moduleRoot) {
+        include "**/${jarName}"
+    }.files
+    return matches.isEmpty() ? null : matches.first().absolutePath
+}
+
+def patchLegacyClasspath = { String name ->
+    def classpathFile = file("${layout.buildDirectory.get().asFile}/moddev/${name}LegacyClasspath.txt")
+    if (!classpathFile.exists()) {
+        return
+    }
+    def additions = [
+            findCachedRuntimeJar('com.mojang', 'brigadier', '1.3.10'),
+            findCachedRuntimeJar('com.mojang', 'authlib', '6.0.54'),
+            findCachedRuntimeJar('com.mojang', 'datafixerupper', '8.0.16'),
+            findCachedRuntimeJar('com.google.code.gson', 'gson', '2.10.1'),
+            findCachedRuntimeJar('com.google.guava', 'failureaccess', '1.0.1'),
+            findCachedRuntimeJar('com.mojang', 'blocklist', '1.0.10'),
+            findCachedRuntimeJar('com.mojang', 'logging', '1.2.7'),
+            findCachedRuntimeJar('com.mojang', 'text2speech', '1.17.9'),
+            findCachedRuntimeJar('commons-codec', 'commons-codec', '1.16.0'),
+            findCachedRuntimeJar('commons-io', 'commons-io', '2.15.1'),
+            findCachedRuntimeJar('com.ibm.icu', 'icu4j', '73.2'),
+            findCachedRuntimeJar('com.github.oshi', 'oshi-core', '6.4.10'),
+            findCachedRuntimeJar('commons-logging', 'commons-logging', '1.2'),
+            findCachedRuntimeJar('it.unimi.dsi', 'fastutil', '8.5.12'),
+            findCachedRuntimeJar('net.java.dev.jna', 'jna', '5.14.0'),
+            findCachedRuntimeJar('net.java.dev.jna', 'jna-platform', '5.14.0'),
+            findCachedRuntimeJar('org.joml', 'joml', '1.10.5'),
+            findCachedRuntimeJar('io.netty', 'netty-buffer', '4.1.97.Final'),
+            findCachedRuntimeJar('io.netty', 'netty-common', '4.1.97.Final'),
+            findCachedRuntimeJar('io.netty', 'netty-transport', '4.1.97.Final'),
+            findCachedRuntimeJar('io.netty', 'netty-transport-classes-epoll', '4.1.97.Final'),
+            findCachedRuntimeJar('io.netty', 'netty-codec', '4.1.97.Final'),
+            findCachedRuntimeJar('io.netty', 'netty-handler', '4.1.97.Final'),
+            findCachedRuntimeJar('io.netty', 'netty-resolver', '4.1.97.Final'),
+            findCachedRuntimeJar('org.apache.commons', 'commons-lang3', '3.14.0'),
+            findCachedRuntimeJar('org.apache.httpcomponents', 'httpclient', '4.5.13'),
+            findCachedRuntimeJar('org.apache.httpcomponents', 'httpcore', '4.4.16'),
+            findCachedRuntimeJar('org.apache.logging.log4j', 'log4j-api', '2.22.1'),
+            findCachedRuntimeJar('org.apache.logging.log4j', 'log4j-core', '2.22.1'),
+            findCachedRuntimeJar('org.apache.logging.log4j', 'log4j-slf4j2-impl', '2.22.1'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl', '3.3.3'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-freetype', '3.3.3'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-glfw', '3.3.3'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-jemalloc', '3.3.3'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-openal', '3.3.3'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-opengl', '3.3.3'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-stb', '3.3.3'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-tinyfd', '3.3.3'),
+            findCachedRuntimeJar('org.lz4', 'lz4-java', '1.8.0'),
+            findCachedRuntimeJar('org.slf4j', 'slf4j-api', '2.0.9'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl', '3.3.3', 'natives-windows'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-freetype', '3.3.3', 'natives-windows'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-glfw', '3.3.3', 'natives-windows'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-jemalloc', '3.3.3', 'natives-windows'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-openal', '3.3.3', 'natives-windows'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-opengl', '3.3.3', 'natives-windows'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-stb', '3.3.3', 'natives-windows'),
+            findCachedRuntimeJar('org.lwjgl', 'lwjgl-tinyfd', '3.3.3', 'natives-windows')
+    ].findAll { it != null }
+
+    def current = classpathFile.getText('UTF-8')
+    def builder = new StringBuilder(current)
+    additions.each { value ->
+        if (!current.contains(value)) {
+            if (!current.endsWith(System.lineSeparator())) {
+                builder.append(System.lineSeparator())
+            }
+            builder.append(value).append(System.lineSeparator())
+        }
+    }
+    classpathFile.setText(builder.toString(), 'UTF-8')
+}
+
+tasks.register('patchDataLegacyClasspath') {
+    dependsOn tasks.named('prepareDataRun')
+    doLast { patchLegacyClasspath('data') }
+}
+
+tasks.register('patchClientLegacyClasspath') {
+    dependsOn tasks.named('prepareClientRun')
+    doLast { patchLegacyClasspath('client') }
+}
+
+tasks.register('patchServerLegacyClasspath') {
+    dependsOn tasks.named('prepareServerRun')
+    doLast { patchLegacyClasspath('server') }
+}
+
+tasks.named('runData').configure { dependsOn tasks.named('patchDataLegacyClasspath') }
+tasks.named('runClient').configure { dependsOn tasks.named('patchClientLegacyClasspath') }
+tasks.named('runServer').configure { dependsOn tasks.named('patchServerLegacyClasspath') }
+
+java {
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            artifact jar
+            artifact sourcesJar
+        }
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
-	it.options.release = 21
-}
-
-java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
-	withSourcesJar()
-}
-
-jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
-}
-
-// configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
-
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
-	}
+    options.encoding = 'UTF-8'
+    options.release = 21
 }

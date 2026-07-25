@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:bamboo_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:bamboo_vertical_slab"
+  }
+}

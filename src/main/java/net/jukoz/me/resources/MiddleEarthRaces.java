@@ -1,24 +1,23 @@
 package net.jukoz.me.resources;
 
-import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
+import net.jukoz.me.compat.neoforge.api.event.registry.DynamicRegistries;
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.resources.datas.RaceType;
 import net.jukoz.me.resources.datas.races.Race;
 import net.jukoz.me.resources.datas.races.data.AttributeData;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.Registry;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import java.util.*;
 
 public class MiddleEarthRaces {
     public final static String PATH = "races";
-    public static final RegistryKey<Registry<Race>> RACE_KEY = RegistryKey.ofRegistry(Identifier.of(MiddleEarth.MOD_ID, PATH));
+    public static final ResourceKey<Registry<Race>> RACE_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, PATH));
 
     public static void register(){
         LoggerUtil.logDebugMsg("Registering Dynamic Races for " + MiddleEarth.MOD_ID);
@@ -33,8 +32,8 @@ public class MiddleEarthRaces {
     public final static Race ORC;
     public final static Race URUK;
 
-    public static void bootstrap(Registerable<Race> context) {
-        RegistryEntryLookup<Race> raceRegistryEntryLookup = context.getRegistryLookup(RACE_KEY);
+    public static void bootstrap(BootstrapContext<Race> context) {
+        HolderGetter<Race> raceRegistryEntryLookup = context.lookup(RACE_KEY);
         // Registering all races
         register(context, raceRegistryEntryLookup, DWARF);
         register(context, raceRegistryEntryLookup, ELF);
@@ -44,71 +43,71 @@ public class MiddleEarthRaces {
         register(context, raceRegistryEntryLookup, URUK);
     }
 
-    private static Race register(Registerable<Race> context, RegistryEntryLookup<Race> raceRegistryEntryLookup, Race race) {
-        RegistryKey<Race> raceRegistryKey = of(race.getId().getPath());
-        String name = raceRegistryKey.getValue().getPath();
-        RegistryKey<Race> newRace = RegistryKey.of(RACE_KEY,Identifier.of(MiddleEarth.MOD_ID,name));
+    private static Race register(BootstrapContext<Race> context, HolderGetter<Race> raceRegistryEntryLookup, Race race) {
+        ResourceKey<Race> raceRegistryKey = of(race.getId().getPath());
+        String name = raceRegistryKey.location().getPath();
+        ResourceKey<Race> newRace = ResourceKey.create(RACE_KEY,ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID,name));
 
-        Optional<RegistryEntry.Reference<Race>> optionalRace = raceRegistryEntryLookup.getOptional(raceRegistryKey);
+        Optional<Holder.Reference<Race>> optionalRace = raceRegistryEntryLookup.get(raceRegistryKey);
         optionalRace.ifPresent(raceReference -> context.register(newRace, race));
 
         return race;
     }
-    private static RegistryKey<Race> of(String name) {
-        return RegistryKey.of(RACE_KEY, Identifier.of(MiddleEarth.MOD_ID, name));
+    private static ResourceKey<Race> of(String name) {
+        return ResourceKey.create(RACE_KEY, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, name));
     }
 
 
     static {
-        DWARF = new Race(Identifier.of(MiddleEarth.MOD_ID, "dwarf"), RaceType.DWARF,
+        DWARF = new Race(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "dwarf"), RaceType.DWARF,
                 new AttributeData(new HashMap<>(){{
-                    put(EntityAttributes.GENERIC_SCALE, 0.81);
-                    put(EntityAttributes.GENERIC_MAX_HEALTH, 22.0);
-                    put(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0);
-                    put(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, 2.75);
-                    put(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.09);
-                    put(EntityAttributes.PLAYER_MINING_EFFICIENCY, 0.15);
+                    put(Attributes.SCALE, 0.81);
+                    put(Attributes.MAX_HEALTH, 22.0);
+                    put(Attributes.ATTACK_DAMAGE, 1.0);
+                    put(Attributes.ENTITY_INTERACTION_RANGE, 2.75);
+                    put(Attributes.MOVEMENT_SPEED, 0.09);
+                    put(Attributes.MINING_EFFICIENCY, 0.15);
                 }}), List.of(), List.of());
-        ELF = new Race(Identifier.of(MiddleEarth.MOD_ID, "elf"), RaceType.ELF,
+        ELF = new Race(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "elf"), RaceType.ELF,
                 new AttributeData(new HashMap<>(){{
-                    put(EntityAttributes.GENERIC_SCALE, 1.06);
-                    put(EntityAttributes.GENERIC_MAX_HEALTH, 20.0);
-                    put(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0);
-                    put(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, 3.25);
-                    put(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.1);
-                    put(EntityAttributes.GENERIC_FALL_DAMAGE_MULTIPLIER, 0.75);
+                    put(Attributes.SCALE, 1.06);
+                    put(Attributes.MAX_HEALTH, 20.0);
+                    put(Attributes.ATTACK_DAMAGE, 1.0);
+                    put(Attributes.ENTITY_INTERACTION_RANGE, 3.25);
+                    put(Attributes.MOVEMENT_SPEED, 0.1);
+                    put(Attributes.FALL_DAMAGE_MULTIPLIER, 0.75);
                 }}), List.of(), List.of());
-        HOBBIT = new Race(Identifier.of(MiddleEarth.MOD_ID, "hobbit"), RaceType.HOBBIT,
+        HOBBIT = new Race(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "hobbit"), RaceType.HOBBIT,
                 new AttributeData(new HashMap<>(){{
-                    put(EntityAttributes.GENERIC_SCALE, 0.6);
-                    put(EntityAttributes.GENERIC_MAX_HEALTH, 14.0);
-                    put(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0.9);
-                    put(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, 2.5);
-                    put(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.115);
-                    put(EntityAttributes.PLAYER_SNEAKING_SPEED, 0.435);
-                    put(EntityAttributes.GENERIC_FALL_DAMAGE_MULTIPLIER, 0.90);
+                    put(Attributes.SCALE, 0.6);
+                    put(Attributes.MAX_HEALTH, 14.0);
+                    put(Attributes.ATTACK_DAMAGE, 0.9);
+                    put(Attributes.ENTITY_INTERACTION_RANGE, 2.5);
+                    put(Attributes.MOVEMENT_SPEED, 0.115);
+                    put(Attributes.SNEAKING_SPEED, 0.435);
+                    put(Attributes.FALL_DAMAGE_MULTIPLIER, 0.90);
                 }}), List.of(), List.of());
-        HUMAN = new Race(Identifier.of(MiddleEarth.MOD_ID, "human"), RaceType.HUMAN,
+        HUMAN = new Race(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "human"), RaceType.HUMAN,
                 new AttributeData(new HashMap<>(){{
-                    put(EntityAttributes.GENERIC_SCALE, 1.0); // Basic
+                    put(Attributes.SCALE, 1.0); // Basic
                 }}), List.of(), List.of());
-        ORC = new Race(Identifier.of(MiddleEarth.MOD_ID, "orc"), RaceType.ORC,
+        ORC = new Race(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "orc"), RaceType.ORC,
                 new AttributeData(new HashMap<>(){{
-                    put(EntityAttributes.GENERIC_SCALE, 0.83);
-                    put(EntityAttributes.GENERIC_MAX_HEALTH, 16.0);
-                    put(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0);
-                    put(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, 2.75);
-                    put(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.11);
-                    put(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0);
+                    put(Attributes.SCALE, 0.83);
+                    put(Attributes.MAX_HEALTH, 16.0);
+                    put(Attributes.ATTACK_DAMAGE, 1.0);
+                    put(Attributes.ENTITY_INTERACTION_RANGE, 2.75);
+                    put(Attributes.MOVEMENT_SPEED, 0.11);
+                    put(Attributes.STEP_HEIGHT, 1.0);
                 }}), List.of(), List.of());
-        URUK = new Race(Identifier.of(MiddleEarth.MOD_ID, "uruk"), RaceType.URUK,
+        URUK = new Race(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "uruk"), RaceType.URUK,
                 new AttributeData(new HashMap<>(){{
-                    put(EntityAttributes.GENERIC_SCALE, 1.0);
-                    put(EntityAttributes.GENERIC_MAX_HEALTH,22.0);
-                    put(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0);
-                    put(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, 3.0);
-                    put(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.09);
-                    put(EntityAttributes.GENERIC_BURNING_TIME, 0.70);
+                    put(Attributes.SCALE, 1.0);
+                    put(Attributes.MAX_HEALTH,22.0);
+                    put(Attributes.ATTACK_DAMAGE, 1.0);
+                    put(Attributes.ENTITY_INTERACTION_RANGE, 3.0);
+                    put(Attributes.MOVEMENT_SPEED, 0.09);
+                    put(Attributes.BURNING_TIME, 0.70);
                 }}), List.of(), List.of());
     }
 }

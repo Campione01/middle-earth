@@ -1,0 +1,17 @@
+{
+  "type": "me:alloying",
+  "amount": 432,
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "me:gold"
+    },
+    {
+      "tag": "me:gold"
+    },
+    {
+      "tag": "me:gold"
+    }
+  ],
+  "output": "gold"
+}

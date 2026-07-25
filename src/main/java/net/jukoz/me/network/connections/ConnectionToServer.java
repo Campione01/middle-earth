@@ -1,6 +1,6 @@
 package net.jukoz.me.network.connections;
 
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.jukoz.me.compat.neoforge.api.client.networking.v1.ClientPlayNetworking;
 import net.jukoz.me.network.packets.C2S.PacketTeleportToDynamicCoordinate;
 import net.jukoz.me.network.packets.ClientToServerPacket;
 

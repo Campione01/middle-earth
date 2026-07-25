@@ -1,0 +1,288 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_leather_scale_vest"
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_leather_scale_vest"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_leather_scale_vest"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_leather_scale_vest"
+            },
+            {
+              "id": "me:rusted_orcish_mail_shirt",
+              "weight": 2
+            },
+            {
+              "cape": "orcish_cape",
+              "id": "me:rusted_orcish_mail_shirt"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "id": "me:rusted_orcish_mail_shirt"
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_orcish_mail_shirt"
+            },
+            {
+              "id": "me:rusted_orcish_mail_hauberk",
+              "weight": 2
+            },
+            {
+              "cape": "orcish_cape",
+              "id": "me:rusted_orcish_mail_hauberk"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "id": "me:rusted_orcish_mail_hauberk"
+            },
+            {
+              "cape": "surcoat",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_orcish_mail_hauberk"
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "cape": "orcish_shoulders",
+              "cape_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:surcoat"
+            }
+          ]
+        },
+        "feet": {
+          "pool": [
+            {
+              "id": "me:orcish_sandals"
+            },
+            {
+              "id": "me:orcish_black_fur_boots"
+            },
+            {
+              "id": "me:orcish_brown_fur_boots"
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            },
+            {
+              "id": "me:rusted_mordor_helmet",
+              "weight": 3
+            },
+            {
+              "id": "me:rusted_mordor_nasal_helmet",
+              "weight": 2
+            },
+            {
+              "hood": "hood",
+              "hood_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_helmet",
+              "weight": 2
+            },
+            {
+              "hood": "hood",
+              "hood_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:rusted_mordor_nasal_helmet",
+              "weight": 2
+            },
+            {
+              "id": "me:rusted_mordor_kettle_hat"
+            },
+            {
+              "id": "me:orcish_braced_helmet"
+            },
+            {
+              "hood": "hood",
+              "hood_colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_helmet"
+            },
+            {
+              "id": "me:rusted_mordor_kettle_hat_with_coif"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_strip_leather_skirt"
+            },
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_leather_skirt"
+            },
+            {
+              "colors": [
+                5186845,
+                4865076,
+                1908510
+              ],
+              "id": "me:orcish_leg_bracer"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:crude_spear",
+              "weight": 3
+            },
+            {
+              "id": "me:orc_spear",
+              "weight": 2
+            },
+            {
+              "id": "me:orc_axe",
+              "weight": 2
+            },
+            {
+              "id": "me:crude_falchion",
+              "weight": 3
+            },
+            {
+              "id": "me:orc_sword",
+              "weight": 2
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:mordor_round_shield",
+              "weight": 3
+            },
+            {
+              "id": "me:mordor_painted_round_shield",
+              "weight": 2
+            },
+            {
+              "id": "me:mordor_black_round_shield",
+              "weight": 2
+            },
+            {
+              "id": "minecraft:air"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:mordor.orc_militia",
+  "race": "me:orc"
+}

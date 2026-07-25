@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/rocks_stage_1_template",
+  "textures": {
+    "all": "me:block/green_tuff",
+    "particle": "me:block/green_tuff"
+  }
+}

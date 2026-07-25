@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:cobbled_quartzite"
+  },
+  "result": {
+    "count": 2,
+    "id": "me:cobbled_quartzite_slab"
+  }
+}

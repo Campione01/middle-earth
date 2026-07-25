@@ -1,0 +1,24 @@
+{
+  "type": "me:big_boulder",
+  "config": {
+    "blockstates": [
+      {
+        "Name": "me:smooth_dolomite"
+      },
+      {
+        "Name": "me:smooth_dolomite"
+      },
+      {
+        "Name": "me:cracked_smooth_dolomite"
+      },
+      {
+        "Name": "me:mossy_smooth_dolomite"
+      }
+    ],
+    "height": 4.35,
+    "length": 5.85,
+    "random_size": 1.7,
+    "randomness": 0.34,
+    "width": 4.1
+  }
+}

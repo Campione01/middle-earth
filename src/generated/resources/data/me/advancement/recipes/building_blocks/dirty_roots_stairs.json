@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dirty_roots": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:dirty_roots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:dirty_roots_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dirty_roots"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:dirty_roots_stairs"
+    ]
+  }
+}

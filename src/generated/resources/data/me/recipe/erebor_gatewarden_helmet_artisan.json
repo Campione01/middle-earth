@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:erebor_plate_helmet"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:bronze_ingot"
+    },
+    {
+      "item": "me:bronze_ingot"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:erebor_gatewarden_helmet"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "me:artisan_table",
+  "category": "hat",
+  "disposition": "neutral",
+  "ingredients": [
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "me:straw"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "me:straw"
+    },
+    {
+      "item": "me:straw"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:straw_hat"
+  }
+}

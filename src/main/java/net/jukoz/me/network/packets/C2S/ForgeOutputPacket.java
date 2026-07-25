@@ -5,22 +5,21 @@ import net.jukoz.me.block.special.forge.ForgeBlockEntity;
 import net.jukoz.me.network.contexts.ServerPacketContext;
 import net.jukoz.me.network.packets.ClientToServerPacket;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
 public class ForgeOutputPacket extends ClientToServerPacket<ForgeOutputPacket> {
-    public static final CustomPayload.Id<ForgeOutputPacket> ID = new CustomPayload.Id<>(Identifier.of(MiddleEarth.MOD_ID, "forge_output_packet"));
-    public static final PacketCodec<RegistryByteBuf, ForgeOutputPacket> CODEC = PacketCodec.tuple(
-            PacketCodecs.INTEGER, p -> p.amount,
-            PacketCodecs.DOUBLE, p -> p.x,
-            PacketCodecs.DOUBLE, p -> p.y,
-            PacketCodecs.DOUBLE, p -> p.z,
+    public static final CustomPacketPayload.Type<ForgeOutputPacket> ID = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, "forge_output_packet"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, ForgeOutputPacket> CODEC = StreamCodec.composite(
+            ByteBufCodecs.INT, p -> p.amount,
+            ByteBufCodecs.DOUBLE, p -> p.x,
+            ByteBufCodecs.DOUBLE, p -> p.y,
+            ByteBufCodecs.DOUBLE, p -> p.z,
             ForgeOutputPacket::new
     );
 
@@ -53,12 +52,12 @@ public class ForgeOutputPacket extends ClientToServerPacket<ForgeOutputPacket> {
     }
 
     @Override
-    public Id<ForgeOutputPacket> getId() {
+    public Type<ForgeOutputPacket> type() {
         return ID;
     }
 
     @Override
-    public PacketCodec<RegistryByteBuf, ForgeOutputPacket> streamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, ForgeOutputPacket> streamCodec() {
         return CODEC;
     }
 
@@ -66,7 +65,7 @@ public class ForgeOutputPacket extends ClientToServerPacket<ForgeOutputPacket> {
     public void process(ServerPacketContext context) {
         try{
             context.player().getServer().execute(() -> {
-                Vec3d coordinates = new Vec3d(x, y, z);
+                Vec3 coordinates = new Vec3(x, y, z);
                 ForgeBlockEntity.outputItemStack(amount, coordinates, context.player());
             });
         }catch (Exception e){

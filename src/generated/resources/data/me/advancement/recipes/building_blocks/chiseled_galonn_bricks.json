@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_galonn_bricks_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:galonn_bricks_slab"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:chiseled_galonn_bricks"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_galonn_bricks_slab"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:chiseled_galonn_bricks"
+    ]
+  }
+}

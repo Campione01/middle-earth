@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "minecraft:light_blue_dye"
+    },
+    "D": {
+      "item": "me:larch_hobbit_door"
+    }
+  },
+  "pattern": [
+    " B ",
+    "BDB",
+    " B "
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:light_blue_hobbit_door"
+  }
+}

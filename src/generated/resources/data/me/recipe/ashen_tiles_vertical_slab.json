@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:ashen_tiles_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:ashen_tiles_vertical_slab"
+  }
+}

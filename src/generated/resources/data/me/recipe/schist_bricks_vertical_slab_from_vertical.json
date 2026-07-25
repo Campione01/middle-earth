@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:schist_bricks_vertical_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:schist_bricks_slab"
+  }
+}

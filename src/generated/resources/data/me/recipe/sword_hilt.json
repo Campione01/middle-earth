@@ -1,0 +1,11 @@
+{
+  "type": "me:anvil_shaping",
+  "amount": 80,
+  "ingredient": {
+    "tag": "me:ingot_shaping"
+  },
+  "output": {
+    "count": 1,
+    "id": "me:sword_hilt"
+  }
+}

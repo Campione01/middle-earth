@@ -1,0 +1,17 @@
+{
+  "type": "me:alloying",
+  "amount": 432,
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "me:edhel_steel_ingot"
+    },
+    {
+      "item": "me:edhel_steel_ingot"
+    },
+    {
+      "item": "me:edhel_steel_ingot"
+    }
+  ],
+  "output": "edhel_steel"
+}

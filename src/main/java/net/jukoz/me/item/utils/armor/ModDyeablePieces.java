@@ -3,8 +3,7 @@ package net.jukoz.me.item.utils.armor;
 import net.jukoz.me.item.ModEquipmentItems;
 import net.jukoz.me.item.utils.armor.capes.ModCapes;
 import net.jukoz.me.item.utils.armor.hoods.ModHoods;
-import net.minecraft.item.Item;
-
+import net.minecraft.world.item.Item;
 import java.util.HashMap;
 
 public class ModDyeablePieces {

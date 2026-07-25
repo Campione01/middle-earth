@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/holly_wood_slab"
+    },
+    "type=double": {
+      "model": "me:block/holly_wood"
+    },
+    "type=top": {
+      "model": "me:block/holly_wood_slab_top"
+    }
+  }
+}

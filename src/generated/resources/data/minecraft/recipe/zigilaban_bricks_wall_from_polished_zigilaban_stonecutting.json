@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:polished_zigilaban"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:zigilaban_bricks_wall"
+  }
+}

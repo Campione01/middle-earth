@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/fir_roofing_slab"
+    },
+    "type=double": {
+      "model": "me:block/fir_roofing"
+    },
+    "type=top": {
+      "model": "me:block/fir_roofing_slab_top"
+    }
+  }
+}

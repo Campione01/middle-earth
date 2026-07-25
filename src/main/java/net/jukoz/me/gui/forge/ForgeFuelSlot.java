@@ -1,26 +1,26 @@
 package net.jukoz.me.gui.forge;
 
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 
 public class ForgeFuelSlot extends Slot {
-    private final ScreenHandler handler;
+    private final AbstractContainerMenu handler;
 
-    public ForgeFuelSlot(Inventory inventory, ScreenHandler handler, int index, int x, int y) {
+    public ForgeFuelSlot(Container inventory, AbstractContainerMenu handler, int index, int x, int y) {
         super(inventory, index, x, y);
         this.handler = handler;
     }
 
     @Override
-    public boolean canInsert(ItemStack stack) {
-        return AbstractFurnaceBlockEntity.canUseAsFuel(stack);
+    public boolean mayPlace(ItemStack stack) {
+        return AbstractFurnaceBlockEntity.isFuel(stack);
     }
 
     @Override
-    public int getMaxItemCount(ItemStack stack) {
-        return super.getMaxItemCount(stack);
+    public int getMaxStackSize(ItemStack stack) {
+        return super.getMaxStackSize(stack);
     }
 }

@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:galadhrim_chestplate"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:mail"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:galadhrim_lord_chestplate"
+  }
+}

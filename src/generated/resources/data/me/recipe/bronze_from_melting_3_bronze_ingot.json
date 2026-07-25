@@ -1,0 +1,17 @@
+{
+  "type": "me:alloying",
+  "amount": 432,
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "me:bronze_ingot"
+    },
+    {
+      "item": "me:bronze_ingot"
+    },
+    {
+      "item": "me:bronze_ingot"
+    }
+  ],
+  "output": "bronze"
+}

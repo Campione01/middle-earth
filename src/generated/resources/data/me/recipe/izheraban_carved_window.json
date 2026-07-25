@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "E": {
+      "item": "me:izheraban"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    }
+  },
+  "pattern": [
+    "EEE",
+    "EGE",
+    "EEE"
+  ],
+  "result": {
+    "count": 2,
+    "id": "me:izheraban_carved_window"
+  }
+}

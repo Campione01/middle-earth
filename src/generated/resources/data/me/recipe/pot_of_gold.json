@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "G": {
+      "item": "me:gold_coin"
+    },
+    "P": {
+      "item": "me:fat_pot"
+    }
+  },
+  "pattern": [
+    " G ",
+    "GGG",
+    " P "
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:pot_of_gold"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:erebor_plate_chestplate"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:bronze_ingot"
+    },
+    {
+      "item": "minecraft:blue_dye"
+    },
+    {
+      "item": "me:bronze_ingot"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:erebor_gatewarden_chestplate"
+  }
+}

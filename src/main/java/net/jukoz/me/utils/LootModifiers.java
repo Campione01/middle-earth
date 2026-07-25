@@ -1,53 +1,60 @@
 package net.jukoz.me.utils;
 
-import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
-import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.item.ModFoodItems;
 import net.jukoz.me.item.ModResourceItems;
-import net.jukoz.me.item.utils.ModItemGroups;
-import net.minecraft.item.Item;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.condition.RandomChanceLootCondition;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.dimension.DimensionOptions;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.LootTableLoadEvent;
 
 public class LootModifiers {
 
-    private static final Identifier HORSE_LOOT_TABLE_IDENTIFIER = Identifier.of("minecraft", "entities/horse");
-    private static final Identifier GOAT_LOOT_TABLE_IDENTIFIER = Identifier.of("minecraft", "entities/goat");
+    private static final ResourceLocation HORSE_LOOT_TABLE_IDENTIFIER = ResourceLocation.fromNamespaceAndPath("minecraft", "entities/horse");
+    private static final ResourceLocation GOAT_LOOT_TABLE_IDENTIFIER = ResourceLocation.fromNamespaceAndPath("minecraft", "entities/goat");
 
-    public static final Identifier FISHING_LOOT_TABLE_IDENTIFIER = Identifier.of("me", "gameplay/fishing");
-    public static final RegistryKey<LootTable> FISHING_LOOT_TABLE =
-            RegistryKey.of(RegistryKeys.LOOT_TABLE, FISHING_LOOT_TABLE_IDENTIFIER);
+    public static final ResourceLocation FISHING_LOOT_TABLE_IDENTIFIER = ResourceLocation.fromNamespaceAndPath("me", "gameplay/fishing");
+    public static final ResourceKey<LootTable> FISHING_LOOT_TABLE =
+            ResourceKey.create(Registries.LOOT_TABLE, FISHING_LOOT_TABLE_IDENTIFIER);
+    private static boolean registered;
 
     public static void modifyLootTables(){
-        LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
-            if(HORSE_LOOT_TABLE_IDENTIFIER.equals(key.getValue()) && source.isBuiltin()) {
-                LootPool.Builder pool = LootPool.builder()
-                        .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceLootCondition.builder(1f))
-                        .with(ItemEntry.builder(ModFoodItems.RAW_HORSE))
-                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
-                tableBuilder.pool(pool);
-            }
+        if (!registered) {
+            registered = true;
+            NeoForge.EVENT_BUS.addListener(LootModifiers::modifyLootTable);
+        }
+    }
 
-            if(GOAT_LOOT_TABLE_IDENTIFIER.equals(key.getValue()) && source.isBuiltin()) {
-                LootPool.Builder pool = LootPool.builder()
-                        .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceLootCondition.builder(1f))
-                        .with(ItemEntry.builder(ModResourceItems.FUR))
-                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
-                tableBuilder.pool(pool);
-            }
-        });
+    private static void modifyLootTable(LootTableLoadEvent event) {
+        if(HORSE_LOOT_TABLE_IDENTIFIER.equals(event.getName())) {
+            event.getTable().addPool(createHorsePool().build());
+        }
+
+        if(GOAT_LOOT_TABLE_IDENTIFIER.equals(event.getName())) {
+            event.getTable().addPool(createGoatPool().build());
+        }
+    }
+
+    private static LootPool.Builder createHorsePool() {
+        return LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1))
+                .when(LootItemRandomChanceCondition.randomChance(1f))
+                .add(LootItem.lootTableItem(ModFoodItems.RAW_HORSE))
+                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f)));
+    }
+
+    private static LootPool.Builder createGoatPool() {
+        return LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1))
+                .when(LootItemRandomChanceCondition.randomChance(1f))
+                .add(LootItem.lootTableItem(ModResourceItems.FUR))
+                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f)));
     }
 }

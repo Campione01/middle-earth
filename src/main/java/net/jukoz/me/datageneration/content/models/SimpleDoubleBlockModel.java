@@ -2,8 +2,7 @@ package net.jukoz.me.datageneration.content.models;
 
 import net.jukoz.me.block.ModNatureBlocks;
 import net.jukoz.me.item.ModResourceItems;
-import net.minecraft.block.Block;
-
+import net.minecraft.world.level.block.Block;
 import java.util.ArrayList;
 import java.util.List;
 

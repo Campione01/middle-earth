@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:smooth_medgon_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:smooth_medgon_vertical_slab"
+  }
+}

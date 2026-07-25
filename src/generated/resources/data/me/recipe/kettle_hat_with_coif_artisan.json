@@ -1,0 +1,17 @@
+{
+  "type": "me:artisan_table",
+  "category": "helmet",
+  "disposition": "neutral",
+  "ingredients": [
+    {
+      "item": "me:mail_coif"
+    },
+    {
+      "item": "me:kettle_hat"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:kettle_hat_with_coif"
+  }
+}

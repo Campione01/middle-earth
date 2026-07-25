@@ -1,0 +1,38 @@
+{
+  "type": "HOBBIT",
+  "attributes": {
+    "datas": [
+      {
+        "id": "minecraft:generic.fall_damage_multiplier",
+        "value": 0.9
+      },
+      {
+        "id": "minecraft:generic.attack_damage",
+        "value": 0.9
+      },
+      {
+        "id": "minecraft:player.sneaking_speed",
+        "value": 0.435
+      },
+      {
+        "id": "minecraft:generic.max_health",
+        "value": 14.0
+      },
+      {
+        "id": "minecraft:player.entity_interaction_range",
+        "value": 2.5
+      },
+      {
+        "id": "minecraft:generic.scale",
+        "value": 0.6
+      },
+      {
+        "id": "minecraft:generic.movement_speed",
+        "value": 0.115
+      }
+    ]
+  },
+  "command_join": [],
+  "command_leave": [],
+  "id": "me:hobbit"
+}

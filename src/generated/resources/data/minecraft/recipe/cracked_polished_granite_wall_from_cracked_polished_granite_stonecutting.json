@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:cracked_polished_granite"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:cracked_polished_granite_wall"
+  }
+}

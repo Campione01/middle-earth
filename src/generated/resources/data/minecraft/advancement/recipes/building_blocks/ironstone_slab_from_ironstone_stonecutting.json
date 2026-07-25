@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ironstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:ironstone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:ironstone_slab_from_ironstone_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ironstone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:ironstone_slab_from_ironstone_stonecutting"
+    ]
+  }
+}

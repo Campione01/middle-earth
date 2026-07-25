@@ -1,5 +1,7 @@
 package net.jukoz.me.item;
 
+import net.jukoz.me.utils.NeoForgeRegistrationBridge;
+
 import net.jukoz.me.MiddleEarth;
 import net.jukoz.me.datageneration.content.models.*;
 import net.jukoz.me.datageneration.content.tags.Bows;
@@ -22,13 +24,12 @@ import net.jukoz.me.item.utils.ModToolMaterials;
 import net.jukoz.me.utils.LoggerUtil;
 import net.jukoz.me.utils.ModFactions;
 import net.jukoz.me.utils.ModSubFactions;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.item.ToolMaterials;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Tiers;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,30 +53,30 @@ public class ModWeaponItems {
             new CustomSwordWeaponItem(ModToolMaterials.KHAZAD_STEEL), true);
 
     public static final Item WOODEN_DAGGER = registerItemWithModel("wooden_dagger",
-            new CustomDaggerWeaponItem(ToolMaterials.WOOD), false);
+            new CustomDaggerWeaponItem(Tiers.WOOD), false);
     public static final Item STONE_DAGGER = registerItemWithModel("stone_dagger",
-            new CustomDaggerWeaponItem(ToolMaterials.STONE), false);
+            new CustomDaggerWeaponItem(Tiers.STONE), false);
     public static final Item BRONZE_DAGGER = registerItemWithModel("bronze_dagger",
             new CustomDaggerWeaponItem(ModToolMaterials.BRONZE), false);
     public static final Item CRUDE_DAGGER = registerItemWithModel("crude_dagger",
             new CustomDaggerWeaponItem(ModToolMaterials.CRUDE), false);
     public static final Item IRON_DAGGER = registerItemWithModel("iron_dagger",
-            new CustomDaggerWeaponItem(ToolMaterials.IRON), false);
+            new CustomDaggerWeaponItem(Tiers.IRON), false);
 
     public static final Item GOLDEN_DAGGER = registerItemWithModel("golden_dagger",
-            new CustomDaggerWeaponItem(ToolMaterials.GOLD), false);
+            new CustomDaggerWeaponItem(Tiers.GOLD), false);
     public static final Item DIAMOND_DAGGER = registerItemWithModel("diamond_dagger",
-            new CustomDaggerWeaponItem(ToolMaterials.DIAMOND), false);
+            new CustomDaggerWeaponItem(Tiers.DIAMOND), false);
     public static final Item NETHERITE_DAGGER = registerItemWithModel("netherite_dagger",
-            new CustomDaggerWeaponItem(ToolMaterials.NETHERITE), false);
+            new CustomDaggerWeaponItem(Tiers.NETHERITE), false);
 
     public static final Item CRUDE_LONGBLADE = registerItemWithModel("crude_longblade",
             new CustomLongswordWeaponItem(ModToolMaterials.CRUDE), true);
 
     public static final Item WOODEN_SPEAR = registerItemWithSpearModel("wooden_spear",
-            new CustomSpearWeaponItem(ToolMaterials.WOOD));
+            new CustomSpearWeaponItem(Tiers.WOOD));
     public static final Item STONE_SPEAR = registerItemWithSpearModel("stone_spear",
-            new CustomSpearWeaponItem(ToolMaterials.STONE));
+            new CustomSpearWeaponItem(Tiers.STONE));
 
     public static final Item BRONZE_SPEAR = registerItemWithSpearModel("bronze_spear",
             new CustomSpearWeaponItem(ModToolMaterials.BRONZE));
@@ -83,7 +84,7 @@ public class ModWeaponItems {
             new CustomSpearWeaponItem(ModToolMaterials.CRUDE));
 
     public static final Item IRON_SPEAR = registerItemWithSpearModel("iron_spear",
-            new CustomSpearWeaponItem(ToolMaterials.IRON));
+            new CustomSpearWeaponItem(Tiers.IRON));
 
     public static final Item STEEL_SPEAR = registerItemWithSpearModel("steel_spear",
             new CustomSpearWeaponItem(ModToolMaterials.STEEL));
@@ -95,11 +96,11 @@ public class ModWeaponItems {
             new CustomSpearWeaponItem(ModToolMaterials.KHAZAD_STEEL));
     
     public static final Item GOLDEN_SPEAR = registerItemWithSpearModel("golden_spear",
-            new CustomSpearWeaponItem(ToolMaterials.GOLD));
+            new CustomSpearWeaponItem(Tiers.GOLD));
     public static final Item DIAMOND_SPEAR = registerItemWithSpearModel("diamond_spear",
-            new CustomSpearWeaponItem(ToolMaterials.DIAMOND));
+            new CustomSpearWeaponItem(Tiers.DIAMOND));
     public static final Item NETHERITE_SPEAR = registerItemWithSpearModel("netherite_spear",
-            new CustomSpearWeaponItem(ToolMaterials.NETHERITE));
+            new CustomSpearWeaponItem(Tiers.NETHERITE));
 
     public static final Item ROUND_SHIELD = registerShield("round_shield",
             new CustomBannerShieldItem(ModShieldTypes.MEDIUM_SHIELD, ModFactions.NONE));
@@ -615,58 +616,58 @@ public class ModWeaponItems {
     //endregion
 
     public static final Item HELD_BANNER = registerItemNoModel("held_banner",
-            new HeldBannerItem(new Item.Settings().maxCount(1)));
+            new HeldBannerItem(new Item.Properties().stacksTo(1)));
 
     private static Item registerItemWithModel(String name, Item item, boolean isDualModel) {
-        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultStack());
+        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultInstance());
         if(isDualModel) {
             SimpleBigItemModel.items.add(item);
         } else {
             SimpleHandheldItemModel.items.add(item);
         }
         Swords.swords.add(item);
-        return Items.register(Identifier.of(MiddleEarth.MOD_ID, name), item);
+        return Items.registerItem(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, name), item);
     }
 
     private static Item registerItemNoModel(String name, Item item) {
-        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultStack());
-        return Items.register(Identifier.of(MiddleEarth.MOD_ID, name), item);
+        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultInstance());
+        return Items.registerItem(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, name), item);
     }
 
     private static Item registerItemWithSpearModel(String name, Item item) {
-        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultStack());
+        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultInstance());
         SimpleSpearModel.items.add(item);
         Swords.swords.add(item);
 
-        return Items.register(Identifier.of(MiddleEarth.MOD_ID, name), item);
+        return Items.registerItem(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, name), item);
     }
 
     private static Item registerBowItem(String name, Item item) {
-        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultStack());
+        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultInstance());
         SimpleBowItemModel.items.add(item);
         Bows.bows.add(item);
 
-        return Items.register(Identifier.of(MiddleEarth.MOD_ID, name), item);
+        return Items.registerItem(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, name), item);
     }
 
     private static Item registerBigBowItem(String name, Item item) {
-        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultStack());
+        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultInstance());
         SimpleBigItemModel.bigBows.add(item);
         Bows.bows.add(item);
 
-        return Items.register(Identifier.of(MiddleEarth.MOD_ID, name), item);
+        return Items.registerItem(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, name), item);
     }
 
     private static Item registerCrossbowItem(String name, Item item) {
-        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultStack());
+        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultInstance());
         SimpleCrossbowItemModel.items.add(item);
         Crossbows.crossbows.add(item);
 
-        return Items.register(Identifier.of(MiddleEarth.MOD_ID, name), item);
+        return Items.registerItem(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, name), item);
     }
 
     private static Item registerGlowyArtefact(String name, Item item, boolean isDualModel) {
-        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultStack());
+        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultInstance());
         SimpleBigItemModel.artefactsBroken.add(item);
         if (isDualModel){
             SimpleBigItemModel.artefacts.add(item);
@@ -674,24 +675,24 @@ public class ModWeaponItems {
         SimpleBigItemModel.artefactsGlowing.add(item);
         Swords.swords.add(item);
 
-        return Items.register(Identifier.of(MiddleEarth.MOD_ID, name), item);
+        return Items.registerItem(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, name), item);
     }
 
     private static Item registerArtefact(String name, Item item, boolean isDualModel) {
-        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultStack());
+        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultInstance());
         SimpleBigItemModel.artefactsBroken.add(item);
         if (isDualModel){
             SimpleBigItemModel.artefacts.add(item);
         }
         Swords.swords.add(item);
 
-        return Items.register(Identifier.of(MiddleEarth.MOD_ID, name), item);
+        return Items.registerItem(ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, name), item);
     }
 
     private static Item registerShield(String name, Item item) {
-        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultStack());
+        ModItemGroups.WEAPONS_CONTENTS.add(item.getDefaultInstance());
         shields.add(item);
-        return Registry.register(Registries.ITEM, Identifier.of(MiddleEarth.MOD_ID, name), item);
+        return NeoForgeRegistrationBridge.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID, name), item);
     }
 
     public static void registerModItems() {

@@ -1,0 +1,104 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 12638463,
+    "foliage_color": 10860366,
+    "grass_color": 12107900,
+    "sky_color": 7254527,
+    "water_color": 5212644,
+    "water_fog_color": 333363
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:disk_clay",
+      "minecraft:disk_gravel",
+      "minecraft:disk_sand",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_dirt",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_gravel",
+      "minecraft:ore_tuff"
+    ],
+    [],
+    [],
+    [
+      "me:big_boulder_granite",
+      "me:big_boulder_mossy_sandstone",
+      "me:big_boulder_stone",
+      "me:dry_dirt_ore",
+      "me:dry_growth",
+      "me:gravel_ore",
+      "me:medium_boulder_granite",
+      "me:medium_boulder_sandstone",
+      "me:medium_boulder_stone",
+      "me:palm_tree",
+      "me:patch_brown_grass",
+      "me:patch_coastal_panic_grass",
+      "me:patch_giant_horokaka",
+      "me:patch_grass",
+      "me:patch_grim_grass",
+      "me:patch_horokaka",
+      "me:patch_small_dry_shrub",
+      "me:patch_tan_shrub",
+      "me:patch_temperate_grass",
+      "me:patch_wild_bell_pepper",
+      "me:patch_wild_tomato",
+      "me:sand_ore",
+      "me:small_boulder_granite",
+      "me:small_boulder_sandstone",
+      "me:small_boulder_stone",
+      "me:white_palm_tree",
+      "minecraft:glow_lichen",
+      "minecraft:patch_cactus_desert",
+      "minecraft:patch_sugar_cane",
+      "minecraft:patch_tall_grass"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "minecraft:rabbit",
+        "maxCount": 4,
+        "minCount": 1,
+        "weight": 3
+      },
+      {
+        "type": "minecraft:wolf",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 3
+      },
+      {
+        "type": "minecraft:llama",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 2
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.5
+}

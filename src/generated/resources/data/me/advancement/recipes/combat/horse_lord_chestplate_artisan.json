@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_rohirric_scale_hauberk": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:rohirric_scale_hauberk"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:horse_lord_chestplate_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_rohirric_scale_hauberk"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:horse_lord_chestplate_artisan"
+    ]
+  }
+}

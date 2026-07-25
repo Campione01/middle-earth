@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/large_door_right_open",
+  "textures": {
+    "all": "me:block/reinforced_spruce_door_7",
+    "particle": "me:block/reinforced_spruce_door_7"
+  }
+}

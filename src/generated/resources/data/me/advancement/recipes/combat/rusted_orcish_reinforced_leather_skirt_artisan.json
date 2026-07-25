@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mail": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:mail"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:rusted_orcish_reinforced_leather_skirt_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mail"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:rusted_orcish_reinforced_leather_skirt_artisan"
+    ]
+  }
+}

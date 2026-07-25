@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/orcish_strip_leather_skirt",
+    "layer1": "me:item/orcish_strip_leather_skirt_overlay"
+  }
+}

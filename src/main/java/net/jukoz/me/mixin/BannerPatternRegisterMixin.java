@@ -1,9 +1,9 @@
 package net.jukoz.me.mixin;
 
 import net.jukoz.me.item.utils.ModBannerPatterns;
-import net.minecraft.block.entity.BannerPattern;
-import net.minecraft.block.entity.BannerPatterns;
-import net.minecraft.registry.Registerable;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatterns;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,7 +20,7 @@ public class BannerPatternRegisterMixin {
             )
     )
 
-    private static void registerModBannerPatterns(Registerable<BannerPattern> registry, CallbackInfo ci) {
+    private static void registerModBannerPatterns(BootstrapContext<BannerPattern> registry, CallbackInfo ci) {
         ModBannerPatterns.register(registry); // TODO fixme
     }
 }

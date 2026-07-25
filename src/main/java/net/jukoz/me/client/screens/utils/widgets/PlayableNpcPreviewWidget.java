@@ -8,28 +8,22 @@ import net.jukoz.me.resources.datas.npcs.NpcUtil;
 import net.jukoz.me.resources.datas.races.Race;
 import net.jukoz.me.resources.datas.npcs.data.NpcGearData;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.InventoryScreen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.render.DiffuseLighting;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
-
+import com.mojang.blaze3d.platform.Lighting;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayableNpcPreviewWidget extends ModWidget{
-    private static final Identifier NPC_PREVIEW = Identifier.of(MiddleEarth.MOD_ID,"textures/gui/widget/npc_preview_widget.png");
+    private static final ResourceLocation NPC_PREVIEW = ResourceLocation.fromNamespaceAndPath(MiddleEarth.MOD_ID,"textures/gui/widget/npc_preview_widget.png");
 
     private static final int MINIMAL_MARGIN = 4;
     private static final float DEFAULT_ANGLE = 145f; // 210f;
@@ -41,11 +35,11 @@ public class PlayableNpcPreviewWidget extends ModWidget{
     private static final Quaternionf ENTITY_ROTATION;
     private static final Vector3f VECTOR;
     private float currentAngle = DEFAULT_ANGLE ; // 210f;
-    private final ButtonWidget leftButton;
-    private final ButtonWidget rightButton;
-    private final ButtonWidget resetButton;
+    private final Button leftButton;
+    private final Button rightButton;
+    private final Button resetButton;
 
-    private ButtonWidget currentButtonClicked;
+    private Button currentButtonClicked;
     private boolean isLeftButton = false;
     private float tickHoldingStart = 0;
     private boolean isEnterKeyPressed = false;
@@ -53,29 +47,29 @@ public class PlayableNpcPreviewWidget extends ModWidget{
     public boolean haveBeenInitialized;
 
     public PlayableNpcPreviewWidget(){
-        ButtonWidget.PressAction leftButtonAction = button -> {
+        Button.OnPress leftButtonAction = button -> {
             addAngle();
             setCurrentButton(true);
         };
         haveBeenInitialized = false;
 
-        ButtonWidget.PressAction resetButtonAction = button -> {
+        Button.OnPress resetButtonAction = button -> {
             currentAngle = DEFAULT_ANGLE;
         };
 
-        ButtonWidget.PressAction rightButtonAction = button -> {
+        Button.OnPress rightButtonAction = button -> {
             reduceAngle();
             setCurrentButton(false);
         };
 
-        leftButton = ButtonWidget.builder(Text.of("left_button"), leftButtonAction).build();
-        leftButton.setDimensions(14, 9);
+        leftButton = Button.builder(Component.nullToEmpty("left_button"), leftButtonAction).build();
+        leftButton.setSize(14, 9);
 
-        resetButton = ButtonWidget.builder(Text.of("reset_button"), resetButtonAction).build();
-        resetButton.setDimensions(6,6);
+        resetButton = Button.builder(Component.nullToEmpty("reset_button"), resetButtonAction).build();
+        resetButton.setSize(6,6);
 
-        rightButton = ButtonWidget.builder(Text.of("right_button"), rightButtonAction).build();
-        rightButton.setDimensions(14, 9);
+        rightButton = Button.builder(Component.nullToEmpty("right_button"), rightButtonAction).build();
+        rightButton.setSize(14, 9);
     }
 
     private void addAngle(){
@@ -94,8 +88,8 @@ public class PlayableNpcPreviewWidget extends ModWidget{
         }
     }
 
-    public List<ButtonWidget> getButtons(){
-        ArrayList<ButtonWidget> listOfButtons = new ArrayList<>();
+    public List<Button> getButtons(){
+        ArrayList<Button> listOfButtons = new ArrayList<>();
         listOfButtons.add(leftButton);
         listOfButtons.add(resetButton);
         listOfButtons.add(rightButton);
@@ -114,7 +108,7 @@ public class PlayableNpcPreviewWidget extends ModWidget{
         this.tickHoldingStart = 0;
     }
 
-    public void updateEntity(NpcGearData data, Race race, World world) {
+    public void updateEntity(NpcGearData data, Race race, Level world) {
         if(world != null)
             haveBeenInitialized = true;
 
@@ -122,9 +116,9 @@ public class PlayableNpcPreviewWidget extends ModWidget{
         updateEquipment(data);
     }
 
-    public void updateToDefaultEntity(World world) {
+    public void updateToDefaultEntity(Level world) {
         BanditHumanEntity entity = new BanditHumanEntity(ModEntities.BANDIT_MILITIA, world);
-        entity.setAiDisabled(true);
+        entity.setNoAi(true);
 
         this.entity = entity;
     }
@@ -136,30 +130,30 @@ public class PlayableNpcPreviewWidget extends ModWidget{
         }
         if(this.entity == null) return;
 
-        this.entity.bodyYaw = currentAngle;
-        this.entity.setPitch(0f);
-        this.entity.headYaw = this.entity.getBodyYaw();
-        this.entity.prevHeadYaw = this.entity.getBodyYaw();
+        this.entity.yBodyRot = currentAngle;
+        this.entity.setXRot(0f);
+        this.entity.yHeadRot = this.entity.getVisualRotationYInDegrees();
+        this.entity.yHeadRotO = this.entity.getVisualRotationYInDegrees();
 
         NpcUtil.equipAll(entity, data);
     }
 
-    private void updateEntityRace(Race race, World world) {
+    private void updateEntityRace(Race race, Level world) {
         this.entity = race.getModel(world);
     }
 
-    public void drawCenteredAnchoredBottom(DrawContext context, int centerX, int endY) {
+    public void drawCenteredAnchoredBottom(GuiGraphics context, int centerX, int endY) {
         float size = 35f;
         int x = centerX;
         int y = endY;
 
-        DiffuseLighting.disableGuiDepthLighting();
-        DiffuseLighting.disableForLevel();
+        Lighting.setupForFlatItems();
+        Lighting.setupLevel();
         if(this.entity == null) return;
 
         if(currentButtonClicked != null){
             if(isEnterKeyPressed || isMouseOver(currentButtonClicked.getWidth(), currentButtonClicked.getHeight(), currentButtonClicked.getX(), currentButtonClicked.getY())) {
-                tickHoldingStart += MinecraftClient.getInstance().inGameHud.getTicks();
+                tickHoldingStart += Minecraft.getInstance().gui.getGuiTicks();
                 if(canRotateSmoothly())
                     currentButtonClicked.onPress();
             }
@@ -170,21 +164,21 @@ public class PlayableNpcPreviewWidget extends ModWidget{
         }
 
         // TODO : Find a way to display the entity behind the buttons.
-        InventoryScreen.drawEntity(context, x, y - 9, size, VECTOR, ENTITY_ROTATION, (Quaternionf)null, this.entity);
+        InventoryScreen.renderEntityInInventory(context, x, y - 9, size, VECTOR, ENTITY_ROTATION, (Quaternionf)null, this.entity);
         int horizontalMargin = MINIMAL_MARGIN + 1;
 
         if(leftButton.active){
             int width = leftButton.getWidth();
             int height = leftButton.getHeight();
             boolean isMouseOver = isMouseOver(width, height, x - width - horizontalMargin, y - MINIMAL_MARGIN);
-            context.drawTexture(NPC_PREVIEW,
+            context.blit(NPC_PREVIEW,
                     x - width - horizontalMargin, y - MINIMAL_MARGIN,
                     0, (currentButtonClicked != null && isLeftButton) ? 18
                             : (leftButton.isFocused() || isMouseOver) ? 9 : 0,
                     width, height
             );
             if(leftButton.isFocused() && getFocusEnabled()){
-                context.drawTexture(NPC_PREVIEW,
+                context.blit(NPC_PREVIEW,
                         x - width - horizontalMargin, y - MINIMAL_MARGIN,
                         0, 27,
                         width, height
@@ -199,13 +193,13 @@ public class PlayableNpcPreviewWidget extends ModWidget{
             int height = resetButton.getHeight();
             boolean isMouseOver = isMouseOver(width, height, x - (width / 2), y - MINIMAL_MARGIN + 2);
 
-            context.drawTexture(NPC_PREVIEW,
+            context.blit(NPC_PREVIEW,
                     x - 3, y - MINIMAL_MARGIN + 2,
                     28, (resetButton.isFocused() || isMouseOver) ? 6 : 0,
                     width, height
             );
             if(resetButton.isFocused() && getFocusEnabled()){
-                context.drawTexture(NPC_PREVIEW,
+                context.blit(NPC_PREVIEW,
                         x - 3, y - MINIMAL_MARGIN + 2,
                         28, 12,
                         width, height
@@ -219,14 +213,14 @@ public class PlayableNpcPreviewWidget extends ModWidget{
             int height = rightButton.getHeight();
             boolean isMouseOver = isMouseOver(width, height, x + horizontalMargin, y - MINIMAL_MARGIN);
 
-            context.drawTexture(NPC_PREVIEW,
+            context.blit(NPC_PREVIEW,
                     x + horizontalMargin, y - MINIMAL_MARGIN,
                     14, (currentButtonClicked != null && !isLeftButton) ? 18
                         : (rightButton.isFocused() || isMouseOver) ? 9 : 0,
                     width, height
             );
             if(rightButton.isFocused() && getFocusEnabled()){
-                context.drawTexture(NPC_PREVIEW,
+                context.blit(NPC_PREVIEW,
                         x + horizontalMargin, y - MINIMAL_MARGIN,
                         14, 27,
                         width, height
@@ -235,10 +229,10 @@ public class PlayableNpcPreviewWidget extends ModWidget{
             rightButton.setPosition(x + horizontalMargin, y - MINIMAL_MARGIN);
         }
 
-        this.entity.bodyYaw = currentAngle;
-        this.entity.setPitch(0f);
-        this.entity.headYaw = this.entity.getBodyYaw();
-        this.entity.prevHeadYaw = this.entity.getBodyYaw();
+        this.entity.yBodyRot = currentAngle;
+        this.entity.setXRot(0f);
+        this.entity.yHeadRot = this.entity.getVisualRotationYInDegrees();
+        this.entity.yHeadRotO = this.entity.getVisualRotationYInDegrees();
     }
 
 

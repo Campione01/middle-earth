@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:polished_ironstone_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:polished_ironstone_vertical_slab"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "cape": "surcoat",
+              "cape_color": 4940404,
+              "color": 8340546,
+              "id": "me:longbeard_partisan_outfit"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:dwarven_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:longbeard_segmented_helmet"
+            },
+            {
+              "id": "me:erebor_leather_helmet"
+            },
+            {
+              "id": "me:erebor_braced_leather_helmet"
+            },
+            {
+              "id": "me:erebor_nasal_leather_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "color": 8340546,
+              "id": "me:longbeard_leather_leggings"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:erebor_sword"
+            },
+            {
+              "id": "me:erebor_axe"
+            },
+            {
+              "id": "me:khazad_steel_sword"
+            },
+            {
+              "id": "me:khazad_steel_spear"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:heater_shield"
+            },
+            {
+              "id": "minecraft:air"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:longbeards.erebor.militia",
+  "race": "me:dwarf"
+}

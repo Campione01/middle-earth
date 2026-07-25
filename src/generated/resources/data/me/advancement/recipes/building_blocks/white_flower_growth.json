@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:white_flower_growth"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_white_flowers": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:white_flowers"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_white_flowers"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:white_flower_growth"
+    ]
+  }
+}

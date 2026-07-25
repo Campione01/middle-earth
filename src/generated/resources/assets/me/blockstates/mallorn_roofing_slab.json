@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/mallorn_roofing_slab"
+    },
+    "type=double": {
+      "model": "me:block/mallorn_roofing"
+    },
+    "type=top": {
+      "model": "me:block/mallorn_roofing_slab_top"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "id": "me:eorling_marshal_chestplate"
+        },
+        "feet": {
+          "id": "me:eorling_marshal_boots"
+        },
+        "head": {
+          "id": "me:eorling_marshal_helmet"
+        },
+        "legs": {
+          "id": "me:eorling_marshal_leggings"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:rohirric_noble_sword",
+              "weight": 3
+            },
+            {
+              "id": "me:rohirric_noble_spear"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:rohirric_eorling_shield"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:rohan.eorling_marhsal",
+  "race": "me:human"
+}

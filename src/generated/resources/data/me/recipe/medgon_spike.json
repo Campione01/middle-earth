@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "M": {
+      "item": "me:medgon"
+    },
+    "P": {
+      "item": "me:polished_medgon"
+    }
+  },
+  "pattern": [
+    "M  ",
+    "MM ",
+    "PMP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:medgon_spike"
+  }
+}

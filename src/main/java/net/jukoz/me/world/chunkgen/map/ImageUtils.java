@@ -8,13 +8,20 @@ import net.jukoz.me.world.map.MiddleEarthMapGeneration;
 import org.joml.sampling.Convolution;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class ImageUtils {
     private static HashMap<Integer, float[]> gaussianBlurKernel = new HashMap<>();

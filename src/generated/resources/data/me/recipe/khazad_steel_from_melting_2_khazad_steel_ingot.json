@@ -1,0 +1,14 @@
+{
+  "type": "me:alloying",
+  "amount": 288,
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "me:khazad_steel_ingot"
+    },
+    {
+      "item": "me:khazad_steel_ingot"
+    }
+  ],
+  "output": "khazad_steel"
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ashen_cobblestone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:ashen_cobblestone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:ashen_cobblestone_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ashen_cobblestone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:ashen_cobblestone_stairs"
+    ]
+  }
+}

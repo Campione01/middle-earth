@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "minecraft:gold_ingot"
+    },
+    "N": {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "pattern": [
+    "I",
+    "N",
+    "N"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:golden_chalice"
+  }
+}

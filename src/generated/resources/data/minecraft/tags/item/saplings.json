@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "me:beech_sapling",
+    "me:chestnut_sapling",
+    "me:holly_sapling",
+    "me:fir_sapling",
+    "me:larch_sapling",
+    "me:lebethron_sapling",
+    "me:white_lebethron_sapling",
+    "me:mallorn_sapling",
+    "me:mirkwood_sapling",
+    "me:palm_sapling",
+    "me:white_palm_sapling",
+    "me:pine_sapling",
+    "me:black_pine_sapling",
+    "me:willow_sapling"
+  ]
+}

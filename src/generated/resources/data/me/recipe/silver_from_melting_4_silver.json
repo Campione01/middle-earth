@@ -1,0 +1,20 @@
+{
+  "type": "me:alloying",
+  "amount": 576,
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "me:silver"
+    },
+    {
+      "tag": "me:silver"
+    },
+    {
+      "tag": "me:silver"
+    },
+    {
+      "tag": "me:silver"
+    }
+  ],
+  "output": "silver"
+}

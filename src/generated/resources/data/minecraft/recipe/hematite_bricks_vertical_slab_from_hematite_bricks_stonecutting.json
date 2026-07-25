@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:hematite_bricks"
+  },
+  "result": {
+    "count": 2,
+    "id": "me:hematite_bricks_vertical_slab"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pumice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:pumice"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:pumice_trapdoor"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pumice"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:pumice_trapdoor"
+    ]
+  }
+}

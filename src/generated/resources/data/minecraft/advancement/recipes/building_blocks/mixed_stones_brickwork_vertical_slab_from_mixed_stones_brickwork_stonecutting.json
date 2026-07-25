@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mixed_stones_brickwork": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:mixed_stones_brickwork"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:mixed_stones_brickwork_vertical_slab_from_mixed_stones_brickwork_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mixed_stones_brickwork"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:mixed_stones_brickwork_vertical_slab_from_mixed_stones_brickwork_stonecutting"
+    ]
+  }
+}

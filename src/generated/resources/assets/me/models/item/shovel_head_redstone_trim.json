@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/shovel_head",
+    "layer1": "me:trims/items/shovel_head_trim_redstone"
+  }
+}

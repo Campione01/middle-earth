@@ -1,0 +1,7 @@
+{
+  "parent": "me:block/large_door_right",
+  "textures": {
+    "all": "me:block/larch_hobbit_door_0",
+    "particle": "me:block/larch_hobbit_door_0"
+  }
+}

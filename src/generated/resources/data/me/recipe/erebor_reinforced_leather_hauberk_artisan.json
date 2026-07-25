@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:erebor_mail_hauberk"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:armor_plate"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:erebor_reinforced_leather_hauberk"
+  }
+}

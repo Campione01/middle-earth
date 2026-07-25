@@ -1,0 +1,53 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:mordor_black_numenorean_plate_chestplate"
+            },
+            {
+              "cape": "mordor_black_numenorean_cape",
+              "id": "me:mordor_black_numenorean_plate_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:mordor_black_numenorean_plate_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:mordor_black_numenorean_plate_helmet",
+              "weight": 4
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:mordor_black_numenorean_plate_leggings"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:black_numenorean_spear"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:black_numenorean_tower_shield"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:mordor.black_numenorean",
+  "race": "me:human"
+}

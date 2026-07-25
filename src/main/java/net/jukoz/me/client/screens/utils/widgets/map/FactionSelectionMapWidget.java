@@ -5,10 +5,10 @@ import net.jukoz.me.client.screens.utils.widgets.UiDirections;
 import net.jukoz.me.client.screens.utils.widgets.map.types.MapMarkerType;
 import net.jukoz.me.resources.datas.factions.data.SpawnData;
 import net.jukoz.me.resources.datas.factions.data.SpawnDataHandler;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.Component;
 import org.joml.Vector2d;
 import org.joml.Vector2i;
 
@@ -41,10 +41,10 @@ public class FactionSelectionMapWidget extends MapWidget {
             spawnMapMarkers[i].setType(MapMarkerType.DYNAMIC_SPAWN);
         }
         updateSelectedSpawn(controller.getCurrentSpawnIndex());
-        MapMarkerWidget.setTitle(Text.translatable("widget.me.spawn_tooltip_title").formatted(Formatting.UNDERLINE));
+        MapMarkerWidget.setTitle(Component.translatable("widget.me.spawn_tooltip_title").withStyle(ChatFormatting.UNDERLINE));
     }
-    public ButtonWidget[] getButtons() {
-        ButtonWidget[] spawnButtonArray = new ButtonWidget[spawnMapMarkers.length];
+    public Button[] getButtons() {
+        Button[] spawnButtonArray = new Button[spawnMapMarkers.length];
         for(int i = 0; i < spawnMapMarkers.length; i++){
             spawnButtonArray[i] = spawnMapMarkers[i].getButton();
         }
@@ -67,7 +67,7 @@ public class FactionSelectionMapWidget extends MapWidget {
     }
 
     @Override
-    protected void draw(DrawContext context, int startX, int startY) {
+    protected void draw(GuiGraphics context, int startX, int startY) {
         super.draw(context, startX, startY);
         SpawnDataHandler handler = controller.getCurrentSpawnDataHandler();
         if(handler == null || handler.getSpawnList() == null) return;
@@ -75,25 +75,25 @@ public class FactionSelectionMapWidget extends MapWidget {
         HashMap<Integer, List<Vector2i>> uniqueIndexes = new HashMap<>();
         for(int i = 0; i < spawns.size(); i++){
             SpawnData spawnData = spawns.get(i);
-            Vector2d coordinates = new Vector2d(spawnData.getCoordinates().getX(), spawnData.getCoordinates().getZ());
+            Vector2d coordinates = new Vector2d(spawnData.getCoordinates().x(), spawnData.getCoordinates().z());
             MapMarkerWidget mapMarker = this.spawnMapMarkers[i];
             if(spawnData.isDynamic()){
                 mapMarker.setType(MapMarkerType.DYNAMIC_SPAWN);
                 mapMarker.computeFromMapPosition(this, coordinates);
                 mapMarker.setContent(
                         List.of(
-                                Text.translatable("spawn." + spawnData.getIdentifier().toTranslationKey()).formatted(Formatting.GOLD),
-                                Text.translatable("widget.me.marker.margin_front").append(Text.translatable("spawn.me.coordinates_base.dynamic").formatted(Formatting.GRAY)
-                                        .append(Text.translatable("spawn.me.coordinates_base_values.dynamic", spawnData.getWorldCoordinates().x, spawnData.getWorldCoordinates().z).formatted(Formatting.WHITE)))
+                                Component.translatable("spawn." + spawnData.getIdentifier().toLanguageKey()).withStyle(ChatFormatting.GOLD),
+                                Component.translatable("widget.me.marker.margin_front").append(Component.translatable("spawn.me.coordinates_base.dynamic").withStyle(ChatFormatting.GRAY)
+                                        .append(Component.translatable("spawn.me.coordinates_base_values.dynamic", spawnData.getWorldCoordinates().x, spawnData.getWorldCoordinates().z).withStyle(ChatFormatting.WHITE)))
                         ));
             } else {
                 mapMarker.setType(MapMarkerType.CUSTOM_SPAWN);
                 mapMarker.computeFromWorldPosition(this, coordinates);
                 mapMarker.setContent(
                         List.of(
-                                Text.translatable("spawn." + spawnData.getIdentifier().toTranslationKey()).formatted(Formatting.GOLD),
-                                Text.translatable("widget.me.marker.margin_front").append(Text.translatable("spawn.me.coordinates_base.custom").formatted(Formatting.GRAY)
-                                        .append(Text.translatable("spawn.me.coordinates_base_values.custom", spawnData.getWorldCoordinates().x, spawnData.getWorldCoordinates().y, spawnData.getWorldCoordinates().z).formatted(Formatting.WHITE)))
+                                Component.translatable("spawn." + spawnData.getIdentifier().toLanguageKey()).withStyle(ChatFormatting.GOLD),
+                                Component.translatable("widget.me.marker.margin_front").append(Component.translatable("spawn.me.coordinates_base.custom").withStyle(ChatFormatting.GRAY)
+                                        .append(Component.translatable("spawn.me.coordinates_base_values.custom", spawnData.getWorldCoordinates().x, spawnData.getWorldCoordinates().y, spawnData.getWorldCoordinates().z).withStyle(ChatFormatting.WHITE)))
                         ));
             }
 

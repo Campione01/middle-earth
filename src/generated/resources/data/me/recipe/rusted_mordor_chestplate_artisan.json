@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "evil",
+  "ingredients": [
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "me:orcish_mail_hauberk"
+    },
+    {
+      "item": "me:mail"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "me:armor_plate"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:rusted_mordor_chestplate"
+  }
+}

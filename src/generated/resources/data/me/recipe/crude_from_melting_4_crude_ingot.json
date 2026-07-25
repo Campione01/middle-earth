@@ -1,0 +1,20 @@
+{
+  "type": "me:alloying",
+  "amount": 576,
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "me:crude_ingot"
+    },
+    {
+      "item": "me:crude_ingot"
+    },
+    {
+      "item": "me:crude_ingot"
+    },
+    {
+      "item": "me:crude_ingot"
+    }
+  ],
+  "output": "crude"
+}

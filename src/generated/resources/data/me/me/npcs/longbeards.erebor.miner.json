@@ -1,0 +1,86 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "color": 8340546,
+              "id": "me:dwarven_gambeson"
+            },
+            {
+              "color": 8340546,
+              "id": "me:dwarven_miner_gambeson"
+            },
+            {
+              "cape": "surcoat",
+              "cape_color": 3877150,
+              "color": 8340546,
+              "id": "me:dwarven_gambeson"
+            },
+            {
+              "cape": "surcoat",
+              "cape_color": 3877150,
+              "color": 8340546,
+              "id": "me:dwarven_miner_gambeson"
+            }
+          ]
+        },
+        "feet": {
+          "pool": [
+            {
+              "id": "me:dwarven_boots",
+              "weight": 3
+            },
+            {
+              "id": "me:dwarven_reinforced_boots"
+            }
+          ]
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:woven_hat",
+              "weight": 4
+            },
+            {
+              "color": 5648429,
+              "id": "me:bycocket",
+              "weight": 4
+            },
+            {
+              "id": "me:dwarven_miner_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "color": 5648429,
+              "id": "me:longbeard_leather_leggings"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:khazad_steel_pickaxe"
+            },
+            {
+              "id": "me:khazad_steel_axe"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "minecraft:air"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:longbeards.erebor.miner",
+  "race": "me:dwarf"
+}

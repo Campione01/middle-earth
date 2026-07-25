@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gondorian_captain_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:gondorian_captain_helmet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:gondorian_fountain_guard_helmet_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gondorian_captain_helmet"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:gondorian_fountain_guard_helmet_artisan"
+    ]
+  }
+}

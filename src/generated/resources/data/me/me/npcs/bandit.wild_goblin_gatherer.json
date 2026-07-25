@@ -1,0 +1,111 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "color": 4865076,
+              "id": "me:orcish_leather_strap"
+            },
+            {
+              "cape": "orcish_cape",
+              "color": 4865076,
+              "id": "me:orcish_leather_strap"
+            },
+            {
+              "cape": "orcish_shoulders",
+              "cape_color": 4865076,
+              "color": 4865076,
+              "id": "me:orcish_leather_strap"
+            },
+            {
+              "cape": "orcish_cape",
+              "color": 4865076,
+              "id": "me:gundabad_bone_pauldron"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "color": 4865076,
+              "id": "me:gundabad_bone_pauldron"
+            },
+            {
+              "cape": "cape",
+              "cape_color": 4865076,
+              "color": 4865076,
+              "id": "me:gundabad_bone_pauldron"
+            },
+            {
+              "color": 4865076,
+              "id": "me:orcish_cape"
+            }
+          ]
+        },
+        "feet": {
+          "color": 4865076,
+          "id": "me:orcish_sandals"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            },
+            {
+              "color": 4865076,
+              "id": "me:leather_skullcap",
+              "weight": 3
+            },
+            {
+              "id": "me:rusted_orcish_mail_coif",
+              "weight": 2
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "color": 4865076,
+              "id": "me:orcish_strip_leather_skirt"
+            },
+            {
+              "color": 4865076,
+              "id": "me:orcish_leather_skirt"
+            },
+            {
+              "color": 4865076,
+              "id": "me:orcish_leg_bracer"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:crude_axe",
+              "weight": 3
+            },
+            {
+              "id": "me:crude_dagger",
+              "weight": 2
+            },
+            {
+              "id": "me:orc_knife",
+              "weight": 2
+            },
+            {
+              "id": "me:crude_pickaxe"
+            },
+            {
+              "id": "me:crude_hoe"
+            },
+            {
+              "id": "me:crude_shovel"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:bandit.wild_goblin_gatherer",
+  "race": "me:orc"
+}

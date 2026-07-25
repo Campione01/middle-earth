@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:polished_jadeite_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "me:polished_jadeite_vertical_slab"
+  }
+}

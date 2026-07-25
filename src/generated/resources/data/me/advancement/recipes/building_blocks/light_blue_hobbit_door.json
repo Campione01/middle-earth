@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_larch_hobbit_door": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:larch_hobbit_door"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:light_blue_hobbit_door"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_larch_hobbit_door"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:light_blue_hobbit_door"
+    ]
+  }
+}

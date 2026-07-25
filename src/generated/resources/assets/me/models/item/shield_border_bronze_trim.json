@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/shield_border",
+    "layer1": "me:trims/items/shield_border_trim_bronze"
+  }
+}

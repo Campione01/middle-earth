@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "F": {
+      "item": "minecraft:leather"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "T": {
+      "item": "me:tin_ingot"
+    }
+  },
+  "pattern": [
+    " PS",
+    "PFF",
+    "TPS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:bellows"
+  }
+}

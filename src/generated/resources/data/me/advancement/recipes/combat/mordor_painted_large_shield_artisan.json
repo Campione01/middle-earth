@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mordor_large_shield": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:mordor_large_shield"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:mordor_painted_large_shield_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mordor_large_shield"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:mordor_painted_large_shield_artisan"
+    ]
+  }
+}

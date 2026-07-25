@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/smooth_ironstone_slab"
+    },
+    "type=double": {
+      "model": "me:block/smooth_ironstone"
+    },
+    "type=top": {
+      "model": "me:block/smooth_ironstone_slab_top"
+    }
+  }
+}

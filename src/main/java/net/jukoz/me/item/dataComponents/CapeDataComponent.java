@@ -6,10 +6,10 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.jukoz.me.item.ModDataComponentTypes;
 import net.jukoz.me.item.utils.armor.capes.ModCapes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.util.math.ColorHelper;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.FastColor;
+import net.minecraft.world.item.ItemStack;
 
 public record CapeDataComponent(ModCapes cape, int capeColor){
 
@@ -21,7 +21,7 @@ public record CapeDataComponent(ModCapes cape, int capeColor){
     public static final Codec<CapeDataComponent> CODEC  = Codec.withAlternative(BASE_CODEC, Codec.BOOL, (enabled) -> {
         return new CapeDataComponent(ModCapes.CAPE, CustomDyeableDataComponent.DEFAULT_COLOR);
     });
-    public static final PacketCodec<ByteBuf, CapeDataComponent> PACKET_CODEC  = PacketCodec.tuple(ModCapes.PACKET_CODEC, CapeDataComponent::getCape, PacketCodecs.INTEGER, CapeDataComponent::capeColor, CapeDataComponent::new);
+    public static final StreamCodec<ByteBuf, CapeDataComponent> PACKET_CODEC  = StreamCodec.composite(ModCapes.PACKET_CODEC, CapeDataComponent::getCape, ByteBufCodecs.INT, CapeDataComponent::capeColor, CapeDataComponent::new);
     ;
 
     public CapeDataComponent(ModCapes cape, int capeColor){
@@ -31,7 +31,7 @@ public record CapeDataComponent(ModCapes cape, int capeColor){
 
     public static int getColor(ItemStack stack, int defaultColor) {
         CapeDataComponent capeDataComponent = stack.get(ModDataComponentTypes.CAPE_DATA);
-        return capeDataComponent != null ? ColorHelper.Argb.fullAlpha(capeDataComponent.capeColor) : defaultColor;
+        return capeDataComponent != null ? FastColor.ARGB32.opaque(capeDataComponent.capeColor) : defaultColor;
     }
 
     public static CapeDataComponent newCape(ModCapes cape) {

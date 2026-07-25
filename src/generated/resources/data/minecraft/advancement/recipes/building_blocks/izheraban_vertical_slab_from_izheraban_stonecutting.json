@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_izheraban": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:izheraban"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:izheraban_vertical_slab_from_izheraban_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_izheraban"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:izheraban_vertical_slab_from_izheraban_stonecutting"
+    ]
+  }
+}

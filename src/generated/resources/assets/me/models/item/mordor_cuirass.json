@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/mordor_cuirass",
+    "layer1": "me:item/mordor_cuirass_overlay"
+  }
+}

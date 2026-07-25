@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "me:gondorian_bow",
+    "me:gondorian_longbow",
+    "me:gondorian_noble_longbow",
+    "me:rohirric_bow",
+    "me:rohirric_longbow",
+    "me:rohirric_noble_bow",
+    "me:dalish_longbow",
+    "me:dalish_noble_longbow",
+    "me:dalish_heyday_longbow",
+    "me:lorien_bow",
+    "me:lorien_longbow",
+    "me:lorien_noble_longbow",
+    "me:erebor_bow",
+    "me:erebor_noble_bow",
+    "me:orcish_bow",
+    "me:mordor_bow",
+    "me:mordor_elite_longbow",
+    "me:uruk_hai_bow",
+    "me:gundabad_bow"
+  ]
+}

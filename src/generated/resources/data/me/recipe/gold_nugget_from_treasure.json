@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:gold_treasure_heap_layer"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "id": "me:gold_coin"
+  }
+}

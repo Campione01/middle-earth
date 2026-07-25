@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "me:mossy_galonn_tiles"
+  },
+  "result": {
+    "count": 2,
+    "id": "me:mossy_galonn_tiles_vertical_slab"
+  }
+}

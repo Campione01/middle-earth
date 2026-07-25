@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "me:item/wanderer_robes",
+    "layer1": "me:item/wanderer_robes_overlay"
+  }
+}

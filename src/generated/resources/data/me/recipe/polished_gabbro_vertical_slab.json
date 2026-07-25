@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:polished_gabbro_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:polished_gabbro_vertical_slab"
+  }
+}

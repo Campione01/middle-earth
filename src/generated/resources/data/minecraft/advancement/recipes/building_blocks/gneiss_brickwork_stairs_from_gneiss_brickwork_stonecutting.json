@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gneiss_brickwork": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:gneiss_brickwork"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:gneiss_brickwork_stairs_from_gneiss_brickwork_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gneiss_brickwork"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:gneiss_brickwork_stairs_from_gneiss_brickwork_stonecutting"
+    ]
+  }
+}

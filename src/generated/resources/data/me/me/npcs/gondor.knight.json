@@ -1,0 +1,92 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:gondorian_soldier_chestplate"
+            },
+            {
+              "id": "me:gondorian_plate_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:gondorian_boots"
+        },
+        "head": {
+          "id": "me:gondorian_plate_helmet"
+        },
+        "legs": {
+          "pool": [
+            {
+              "id": "me:gondorian_mail_coat",
+              "weight": 2
+            },
+            {
+              "id": "me:gondorian_plate_leggings"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_sword"
+            },
+            {
+              "id": "me:gondorian_axe"
+            },
+            {
+              "id": "me:gondorian_longsword"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_shield"
+            }
+          ]
+        }
+      },
+      {
+        "chest": {
+          "id": "me:gondorian_plate_chestplate"
+        },
+        "feet": {
+          "id": "me:gondorian_boots"
+        },
+        "head": {
+          "id": "me:gondorian_plate_helmet"
+        },
+        "legs": {
+          "id": "me:gondorian_plate_leggings"
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_spear"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:gondorian_shield"
+            },
+            {
+              "id": "me:gondorian_tower_shield"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:gondor.knight",
+  "race": "me:human"
+}

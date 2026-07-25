@@ -1,28 +1,41 @@
 package net.jukoz.me.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.jukoz.me.item.items.shields.CustomSiegeShieldItem;
 import net.jukoz.me.item.items.weapons.ReachWeaponItem;
 import net.jukoz.me.item.items.weapons.ranged.CustomLongbowWeaponItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Hand;
+import net.jukoz.me.utils.PlayerActionHandlingContext;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ServerPlayNetworkHandler.class)
+@Mixin(ServerGamePacketListenerImpl.class)
 public class ServerPlayNetworkHandlerMixin {
 
-    @Shadow public ServerPlayerEntity player;
+    @Shadow public ServerPlayer player;
 
-    @Inject(method = "onPlayerAction", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0,
-            target = "Lnet/minecraft/server/network/ServerPlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), cancellable = true)
-    public void onPlayerAction(PlayerActionC2SPacket packet, CallbackInfo ci) {
-        ItemStack stackMainHand = this.player.getStackInHand(Hand.MAIN_HAND);
+    @WrapMethod(method = "handlePlayerAction")
+    private void wrapHandlePlayerAction(ServerboundPlayerActionPacket packet, Operation<Void> original) {
+        PlayerActionHandlingContext.enter();
+        try {
+            original.call(packet);
+        } finally {
+            PlayerActionHandlingContext.exit();
+        }
+    }
+
+    @Inject(method = "handlePlayerAction", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0,
+            target = "Lnet/minecraft/server/level/ServerPlayer;getItemInHand(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true)
+    public void handlePlayerAction(ServerboundPlayerActionPacket packet, CallbackInfo ci) {
+        ItemStack stackMainHand = this.player.getItemInHand(InteractionHand.MAIN_HAND);
         if(stackMainHand != null){
             if ((stackMainHand.getItem() instanceof ReachWeaponItem && (((ReachWeaponItem) stackMainHand.getItem()).type.twoHanded))
                     || (stackMainHand.getItem() instanceof CustomSiegeShieldItem)

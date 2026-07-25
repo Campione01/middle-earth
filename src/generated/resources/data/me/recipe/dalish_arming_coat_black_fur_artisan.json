@@ -1,0 +1,35 @@
+{
+  "type": "me:artisan_table",
+  "category": "chestplate",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fur"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:fur"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:dalish_arming_coat_black_fur"
+  }
+}

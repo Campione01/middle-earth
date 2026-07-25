@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "me:block/nurgon_bricks",
+    "side": "me:block/nurgon_bricks",
+    "top": "me:block/nurgon_bricks"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "carvers": {},
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 11780310,
+    "foliage_color": 10328434,
+    "grass_color": 8881498,
+    "sky_color": 9479110,
+    "water_color": 5141697,
+    "water_fog_color": 460593
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "me:ashen_gravel",
+      "me:ashen_sand",
+      "me:patch_dead_rushes",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_dirt",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_gravel",
+      "minecraft:ore_tuff"
+    ],
+    [],
+    [],
+    [
+      "me:big_boulder_basalt",
+      "me:coarse_dirt_ore",
+      "me:dead_black_pine_tree",
+      "me:dry_pine_tree",
+      "me:gravel_ore",
+      "me:medium_boulder_basalt",
+      "me:patch_blackstone",
+      "me:patch_common_scorched_grass",
+      "me:patch_common_scorched_shrub",
+      "me:patch_common_scorched_tuft",
+      "me:patch_shriveled_shrub",
+      "me:patch_tough_berry_bush",
+      "me:scorched_tree",
+      "me:small_boulder_basalt",
+      "me:sparse_pine_brush_tree",
+      "minecraft:brown_mushroom_normal",
+      "minecraft:glow_lichen",
+      "minecraft:patch_berry_rare",
+      "minecraft:patch_grass_taiga",
+      "minecraft:red_mushroom_normal"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.4
+}

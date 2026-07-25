@@ -1,0 +1,38 @@
+{
+  "type": "me:artisan_table",
+  "category": "cape",
+  "disposition": "good",
+  "ingredients": [
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "me:steel_nugget"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:green_dye"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:green_dye"
+    },
+    {
+      "item": "minecraft:yellow_dye"
+    },
+    {
+      "item": "me:fabric"
+    },
+    {
+      "item": "minecraft:white_dye"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "me:eorling_marshal_cape"
+  }
+}

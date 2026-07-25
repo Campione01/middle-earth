@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_lorien_scale_coat": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:lorien_scale_coat"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:galadhrim_leggings_artisan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_lorien_scale_coat"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:galadhrim_leggings_artisan"
+    ]
+  }
+}

@@ -9,45 +9,59 @@ import net.jukoz.me.resources.datas.factions.Faction;
 import net.jukoz.me.resources.datas.factions.FactionLookup;
 import net.jukoz.me.resources.datas.races.Race;
 import net.jukoz.me.utils.LoggerUtil;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class PlayerData {
     private AffiliationData affiliationData;
-    private Identifier race;
+    private ResourceLocation race;
     private BlockPos overworldSpawnCoordinates;
+    private transient Runnable dirtyMarker = () -> {};
 
     public PlayerData(){
         this.affiliationData = null;
         this.race = null;
         this.overworldSpawnCoordinates = null;
     }
-    public void setRace(Identifier raceId){
-        this.race = raceId;
+
+    public void setDirtyMarker(Runnable dirtyMarker) {
+        this.dirtyMarker = dirtyMarker == null ? () -> {} : dirtyMarker;
     }
-    public Identifier getRace(){
+
+    private void markDirty() {
+        dirtyMarker.run();
+    }
+
+    public void setRace(ResourceLocation raceId){
+        this.race = raceId;
+        markDirty();
+    }
+    public ResourceLocation getRace(){
         return this.race;
     }
 
     public void setAffiliationData(AffiliationData affiliationData){
         this.affiliationData = affiliationData;
+        markDirty();
     }
 
     public boolean hasAffilition(){
         return affiliationData != null;
     }
 
-    public Race getRace(World world){
-        return world.getRegistryManager().get(MiddleEarthRaces.RACE_KEY).get(this.race);
+    public Race getRace(Level world){
+        if(this.race == null)
+            return null;
+        return world.registryAccess().registryOrThrow(MiddleEarthRaces.RACE_KEY).get(this.race);
     }
-    public Faction getFaction(World world) throws FactionIdentifierException{
+    public Faction getFaction(Level world) throws FactionIdentifierException{
         if(!hasAffilition())
             return null;
         Faction faction = FactionLookup.getFactionById(world, affiliationData.faction);
         if(faction.getFactionType() == FactionType.SUBFACTION){
-            Identifier parentFactionIdentifier = faction.getParentFactionId();
+            ResourceLocation parentFactionIdentifier = faction.getParentFactionId();
             if(parentFactionIdentifier == null){
                 LoggerUtil.logError(faction.getName() + " is said to be a subfaction, but does not have a parent faction, returning the obtained faction by default.");
                 return faction;
@@ -56,7 +70,7 @@ public class PlayerData {
         }
         return faction;
     }
-    public Faction getSubfaction(World world) throws FactionIdentifierException{
+    public Faction getSubfaction(Level world) throws FactionIdentifierException{
         if(!hasAffilition())
             return null;
         Faction faction = FactionLookup.getFactionById(world, affiliationData.faction);
@@ -65,7 +79,7 @@ public class PlayerData {
         return faction;
     }
 
-    public Faction getCurrentFaction(World world) throws FactionIdentifierException {
+    public Faction getCurrentFaction(Level world) throws FactionIdentifierException {
         if(!hasAffilition())
             return null;
         return FactionLookup.getFactionById(world, affiliationData.faction);
@@ -75,26 +89,28 @@ public class PlayerData {
             return null;
         return affiliationData.disposition;
     }
-    public Identifier getCurrentFactionId() {
+    public ResourceLocation getCurrentFactionId() {
         if(!hasAffilition())
             return null;
         return affiliationData.faction;
     }
 
-    public Identifier getCurrentSpawnId(){
+    public ResourceLocation getCurrentSpawnId(){
         if(!hasAffilition())
             return null;
         return affiliationData.spawnId;
     }
 
-    public RaceType getRaceType(World world){
+    public RaceType getRaceType(Level world){
+        if(race == null)
+            return RaceType.NONE;
         Race foundRace = getRace(world);
-        if(race == null || foundRace == null)
+        if(foundRace == null)
             return RaceType.NONE;
         return foundRace.getRaceType();
     }
 
-    public Vec3d getSpawnMiddleEarthCoordinate(World world){
+    public Vec3 getSpawnMiddleEarthCoordinate(Level world){
         if(!hasAffilition())
             return null;
         return affiliationData.getSpawnMiddleEarthCoordinate(world);
@@ -118,6 +134,7 @@ public class PlayerData {
 
     public void setOverworldSpawn(BlockPos overworldSpawnCoordinate) {
         this.overworldSpawnCoordinates = overworldSpawnCoordinate;
+        markDirty();
     }
     public BlockPos getOverworldSpawnCoordinates() {
         return overworldSpawnCoordinates;
@@ -127,12 +144,14 @@ public class PlayerData {
         this.affiliationData = null;
         this.overworldSpawnCoordinates = null;
         this.race = null;
+        markDirty();
     }
 
-    public boolean setSpawnMiddleEarthId(World world, Identifier foundId) throws FactionIdentifierException {
+    public boolean setSpawnMiddleEarthId(Level world, ResourceLocation foundId) throws FactionIdentifierException {
         if(hasAffilition()){
             if(FactionLookup.getFactionById(world,affiliationData.faction).getSpawnData().getAllSpawnIdentifiers().contains(foundId)){
                 affiliationData.spawnId = foundId;
+                markDirty();
                 return true;
             }
         }

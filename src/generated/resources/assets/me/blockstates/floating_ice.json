@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "me:block/floating_ice"
+      },
+      {
+        "model": "me:block/floating_ice",
+        "y": 90
+      },
+      {
+        "model": "me:block/floating_ice",
+        "y": 180
+      },
+      {
+        "model": "me:block/floating_ice",
+        "y": 270
+      }
+    ]
+  }
+}

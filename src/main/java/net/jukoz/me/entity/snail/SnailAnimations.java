@@ -1,22 +1,22 @@
 package net.jukoz.me.entity.snail;
 
-import net.minecraft.client.render.entity.animation.Animation;
-import net.minecraft.client.render.entity.animation.AnimationHelper;
-import net.minecraft.client.render.entity.animation.Keyframe;
-import net.minecraft.client.render.entity.animation.Transformation;
+import net.minecraft.client.animation.AnimationChannel;
+import net.minecraft.client.animation.AnimationDefinition;
+import net.minecraft.client.animation.Keyframe;
+import net.minecraft.client.animation.KeyframeAnimations;
 
 public class SnailAnimations {
-    public static final Animation CRAWL = Animation.Builder.create(2f).looping()
-            .addBoneAnimation("body",
-                    new Transformation(Transformation.Targets.SCALE,
-                            new Keyframe(0f, AnimationHelper.createScalingVector(1f, 1f, 1f),
-                                    Transformation.Interpolations.CUBIC),
-                            new Keyframe(0.5f, AnimationHelper.createScalingVector(1f, 1f, 1.2f),
-                                    Transformation.Interpolations.CUBIC),
-                            new Keyframe(1f, AnimationHelper.createScalingVector(1f, 1f, 1f),
-                                    Transformation.Interpolations.CUBIC),
-                            new Keyframe(1.5f, AnimationHelper.createScalingVector(1f, 1f, 0.8f),
-                                    Transformation.Interpolations.CUBIC),
-                            new Keyframe(2f, AnimationHelper.createScalingVector(1f, 1f, 1f),
-                                    Transformation.Interpolations.CUBIC))).build();
+    public static final AnimationDefinition CRAWL = AnimationDefinition.Builder.withLength(2f).looping()
+            .addAnimation("body",
+                    new AnimationChannel(AnimationChannel.Targets.SCALE,
+                            new Keyframe(0f, KeyframeAnimations.scaleVec(1f, 1f, 1f),
+                                    AnimationChannel.Interpolations.CATMULLROM),
+                            new Keyframe(0.5f, KeyframeAnimations.scaleVec(1f, 1f, 1.2f),
+                                    AnimationChannel.Interpolations.CATMULLROM),
+                            new Keyframe(1f, KeyframeAnimations.scaleVec(1f, 1f, 1f),
+                                    AnimationChannel.Interpolations.CATMULLROM),
+                            new Keyframe(1.5f, KeyframeAnimations.scaleVec(1f, 1f, 0.8f),
+                                    AnimationChannel.Interpolations.CATMULLROM),
+                            new Keyframe(2f, KeyframeAnimations.scaleVec(1f, 1f, 1f),
+                                    AnimationChannel.Interpolations.CATMULLROM))).build();
 }

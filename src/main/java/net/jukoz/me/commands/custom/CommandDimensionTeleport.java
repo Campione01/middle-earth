@@ -5,32 +5,34 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.jukoz.me.commands.ModCommands;
 import net.jukoz.me.world.dimension.ModDimensions;
-import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.argument.*;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.coordinates.Coordinates;
+import net.minecraft.commands.arguments.coordinates.Vec3Argument;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.phys.Vec3;
 
 public class CommandDimensionTeleport {
     private static final String TP = "tp";
     private static final String PLAYER = "player";
     private static final String LOCATION = "location";
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess commandRegistryAccess, CommandManager.RegistrationEnvironment registrationEnvironment) {
-        dispatcher.register((CommandManager.literal(ModCommands.BASE_COMMAND)
-                .requires(source -> source.hasPermissionLevel(2)))
-                .then((CommandManager.literal(TP))
-                .then(CommandManager.argument(PLAYER, EntityArgumentType.player())
-                .then(CommandManager.argument(LOCATION, Vec3ArgumentType.vec3())
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext commandRegistryAccess, Commands.CommandSelection registrationEnvironment) {
+        dispatcher.register((Commands.literal(ModCommands.BASE_COMMAND)
+                .requires(source -> source.hasPermission(2)))
+                .then((Commands.literal(TP))
+                .then(Commands.argument(PLAYER, EntityArgument.player())
+                .then(Commands.argument(LOCATION, Vec3Argument.vec3())
                 .executes(CommandDimensionTeleport::run)))));
     }
 
-    public static int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    public static int run(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         try{
-            PosArgument posArgument = Vec3ArgumentType.getPosArgument(context, LOCATION);
-            Vec3d coordinates = posArgument.toAbsolutePos(context.getSource());
+            Coordinates posArgument = Vec3Argument.getCoordinates(context, LOCATION);
+            Vec3 coordinates = posArgument.getPosition(context.getSource());
 
-            ServerPlayerEntity targettedPlayer = EntityArgumentType.getPlayer(context, PLAYER);
+            ServerPlayer targettedPlayer = EntityArgument.getPlayer(context, PLAYER);
 
             ModDimensions.teleportPlayerToMe(targettedPlayer, coordinates, true, true);
             return 1;

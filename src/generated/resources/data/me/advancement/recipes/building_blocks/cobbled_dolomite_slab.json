@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cobbled_dolomite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:cobbled_dolomite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "me:cobbled_dolomite_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cobbled_dolomite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "me:cobbled_dolomite_slab"
+    ]
+  }
+}

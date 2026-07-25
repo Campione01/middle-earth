@@ -1,0 +1,162 @@
+{
+  "gears": {
+    "pool": [
+      {
+        "chest": {
+          "pool": [
+            {
+              "id": "me:uruk_hai_leather_chestplate"
+            },
+            {
+              "cape": "orcish_cape",
+              "id": "me:uruk_hai_leather_chestplate"
+            },
+            {
+              "cape": "orcish_shoulders",
+              "cape_colors": [
+                3156776,
+                6639943
+              ],
+              "id": "me:uruk_hai_leather_chestplate"
+            },
+            {
+              "cape": "orcish_cape",
+              "colors": [
+                3156776,
+                6639943
+              ],
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "cape": "orcish_long_cape",
+              "colors": [
+                3156776,
+                6639943
+              ],
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "cape": "cape",
+              "cape_colors": [
+                3156776,
+                6639943
+              ],
+              "colors": [
+                3156776,
+                6639943
+              ],
+              "id": "me:orcish_leather_chestplate"
+            },
+            {
+              "cape": "orcish_shoulders",
+              "cape_colors": [
+                3156776,
+                6639943
+              ],
+              "colors": [
+                3156776,
+                6639943
+              ],
+              "id": "me:orcish_leather_chestplate"
+            }
+          ]
+        },
+        "feet": {
+          "id": "me:uruk_hai_boots"
+        },
+        "head": {
+          "pool": [
+            {
+              "id": "me:uruk_hai_plate_helmet",
+              "weight": 5
+            },
+            {
+              "colors": [
+                3156776,
+                6639943
+              ],
+              "id": "me:uruk_hai_leather_scout_cap",
+              "weight": 4
+            },
+            {
+              "id": "me:uruk_hai_light_helmet",
+              "weight": 2
+            },
+            {
+              "id": "me:uruk_hai_reinforced_helmet"
+            },
+            {
+              "id": "me:uruk_hai_sapper_helmet"
+            },
+            {
+              "id": "me:uruk_hai_soldier_helmet"
+            }
+          ]
+        },
+        "legs": {
+          "pool": [
+            {
+              "colors": [
+                3156776,
+                6639943
+              ],
+              "id": "me:rusted_orcish_mail_coat"
+            },
+            {
+              "colors": [
+                3156776,
+                6639943
+              ],
+              "id": "me:rusted_orcish_reinforced_leather_skirt"
+            },
+            {
+              "colors": [
+                3156776,
+                6639943
+              ],
+              "id": "me:rusted_orcish_reinforced_strip_leather_skirt"
+            }
+          ]
+        },
+        "mainhand": {
+          "pool": [
+            {
+              "id": "me:isengard_orc_warblade"
+            },
+            {
+              "id": "me:isengard_orc_cleaver"
+            },
+            {
+              "id": "me:isengard_orc_axe"
+            },
+            {
+              "id": "me:isengard_orc_spear"
+            }
+          ]
+        },
+        "offhand": {
+          "pool": [
+            {
+              "id": "me:uruk_hai_shield"
+            },
+            {
+              "id": "me:uruk_hai_s_rune_shield"
+            },
+            {
+              "id": "me:uruk_hai_white_hand_shield"
+            },
+            {
+              "id": "me:uruk_hai_white_palmprint_shield"
+            },
+            {
+              "id": "minecraft:air",
+              "weight": 3
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "id": "me:isengard.uruk_hai_soldier",
+  "race": "me:uruk"
+}

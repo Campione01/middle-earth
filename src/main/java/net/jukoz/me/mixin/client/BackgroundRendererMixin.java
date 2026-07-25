@@ -1,19 +1,19 @@
 package net.jukoz.me.mixin.client;
 
+import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.jukoz.me.compat.neoforge.dist.EnvType;
+import net.jukoz.me.compat.neoforge.dist.Environment;
 import net.jukoz.me.world.biomes.MEBiomeFogData;
 import net.jukoz.me.world.dimension.ModDimensions;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.BackgroundRenderer;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.FogShape;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.client.Camera;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.biome.Biome;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,24 +22,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
-@Mixin(BackgroundRenderer.class)
+@Mixin(FogRenderer.class)
 public class BackgroundRendererMixin {
     private static final float TICK_SPEED = 0.001f;
     private static float fogStartMultiplier = 0.25f;
     private static float fogEndMultiplier = 1;
 
-    @Inject(method = "applyFog", at = @At("TAIL"))
-    private static void applyFog(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci) {
-        Entity entity = camera.getFocusedEntity();
+    @Inject(method = "setupFog", at = @At("TAIL"))
+    private static void setupFog(Camera camera, FogRenderer.FogMode fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci) {
+        Entity entity = camera.getEntity();
 
-        if (entity instanceof ClientPlayerEntity clientPlayerEntity) {
+        if (entity instanceof LocalPlayer clientPlayerEntity) {
             if(
-                    !clientPlayerEntity.hasStatusEffect(StatusEffects.DARKNESS) &&
-                    !clientPlayerEntity.hasStatusEffect(StatusEffects.BLINDNESS) &&
-                    !clientPlayerEntity.isSubmergedInWater() &&
-                    ModDimensions.isInMiddleEarth(clientPlayerEntity.getWorld()))
+                    !clientPlayerEntity.hasEffect(MobEffects.DARKNESS) &&
+                    !clientPlayerEntity.hasEffect(MobEffects.BLINDNESS) &&
+                    !clientPlayerEntity.isUnderWater() &&
+                    ModDimensions.isInMiddleEarth(clientPlayerEntity.level()))
             {
-                Optional<RegistryKey<Biome>> biomeRegistry = clientPlayerEntity.getWorld().getBiome(clientPlayerEntity.getBlockPos()).getKey();
+                Optional<ResourceKey<Biome>> biomeRegistry = clientPlayerEntity.level().getBiome(clientPlayerEntity.blockPosition()).unwrapKey();
                 if(biomeRegistry.isPresent() && MEBiomeFogData.DATA.containsKey(biomeRegistry.get())){
                     MEBiomeFogData fogData = MEBiomeFogData.DATA.get(biomeRegistry.get());
                     
@@ -59,7 +59,7 @@ public class BackgroundRendererMixin {
                     fogStartMultiplier = Math.min(fogStartMultiplier + (tickDelta * TICK_SPEED), 1);
                 }
 
-                float f = MathHelper.clamp(viewDistance / 10.0F, 4.0F, 64.0F);
+                float f = Mth.clamp(viewDistance / 10.0F, 4.0F, 64.0F);
                 float fogStart = (viewDistance - f) * fogStartMultiplier;
                 float fogEnd = viewDistance * fogEndMultiplier;
 

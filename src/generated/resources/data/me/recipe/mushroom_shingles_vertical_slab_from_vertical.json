@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "me:mushroom_shingles_vertical_slab"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:mushroom_shingles_slab"
+  }
+}

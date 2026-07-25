@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mixed_stones_vertical_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": "me:mixed_stones_vertical_slab"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:mixed_stones_slab_from_mixed_stones_vertical_slab_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mixed_stones_vertical_slab"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:mixed_stones_slab_from_mixed_stones_vertical_slab_stonecutting"
+    ]
+  }
+}

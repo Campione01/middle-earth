@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "": {
+      "model": "me:block/schist_table",
+      "uvlock": false
+    }
+  }
+}

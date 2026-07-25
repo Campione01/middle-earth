@@ -2,63 +2,71 @@ package net.jukoz.me.block.special.forge;
 
 import com.mojang.serialization.MapCodec;
 import net.jukoz.me.block.ModBlockEntities;
+import net.jukoz.me.compat.neoforge.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.jukoz.me.item.ModDataComponentTypes;
 import net.jukoz.me.item.dataComponents.TemperatureDataComponent;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class ForgeBlock extends BlockWithEntity implements BlockEntityProvider {
-    public static final EnumProperty<ForgePart> PART = EnumProperty.of("part", ForgePart.class);
-    public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-    public static final BooleanProperty LIT = Properties.LIT;
+public class ForgeBlock extends BaseEntityBlock implements EntityBlock {
+    public static final EnumProperty<ForgePart> PART = EnumProperty.create("part", ForgePart.class);
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
-    public ForgeBlock(Settings settings) {
+    public ForgeBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(((this.stateManager.getDefaultState()).with(FACING, Direction.NORTH)).with(LIT, false).with(PART, ForgePart.BOTTOM));
+        this.registerDefaultState(((this.stateDefinition.any()).setValue(FACING, Direction.NORTH)).setValue(LIT, false).setValue(PART, ForgePart.BOTTOM));
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return createCodec(ForgeBlock::new);
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return simpleCodec(ForgeBlock::new);
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean moved) {
         if(state.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if(blockEntity instanceof ForgeBlockEntity forgeBlockEntity) {
-                if (state.get(PART) == ForgePart.BOTTOM){
+                if (state.getValue(PART) == ForgePart.BOTTOM){
                     MetalTypes metal = forgeBlockEntity.getCurrentMetal();
                     int storage = forgeBlockEntity.getStorage();
 
@@ -68,127 +76,136 @@ public class ForgeBlock extends BlockWithEntity implements BlockEntityProvider {
                         ItemStack nuggetStack = new ItemStack(metal.getNugget(), storage % 144 / 16);
                         nuggetStack.set(ModDataComponentTypes.TEMPERATURE_DATA, new TemperatureDataComponent(1000));
 
-                        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), ingotStack);
-                        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), nuggetStack);
+                        Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), ingotStack);
+                        Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), nuggetStack);
                     }
-                    ItemScatterer.spawn(world, pos, forgeBlockEntity);
+                    Containers.dropContents(world, pos, forgeBlockEntity);
                 }
             }
-            super.onStateReplaced(state, world, pos, newState, moved);
+            super.onRemove(state, world, pos, newState, moved);
         }
     }
     @Nullable
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockPos pos = ctx.getBlockPos().add(0,1,0);
-        World world = ctx.getWorld();
-        Direction direction = ctx.getHorizontalPlayerFacing().getOpposite();
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        BlockPos pos = ctx.getClickedPos().offset(0,1,0);
+        Level world = ctx.getLevel();
+        Direction direction = ctx.getHorizontalDirection().getOpposite();
 
-        return world.getBlockState(pos).canReplace(ctx) && world.getWorldBorder().contains(pos) ? (BlockState)this.getDefaultState().with(FACING, direction).with(PART, ForgePart.BOTTOM) : null;
+        return world.getBlockState(pos).canBeReplaced(ctx) && world.getWorldBorder().isWithinBounds(pos) ? (BlockState)this.defaultBlockState().setValue(FACING, direction).setValue(PART, ForgePart.BOTTOM) : null;
     }
 
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        super.onPlaced(world, pos, state, placer, itemStack);
-        if (!world.isClient) {
-            BlockPos blockPos = pos.add(0,1,0);
-            world.setBlockState(blockPos, (BlockState)state.with(PART, ForgePart.TOP), 3);
-            world.updateNeighbors(pos, Blocks.AIR);
-            state.updateNeighbors(world, pos, 3);
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        super.setPlacedBy(world, pos, state, placer, itemStack);
+        if (!world.isClientSide) {
+            BlockPos blockPos = pos.offset(0,1,0);
+            world.setBlock(blockPos, (BlockState)state.setValue(PART, ForgePart.TOP), 3);
+            world.blockUpdated(pos, Blocks.AIR);
+            state.updateNeighbourShapes(world, pos, 3);
         }
     }
 
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (!world.isClient) {
-            ForgePart forgePart = (ForgePart)state.get(PART);
-            ForgePart forgePartOpposite = (ForgePart)state.get(PART).getOpposite(state.get(PART));
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+        if (!world.isClientSide) {
+            ForgePart forgePart = (ForgePart)state.getValue(PART);
+            ForgePart forgePartOpposite = (ForgePart)state.getValue(PART).getOpposite(state.getValue(PART));
             BlockPos blockPos;
             if(forgePart == ForgePart.BOTTOM){
-                blockPos = pos.add(0,1,0);
+                blockPos = pos.offset(0,1,0);
             } else {
-                blockPos = pos.add(0,-1,0);
+                blockPos = pos.offset(0,-1,0);
             }
             BlockState blockState = world.getBlockState(blockPos);
-            if (blockState.isOf(this) && blockState.get(PART) == forgePartOpposite) {
-                world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 35);
-                world.syncWorldEvent(player, 2001, blockPos, Block.getRawIdFromState(blockState));
+            if (blockState.is(this) && blockState.getValue(PART) == forgePartOpposite) {
+                world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 35);
+                world.levelEvent(player, 2001, blockPos, Block.getId(blockState));
             }
         }
-        return super.onBreak(world, pos, state, player);
+        return super.playerWillDestroy(world, pos, state, player);
     }
 
     @Override
-    public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return state.with(FACING, rotation.rotate(state.get(FACING)));
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
-    public BlockState mirror(BlockState state, BlockMirror mirror) {
-        return state.rotate(mirror.getRotation(state.get(FACING)));
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
         builder.add(LIT);
         builder.add(PART);
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (world.isClient) {
-            return ActionResult.SUCCESS;
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (world.isClientSide) {
+            return InteractionResult.SUCCESS;
         } else {
-            if(state.get(PART) == ForgePart.BOTTOM){
-                NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
+            if(state.getValue(PART) == ForgePart.BOTTOM){
+                MenuProvider screenHandlerFactory = state.getMenuProvider(world, pos);
                 if(screenHandlerFactory != null) {
-                    player.openHandledScreen(screenHandlerFactory);
+                    if (screenHandlerFactory instanceof ExtendedScreenHandlerFactory<?> extendedScreenHandlerFactory && player instanceof ServerPlayer serverPlayer) {
+                        ExtendedScreenHandlerFactory.open(serverPlayer, castOpeningFactory(extendedScreenHandlerFactory), BlockPos.STREAM_CODEC.cast());
+                    } else {
+                        player.openMenu(screenHandlerFactory);
+                    }
                 }
             }
-            return ActionResult.CONSUME;
+            return InteractionResult.CONSUME;
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static ExtendedScreenHandlerFactory<BlockPos> castOpeningFactory(ExtendedScreenHandlerFactory<?> factory) {
+        return (ExtendedScreenHandlerFactory<BlockPos>) factory;
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new ForgeBlockEntity(pos, state);
     }
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
         return ForgeBlock.validateTicker(world, type, ModBlockEntities.FORGE);
     }
 
     @Nullable
-    protected static <T extends BlockEntity> BlockEntityTicker<T> validateTicker(World world, BlockEntityType<T> givenType, BlockEntityType<ForgeBlockEntity> expectedType) {
-        return world.isClient ? null : ForgeBlock.validateTicker(givenType, expectedType, ForgeBlockEntity::tick);
+    protected static <T extends BlockEntity> BlockEntityTicker<T> validateTicker(Level world, BlockEntityType<T> givenType, BlockEntityType<ForgeBlockEntity> expectedType) {
+        return world.isClientSide ? null : ForgeBlock.createTickerHelper(givenType, expectedType, ForgeBlockEntity::tick);
     }
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        if (!state.get(LIT).booleanValue()) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
+        if (!state.getValue(LIT).booleanValue()) {
             return;
         }
-        if (state.get(PART) == ForgePart.BOTTOM){
+        if (state.getValue(PART) == ForgePart.BOTTOM){
             double d = (double)pos.getX() + 0.5;
             double e = pos.getY();
             double f = (double)pos.getZ() + 0.5;
             if (random.nextDouble() < 0.1) {
-                world.playSound(d, e, f, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0f, 1.0f, false);
+                world.playLocalSound(d, e, f, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0f, 1.0f, false);
             }
-            Direction direction = state.get(FACING);
+            Direction direction = state.getValue(FACING);
             Direction.Axis axis = direction.getAxis();
             double g = 0.52;
             double h = random.nextDouble() * 0.6 - 0.3;
-            double i = axis == Direction.Axis.X ? (double)direction.getOffsetX() * 0.52 : h;
+            double i = axis == Direction.Axis.X ? (double)direction.getStepX() * 0.52 : h;
             double j = random.nextDouble() * 6.0 / 16.0;
-            double k = axis == Direction.Axis.Z ? (double)direction.getOffsetZ() * 0.52 : h;
+            double k = axis == Direction.Axis.Z ? (double)direction.getStepZ() * 0.52 : h;
             world.addParticle(ParticleTypes.SMOKE, d + i, e + j, f + k, 0.0, 0.0, 0.0);
             world.addParticle(ParticleTypes.FLAME, d + i, e + j, f + k, 0.0, 0.0, 0.0);
         } else {
             SimpleParticleType simpleParticleType = ParticleTypes.CAMPFIRE_COSY_SMOKE;
-            world.addImportantParticle(simpleParticleType, true, (double)pos.getX() + 0.5 + random.nextDouble() / 3.0 * (double)(random.nextBoolean() ? 1 : -1), (double)pos.getY() + random.nextDouble() + random.nextDouble(), (double)pos.getZ() + 0.5 + random.nextDouble() / 3.0 * (double)(random.nextBoolean() ? 1 : -1), 0.0, 0.07, 0.0);
+            world.addAlwaysVisibleParticle(simpleParticleType, true, (double)pos.getX() + 0.5 + random.nextDouble() / 3.0 * (double)(random.nextBoolean() ? 1 : -1), (double)pos.getY() + random.nextDouble() + random.nextDouble(), (double)pos.getZ() + 0.5 + random.nextDouble() / 3.0 * (double)(random.nextBoolean() ? 1 : -1), 0.0, 0.07, 0.0);
         }
     }
 }

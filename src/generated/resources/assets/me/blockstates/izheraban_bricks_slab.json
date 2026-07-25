@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "me:block/izheraban_bricks_slab"
+    },
+    "type=double": {
+      "model": "me:block/izheraban_bricks"
+    },
+    "type=top": {
+      "model": "me:block/izheraban_bricks_slab_top"
+    }
+  }
+}

@@ -3,11 +3,10 @@ package net.jukoz.me.world.biomes.surface;
 import net.jukoz.me.world.biomes.MEBiomeDataConfigs;
 import net.jukoz.me.world.biomes.MEBiomeKeys;
 import net.jukoz.me.world.chunkgen.map.MiddleEarthHeightMap;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.biome.Biome;
-
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,16 +17,16 @@ import java.util.List;
  */
 public class MapBasedBiomePool {
     private static HashMap<Color, MapBasedCustomBiome> biomeHashMap;
-    public static List<RegistryKey<Biome>> coastalBiomes = new ArrayList<>();
-    public static List<RegistryKey<Biome>> waterBiomes = new ArrayList<>();
-    public static List<RegistryKey<Biome>> riverbiomes = new ArrayList<>();
-    public static List<RegistryKey<Biome>> frozenBiomes = new ArrayList<>();
-    public static List<RegistryKey<Biome>> wastePondBiomes = new ArrayList<>();
-    public static List<RegistryKey<Biome>> mirkwoodSwampBiomes = new ArrayList<>();
-    public static List<RegistryKey<Biome>> oasisBiomes = new ArrayList<>();
-    public static List<RegistryKey<Biome>> anduinWaterBiomes = new ArrayList<>();
-    public static List<RegistryKey<Biome>> deadMarshesBiomes = new ArrayList<>();
-    public static List<RegistryKey<Biome>> mangrovePondBiomes = new ArrayList<>();
+    public static List<ResourceKey<Biome>> coastalBiomes = new ArrayList<>();
+    public static List<ResourceKey<Biome>> waterBiomes = new ArrayList<>();
+    public static List<ResourceKey<Biome>> riverbiomes = new ArrayList<>();
+    public static List<ResourceKey<Biome>> frozenBiomes = new ArrayList<>();
+    public static List<ResourceKey<Biome>> wastePondBiomes = new ArrayList<>();
+    public static List<ResourceKey<Biome>> mirkwoodSwampBiomes = new ArrayList<>();
+    public static List<ResourceKey<Biome>> oasisBiomes = new ArrayList<>();
+    public static List<ResourceKey<Biome>> anduinWaterBiomes = new ArrayList<>();
+    public static List<ResourceKey<Biome>> deadMarshesBiomes = new ArrayList<>();
+    public static List<ResourceKey<Biome>> mangrovePondBiomes = new ArrayList<>();
 
     public static Color DEFAULT_COLOR = new Color(0x375ac3);
     public static MapBasedCustomBiome defaultBiome;
@@ -412,12 +411,12 @@ public class MapBasedBiomePool {
 
         mangrovePondBiomes.add(MEBiomeKeys.ETHIR_ANDUIN);
     }
-    public static MapBasedCustomBiome getBiome(RegistryEntry<Biome> biome, int posX, int posZ) {
+    public static MapBasedCustomBiome getBiome(Holder<Biome> biome, int posX, int posZ) {
         MapBasedCustomBiome foundBiome = null;
-        if(biome.getKey().isPresent()){
-            Identifier biomeId = biome.getKey().get().getValue();
+        if(biome.unwrapKey().isPresent()){
+            ResourceLocation biomeId = biome.unwrapKey().get().location();
             foundBiome = biomeHashMap.values().stream().filter(
-                    b-> b.getBiomeKey().getValue().equals(biomeId)
+                    b-> b.getBiomeKey().location().equals(biomeId)
             ).findFirst().orElse(defaultBiome);
         }
 

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "me:black_pine_planks"
+    },
+    "S": {
+      "tag": "me:steel_ingots"
+    }
+  },
+  "pattern": [
+    "SPP",
+    "SPS",
+    "SPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "me:reinforced_black_pine_door"
+  }
+}
